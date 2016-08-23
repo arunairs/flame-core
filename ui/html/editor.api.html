@@ -1,0 +1,543 @@
+<div class="interfaces">
+    <div class="nav-action-bar">
+        <md-button class="md-accent md-custom" ng-click="showCreateInterfaceDialog($event)">
+            <md-icon><i class="mdi mdi-add-box mdi-14x"></i></md-icon>
+            新建接口
+        </md-button>
+    </div>
+    <div class="sidebar" md-whiteframe="1">
+        <md-content class="versions">
+            <md-subheader class="md-primary">版本</md-subheader>
+            <md-select ng-model="weapon" placeholder="版本" class="md-no-underline">
+                <md-option value="1.0.0">1.0.0</md-option>
+                <md-option value="1.1.0">1.1.0</md-option>
+                <md-option value="1.2.0">1.2.0</md-option>
+                <md-option value="1.3.0">1.3.0</md-option>
+            </md-select>
+        </md-content>
+        <md-content>
+            <md-subheader class="md-primary">模块
+                <md-button class="md-icon-button md-accent add-module" aria-label="Add"
+                           ng-click="openCreateModuleDialog($event)">
+                    <i class="mdi mdi-add mdi-16x"></i>
+                </md-button>
+            </md-subheader>
+            <md-list flex>
+                <md-list-item class="md-1-line" ng-repeat="item in menus" ng-click="null" ng-class="{active:$index==0}">
+                    <div class="operation-button reorder">
+                        <md-button class="md-icon-button">
+                            <i class="mdi mdi-reorder mdi-16x"></i>
+                        </md-button>
+                    </div>
+                    <span ng-bind="item.name"></span>
+                    <div class="operation-button more">
+                        <md-menu md-position-mode="target-right target">
+                            <md-button aria-label="Open phone interactions menu" class="md-icon-button"
+                                       ng-click="openMenu($mdOpenMenu, $event)">
+                                <i class="mdi mdi-more-vert mdi-16x"></i></md-button>
+                            <md-menu-content width="3">
+                                <md-menu-item>
+                                    <md-button ng-click="openEditModuleDialog($event)">
+                                        <i class="mdi mdi-add-circle mdi-16x"></i>
+                                        添加接口
+                                    </md-button>
+                                </md-menu-item>
+                                <md-menu-item>
+                                    <md-button ng-click="openEditModuleDialog($event)">
+                                        <i class="mdi mdi-edit mdi-16x"></i>
+                                        重命名
+                                    </md-button>
+                                </md-menu-item>
+                                <md-menu-divider></md-menu-divider>
+                                <md-menu-item>
+                                    <md-button ng-click="ctrl.toggleNotifications()">
+                                        <i class="mdi mdi-delete mdi-16x"></i>
+                                        删除
+                                    </md-button>
+                                </md-menu-item>
+                            </md-menu-content>
+                        </md-menu>
+                    </div>
+                </md-list-item>
+            </md-list>
+        </md-content>
+    </div>
+    <div class="right-main-container">
+        <div class="doc">
+            <div class="group">
+                <div class="group-body">
+                    <md-card class="card api-card display" ng-repeat="item in data">
+                        <md-toolbar class="md-custom">
+                            <div class="md-toolbar-tools">
+                                <h4>
+                                    <span>公司 > 获得公司信息</span>
+                                </h4>
+                                <span flex></span>
+                                <md-button class="md-icon-button">
+                                    <i class="mdi mdi-edit mdi-16x"></i>
+                                </md-button>
+                                <md-menu>
+                                    <md-button aria-label="Open phone interactions menu" class="md-icon-button"
+                                               ng-click="openMenu($mdOpenMenu, $event)">
+                                        <i class="mdi mdi-more-vert mdi-16x"></i></md-button>
+                                    <md-menu-content width="3">
+                                        <md-menu-item>
+                                            <md-button ng-click="ctrl.toggleNotifications()">
+                                                <i class="mdi mdi-delete mdi-16x"></i>
+                                                删除
+                                            </md-button>
+                                        </md-menu-item>
+                                    </md-menu-content>
+                                </md-menu>
+                            </div>
+                        </md-toolbar>
+                        <bm-tabs>
+                            <md-tabs md-dynamic-height class="api-tabs">
+                                <md-tab label="接口1">
+                                </md-tab>
+                                <md-tab label="接口2">
+                                </md-tab>
+                                <md-tab label="接口3">
+                                </md-tab>
+                            </md-tabs>
+                            <bm-tabs-panel>
+                                <md-tab-content class="md-padding bm-active" layout="column">
+                                    <div class="remark">
+                                        <i class="pull-left mdi mdi-description mdi mdi-18x"></i>
+                                        <div class="pull-left content">
+                                            <p class="form-control-static">客户端用此接口获得公司信息</p>
+                                        </div>
+                                    </div>
+                                    <div class="request-url">
+                                        <div class="group-title">
+                                            <md-icon md-font-icon="mdi mdi-near-me mdi-16x"></md-icon>
+                                            <span class="title">请求路径</span>
+                                        </div>
+                                        <md-chips class="custom-chips" ng-model="item.http_methods" readonly="true">
+                                        </md-chips>
+                                        <md-input-container class="md-icon-float md-block">
+                                            <input ng-model="item.text" disabled>
+                                        </md-input-container>
+                                    </div>
+                                    <div class="horizontal-line"></div>
+                                    <div>
+                                        <div class="group-title">
+                                            <md-icon md-font-icon="mdi mdi-swap-vertical-circle mdi-16x"></md-icon>
+                                            <span class="title">参数</span>
+                                        </div>
+                                        <div class="group-content">
+                                            <div class="group">
+                                                <label class="pull-left control-label">Path</label>
+                                                <div class="table-col">
+                                                    <div class="wrapper">
+                                                        <table class="table table-bordered table-striped">
+                                                            <thead>
+                                                            <tr>
+                                                                <td>名称</td>
+                                                                <td>类型</td>
+                                                                <td>示例</td>
+                                                                <td>备注</td>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            <tr>
+                                                                <td>id</td>
+                                                                <td>long</td>
+                                                                <td>560001</td>
+                                                                <td>333333333</td>
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="group">
+                                                <label class="pull-left control-label">Query</label>
+                                                <div class="table-col">
+                                                    <div class="wrapper">
+                                                        <table class="table table-bordered table-striped">
+                                                            <thead>
+                                                            <tr>
+                                                                <td>名称</td>
+                                                                <td>类型</td>
+                                                                <td>必填</td>
+                                                                <td>示例</td>
+                                                                <td>备注</td>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            <tr>
+                                                                <td>id</td>
+                                                                <td>long</td>
+                                                                <td><i class="mdi mdi-check"></i></td>
+                                                                <td>560001</td>
+                                                                <td>333333333</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>id</td>
+                                                                <td>long</td>
+                                                                <td><i class="mdi mdi-check"></i></td>
+                                                                <td>560001</td>
+                                                                <td>333333333</td>
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="group">
+                                                <label class="pull-left control-label">Matrix</label>
+                                                <div class="table-col">
+                                                    <div class="wrapper">
+                                                        <table class="table table-bordered table-striped">
+                                                            <thead>
+                                                            <tr>
+                                                                <td>名称</td>
+                                                                <td>类型</td>
+                                                                <td>必填</td>
+                                                                <td>示例</td>
+                                                                <td>备注</td>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            <tr>
+                                                                <td>id</td>
+                                                                <td>long</td>
+                                                                <td><i class="mdi mdi-check"></i></td>
+                                                                <td>560001</td>
+                                                                <td>333333333</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>id</td>
+                                                                <td>long</td>
+                                                                <td><i class="mdi mdi-check"></i></td>
+                                                                <td>560001</td>
+                                                                <td>333333333</td>
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="group">
+                                                <label class="pull-left control-label">Form</label>
+                                                <div class="table-col">
+                                                    <div class="wrapper">
+                                                        <table class="table table-bordered table-striped">
+                                                            <thead>
+                                                            <tr>
+                                                                <td>名称</td>
+                                                                <td>类型</td>
+                                                                <td>必填</td>
+                                                                <td>示例</td>
+                                                                <td>备注</td>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            <tr>
+                                                                <td>id</td>
+                                                                <td>long</td>
+                                                                <td><i class="mdi mdi-check"></i></td>
+                                                                <td>560001</td>
+                                                                <td>333333333</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>id</td>
+                                                                <td>long</td>
+                                                                <td><i class="mdi mdi-check"></i></td>
+                                                                <td>560001</td>
+                                                                <td>333333333</td>
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="group">
+                                                <label class="pull-left control-label">Header</label>
+                                                <div class="table-col">
+                                                    <div class="wrapper">
+                                                        <table class="table table-bordered table-striped">
+                                                            <thead>
+                                                            <tr>
+                                                                <td>名称</td>
+                                                                <td>类型</td>
+                                                                <td>必填</td>
+                                                                <td>示例</td>
+                                                                <td>备注</td>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            <tr>
+                                                                <td>id</td>
+                                                                <td>long</td>
+                                                                <td><i class="mdi mdi-check"></i></td>
+                                                                <td>560001</td>
+                                                                <td>333333333</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>id</td>
+                                                                <td>long</td>
+                                                                <td><i class="mdi mdi-check"></i></td>
+                                                                <td>560001</td>
+                                                                <td>333333333</td>
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="group">
+                                                <label class="pull-left control-label">Cookie</label>
+                                                <div class="table-col">
+                                                    <div class="wrapper">
+                                                        <table class="table table-bordered table-striped">
+                                                            <thead>
+                                                            <tr>
+                                                                <td>名称</td>
+                                                                <td>类型</td>
+                                                                <td>必填</td>
+                                                                <td>示例</td>
+                                                                <td>备注</td>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            <tr>
+                                                                <td>id</td>
+                                                                <td>long</td>
+                                                                <td><i class="mdi mdi-check"></i></td>
+                                                                <td>560001</td>
+                                                                <td>333333333</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>id</td>
+                                                                <td>long</td>
+                                                                <td><i class="mdi mdi-check"></i></td>
+                                                                <td>560001</td>
+                                                                <td>333333333</td>
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="group">
+                                                <label class="pull-left control-label">JSON</label>
+                                                <div class="json-col">
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="subtitle"><span>数据</span></div>
+                                                            <p class="form-control-static" hljs
+                                                               hljs-source="toPrettyJSON('{loginName: \'admin\', password: \'password\'}', 4)">
+                                                            </p>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <table class="table">
+                                                                <thead>
+                                                                <tr>
+                                                                    <td>名称</td>
+                                                                    <td>类型</td>
+                                                                    <td>必填</td>
+                                                                    <td>示例</td>
+                                                                    <td>备注</td>
+                                                                </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                <tr>
+                                                                    <td>id</td>
+                                                                    <td>long</td>
+                                                                    <td><i class="mdi mdi-check"></i></td>
+                                                                    <td>560001</td>
+                                                                    <td>333333333</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>id</td>
+                                                                    <td>long</td>
+                                                                    <td><i class="mdi mdi-check"></i></td>
+                                                                    <td>560001</td>
+                                                                    <td>333333333</td>
+                                                                </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="horizontal-line"></div>
+                                    <div>
+                                        <div class="group-title">
+                                            <md-icon md-font-icon="mdi mdi-file-download mdi-16x"></md-icon>
+                                            <span class="title">返回值</span>
+                                        </div>
+                                        <div class="group-content clear-margin-top">
+                                            <div class="group tab-col">
+                                                <md-tabs md-dynamic-height md-border-bottom>
+                                                    <md-tab label="JSON">
+                                                        <md-content>
+                                                            <div>
+                                                                <div class="col-md-6">
+                                                                    <p class="form-control-static" hljs
+                                                                       hljs-source="toPrettyJSON('{loginName: \'admin\', password: \'password\'}', 4)">
+                                                                    </p>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <table class="table">
+                                                                        <thead>
+                                                                        <tr>
+                                                                            <td>名称</td>
+                                                                            <td>类型</td>
+                                                                            <td>必填</td>
+                                                                            <td>示例</td>
+                                                                            <td>备注</td>
+                                                                        </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                        <tr>
+                                                                            <td>id</td>
+                                                                            <td>long</td>
+                                                                            <td><i class="mdi mdi-check"></i></td>
+                                                                            <td>560001</td>
+                                                                            <td>333333333</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>id</td>
+                                                                            <td>long</td>
+                                                                            <td><i class="mdi mdi-check"></i></td>
+                                                                            <td>560001</td>
+                                                                            <td>333333333</td>
+                                                                        </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </md-content>
+                                                    </md-tab>
+                                                    <md-tab label="XML">
+                                                        <md-content>
+                                                            <p class="form-control-static" hljs
+                                                               hljs-source="toPrettyJSON('{angularjs: 1, is: 2, awesome: 3}', 4)">
+                                                            </p>
+                                                            <table class="table table-striped">
+                                                                <thead>
+                                                                <tr>
+                                                                    <td>属性</td>
+                                                                    <td>类型</td>
+                                                                    <td>示例</td>
+                                                                    <td>备注</td>
+                                                                </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                <tr>
+                                                                    <td>id</td>
+                                                                    <td>long</td>
+                                                                    <td>560001</td>
+                                                                    <td>333333333</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>id</td>
+                                                                    <td>long</td>
+                                                                    <td>560001</td>
+                                                                    <td>333333333</td>
+                                                                </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </md-content>
+                                                    </md-tab>
+                                                </md-tabs>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="clear-padding-top">
+                                        <div class="group-title">
+                                            <md-icon md-font-icon="mdi mdi-error mdi-16x"></md-icon>
+                                            <span class="title">异常值</span>
+                                        </div>
+                                        <div class="group-content clear-margin-top">
+                                            <div class="group tab-col">
+                                                <md-tabs md-dynamic-height md-border-bottom>
+                                                    <md-tab label="JSON">
+                                                        <md-content>
+                                                            <div>
+                                                                <div class="col-md-6">
+                                                                    <p class="form-control-static" hljs
+                                                                       hljs-source="toPrettyJSON('{loginName: \'admin\', password: \'password\'}', 4)">
+                                                                    </p>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <table class="table">
+                                                                        <thead>
+                                                                        <tr>
+                                                                            <td>名称</td>
+                                                                            <td>类型</td>
+                                                                            <td>必填</td>
+                                                                            <td>示例</td>
+                                                                            <td>备注</td>
+                                                                        </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                        <tr>
+                                                                            <td>id</td>
+                                                                            <td>long</td>
+                                                                            <td><i class="mdi mdi-check"></i></td>
+                                                                            <td>560001</td>
+                                                                            <td>333333333</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>id</td>
+                                                                            <td>long</td>
+                                                                            <td><i class="mdi mdi-check"></i></td>
+                                                                            <td>560001</td>
+                                                                            <td>333333333</td>
+                                                                        </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </md-content>
+                                                    </md-tab>
+                                                    <md-tab label="XML">
+                                                        <md-content>
+                                                            <p class="form-control-static" hljs
+                                                               hljs-source="toPrettyJSON('{angularjs: 1, is: 2, awesome: 3}', 4)">
+                                                            </p>
+                                                            <table class="table table-striped">
+                                                                <thead>
+                                                                <tr>
+                                                                    <td>属性</td>
+                                                                    <td>类型</td>
+                                                                    <td>示例</td>
+                                                                    <td>备注</td>
+                                                                </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                <tr>
+                                                                    <td>id</td>
+                                                                    <td>long</td>
+                                                                    <td>560001</td>
+                                                                    <td>333333333</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>id</td>
+                                                                    <td>long</td>
+                                                                    <td>560001</td>
+                                                                    <td>333333333</td>
+                                                                </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </md-content>
+                                                    </md-tab>
+                                                </md-tabs>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </md-tab-content>
+                            </bm-tabs-panel>
+                        </bm-tabs>
+                    </md-card>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

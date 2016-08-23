@@ -1,0 +1,195 @@
+.api-card {
+
+}
+
+.api-card md-input-container > md-icon {
+    position: absolute;
+}
+
+.api-card .md-chips {
+    padding: 0;
+    box-shadow: none;
+}
+
+.api-card .request-url {
+    margin-top: 5px;
+    padding-bottom: 0;
+}
+
+.api-card .group label {
+    position: relative;
+    top: 11px;
+}
+
+.api-card .group-title md-icon {
+    position: relative;
+    top: -1px;
+    vertical-align: middle;
+    margin-left: 5px;
+    color: #0277BD;
+}
+
+.api-card .group-title .title {
+    vertical-align: middle;
+    margin-left: 7px;
+    font-size: 15px;
+    font-weight: bold;
+    color: #2856b6;
+}
+
+.api-card .group-content {
+    margin-left: 40px;
+    margin-top: 15px;
+}
+
+.api-card .group-content .group {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.api-card .group-content .group:nth-last-of-type(1) {
+    margin-bottom: 0;
+}
+
+.api-card .group-content .group .table-col .table tr > td {
+    padding: 5px 8px;
+}
+
+.api-card .group-content .table-col {
+    padding-left: 50px;
+}
+
+.api-card .group-content .table-col .wrapper {
+    position: relative;
+    margin-right: 25px;
+    margin-left: 15px;
+}
+
+.api-card .group-content .table-col table > thead {
+    color: #424242;
+    font-weight: bold;
+}
+
+.api-card .group-content .table-col .table-bordered > tbody > tr > td {
+    border-color: transparent;
+}
+
+.api-card .group-content .json-col {
+    width: 100%;
+    padding-left: 65px;
+    position: relative;
+}
+
+.api-card .group-content .json-col .row {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 3px;
+    margin-left: 0;
+    margin-right: 25px;
+}
+
+.api-card .group-content .json-col .subtitle {
+    margin: 0;
+    font-size: 14px;
+    font-weight: bold;
+    height: 49px;
+    border-bottom: 1px solid #ddd;
+}
+
+.api-card .group-content .json-col .subtitle span {
+    padding: 13px;
+    line-height: 49px;
+    border-bottom: 3px solid rgb(236, 64, 122);
+}
+
+.api-card .group-content .json-col table > tbody > tr > td {
+    border-top: 1px solid #ddd;
+}
+
+.api-card .group-content .json-col p {
+    width: 100%;
+}
+
+.api-card .remark {
+    margin: 7px 10px;
+    padding: 0;
+    color: #455A64;
+    border-radius: 2px;
+    background: #FFF3E0;
+    border: 1px solid #FFE0B2;
+    border-bottom-width: 2px;
+}
+
+.api-card .remark i {
+    color: #666;
+    padding: 16px 14px;
+    margin-top: 3px;
+    margin-right: 0;
+}
+
+.api-card .remark .content {
+    padding: 15px;
+    border-left: 1px solid #FFE0B2;
+}
+
+.api-card .request-url {
+    position: relative;
+}
+
+.api-card .request-url md-chips {
+    position: absolute;
+    top: 15px;
+    right: 5px;
+}
+
+.api-card .request-url md-input-container {
+    margin-top: 8px;
+    margin-bottom: 0;
+    padding-left: 39px;
+}
+
+.api-card .request-url input {
+    color: rgb(236, 64, 122);
+    font-size: 16px;
+    background: none;
+}
+
+.api-card .api-tabs > md-tabs-wrapper > md-tabs-canvas {
+    background: #424242;
+}
+
+.api-card .api-tabs > md-tabs-wrapper > md-tabs-canvas .md-tab {
+    padding: 12px 40px;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.api-card .api-tabs > md-tabs-wrapper > md-tabs-canvas .md-tab.md-active {
+    color: #fff;
+}
+
+.api-card .api-tabs md-ink-bar {
+    height: 3px;
+    background: rgb(236, 64, 122);
+}
+
+.api-card .tab-col md-tabs {
+    margin-top: 15px;
+    margin-right: 30px;
+    border-top: 1px solid #ddd;
+}
+
+.api-card .horizontal-line {
+    background: rgba(0, 0, 0, 0.1);
+    height: 2px;
+    padding: 0;
+    margin: 15px 8px;
+}
+
+.api-card pre {
+    background: none;
+    border: none;
+    margin: 0;
+}
+
+.api-card pre code {
+    background: none;
+}

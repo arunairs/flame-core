@@ -1,0 +1,271 @@
+<md-dialog class="interface-dialog">
+    <form>
+        <md-toolbar class="md-accent">
+            <div class="md-toolbar-tools">
+                <h2>新建功能</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="addInterface()">
+                    <md-icon class="mdi mdi-add-circle-outline mdi-17x"></md-icon>
+                </md-button>
+                <md-button class="md-icon-button" ng-click="cancel()">
+                    <md-icon md-svg-src="../boat/image/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content>
+            <bm-tabs id="paramTab">
+                <md-tabs md-dynamic-height md-border-bottom md-stretch-tabs="always" md-selected="selectedIndex">
+                    <md-tab label="基本信息" ng-click="showBasicInfo($event)">
+                    </md-tab>
+                    <md-tab ng-repeat="interface in function.interfaces" ng-click="showInterface($event,$index)"
+                            label="{{interface.name}}">
+                        <md-tab-label>
+                            {{interface.name}}
+                            <md-progress-circular md-mode="indeterminate" md-diameter="20px"
+                                                  ng-if="interface.processing==true"></md-progress-circular>
+                        </md-tab-label>
+                    </md-tab>
+                </md-tabs>
+                <bm-tabs-panel>
+                    <md-tab-content class="md-padding bm-active">
+                        <div>
+                            <form class="ng-pristine ng-valid ng-valid-mindate ng-valid-maxdate ng-valid-filtered ng-valid-valid ng-valid-required ng-valid-pattern">
+                                <div layout-gt-sm="row" class="layout-gt-sm-row">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>功能名称</label>
+                                        <input ng-model="function.name">
+                                    </md-input-container>
+                                    <md-input-container flex="50">
+                                        <label>模块</label>
+                                        <md-select name="type" ng-model="function.module">
+                                            <md-option value="app">公司</md-option>
+                                            <md-option value="web">用户</md-option>
+                                            <md-option value="loh">登录</md-option>
+                                        </md-select>
+                                    </md-input-container>
+                                </div>
+                                <div layout="row">
+                                    <md-input-container class="md-block" flex="100">
+                                        <label>URL</label>
+                                        <input ng-model="function.url">
+                                    </md-input-container>
+                                </div>
+                                <md-input-container class="md-block">
+                                    <label>备注</label>
+                                    <textarea ng-model="function.comment" md-maxlength="500" rows="2"
+                                              md-select-on-focus=""></textarea>
+                                </md-input-container>
+                                <md-input-container class="clear-margin-top">
+                                    <md-switch ng-model="function.isPublic" class="md-primary clear-margin">公开
+                                    </md-switch>
+                                </md-input-container>
+                            </form>
+                        </div>
+                    </md-tab-content>
+                    <md-tab-content class="md-padding bm-right" ng-repeat="interface in function.interfaces">
+                        <div>
+                            <form class="ng-pristine ng-valid ng-valid-filtered ng-valid-valid ng-valid-required ng-valid-pattern">
+                                <div layout-gt-sm="row" class="layout-gt-sm-row">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>名称</label>
+                                        <input ng-model="interface.name">
+                                    </md-input-container>
+                                    <md-input-container flex="50">
+                                        <label>请求方法</label>
+                                        <md-select ng-model="interface.requestMethod" multiple>
+                                            <md-option ng-repeat="method in requestMethods" ng-value="method">
+                                                {{method.name}}
+                                            </md-option>
+                                        </md-select>
+                                    </md-input-container>
+                                </div>
+                                <div layout-gt-sm="row" class="layout-gt-sm-row">
+                                    <md-input-container class="md-block" flex="100">
+                                        <label>URL</label>
+                                        <input ng-model="interface.url">
+                                    </md-input-container>
+                                </div>
+                                <md-input-container class="md-block">
+                                    <label>描述</label>
+                                    <textarea ng-model="interface.description" md-maxlength="500" rows="2"></textarea>
+                                </md-input-container>
+
+                                <div class="tabs-wrapper">
+                                    <bm-tabs>
+                                        <md-tabs md-dynamic-height md-border-bottom>
+                                            <md-tab ng-repeat="tab in paramTabs" label="{{tab.name|uppercase}}"
+                                                    ng-click="switchParamTab($event,$index)">
+                                            </md-tab>
+                                        </md-tabs>
+                                        <bm-tabs-panel>
+                                            <md-tab-content class="md-padding param-tab"
+                                                            ng-repeat="tab in paramTabs"
+                                                            ng-class="{'bm-active':$first,'bm-right':!$first}">
+                                                <div ng-if="tab.name!='body'">
+                                                    <div layout="row" class="form-title">
+                                                        <div flex="20"><span>变量名</span></div>
+                                                        <div flex="20"><span>类型</span></div>
+                                                        <div flex="20"><span>示例</span></div>
+                                                        <div flex="10" class="text-center"><span>必填</span></div>
+                                                        <div flex="20"><span>备注</span></div>
+                                                    </div>
+                                                    <div layout="row"
+                                                         ng-repeat="param in interface[tab.name]">
+                                                        <md-input-container md-no-float flex="20">
+                                                            <input ng-model="param.name"
+                                                                   placeholder="变量名"
+                                                                   ng-click="addParamItem(tab.name,$index)">
+                                                        </md-input-container>
+                                                        <md-input-container md-no-float flex="20">
+                                                            <md-select ng-model="param.type"
+                                                                       ng-click="addParamItem(tab.name,$index)"
+                                                                       placeholder="类型">
+                                                                <md-option ng-repeat="fieldType in fieldTypes"
+                                                                           ng-value="fieldType">{{fieldType.name}}
+                                                                </md-option>
+                                                            </md-select>
+                                                        </md-input-container>
+                                                        <md-input-container md-no-float flex="20">
+                                                            <input ng-model="param.example"
+                                                                   ng-click="addParamItem(tab.name,$index)"
+                                                                   placeholder="示例">
+                                                        </md-input-container>
+                                                        <md-input-container flex="10" class="text-center">
+                                                            <md-checkbox ng-if="tab.name=='path'"
+                                                                         ng-init="param.isRequired=true"
+                                                                         ng-checked="param.isRequired"
+                                                                         ng-disabled="true"
+                                                                         ng-click="addParamItem(tab.name,$index)">
+                                                            </md-checkbox>
+                                                            <md-checkbox ng-if="tab.name!='path'"
+                                                                         ng-init="param.isRequired=param.isRequired?param.isRequired:true"
+                                                                         ng-checked="param.isRequired"
+                                                                         ng-click="toggleRequired(tab.name,$index)">
+                                                            </md-checkbox>
+                                                        </md-input-container>
+                                                        <md-input-container md-no-float flex="20">
+                                                            <input ng-model="param.comment"
+                                                                   ng-click="addParamItem(tab.name,$index)"
+                                                                   placeholder="备注">
+                                                        </md-input-container>
+                                                        <div flex="10" class="param-buttons"
+                                                             ng-show="interface[tab.name].length>0&&!$last">
+                                                            <md-button ng-click="deleteParamItem(tab.name,$index)"><i
+                                                                    class="mdi mdi-delete mdi-14x"></i>
+                                                            </md-button>
+                                                            <md-button class=""><i
+                                                                    class="mdi mdi-reorder mdi-14x"></i></md-button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div ng-if="tab.name=='body'" class="body">
+                                                    <div layout="row">
+                                                        <md-radio-group ng-model="interface.body.type" layout="row">
+                                                            <md-radio-button class="md-accent"
+                                                                             ng-repeat="bodyType in bodyTypes"
+                                                                             ng-value="bodyType.field">{{bodyType.name}}
+                                                            </md-radio-button>
+                                                        </md-radio-group>
+                                                        <md-select ng-if="interface.body.type=='raw'"
+                                                                   ng-model="interface.body.rawType" placeholder="媒体格式"
+                                                                   class="md-no-underline md-accent clear-margin rawType">
+                                                            <md-option ng-repeat="type in rawTypes" ng-bind="type.name"
+                                                                       ng-value="type.value"></md-option>
+                                                        </md-select>
+                                                    </div>
+                                                    <div ng-if="interface.body.type=='form-data'||interface.body.type=='x-www-form-urlencoded'">
+                                                        <div layout="row" class="form-title">
+                                                            <div flex="20"><span>变量名</span></div>
+                                                            <div flex="20"><span>类型</span></div>
+                                                            <div flex="20"><span>示例</span></div>
+                                                            <div flex="10" class="text-center"><span>必填</span></div>
+                                                            <div flex="20"><span>备注</span></div>
+                                                        </div>
+                                                        <div layout="row"
+                                                             ng-repeat="param in interface.body[interface.body.type]">
+                                                            <md-input-container md-no-float flex="20">
+                                                                <input ng-model="param.name"
+                                                                       placeholder="变量名"
+                                                                       ng-click="addBodyParamItem(interface.body.type,$index)">
+                                                            </md-input-container>
+                                                            <md-input-container md-no-float flex="20">
+                                                                <md-select ng-model="param.type"
+                                                                           ng-click="addBodyParamItem(interface.body.type,$index)"
+                                                                           placeholder="类型">
+                                                                    <md-option ng-repeat="fieldType in fieldTypes"
+                                                                               ng-value="fieldType">{{fieldType.name}}
+                                                                    </md-option>
+                                                                </md-select>
+                                                            </md-input-container>
+                                                            <md-input-container md-no-float flex="20">
+                                                                <input ng-model="param.example"
+                                                                       ng-click="addBodyParamItem(interface.body.type,$index)"
+                                                                       placeholder="示例">
+                                                            </md-input-container>
+                                                            <md-input-container flex="10" class="text-center">
+                                                                <md-checkbox ng-checked="param.isRequired"
+                                                                             ng-init="param.isRequired=param.isRequired?param.isRequired:true"
+                                                                             ng-click="toggleBodyRequired(interface.body.type,$index)">
+                                                                </md-checkbox>
+                                                            </md-input-container>
+                                                            <md-input-container md-no-float flex="20">
+                                                                <input ng-model="param.comment"
+                                                                       ng-click="addBodyParamItem(interface.body.type,$index)"
+                                                                       placeholder="备注">
+                                                            </md-input-container>
+                                                            <div flex="10" class="param-buttons"
+                                                                 ng-show="interface.body.type.length>0&&!$last">
+                                                                <md-button
+                                                                        ng-click="deleteParamItem(interface.body.type,$index)">
+                                                                    <i class="mdi mdi-delete mdi-14x"></i>
+                                                                </md-button>
+                                                                <md-button class=""><i
+                                                                        class="mdi mdi-reorder mdi-14x"></i></md-button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div ng-if="interface.body.type=='binary'" class="binary">
+                                                        <div layout="row" class="form-title">
+                                                            <div flex="20"><span>文件</span></div>
+                                                        </div>
+                                                        <md-chips
+                                                                ng-model="interface.body[interface.body.type].fileTypes"
+                                                                readonly=false
+                                                                md-removable=true
+                                                                placeholder="文件类型"
+                                                                delete-button-label="删除"
+                                                                secondary-placeholder="增加文件类型"></md-chips>
+                                                        <md-input-container class="md-block comment">
+                                                            <input ng-model="interface.body[interface.body.type].comment"
+                                                                   placeholder="备注">
+                                                        </md-input-container>
+                                                    </div>
+                                                    <div ng-if="interface.body.type=='raw'">
+
+                                                    </div>
+                                                </div>
+                                            </md-tab-content>
+                                        </bm-tabs-panel>
+                                    </bm-tabs>
+                                </div>
+                            </form>
+                        </div>
+                    </md-tab-content>
+                </bm-tabs-panel>
+            </bm-tabs>
+        </md-dialog-content>
+
+        <md-dialog-actions layout="row">
+            <md-button class="md-primary" ng-if="selectedIndex>0" ng-click="deleteInterface()">
+                删除这个接口
+            </md-button>
+            <span flex></span>
+            <md-button class="md-accent" ng-click="answer('not useful')">
+                取消
+            </md-button>
+            <md-button class="md-accent" ng-click="answer('useful')">
+                创建
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

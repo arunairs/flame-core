@@ -1,0 +1,6 @@
+*.iml
+*.sh
+.idea/
+.gradle/
+build/
+/classes/

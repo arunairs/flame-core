@@ -1,0 +1,30 @@
+<nav class="navbar navbar-fixed-top navbar-primary" ng-class="{'navbar-shadow':showNavShadow}" role="navigation">
+    <div class="global-navbar">
+        <div class="container">
+            <img id="logo" src="../ui/image/logo.png">
+            <a id="logo-text" class="navbar-brand">Promise</a>
+            <div class="pull-right" id="navbar-right">
+                <span id="searchBtn"><i class="mdi mdi-search mdi-16x icon-light navbar-right-icon"></i></span>
+                <span id="loginBtn"><i class="mdi mdi-person mdi-16x icon-light navbar-right-icon"></i></span>
+            </div>
+        </div>
+    </div>
+    <div id="system-menu">
+        <div class="container">
+            <md-content>
+                <md-tabs md-dynamic-height>
+                    <md-tab label="项目">
+                    </md-tab>
+                    <md-tab label="收藏">
+                    </md-tab>
+                    <md-tab label="意见">
+                    </md-tab>
+                </md-tabs>
+            </md-content>
+        </div>
+    </div>
+</nav>
+<div ui-view="" class="full-size-width"></div>
+<footer>
+    <div class="text-center"><span class="logo">blinkmind</span>&nbsp;&copy;2016</div>
+</footer>

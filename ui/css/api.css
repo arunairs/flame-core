@@ -1,0 +1,137 @@
+.api {
+    padding-top: 100px;
+}
+
+.api .interfaces .sidebar {
+    /*background-color: #ECEFF1;*/
+    right: 0;
+    left: auto;
+}
+
+.api .interfaces .sidebar .add-module {
+    position: absolute;
+    right: -14px;
+    top: -13px;
+}
+
+.api .interfaces .sidebar .versions {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.api .interfaces .sidebar .versions md-select {
+    margin: 5px 14px;
+}
+
+.api .interfaces .sidebar .more {
+    position: absolute;
+    top: 3px;
+    right: 2px;
+}
+
+.api .interfaces .sidebar .reorder {
+    margin-left: -14px;
+}
+
+.api .interfaces .sidebar .reorder button {
+    cursor: move;
+}
+
+.api .interfaces .right-main-container {
+    margin-left: 230px;
+    margin-right: 320px;
+    margin-top: 15px;
+    max-width: 1024px;
+}
+
+.api .interfaces .right-main-container .doc {
+    margin: 0 auto;
+}
+
+.api .interfaces .poster {
+    height: 320px;
+    padding-top: 70px;
+    border-radius: 5px 5px 0 0;
+    background-image: url("../image/Flat Buildings.png");
+    background-color: #FFC107;
+    background-size: 100% auto;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.api .interfaces .favorite-button {
+    position: absolute;
+    bottom: -30px;
+    right: 20px;
+}
+
+.api .interfaces .favorite-button .mdi {
+    position: relative;
+    top: 9px;
+}
+
+.api .interfaces .group-name {
+    background: #ECEFF1;
+}
+
+.api .interfaces .group-name button {
+    font-size: 16px;
+}
+
+.api .interfaces .group-name button .mdi {
+    position: relative;
+    top: 8px;
+}
+
+.api .interfaces md-toolbar{
+    border-radius: 3px 3px 0 0;
+}
+
+.api .interfaces .card {
+    /*padding: 10px 20px 15px 20px;*/
+    border-top: 2px solid #f1f1f1;
+}
+
+.api .interfaces .card .subtitle {
+    margin: 18px 0 0 0;
+}
+
+.api .interfaces .card form {
+    margin: 7px 5px;
+}
+
+.api .interfaces .card form .form-group label {
+    margin-left: 35px;
+}
+
+.api .interfaces .card form .form-group.icon {
+    margin-top: 15px;
+}
+
+.api .interfaces .card form .form-group.icon label {
+    margin-left: 0;
+}
+
+.api .interfaces .card form .form-group.icon > .mdi {
+    width: 35px;
+    position: relative;
+    top: 6px;
+    margin-right: 0;
+    color: rgb(63, 81, 181);
+}
+
+.api .interfaces .card form .form-group md-pagination-wrapper {
+    height: 38px;
+}
+
+.api .interfaces .card form .form-group md-tabs-wrapper {
+    border-width: 0;
+}
+
+.api .interfaces .card form .form-group .md-tab {
+    padding-top: 6px;
+    padding-bottom: 6px;
+}
+
+.api .interfaces .card .md-chips md-chip {
+    margin-top: 0;
+}

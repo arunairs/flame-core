@@ -1,0 +1,18 @@
+<div class="api editor layout-default">
+    <div>
+        <div class="sidenav text-center">
+            <md-content>
+                <md-list flex>
+                    <md-list-item class="md-1-line" ng-repeat="item in menus" ng-class="{'active':menuIndex==$index}"
+                                  ng-click="redirect($index)">
+                        <i class="mdi mdi-18x"
+                           ng-class="item.class"></i><span ng-bind="item.name"></span>
+                    </md-list-item>
+                </md-list>
+            </md-content>
+        </div>
+        <div class="editor-container">
+            <div ui-view></div>
+        </div>
+    </div>
+</div>

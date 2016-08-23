@@ -1,0 +1,71 @@
+.interface-dialog {
+    min-width: 860px;
+}
+
+.interface-dialog md-dialog-content {
+    max-width: 860px;
+    max-height: 1280px;
+}
+
+.interface-dialog .tabs-wrapper {
+    position: relative;
+}
+
+.interface-dialog md-tabs md-progress-circular {
+    position: relative;
+    left: 15px;
+}
+
+.interface-dialog .param-tab md-checkbox {
+    margin-left: 10px;
+}
+
+.interface-dialog .param-tab .form-title {
+    background: #eee;
+    border-radius: 0 0 2px 2px;
+    line-height: 40px;
+    margin: -16px -15px 10px -15px;
+    padding: 0 15px;
+}
+
+.interface-dialog .param-tab .body .form-title {
+    margin-top: 15px;
+}
+
+.interface-dialog .param-tab .body .binary .comment {
+    margin-top: 30px;
+}
+
+.interface-dialog .param-tab .body .binary ._md-chip-content span {
+    position: relative;
+    top: -1px;
+}
+
+.interface-dialog .param-tab md-input-container {
+    margin: 13px 0;
+}
+
+.interface-dialog .param-tab md-select.rawType {
+    position: absolute;
+    top: 12px;
+    left: 470px;
+}
+
+.interface-dialog .param-buttons button {
+    min-width: 36px;
+    line-height: 30px;
+    min-height: 0;
+    margin-left: 0;
+    margin-right: 0;
+    padding-top: 8px;
+    color: #666;
+}
+
+div[ui-codemirror] {
+    width: 600px;
+    height: 600px;
+}
+
+.branch-dialog{
+    min-width: 600px;
+}

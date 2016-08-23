@@ -1,0 +1,116 @@
+.editor {
+}
+
+.editor .interfaces .card {
+    margin-top: 15px;
+    border-top: none;
+}
+
+.editor .group section:nth-of-type(1).card {
+    margin-top: 0;
+}
+
+.editor .interfaces .group-name {
+    background: transparent;
+}
+
+.editor .interfaces .group-name button {
+    color: rgba(0, 0, 0, 0.6);
+    margin: 0;
+    margin-bottom: 5px;
+}
+
+.editor .interfaces .group-body .card:nth-of-type(1) {
+    margin-top: 0;
+}
+
+.editor .property .sidebar .editors md-icon span {
+    position: relative;
+    top: 3px;
+    font-family: 'RobotoRegular', 'HanHei SC', 'PingFang SC', 'Helvetica Neue', 'Helvetica', 'STHeitiSC-Light', 'Arial', sans-serif;
+}
+
+.editor .property .sidebar .editors ._md-subheader-inner {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.editor .property md-toolbar {
+    background: #424242;
+}
+
+.editor .property md-input-container {
+    margin: 0;
+    margin-top: 27px;
+}
+
+.editor .property md-toolbar button.md-accent > md-icon {
+    fill: #1565C0;
+}
+
+.editor .property .status > md-list {
+    margin-left: -8px;
+    margin-right: -8px;
+    padding-top: 0;
+}
+
+.editor .property .status > md-list > md-list-item {
+    width: 25%;
+    float: left;
+    padding: 10px;
+    padding-top: 6px;
+}
+
+.editor .property .status > md-list > md-list-item > .md-item-text {
+    width: 100%;
+    padding: 10px;
+    border-top: 2px solid #1565C0;
+    border-radius: 2px;
+}
+
+.editor .property .card {
+    border-radius: 0;
+    box-shadow: none;
+    margin-top: 0;
+}
+
+.editor .property md-card-title {
+    padding-bottom: 5px;
+}
+
+.editor .property md-input-container.dark label {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.editor .property md-input-container.dark input {
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.editor .property .card.dark {
+    background: rgb(48, 48, 48);
+}
+
+.editor .property md-content md-card:nth-child(1) {
+    margin-top: 0;
+}
+
+.editor .property .switch-row {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+    padding: 12px;
+}
+
+.editor .property .switch-group .switch-row:last-of-type {
+    border-bottom: none;
+}
+
+.editor .property button.save {
+    position: absolute;
+    top: 19px;
+    right: 30px;
+    color: rgba(0, 0, 0, 0.54);
+}
+
+.editor .md-headline {
+    font-size: 18px;
+    color: rgb(236, 64, 122);
+}

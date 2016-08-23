@@ -1,0 +1,18 @@
+.layout{
+
+}
+
+.layout-default .sidenav {
+    background-color: transparent;
+    width: 180px;
+    padding-left: 12px;
+}
+
+.layout-default .sidenav md-list-item {
+    margin: 7px 0;
+}
+
+.layout-default .sidenav .mdi {
+    color: rgba(0, 0, 0, 0.5);
+    margin-right: 12px;
+}
