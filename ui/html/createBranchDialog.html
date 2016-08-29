@@ -1,0 +1,62 @@
+<md-dialog class="branch-dialog">
+    <form>
+        <md-toolbar class="md-accent">
+            <div class="md-toolbar-tools">
+                <h2>新建分支</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="cancel()">
+                    <md-icon md-svg-src="image/icon/ic_close_24px.svg" aria-label="Close dialog"></md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content layout-padding>
+            <h4 class="md-primary">版本号</h4>
+            <div layout="row">
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>主版本</label>
+                    <input ng-model="version.major">
+                </md-input-container>
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>次版本</label>
+                    <input ng-model="version.minor">
+                </md-input-container>
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>修订版本</label>
+                    <input ng-model="version.revision">
+                </md-input-container>
+            </div>
+            <div layout="row">
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>分支类型</label>
+                    <md-select ng-model="version.type">
+                        <md-option ng-repeat="type in versionTypes" ng-value="type">
+                            {{type.name}}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>版本名称</label>
+                    <input ng-model="version.name">
+                </md-input-container>
+                <md-input-container class="md-block" flex="10" ng-model="version.name">
+                    <md-button class="md-icon-button md-accent auto-generate" ng-click="generateVersionName()">
+                        <md-tooltip md-direction="top">
+                            自动生成版本名称
+                        </md-tooltip>
+                        <md-icon><i class="mdi mdi-16x mdi-autorenew"></i></md-icon>
+                    </md-button>
+                </md-input-container>
+            </div>
+        </md-dialog-content>
+
+        <md-dialog-actions layout="row">
+            <span flex></span>
+            <md-button class="md-accent" ng-click="answer('not useful')">
+                取消
+            </md-button>
+            <md-button class="md-accent" ng-click="answer('useful')">
+                创建
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

@@ -2,51 +2,6 @@
     padding-top: 100px;
 }
 
-.api .interfaces .sidebar {
-    /*background-color: #ECEFF1;*/
-    right: 0;
-    left: auto;
-}
-
-.api .interfaces .sidebar .add-module {
-    position: absolute;
-    right: -14px;
-    top: -13px;
-}
-
-.api .interfaces .sidebar .versions {
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-}
-
-.api .interfaces .sidebar .versions md-select {
-    margin: 5px 14px;
-}
-
-.api .interfaces .sidebar .more {
-    position: absolute;
-    top: 3px;
-    right: 2px;
-}
-
-.api .interfaces .sidebar .reorder {
-    margin-left: -14px;
-}
-
-.api .interfaces .sidebar .reorder button {
-    cursor: move;
-}
-
-.api .interfaces .right-main-container {
-    margin-left: 230px;
-    margin-right: 320px;
-    margin-top: 15px;
-    max-width: 1024px;
-}
-
-.api .interfaces .right-main-container .doc {
-    margin: 0 auto;
-}
-
 .api .interfaces .poster {
     height: 320px;
     padding-top: 70px;

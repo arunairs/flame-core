@@ -1,0 +1,110 @@
+<div class="publish">
+    <div class="nav-action-bar">
+        <div class="nav-action-bar">
+            <md-button class="md-accent md-custom" ng-click="showPublishDialog($event)">
+                <md-icon><i class="mdi mdi-publish mdi-14x"></i></md-icon>
+                发布
+            </md-button>
+            <md-button class="md-accent md-custom" ng-click="showCreateBranchDialog($event)">
+                <md-icon><i class="mdi mdi-content-copy mdi-14x"></i></md-icon>
+                新建分支
+            </md-button>
+        </div>
+    </div>
+    <div class="sidebar right" md-whiteframe="1">
+        <md-content class="versions">
+            <md-subheader class="md-primary">版本</md-subheader>
+            <md-select ng-model="weapon" placeholder="版本" class="md-no-underline">
+                <md-option value="1.0.0">1.0.0</md-option>
+                <md-option value="1.1.0">1.1.0</md-option>
+                <md-option value="1.2.0">1.2.0</md-option>
+                <md-option value="1.3.0">1.3.0</md-option>
+            </md-select>
+        </md-content>
+        <md-content>
+            <md-subheader class="md-primary">参与人
+            </md-subheader>
+            <md-list flex class="editors">
+                <md-list-item class="md-2-line" ng-repeat="editor in editors" ng-click="null">
+                    <md-icon class="md-avatar-icon text-center"><span>M</span></md-icon>
+                    <div class="md-list-item-text" layout="column">
+                        <h3>{{ editor.name }}</h3>
+                        <h4>{{ editor.datetime }}</h4>
+                    </div>
+                </md-list-item>
+            </md-list>
+        </md-content>
+    </div>
+    <div class="right-main-container">
+        <div class="center-wrapper">
+            <md-card>
+                <md-toolbar class="md-hue-2">
+                    <div class="md-toolbar-tools">
+                        <md-button class="md-icon-button" aria-label="Settings" ng-disabled="true">
+                            <md-icon md-svg-icon="image/icon/menu.svg"></md-icon>
+                        </md-button>
+                        <h2>
+                            <span>属性</span>
+                        </h2>
+                    </div>
+                </md-toolbar>
+                <md-card-content>
+                    <div class="card">
+                        <h4 class="md-primary">文档简介</h4>
+                        <div layout="row">
+                            <md-input-container class="md-icon-float md-block" flex-gt-sm>
+                                <label>名称</label>
+                                <md-icon md-svg-src="image/icon/ic_title_24px.svg"></md-icon>
+                                <input ng-model="user.firstName">
+                            </md-input-container>
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>版本号</label>
+                                <input ng-model="theMax">
+                            </md-input-container>
+                        </div>
+                        <div layout="row">
+                            <md-input-container class="md-icon-float md-block clear-margin-bottom" flex="100">
+                                <label>版本说明</label>
+                                <md-icon md-svg-src="image/icon/ic_short_text_24px.svg"></md-icon>
+                                <textarea ng-model="user.biography" md-maxlength="150" rows="1"
+                                          md-select-on-focus></textarea>
+                            </md-input-container>
+                        </div>
+                        <div layout="row">
+                            <md-input-container class="md-block" flex="100">
+                                <label>备注</label>
+                                <md-icon md-svg-src="image/icon/ic_comment_24px.svg"></md-icon>
+                                <textarea ng-model="user.biography" md-maxlength="150" rows="1"
+                                          md-select-on-focus></textarea>
+                            </md-input-container>
+                        </div>
+                    </div>
+                    <md-divider></md-divider>
+                    <div class="card">
+                        <h4 class="md-primary">权限</h4>
+                        <md-list>
+                            <md-subheader class="md-no-sticky">可见度</md-subheader>
+                            <md-radio-group ng-model="doc.visibility">
+                                <md-list-item ng-click="setVisibility('public')">
+                                    <md-icon md-svg-src="image/icon/ic_visibility_24px.svg"></md-icon>
+                                    <p>对所有人公开</p>
+                                    <md-radio-button class="clear-margin-bottom" value="public"></md-radio-button>
+                                </md-list-item>
+                                <md-list-item ng-click="setVisibility('private')">
+                                    <md-icon md-svg-src="image/icon/ic_visibility_off_24px.svg"></md-icon>
+                                    <p>仅对内部人员公开</p>
+                                    <md-radio-button class="clear-margin-bottom" value="private"></md-radio-button>
+                                </md-list-item>
+                            </md-radio-group>
+                        </md-list>
+                    </div>
+                    <md-divider></md-divider>
+                    <div layout="row" class="button-group">
+                        <md-button class="md-raised md-primary" flex="50">删除该文档</md-button>
+                        <md-button class="md-raised md-accent" flex="50">保存</md-button>
+                    </div>
+                </md-card-content>
+            </md-card>
+        </div>
+    </div>
+</div>

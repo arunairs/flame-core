@@ -104,6 +104,24 @@ app.factory("dialogService", function ($rootScope, $http, $mdDialog) {
         })
     }
 
+    service.chooseVersionType = function (ev, args, answered, cancelled) {
+        $mdDialog.show({
+            controller: 'chooseVersionTypeDialog',
+            templateUrl: '../ui/html/chooseVersionTypeDialog.html',
+            parent: angular.element(document.body),
+            clickOutsideToClose: true,
+            targetEvent: ev,
+            fullscreen: false,
+            locals: {dialogEvent: ev, args: args}
+        }).then(function (answer) {
+            if (answered)
+                answered(answer);
+        }, function () {
+            if (cancelled)
+                cancelled()
+        })
+    }
+
     service.publish = function (ev, args, confirmed, cancelled) {
         var confirm = $mdDialog.confirm()
             .title('确认')

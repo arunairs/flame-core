@@ -1,0 +1,33 @@
+<md-dialog class="version-type-dialog">
+    <form>
+        <md-toolbar class="md-accent">
+            <div class="md-toolbar-tools">
+                <h2>选择分支类型</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="cancel()">
+                    <md-icon md-svg-src="image/icon/ic_close_24px.svg" aria-label="Close dialog"></md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content layout-padding>
+            <div>
+                <md-list>
+                    <md-list-item ng-repeat="type in versionTypes">
+                        <p> {{ type.name }} </p>
+                        <md-checkbox class="md-secondary md-primary" ng-model="topping.wanted"></md-checkbox>
+                    </md-list-item>
+                </md-list>
+            </div>
+        </md-dialog-content>
+
+        <md-dialog-actions layout="row">
+            <span flex></span>
+            <md-button class="md-accent" ng-click="answer('not useful')">
+                取消
+            </md-button>
+            <md-button class="md-accent" ng-click="answer('useful')">
+                确定
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

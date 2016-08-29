@@ -12,7 +12,7 @@
 }
 
 .interface-dialog md-tabs md-progress-circular {
-    position: relative;
+    display: inline;
     left: 15px;
 }
 
@@ -67,5 +67,14 @@ div[ui-codemirror] {
 }
 
 .branch-dialog{
-    min-width: 600px;
+    min-width: 680px;
+}
+
+.branch-dialog h4{
+    margin-top: 10px !important;
+}
+
+.branch-dialog .auto-generate{
+    position: relative;
+    top: -7px;
 }

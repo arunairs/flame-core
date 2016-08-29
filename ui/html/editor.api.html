@@ -4,8 +4,16 @@
             <md-icon><i class="mdi mdi-add-box mdi-14x"></i></md-icon>
             新建接口
         </md-button>
+        <md-button class="md-accent md-custom" ng-click="showPublishDialog($event)">
+            <md-icon><i class="mdi mdi-publish mdi-14x"></i></md-icon>
+            发布
+        </md-button>
+        <md-button class="md-accent md-custom" ng-click="showCreateBranchDialog($event)">
+            <md-icon><i class="mdi mdi-content-copy mdi-14x"></i></md-icon>
+            新建分支
+        </md-button>
     </div>
-    <div class="sidebar" md-whiteframe="1">
+    <div class="sidebar right" md-whiteframe="1">
         <md-content class="versions">
             <md-subheader class="md-primary">版本</md-subheader>
             <md-select ng-model="weapon" placeholder="版本" class="md-no-underline">
@@ -63,7 +71,7 @@
         </md-content>
     </div>
     <div class="right-main-container">
-        <div class="doc">
+        <div class="center-wrapper">
             <div class="group">
                 <div class="group-body">
                     <md-card class="card api-card display" ng-repeat="item in data">

@@ -1,0 +1,97 @@
+.sidebar {
+    position: fixed;
+    left: 68px;
+    top: 0;
+    width: 290px;
+    height: 100%;
+    padding-top: 100px;
+    z-index: 1;
+    background-color: #fff;
+}
+
+.sidebar.right {
+    right: 0;
+    left: auto;
+}
+
+.sidebar md-list {
+    margin: 0;
+    padding: 0;
+}
+
+.sidebar md-list-item {
+    line-height: 40px;
+    font-size: 15px;
+    margin-bottom: 3px;
+    color: #455A64;
+}
+
+.sidebar md-list-item .mdi {
+    position: relative;
+    top: -1px;
+    margin-right: 12px;
+    margin-left: 5px;
+}
+
+.sidebar .active {
+    background-color: #CFD8DC;
+    color: #333;
+}
+
+.sidebar .title {
+    position: relative;
+    line-height: 50px;
+    border-bottom: 1px solid #f1f1f1;
+    padding-left: 15px;
+}
+
+.sidebar .title .mdi-keyboard-arrow-down {
+    position: absolute;
+    top: 14px;
+    right: 15px;
+}
+
+.sidebar .title md-select {
+    margin: 0;
+    margin-right: 12px;
+}
+
+.sidebar .operation-button {
+    margin-top: 1px;
+}
+
+.sidebar .operation-button .mdi {
+    position: relative;
+    top: 2px;
+    left: 0px;
+    margin-right: 0;
+    margin-left: 0;
+}
+
+.sidebar .add-module {
+    position: absolute;
+    right: -14px;
+    top: -13px;
+}
+
+.sidebar .versions {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.sidebar .versions md-select {
+    margin: 5px 14px;
+}
+
+.sidebar .more {
+    position: absolute;
+    top: 3px;
+    right: 2px;
+}
+
+.sidebar .reorder {
+    margin-left: -14px;
+}
+
+.sidebar .reorder button {
+    cursor: move;
+}

@@ -208,12 +208,6 @@ md-menu-item .mdi {
     color: rgba(0, 0, 0, 0.54);
 }
 
-.right-main-container {
-    position: relative;
-    margin-left: 68px;
-    margin-right: 280px;
-}
-
 md-content.md-docs-dark-theme {
     color: rgba(255, 255, 255, 1.0);
     background-color: #1976D2;
@@ -307,11 +301,11 @@ md-checkbox.md-checked ._md-icon:after {
     top: 2.8px;
 }
 
-md-select.md-accent md-select-value span, h4.md-accent, h5.md-accent {
+md-select.md-accent md-select-value span, h1.md-accent, h2.md-accent, h3.md-accent, h4.md-accent, h5.md-accent {
     color: #1565C0;
 }
 
-p.md-primary, h4.md-primary, h5.md-primary {
+p.md-primary, h1.md-primary, h2.md-primary, h3.md-primary, h4.md-primary, h5.md-primary {
     color: rgb(236, 64, 122);
 }
 
@@ -364,4 +358,8 @@ bm-tabs-panel > md-tab-content.bm-right:not(.bm-active) {
 
 .md-button > md-icon {
     margin-right: 3px;
+}
+
+md-list-item .md-list-item-inner>md-icon:first-child:not(.md-avatar-icon){
+    margin-top: 15px;
 }

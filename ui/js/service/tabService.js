@@ -11,7 +11,6 @@ app.factory("tabService", function ($timeout, $animateCss) {
         var tabs = panel.children('md-tab-content');
         var selectedIndex = panel.children('md-tab-content.bm-active').index();
         if (selectedIndex == index)return;
-        console.log(tabs.eq(selectedIndex)[0].offsetHeight + " " + tabs.eq(index)[0].offsetHeight);
         if (!opts || !opts.skipAnimate) {
             $animateCss(panel, {
                 from: {'height': tabs.eq(selectedIndex)[0].offsetHeight + 5 + 'px'},

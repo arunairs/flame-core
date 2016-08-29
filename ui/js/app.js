@@ -23,8 +23,8 @@ app.config(function ($stateProvider, $urlRouterProvider) {
         })
         .state('dashboard.editor.publish', {
             url: '/publish',
-            templateUrl: '../ui/html/editor.property.html',
-            controller: 'editor.property'
+            templateUrl: '../ui/html/editor.publish.html',
+            controller: 'editor.publish'
         })
         .state('dashboard.api', {
             url: '/api',
@@ -127,4 +127,12 @@ app.constant('requestMethods', [
     {name: "string", isFileField: false},
     {name: "date", isFileField: false},
     {name: "file", isFileField: true}
+]).constant('versionTypes', [
+    {name: "Pre Alpha"},
+    {name: "Alpha"},
+    {name: "Beta"},
+    {name: "Release Candidate"},
+    {name: "RTM"},
+    {name: "GA"},
+    {name: "Release"}
 ]);

@@ -1,29 +1,11 @@
 /**
  * Created by anczhang on 7/16/16.
  */
-app.controller('editor.property', function ($scope, $rootScope, $location, $state, $stateParams, $http, dialogService) {
+app.controller('editor.publish', function ($scope, $rootScope, $location, $state, $stateParams, $http, dialogService, versionTypes) {
 
     $scope.$parent.menuIndex = 1;
-
-    hljs.initHighlightingOnLoad();
-
-    var data = new Array();
-    for (var i = 0; i < 10; i++)
-        data[i] = new Object();
-
-    $scope.data = data;
-
-    $scope.toPrettyJSON = function (objStr, tabWidth) {
-        try {
-            var obj = $parse(objStr)({});
-        } catch (e) {
-            // eat $parse error
-            console.log(e)
-        }
-
-        var result = JSON.stringify(obj, null, Number(tabWidth));
-        return result;
-    };
+    $scope.versionTypes = versionTypes;
+    $scope.doc = {visibility: 'public'};
 
     var imagePath = "";
     $scope.editors = [
@@ -91,5 +73,17 @@ app.controller('editor.property', function ($scope, $rootScope, $location, $stat
         }, function () {
 
         })
+    }
+
+    $scope.showChooseVersionTypeDialog = function (event) {
+        dialogService.chooseVersionType(event, {}, function () {
+
+        }, function () {
+
+        })
+    }
+
+    $scope.setVisibility = function (visibility) {
+        $scope.doc.visibility = visibility;
     }
 })

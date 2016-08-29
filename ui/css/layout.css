@@ -1,4 +1,4 @@
-.layout{
+.layout {
 
 }
 
@@ -15,4 +15,16 @@
 .layout-default .sidenav .mdi {
     color: rgba(0, 0, 0, 0.5);
     margin-right: 12px;
+}
+
+.layout-default .right-main-container {
+    position: relative;
+    margin-left: 230px;
+    margin-right: 320px;
+    margin-top: 15px;
+}
+
+.layout-default .right-main-container > .center-wrapper {
+    margin: 0 auto;
+    max-width: 1024px;
 }
