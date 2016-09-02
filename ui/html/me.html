@@ -1,0 +1,16 @@
+<div class="me layout-default">
+    <div class="sidenav clear-padding-left">
+        <md-content>
+            <md-list flex>
+                <md-list-item class="md-1-line" ng-repeat="item in menus" ng-class="{'active':menuIndex==$index}"
+                              ng-click="redirect($index)">
+                    <i class="mdi mdi-18x"
+                       ng-class="item.class"></i>
+                </md-list-item>
+            </md-list>
+        </md-content>
+    </div>
+    <div class="me-container">
+        <div ui-view></div>
+    </div>
+</div>

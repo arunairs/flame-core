@@ -13,12 +13,9 @@ app.controller('me', function ($scope, $rootScope, $location, $state, $http, $pa
 
     $scope.menus =
         [
-            {'name': '个人资料', 'class': 'mdi-account-circle'},
-            {'name': '我的项目', 'class': 'mdi-album'},
+            {'name': '项目', 'class': 'mdi-explore'},
             {'name': '收藏', 'class': 'mdi-grade'},
             {'name': '反馈', 'class': 'mdi-comment'},
-            {'name': '基本资料', 'class': 'mdi-account-box'},
             {'name': '设置', 'class': 'mdi-settings'}
         ]
-
 })

@@ -50,12 +50,13 @@ app.config(function ($stateProvider, $urlRouterProvider) {
         .state('dashboard.me', {
             url: '/me',
             templateUrl: '../ui/html/me.html',
-            controller: 'me'
+            controller: 'me',
+            abstract: true
         })
         .state('dashboard.me.project', {
             url: '/project',
-            templateUrl: '../ui/html/myProject.html',
-            controller: 'myProject'
+            templateUrl: '../ui/html/me.project.html',
+            controller: 'me.project'
         })
         .state('dashboard.me.docList', {
             url: '/document',

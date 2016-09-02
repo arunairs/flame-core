@@ -22,7 +22,7 @@ ul, li {
 .navbar {
     margin-bottom: 0;
     border-radius: 0;
-    z-index: 20;
+    z-index: 21;
 }
 
 .navbar-shadow {
@@ -360,6 +360,20 @@ bm-tabs-panel > md-tab-content.bm-right:not(.bm-active) {
     margin-right: 3px;
 }
 
-md-list-item .md-list-item-inner>md-icon:first-child:not(.md-avatar-icon){
+md-list-item .md-list-item-inner > md-icon:first-child:not(.md-avatar-icon) {
     margin-top: 15px;
+}
+
+.truncate {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+md-icon[md-svg-src] {
+    margin: 0 10px;
+}
+
+.list-icon svg{
+    fill: #424242
 }

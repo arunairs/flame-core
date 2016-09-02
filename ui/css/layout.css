@@ -2,6 +2,10 @@
 
 }
 
+.layout-default {
+    padding-top: 100px;
+}
+
 .layout-default .sidenav {
     background-color: transparent;
     width: 180px;

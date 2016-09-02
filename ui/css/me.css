@@ -1,15 +1,60 @@
-.me .sidenav {
-    background-color: #f1f1f1;
-}
-
-.me .sidenav .mdi {
-    color: rgba(0, 0, 0, 0.5);
-}
-
 .me-container {
+}
+
+.me-project .sidebar {
+    border-left: 1px solid rgba(0, 0, 0, 0.1);
+    border-right: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.me-project .right-main-container {
+    margin: 0;
+    margin-left: 358px;
+    background: #fff;
+}
+
+.me-project .wall {
     position: relative;
-    margin-left: 348px;
-    padding-top: 85px;
+    height: 180px;
+    background: #EEEEEE;
+    border-bottom: 2px solid #E0E0E0;
+}
+
+.me-project .wall .project-info {
+    position: absolute;
+    bottom: 25px;
+    left: 0px;
+    width: 100%;
+    white-space: nowrap;
+}
+
+.me-project .wall .project-info .project-icon {
+    margin-left: 25px;
+    margin-bottom: 10px;
+    margin-right: 15px;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.me-project .wall .project-info .text_lines {
+    display: inline-block;
+    position: relative;
+}
+
+.me-project .wall .project-info .text_lines h5{
+    width: 80%;
+    display: inline-block;
+    white-space: normal;
+    line-height: 22px;
+}
+
+.me-project .wall .add-doc {
+    position: absolute;
+    right: 30px;
+    bottom: -28px;
+}
+
+.me-project .project-list {
+    margin-top: 5px;
 }
 
 .action-bar {
@@ -20,119 +65,4 @@
     background-color: #fff;
     padding-left: 350px;
     z-index: 99;
-}
-
-.content-body {
-    background-color: #fff;
-}
-
-.me .wrapper {
-    border: none;
-    padding: 0 5px;
-}
-
-.action-bar .nav-tabs {
-    display: inline-block;
-    border: none;
-}
-
-.action-bar .nav-tabs > li {
-    margin: auto 10px;
-}
-
-.action-bar .nav-tabs > li > a {
-    border: none;
-    border-bottom: 4px solid transparent;
-    border-radius: 0;
-    background: transparent;
-    color: #455A64;
-    line-height: 25px;
-    transition: all 0.2s;
-}
-
-.action-bar .nav-tabs > li > a:hover {
-    border-bottom: 4px solid #B2EBF2;
-    transition: all 0.2s;
-}
-
-.action-bar .nav-tabs > li.active > a, .action-bar .nav-tabs > li.active > a:focus, .action-bar .nav-tabs > li.active > a:hover {
-    color: #0091EA;
-    background: transparent;
-    cursor: default;
-    border: none;
-    border-bottom: 4px solid #0091EA;
-    transition: all 0.2s;
-}
-
-.action-bar .dropdown {
-    float: right;
-}
-
-.me .project-item .description h5 {
-    padding-right: 0;
-}
-
-.table-wrapper {
-    margin: 15px;
-}
-
-.my-project {
-    background-color: #fff;
-}
-
-.my-project .headline {
-    position: fixed;
-    top: 85px;
-    width: 100%;
-    height: 30px;
-    background-color: rgba(250, 250, 250, 0.9);
-    border-bottom: 1px solid #f1f1f1;
-    z-index: 99;
-}
-
-.my-project .content-body .headline {
-    padding-right: 570px;
-}
-
-.my-project .headline .dropdown button {
-    height: 30px;
-    line-height: 30px;
-    background-color: transparent;
-    border-radius: 0;
-    padding: 0 15px;
-    font-size: 13px;
-}
-
-.my-project .headline .operation .mdi {
-    position: relative;
-    top: 7px;
-    color: #0091EA;
-    margin-right: 7px;
-}
-
-.my-project .content-body .doc-row {
-    padding: 0 5px;
-}
-
-.my-project .content-body .doc-list {
-    padding-top: 28px;
-    padding-bottom: 18px;
-}
-
-.my-project .content-body .card {
-    margin-top: 12px;
-}
-
-.my-project .mdi-folder {
-    margin-right: 15px;
-}
-
-.my-project md-list {
-    padding: 0;
-}
-
-.my-project .more {
-    position: absolute;
-    right: 10px;
-    top: 25px;
 }
