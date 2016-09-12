@@ -136,4 +136,6 @@ app.constant('requestMethods', [
     {name: "RTM"},
     {name: "GA"},
     {name: "Release"}
+]).constant('documentTypes', [
+    {name: "REST API"}
 ]);

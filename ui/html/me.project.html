@@ -1,6 +1,6 @@
 <div class="me-project">
     <div class="nav-action-bar">
-        <md-button class="md-accent md-custom" ng-click="showCreateInterfaceDialog($event)">
+        <md-button class="md-accent md-custom" ng-click="openCreateProjectDialog($event)">
             <md-icon><i class="mdi mdi-library-add mdi-14x"></i></md-icon>
             新建项目
         </md-button>
@@ -12,12 +12,31 @@
             </md-select>
         </div>
         <md-divider></md-divider>
-        <md-list flex class="project-list">
+        <md-list flex class="project-list more-hover">
             <md-list-item class="md-1-line" ng-repeat="project in projects" ng-click="redirect($index)">
                 <i class="mdi mdi-folder mdi-18x"></i>
                 <div class="md-list-item-text">
                     <span ng-bind="project.name"></span>
                 </div>
+                <md-menu class="md-secondary">
+                    <md-button aria-label="Open phone interactions menu" class="md-icon-button more-button"
+                               ng-click="$mdOpenMenu($event)">
+                        <md-icon md-menu-origin md-svg-icon="image/icon/ic_more_vert_24px.svg"></md-icon>
+                    </md-button>
+                    <md-menu-content width="3">
+                        <md-menu-item>
+                            <md-button ng-click="ctrl.redial($event)">
+                                编辑
+                            </md-button>
+                        </md-menu-item>
+                        <md-menu-divider></md-menu-divider>
+                        <md-menu-item>
+                            <md-button ng-click="ctrl.toggleNotifications()">
+                                删除
+                            </md-button>
+                        </md-menu-item>
+                    </md-menu-content>
+                </md-menu>
             </md-list-item>
         </md-list>
     </div>
@@ -29,30 +48,46 @@
                     <h5 class="">铠狮网是一个汇集众多软件服务商的优秀案例展示平台，帮助客户通过在线搜索案例的方式寻找匹配的服务商，并在线完成项目实施管理的IT界B2B服务平台。</h5>
                 </div>
             </div>
-            <md-button class="md-fab md-primary add-doc">
+            <md-button class="md-fab md-primary add-doc" ng-click="openCreateDocumentDialog($event)">
                 <md-icon md-svg-src="image/icon/ic_add_24px.svg"></md-icon>
             </md-button>
         </div>
-        <md-list flex class="clear-padding">
+        <md-list flex class="clear-padding doc-list">
             <md-list-item class="md-3-line" ng-repeat="doc in projects" ng-click="null">
                 <md-icon md-svg-icon="image/icon/ic_library_books_24px.svg" class="list-icon"></md-icon>
                 <div class="md-list-item-text">
                     <div class="md-list-item-text">
-                        <h3 ng-bind="doc.name"></h3>
+                        <h3>
+                            <span ng-bind="doc.name"></span>
+                        </h3>
                         <p ng-bind="doc.description"></p>
                     </div>
                 </div>
+                <span class="doc-type md-secondary">REST API</span>
                 <md-menu md-position-mode="target-right target" class="md-secondary">
                     <md-button aria-label="Open demo menu" class="md-icon-button" ng-click="$mdOpenMenu($event)">
                         <md-icon md-menu-origin md-svg-icon="image/icon/ic_more_vert_24px.svg"></md-icon>
                     </md-button>
                     <md-menu-content width="3">
-                        <md-menu-item ng-repeat="item in [1, 2, 3]">
+                        <md-menu-item>
                             <md-button ng-click="ctrl.announceClick($index)">
                                 <div layout="row" flex>
-                                    <p flex>Option {{item}}</p>
-                                    <md-icon md-menu-align-target md-svg-icon="call:portable-wifi-off"
-                                             style="margin: auto 3px auto 0;"></md-icon>
+                                    <p flex>查看</p>
+                                </div>
+                            </md-button>
+                        </md-menu-item>
+                        <md-menu-item>
+                            <md-button ng-click="ctrl.announceClick($index)">
+                                <div layout="row" flex>
+                                    <p flex>编辑</p>
+                                </div>
+                            </md-button>
+                        </md-menu-item>
+                        <md-menu-divider></md-menu-divider>
+                        <md-menu-item>
+                            <md-button ng-click="ctrl.announceClick($index)">
+                                <div layout="row" flex>
+                                    <p flex>删除</p>
                                 </div>
                             </md-button>
                         </md-menu-item>

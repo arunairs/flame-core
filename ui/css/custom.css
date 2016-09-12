@@ -370,10 +370,18 @@ md-list-item .md-list-item-inner > md-icon:first-child:not(.md-avatar-icon) {
     text-overflow: ellipsis;
 }
 
-.list-icon svg{
+.list-icon svg {
     fill: #424242
 }
 
 button.md-fab md-icon[md-svg-src] {
     margin: 0 10px;
+}
+
+md-list.more-hover > md-list-item button.more-button {
+    display: none;
+}
+
+md-list.more-hover > md-list-item:hover button.more-button {
+    display: block;
 }

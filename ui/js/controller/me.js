@@ -1,7 +1,7 @@
 /**
  * Created by anczhang on 6/26/16.
  */
-app.controller('me', function ($scope, $rootScope, $location, $state, $http, $parse) {
+app.controller('me', function ($scope, $rootScope, $location, $state, $http, $parse, dialogService) {
     var data = new Array();
     for (var i = 0; i < 10; i++)
         data[i] = {
@@ -18,4 +18,22 @@ app.controller('me', function ($scope, $rootScope, $location, $state, $http, $pa
             {'name': '反馈', 'class': 'mdi-comment'},
             {'name': '设置', 'class': 'mdi-settings'}
         ]
+
+    $scope.menuIndex = 0;
+
+    $scope.openCreateProjectDialog = function (event) {
+        dialogService.createProject(event, {}, function () {
+
+        }, function () {
+
+        })
+    }
+
+    $scope.openCreateDocumentDialog = function (event) {
+        dialogService.createDocument(event, {}, function () {
+
+        }, function () {
+
+        })
+    }
 })

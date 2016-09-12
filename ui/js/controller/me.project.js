@@ -11,6 +11,8 @@ app.controller('me.project', function ($scope, $rootScope, $location, $state, $h
 
     $scope.projects = data;
 
+    $scope.$parent.menuIndex = 0;
+
     $scope.menus = [
         {'name': '我创建的', 'class': 'mdi-grade'},
         {'name': '我参与的', 'class': 'mdi-comment'},

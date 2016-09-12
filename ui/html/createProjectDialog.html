@@ -1,0 +1,37 @@
+<md-dialog class="project-dialog">
+    <form>
+        <md-toolbar class="md-accent">
+            <div class="md-toolbar-tools">
+                <h2>新建项目</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="cancel()">
+                    <md-icon md-svg-src="image/icon/ic_close_24px.svg" aria-label="Close dialog"></md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content layout-padding>
+            <div layout="row">
+                <md-input-container class="md-block" flex>
+                    <label>名称</label>
+                    <input ng-model="project.name">
+                </md-input-container>
+            </div>
+            <div layout="row">
+                <md-input-container class="md-block" flex>
+                    <label>描述</label>
+                    <textarea ng-model="project.description" md-maxlength="150" rows="2" md-select-on-focus></textarea>
+                </md-input-container>
+            </div>
+        </md-dialog-content>
+
+        <md-dialog-actions layout="row">
+            <span flex></span>
+            <md-button class="md-accent" ng-click="answer('not useful')">
+                取消
+            </md-button>
+            <md-button class="md-accent" ng-click="answer('useful')">
+                创建
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

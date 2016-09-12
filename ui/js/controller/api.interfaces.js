@@ -2,12 +2,6 @@
  * Created by anczhang on 7/5/16.
  */
 app.controller('api.interfaces', function ($scope, $rootScope, $location, $state, $http, $parse, $mdToast, dialogService) {
-    $("#catalog").affix({
-        offset: {
-            top: 300
-        }
-    });
-
     hljs.initHighlightingOnLoad();
 
     var data = new Array();

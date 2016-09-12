@@ -25,12 +25,4 @@ app.controller('editor.api', function ($scope, $rootScope, $location, $state, $h
         return result;
     };
 
-    $scope.showCreateInterfaceDialog = function (event) {
-        dialogService.createInterface(event, null, function () {
-
-        }, function () {
-
-        });
-    }
-
 })

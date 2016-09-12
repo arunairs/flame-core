@@ -60,29 +60,6 @@ app.controller('editor.publish', function ($scope, $rootScope, $location, $state
         }
     ];
 
-    $scope.showPublishDialog = function (event) {
-        dialogService.publish(event, {}, function (answer) {
-            alert(answer);
-        }, function () {
-        })
-    }
-
-    $scope.showCreateBranchDialog = function (event) {
-        dialogService.createBranch(event, {}, function (answer) {
-            alert(answer);
-        }, function () {
-
-        })
-    }
-
-    $scope.showChooseVersionTypeDialog = function (event) {
-        dialogService.chooseVersionType(event, {}, function () {
-
-        }, function () {
-
-        })
-    }
-
     $scope.setVisibility = function (visibility) {
         $scope.doc.visibility = visibility;
     }

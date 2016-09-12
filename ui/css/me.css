@@ -14,14 +14,14 @@
 
 .me-project .wall {
     position: relative;
-    height: 160px;
+    height: 150px;
     background: #EEEEEE;
     border-bottom: 2px solid #E0E0E0;
 }
 
 .me-project .wall .project-info {
     position: absolute;
-    bottom: 25px;
+    bottom: 22px;
     left: 0px;
     width: 100%;
     white-space: nowrap;
@@ -40,11 +40,16 @@
     position: relative;
 }
 
-.me-project .wall .project-info .text_lines h5{
+.me-project .wall .project-info .text_lines h3 {
+    font-size: 21px;
+}
+
+.me-project .wall .project-info .text_lines h5 {
     width: 80%;
     display: inline-block;
     white-space: normal;
     line-height: 22px;
+    font-style: italic;
 }
 
 .me-project .wall .add-doc {
@@ -55,6 +60,18 @@
 
 .me-project .project-list {
     margin-top: 5px;
+}
+
+.me-project .doc-list .doc-type{
+    border-radius: 2px;
+    display: inline-block;
+    background: #03A9F4;
+    padding: 0 4px;
+    color: #fff;
+    font-size: 10px;
+    line-height: 17px;
+    font-weight: bold;
+    margin-left: 15px;
 }
 
 .action-bar {

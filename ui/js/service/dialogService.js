@@ -11,22 +11,41 @@ app.factory("dialogService", function ($rootScope, $http, $mdDialog) {
 
     var service = {};
 
-    // service.createModule = function (ev, answered, cancelled) {
-    //     $mdDialog.show({
-    //         controller: 'createModuleDialog',
-    //         templateUrl: '../boat/html/createProjectDialog.html',
-    //         parent: angular.element(document.body),
-    //         clickOutsideToClose: true,
-    //         targetEvent: ev,
-    //         fullscreen: false
-    //     }).then(function (answer) {
-    //         if (answered)
-    //             answered(answer);
-    //     }, function () {
-    //         if (cancelled)
-    //             cancelled()
-    //     })
-    // }
+    service.createProject = function (ev, args, answered, cancelled) {
+        $mdDialog.show({
+            controller: 'createProjectDialog',
+            templateUrl: 'html/createProjectDialog.html',
+            parent: angular.element(document.body),
+            clickOutsideToClose: false,
+            targetEvent: ev,
+            fullscreen: true,
+            locals: {dialogEvent: ev, args: args}
+        }).then(function (answer) {
+            if (answered)
+                answered(answer);
+        }, function () {
+            if (cancelled)
+                cancelled()
+        })
+    }
+
+    service.createDocument = function (ev, args, answered, cancelled) {
+        $mdDialog.show({
+            controller: 'createDocumentDialog',
+            templateUrl: 'html/createDocumentDialog.html',
+            parent: angular.element(document.body),
+            clickOutsideToClose: false,
+            targetEvent: ev,
+            fullscreen: true,
+            locals: {dialogEvent: ev, args: args}
+        }).then(function (answer) {
+            if (answered)
+                answered(answer);
+        }, function () {
+            if (cancelled)
+                cancelled()
+        })
+    }
 
     service.createModule = function (ev, answered, cancelled) {
         var confirm = $mdDialog.prompt()
@@ -37,7 +56,7 @@ app.factory("dialogService", function ($rootScope, $http, $mdDialog) {
             //.initialValue('Buddy')
             .targetEvent(ev)
             .clickOutsideToClose(true)
-            .ok('确定')
+            .ok('创建')
             .cancel('取消');
         $mdDialog.show(confirm).then(function (answer) {
             if (answered)
@@ -71,7 +90,7 @@ app.factory("dialogService", function ($rootScope, $http, $mdDialog) {
     service.createInterface = function (ev, args, answered, cancelled) {
         $mdDialog.show({
             controller: 'createInterfaceDialog',
-            templateUrl: '../ui/html/createInterfaceDialog.html',
+            templateUrl: 'html/createInterfaceDialog.html',
             parent: angular.element(document.body),
             clickOutsideToClose: false,
             targetEvent: ev,
@@ -89,7 +108,7 @@ app.factory("dialogService", function ($rootScope, $http, $mdDialog) {
     service.createBranch = function (ev, args, answered, cancelled) {
         $mdDialog.show({
             controller: 'createBranchDialog',
-            templateUrl: '../ui/html/createBranchDialog.html',
+            templateUrl: 'html/createBranchDialog.html',
             parent: angular.element(document.body),
             clickOutsideToClose: false,
             targetEvent: ev,
@@ -107,7 +126,7 @@ app.factory("dialogService", function ($rootScope, $http, $mdDialog) {
     service.chooseVersionType = function (ev, args, answered, cancelled) {
         $mdDialog.show({
             controller: 'chooseVersionTypeDialog',
-            templateUrl: '../ui/html/chooseVersionTypeDialog.html',
+            templateUrl: 'html/chooseVersionTypeDialog.html',
             parent: angular.element(document.body),
             clickOutsideToClose: true,
             targetEvent: ev,
