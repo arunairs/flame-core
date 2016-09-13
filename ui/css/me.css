@@ -1,12 +1,12 @@
 .me-container {
 }
 
-.me-project .sidebar {
+.me-container .sidebar {
     border-left: 1px solid rgba(0, 0, 0, 0.1);
     border-right: 1px solid rgba(0, 0, 0, 0.1);
 }
 
-.me-project .right-main-container {
+.me-container .right-main-container {
     margin: 0;
     margin-left: 358px;
     background: #fff;
@@ -59,11 +59,11 @@
     bottom: -28px;
 }
 
-.me-project .project-list {
+.me-project .project-list, .me-favorite .folder-list {
     margin-top: 5px;
 }
 
-.me-project .doc-list .doc-type{
+.me-container .doc-list .doc-type {
     border-radius: 2px;
     display: inline-block;
     background: #03A9F4;

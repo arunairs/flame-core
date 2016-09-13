@@ -1,18 +1,14 @@
 <div class="me-favorite">
     <div class="nav-action-bar">
         <md-button class="md-accent md-custom" ng-click="openCreateProjectDialog($event)">
-            <md-icon><i class="mdi mdi-library-add mdi-14x"></i></md-icon>
-            新建文件夹
+            <md-icon><i class="mdi mdi-create-new-folder mdi-14x"></i></md-icon>
+            新建收藏夹
         </md-button>
     </div>
     <div class="sidebar left">
-        <div class="md-padding">
-            <md-select ng-model="projectView" class="md-no-underline clear-margin">
-                <md-option ng-repeat="item in menus" ng-value="item">{{item.name}}</md-option>
-            </md-select>
-        </div>
+        <md-subheader class="md-no-sticky">12个收藏夹</md-subheader>
         <md-divider></md-divider>
-        <md-list flex class="project-list more-hover">
+        <md-list flex class="folder-list more-hover">
             <md-list-item class="md-1-line" ng-repeat="project in projects" ng-click="redirect($index)">
                 <i class="mdi mdi-folder mdi-18x"></i>
                 <div class="md-list-item-text">
