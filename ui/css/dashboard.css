@@ -155,8 +155,9 @@ md-content {
     margin: 15px 0;
 }
 
-.sidenav md-list-item.active, .sidenav md-list-item.active i {
+.sidenav md-list-item.active, .sidenav md-list-item.active i, .sidenav md-list-item.active svg {
     color: #1565C0 !important;
+    fill: #1565C0 !important;
 }
 
 .nav-action-bar {

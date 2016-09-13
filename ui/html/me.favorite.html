@@ -1,0 +1,89 @@
+<div class="me-favorite">
+    <div class="nav-action-bar">
+        <md-button class="md-accent md-custom" ng-click="openCreateProjectDialog($event)">
+            <md-icon><i class="mdi mdi-library-add mdi-14x"></i></md-icon>
+            新建文件夹
+        </md-button>
+    </div>
+    <div class="sidebar left">
+        <div class="md-padding">
+            <md-select ng-model="projectView" class="md-no-underline clear-margin">
+                <md-option ng-repeat="item in menus" ng-value="item">{{item.name}}</md-option>
+            </md-select>
+        </div>
+        <md-divider></md-divider>
+        <md-list flex class="project-list more-hover">
+            <md-list-item class="md-1-line" ng-repeat="project in projects" ng-click="redirect($index)">
+                <i class="mdi mdi-folder mdi-18x"></i>
+                <div class="md-list-item-text">
+                    <span ng-bind="project.name"></span>
+                </div>
+                <md-menu class="md-secondary">
+                    <md-button aria-label="Open phone interactions menu" class="md-icon-button more-button"
+                               ng-click="$mdOpenMenu($event)">
+                        <md-icon md-menu-origin md-svg-icon="image/icon/ic_more_vert_24px.svg"></md-icon>
+                    </md-button>
+                    <md-menu-content width="3">
+                        <md-menu-item>
+                            <md-button ng-click="ctrl.redial($event)">
+                                编辑
+                            </md-button>
+                        </md-menu-item>
+                        <md-menu-divider></md-menu-divider>
+                        <md-menu-item>
+                            <md-button ng-click="ctrl.toggleNotifications()">
+                                删除
+                            </md-button>
+                        </md-menu-item>
+                    </md-menu-content>
+                </md-menu>
+            </md-list-item>
+        </md-list>
+    </div>
+    <div class="right-main-container">
+        <md-list flex class="clear-padding doc-list">
+            <md-list-item class="md-3-line" ng-repeat="doc in projects" ng-click="null">
+                <md-icon md-svg-icon="image/icon/ic_library_books_24px.svg" class="list-icon"></md-icon>
+                <div class="md-list-item-text">
+                    <div class="md-list-item-text">
+                        <h3>
+                            <span ng-bind="doc.name"></span>
+                        </h3>
+                        <p ng-bind="doc.description"></p>
+                    </div>
+                </div>
+                <span class="doc-type md-secondary">REST API</span>
+                <md-menu md-position-mode="target-right target" class="md-secondary">
+                    <md-button aria-label="Open demo menu" class="md-icon-button" ng-click="$mdOpenMenu($event)">
+                        <md-icon md-menu-origin md-svg-icon="image/icon/ic_more_vert_24px.svg"></md-icon>
+                    </md-button>
+                    <md-menu-content width="3">
+                        <md-menu-item>
+                            <md-button ng-click="ctrl.announceClick($index)">
+                                <div layout="row" flex>
+                                    <p flex>查看</p>
+                                </div>
+                            </md-button>
+                        </md-menu-item>
+                        <md-menu-item>
+                            <md-button ng-click="ctrl.announceClick($index)">
+                                <div layout="row" flex>
+                                    <p flex>编辑</p>
+                                </div>
+                            </md-button>
+                        </md-menu-item>
+                        <md-menu-divider></md-menu-divider>
+                        <md-menu-item>
+                            <md-button ng-click="ctrl.announceClick($index)">
+                                <div layout="row" flex>
+                                    <p flex>删除</p>
+                                </div>
+                            </md-button>
+                        </md-menu-item>
+                    </md-menu-content>
+                </md-menu>
+                <md-divider></md-divider>
+            </md-list-item>
+        </md-list>
+    </div>
+</div>

@@ -6,7 +6,7 @@ app.config(function ($stateProvider, $urlRouterProvider) {
     $stateProvider
         .state('dashboard', {
             url: '',
-            templateUrl: '../ui/html/dashboard.html',
+            templateUrl: 'html/dashboard.html',
             controller: 'dashboard',
             abstract: true
         })
@@ -18,50 +18,50 @@ app.config(function ($stateProvider, $urlRouterProvider) {
         })
         .state('dashboard.editor.api', {
             url: '/api',
-            templateUrl: '../ui/html/editor.api.html',
+            templateUrl: 'html/editor.api.html',
             controller: 'editor.api'
         })
         .state('dashboard.editor.publish', {
             url: '/publish',
-            templateUrl: '../ui/html/editor.publish.html',
+            templateUrl: 'html/editor.publish.html',
             controller: 'editor.publish'
         })
         .state('dashboard.api', {
             url: '/api',
-            templateUrl: '../ui/html/api.html',
+            templateUrl: 'html/api.html',
             controller: 'api',
             abstract: true
         })
         .state('dashboard.api.interfaces', {
             url: '/interfaces',
-            templateUrl: '../ui/html/api.interfaces.html',
+            templateUrl: 'html/api.interfaces.html',
             controller: 'api.interfaces'
         })
         .state('dashboard.project', {
             url: '/project',
-            templateUrl: '../ui/html/project.html',
+            templateUrl: 'html/project.html',
             controller: 'project'
         })
         .state('dashboard.createProject', {
             url: '/createProject',
-            templateUrl: '../ui/html/createProject.html',
+            templateUrl: 'html/createProject.html',
             controller: 'createProject'
         })
         .state('dashboard.me', {
             url: '/me',
-            templateUrl: '../ui/html/me.html',
+            templateUrl: 'html/me.html',
             controller: 'me',
             abstract: true
         })
         .state('dashboard.me.project', {
             url: '/project',
-            templateUrl: '../ui/html/me.project.html',
+            templateUrl: 'html/me.project.html',
             controller: 'me.project'
         })
-        .state('dashboard.me.docList', {
-            url: '/document',
-            templateUrl: '../ui/html/docList.html',
-            controller: 'docList'
+        .state('dashboard.me.favorite', {
+            url: '/favorite',
+            templateUrl: 'html/me.favorite.html',
+            controller: 'me.favorite'
         })
         .state('404', {
             url: '/404',

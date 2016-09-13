@@ -21,6 +21,14 @@
     margin-right: 12px;
 }
 
+.layout-default .sidenav.collapsed {
+    width: 68px;
+}
+
+.layout-default .sidenav.collapsed md-list-item md-icon {
+    margin-left: 7px;
+}
+
 .layout-default .right-main-container {
     position: relative;
     margin-left: 230px;

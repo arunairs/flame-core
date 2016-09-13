@@ -13,13 +13,17 @@ app.controller('me', function ($scope, $rootScope, $location, $state, $http, $pa
 
     $scope.menus =
         [
-            {'name': '项目', 'class': 'mdi-explore'},
-            {'name': '收藏', 'class': 'mdi-grade'},
-            {'name': '反馈', 'class': 'mdi-comment'},
-            {'name': '设置', 'class': 'mdi-settings'}
+            {'name': '项目', 'icon': 'image/icon/ic_explore_24px.svg', state: '^.project'},
+            {'name': '收藏', 'icon': 'image/icon/ic_grade_24px.svg', state: '^.favorite'},
+            {'name': '反馈', 'icon': 'image/icon/ic_comment_24px.svg', state: '^.comment'},
+            {'name': '设置', 'icon': 'image/icon/ic_settings_24px.svg', state: '^.setting'}
         ]
 
     $scope.menuIndex = 0;
+
+    $scope.redirect = function (index) {
+        $state.go($scope.menus[index].state);
+    }
 
     $scope.openCreateProjectDialog = function (event) {
         dialogService.createProject(event, {}, function () {
