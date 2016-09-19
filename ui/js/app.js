@@ -63,6 +63,11 @@ app.config(function ($stateProvider, $urlRouterProvider) {
             templateUrl: 'html/me.favorite.html',
             controller: 'me.favorite'
         })
+        .state('dashboard.me.setting', {
+            url: '/setting',
+            templateUrl: 'html/me.setting.html',
+            controller: 'me.setting'
+        })
         .state('404', {
             url: '/404',
             templateUrl: '404.html'

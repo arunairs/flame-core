@@ -1,10 +1,10 @@
 <div class="me layout-default">
-    <div class="sidenav collapsed clear-padding-left">
+    <div class="sidenav text-center">
         <md-content>
             <md-list flex>
                 <md-list-item class="md-1-line" ng-repeat="item in menus" ng-class="{'active':menuIndex==$index}"
                               ng-click="redirect($index)">
-                    <md-icon md-svg-icon="{{item.icon}}"></md-icon>
+                    <md-icon md-svg-icon="{{item.icon}}"></md-icon><p ng-bind="item.name"></p>
                 </md-list-item>
             </md-list>
         </md-content>

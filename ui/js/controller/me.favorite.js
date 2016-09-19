@@ -12,12 +12,4 @@ app.controller('me.favorite', function ($scope, $rootScope, $location, $state, $
     $scope.projects = data;
 
     $scope.$parent.menuIndex = 1;
-
-    $scope.menus = [
-        {'name': '我创建的', 'class': 'mdi-grade'},
-        {'name': '我参与的', 'class': 'mdi-comment'},
-        {'name': '回收站', 'class': 'mdi-account-box'}
-    ]
-
-    $scope.projectView = $scope.menus[0];
 })

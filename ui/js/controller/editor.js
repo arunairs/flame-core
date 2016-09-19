@@ -4,9 +4,9 @@
 app.controller('editor', function ($scope, $rootScope, $location, $state, $http, $parse, dialogService) {
     $scope.menus =
         [
-            {'name': '接口', 'class': 'mdi-layers', state: "dashboard.editor.api"},
-            {'name': '发布', 'class': 'mdi-publish', state: "dashboard.editor.publish"},
-            {'name': '测试', 'class': 'mdi-developer-mode'},
+            {'name': '接口', 'icon': 'image/icon/ic_layers_24px.svg', state: "dashboard.editor.api"},
+            {'name': '发布', 'icon': 'image/icon/ic_publish_24px.svg', state: "dashboard.editor.publish"},
+            {'name': '测试', 'icon': 'image/icon/ic_developer_mode_24px.svg'},
         ]
 
     $scope.redirect = function (index) {
