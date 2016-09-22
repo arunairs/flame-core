@@ -1,5 +1,6 @@
 *.iml
 *.sh
+.DS_Store
 .idea/
 .gradle/
 build/
