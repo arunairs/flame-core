@@ -1,0 +1,5 @@
+rootProject.name = 'promise'
+include ':server'
+include ':server:api'
+include ':server:repository'
+include ':ui'
