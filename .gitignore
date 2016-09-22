@@ -6,3 +6,11 @@
 build/
 /classes/
 server/api/data/
+web/node_modules
+web/npm-debug.log
+web/client/dist
+web/ui/dist
+web/server/assets.dev.json
+web/server/assets.pro.json
+web/.sass-cache
+web/todo.md
