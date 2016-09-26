@@ -1,0 +1,26 @@
+spring.profiles.default: dev
+
+---
+
+spring:
+  profiles: prod
+database:
+  url: 124
+  name: ewtewt
+server:
+  port: 80
+  contextPath: /
+
+---
+
+spring:
+  profiles: dev
+server:
+  port: 8080
+  contextPath: /
+
+datasource:
+  driverClassName: com.mysql.jdbc.Driver
+  url: jdbc:mysql://127.0.0.1:6379/promise?characterEncoding=utf-8
+  username: developer
+  password: welcome1
