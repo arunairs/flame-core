@@ -1,3 +1,5 @@
-dependencies{
+dependencies {
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: libs.spring.boot.version
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: libs.spring.boot.version
+    runtime group: 'mysql', name: 'mysql-connector-java', version: '6.0.4'
 }
