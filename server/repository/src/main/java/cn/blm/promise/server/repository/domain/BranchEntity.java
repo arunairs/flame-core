@@ -1,6 +1,6 @@
-package cn.blm.promise.repository.domain;
+package cn.blm.promise.server.repository.domain;
 
-import cn.blm.promise.repository.enumeration.BranchType;
+import cn.blm.promise.server.repository.enumeration.BranchType;
 
 import javax.persistence.Entity;
 
@@ -8,7 +8,7 @@ import javax.persistence.Entity;
  * @author jiaan.zhang@oracle.com
  * @date 26/09/2016 2:40 PM
  */
-@Entity
+@Entity(name = "branch")
 public class BranchEntity extends AbstractEntity
 {
 	private Integer major;

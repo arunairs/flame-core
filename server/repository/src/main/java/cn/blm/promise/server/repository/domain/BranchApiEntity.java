@@ -1,4 +1,4 @@
-package cn.blm.promise.repository.domain;
+package cn.blm.promise.server.repository.domain;
 
 /**
  * @author jiaan.zhang@oracle.com

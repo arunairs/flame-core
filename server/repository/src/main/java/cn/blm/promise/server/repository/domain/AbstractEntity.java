@@ -1,5 +1,8 @@
-package cn.blm.promise.repository.domain;
+package cn.blm.promise.server.repository.domain;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import java.util.Date;
 
@@ -8,12 +11,14 @@ import java.util.Date;
  * @date 26/09/2016 2:44 PM
  */
 @MappedSuperclass
-abstract class AbstractEntity
+public abstract class AbstractEntity
 {
 	private Long id;
 	private Date createdDate;
 	private Date updatedDate;
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	public Long getId()
 	{
 		return id;

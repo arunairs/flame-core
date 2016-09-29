@@ -1,6 +1,6 @@
-package cn.blm.promise.repository;
+package cn.blm.promise.server.repository;
 
-import cn.blm.promise.repository.domain.DocumentEntity;
+import cn.blm.promise.server.repository.domain.DocumentEntity;
 import org.springframework.stereotype.Repository;
 
 /**

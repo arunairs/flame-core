@@ -1,4 +1,4 @@
-package cn.blm.promise.repository.enumeration;
+package cn.blm.promise.server.repository.enumeration;
 
 /**
  * @author jiaan.zhang@oracle.com

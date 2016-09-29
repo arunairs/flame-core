@@ -1,4 +1,4 @@
-package cn.blm.promise.repository.domain;
+package cn.blm.promise.server.repository.domain;
 
 import javax.persistence.Entity;
 
@@ -6,7 +6,7 @@ import javax.persistence.Entity;
  * @author jiaan.zhang@oracle.com
  * @date 26/09/2016 4:13 PM
  */
-@Entity
+@Entity(name = "api")
 public class ApiEntity extends AbstractEntity
 {
 	private String name;
