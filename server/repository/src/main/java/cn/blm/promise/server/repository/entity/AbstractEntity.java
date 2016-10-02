@@ -1,30 +1,26 @@
-package cn.blm.promise.server.repository.domain;
+package cn.blm.promise.server.repository.entity;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import org.springframework.data.annotation.Id;
+
 import java.util.Date;
 
 /**
  * @author jiaan.zhang@oracle.com
  * @date 26/09/2016 2:44 PM
  */
-@MappedSuperclass
 public abstract class AbstractEntity
 {
-	private Long id;
-	private Date createdDate;
+	private String id;
+	private Date createdDate = new Date();
 	private Date updatedDate;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	public Long getId()
+	public String getId()
 	{
 		return id;
 	}
 
-	public void setId(Long id)
+	public void setId(String id)
 	{
 		this.id = id;
 	}

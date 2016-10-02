@@ -1,6 +1,6 @@
 package cn.blm.promise.server.repository;
 
-import cn.blm.promise.server.repository.domain.ApiEntity;
+import cn.blm.promise.server.repository.entity.ApiEntity;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -8,6 +8,11 @@ import org.springframework.stereotype.Repository;
  * @date 26/09/2016 4:21 PM
  */
 @Repository
-public class ApiRepository extends AbstractRepository<ApiEntity,Long>
+public class ApiRepository extends AbstractMongoRepository<ApiEntity, String>
 {
+	@Override
+	public Class<ApiEntity> getEntityClass()
+	{
+		return ApiEntity.class;
+	}
 }

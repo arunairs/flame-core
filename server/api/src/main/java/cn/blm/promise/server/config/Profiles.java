@@ -1,4 +1,4 @@
-package cn.blm.promise.server.api.config;
+package cn.blm.promise.server.config;
 
 /**
  * @author jiaan.zhang@oracle.com

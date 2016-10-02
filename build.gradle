@@ -26,6 +26,8 @@ allprojects { project ->
     apply plugin: 'propdeps-idea'
     apply plugin: 'propdeps-eclipse'
 
+    version = archiveVersion
+
     project.tasks.withType(JavaCompile) {
         options.encoding = 'UTF-8'
     }

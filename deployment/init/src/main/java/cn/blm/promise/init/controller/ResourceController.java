@@ -1,4 +1,4 @@
-package cn.blinkmind.promise.init.controller;
+package cn.blm.promise.init.controller;
 
 /**
  * @author jiaan.zhang@oracle.com

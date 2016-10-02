@@ -1,6 +1,6 @@
 package cn.blm.promise.server.repository;
 
-import cn.blm.promise.server.repository.domain.AccountEntity;
+import cn.blm.promise.server.repository.entity.AccountEntity;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -8,6 +8,11 @@ import org.springframework.stereotype.Repository;
  * @date 26/09/2016 4:24 PM
  */
 @Repository
-public class AccountRepository extends AbstractRepository<AccountEntity,Long>
+public class AccountRepository extends AbstractMongoRepository<AccountEntity, String>
 {
+	@Override
+	protected Class<AccountEntity> getEntityClass()
+	{
+		return AccountEntity.class;
+	}
 }

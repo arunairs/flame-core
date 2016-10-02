@@ -1,15 +1,14 @@
-package cn.blm.promise.server.repository.domain;
+package cn.blm.promise.server.repository.entity;
 
 import cn.blm.promise.server.repository.enumeration.BranchType;
-
-import javax.persistence.Entity;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
  * @author jiaan.zhang@oracle.com
  * @date 26/09/2016 2:40 PM
  */
-@Entity(name = "branch")
-public class BranchEntity extends AbstractEntity
+@Document(collection = "archives")
+public class ArchiveEntity extends AbstractEntity
 {
 	private Integer major;
 	private Integer minor;

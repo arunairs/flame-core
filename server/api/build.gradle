@@ -1,5 +1,7 @@
 apply plugin: 'spring-boot'
 
+archivesBaseName = "${archivePrefix}-api"
+
 dependencies {
     compile project(':common:util')
     compile project(':server:repository')

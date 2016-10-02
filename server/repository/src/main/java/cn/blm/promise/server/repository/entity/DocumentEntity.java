@@ -1,14 +1,13 @@
-package cn.blm.promise.server.repository.domain;
+package cn.blm.promise.server.repository.entity;
 
 import cn.blm.promise.server.repository.enumeration.DocumentType;
-
-import javax.persistence.Entity;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
  * @author jiaan.zhang@oracle.com
  * @date 26/09/2016 1:42 PM
  */
-@Entity(name = "document")
+@Document(collection = "documents")
 public class DocumentEntity extends AbstractEntity
 {
 	private String name;
