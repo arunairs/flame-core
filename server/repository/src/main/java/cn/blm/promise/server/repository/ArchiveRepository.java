@@ -1,6 +1,6 @@
 package cn.blm.promise.server.repository;
 
-import cn.blm.promise.server.repository.entity.ArchiveEntity;
+import cn.blm.promise.server.repository.entity.Archive;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -8,11 +8,11 @@ import org.springframework.stereotype.Repository;
  * @date 26/09/2016 4:21 PM
  */
 @Repository
-public class ArchiveRepository extends AbstractMongoRepository<ArchiveEntity, String>
+public class ArchiveRepository extends AbstractMongoRepository<Archive, Long>
 {
 	@Override
-	protected Class<ArchiveEntity> getEntityClass()
+	protected Class<Archive> getEntityClass()
 	{
-		return ArchiveEntity.class;
+		return Archive.class;
 	}
 }

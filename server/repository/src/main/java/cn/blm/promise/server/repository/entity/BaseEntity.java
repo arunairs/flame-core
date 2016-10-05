@@ -8,19 +8,19 @@ import java.util.Date;
  * @author jiaan.zhang@oracle.com
  * @date 26/09/2016 2:44 PM
  */
-public abstract class AbstractEntity
+public abstract class BaseEntity
 {
-	private String id;
-	private Date createdDate = new Date();
+	private Long id;
+	private Date createdDate;
 	private Date updatedDate;
 
 	@Id
-	public String getId()
+	public Long getId()
 	{
 		return id;
 	}
 
-	public void setId(String id)
+	public void setId(Long id)
 	{
 		this.id = id;
 	}

@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
  * @date 26/09/2016 4:13 PM
  */
 @Document(collection = "accounts")
-public class AccountEntity extends AbstractEntity
+public class Account extends BaseEntity
 {
 	private String username;
 	private String password;

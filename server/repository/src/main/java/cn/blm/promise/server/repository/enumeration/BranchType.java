@@ -6,4 +6,5 @@ package cn.blm.promise.server.repository.enumeration;
  */
 public enum BranchType
 {
+	RELEASE
 }
