@@ -1,4 +1,4 @@
-package cn.blm.promise.server.exception.handler;
+package cn.blm.promise.server.advice;
 
 import cn.blm.promise.server.exception.BadRequestException;
 import cn.blm.promise.server.exception.ErrorInfo;

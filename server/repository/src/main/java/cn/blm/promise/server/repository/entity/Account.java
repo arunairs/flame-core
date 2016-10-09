@@ -1,12 +1,9 @@
 package cn.blm.promise.server.repository.entity;
 
-import org.springframework.data.mongodb.core.mapping.Document;
-
 /**
  * @author jiaan.zhang@oracle.com
  * @date 26/09/2016 4:13 PM
  */
-@Document(collection = "accounts")
 public class Account extends BaseEntity
 {
 	private String username;
