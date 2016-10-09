@@ -1,0 +1,35 @@
+import cn.blm.promise.buildsrc.TaskGroup
+import cn.blm.promise.buildsrc.external.Redis
+
+task redisEnv(group: TaskGroup.REDIS, dependsOn: [':externalEnv']) {
+    ext.addRedis = { String name ->
+        externalEnv.addComponent(name, new Redis(name,
+                env.getRequiredString('REDIS_HOST'),
+                env.getRequiredString('REDIS_PORT'),
+                env.getRequiredInteger('REDIS_DATABASE'),
+                project))
+    }
+
+    ext.getRedis = { String name ->
+        return externalEnv.getComponent(name)
+    }
+
+    if (env.getString('REDIS_HOME')) {
+        addRedis('redis')
+    }
+}
+
+task startRedis(group: TaskGroup.REDIS, dependsOn: [':redisEnv']) << {
+    Redis redis = redisEnv.getRedis('redis')
+    redis.start()
+}
+
+task stopRedis(group: TaskGroup.REDIS, dependsOn: [':redisEnv']) << {
+    Redis redis = redisEnv.getRedis('redis')
+    redis.stop()
+}
+
+task flushDB(group: TaskGroup.REDIS, dependsOn: [':redisEnv', ':startRedis']) << {
+    Redis redis = redisEnv.getRedis('redis')
+    redis.client.flushDB()
+}

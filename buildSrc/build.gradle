@@ -8,4 +8,5 @@ dependencies {
     compile gradleApi()
     compile group: 'redis.clients', name: 'jedis', version: '2.9.0'
     compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.4'
+    compile group: 'commons-io', name: 'commons-io', version: '2.5'
 }

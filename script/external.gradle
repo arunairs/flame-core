@@ -1,0 +1,13 @@
+import cn.blm.promise.buildsrc.TaskGroup
+import cn.blm.promise.buildsrc.external.Component
+
+task externalEnv(group: TaskGroup.SERVER, dependsOn: ['systemEnv'], description: 'set external component environment') {
+    ext.components = new HashMap<String, Component>()
+    ext.addComponent = { String name, Component component ->
+        components.put(name, component)
+        logger.lifecycle "configure new external component:${name}"
+    }
+    ext.getComponent = { String name ->
+        return components[name]
+    }
+}

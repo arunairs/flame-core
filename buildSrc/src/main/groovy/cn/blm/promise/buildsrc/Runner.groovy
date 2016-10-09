@@ -1,4 +1,4 @@
-package cn.blinkmind.promise.buildsrc
+package cn.blm.promise.buildsrc
 
 /**
  * @author jiaan.zhang@oracle.com

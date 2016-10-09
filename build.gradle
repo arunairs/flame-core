@@ -1,3 +1,7 @@
+apply from:'script/env.gradle'
+apply from:'script/external.gradle'
+apply from:'script/redis.gradle'
+
 buildscript {
     repositories {
         jcenter()

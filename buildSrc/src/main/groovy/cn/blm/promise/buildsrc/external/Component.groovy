@@ -1,13 +1,14 @@
-package cn.blinkmind.promise.buildsrc.container
+package cn.blm.promise.buildsrc.external
 
 import org.gradle.api.Project
 
 /**
  * @author jiaan.zhang@oracle.com
- * @date 06/10/2016 12:46 AM
+ * @date 06/10/2016 1:50 AM
  */
-abstract class Container {
-    enum ContainerState {
+abstract class Component {
+
+    enum State {
         RUNNING,
         STOPPED
     }
@@ -20,7 +21,7 @@ abstract class Container {
     Project project = null
     Map<String, Object> properties = new HashMap<String, Object>();
 
-    public ContainerConfig(String name, Project project) {
+    Component(String name, Project project) {
         this.name = name
         this.project = project
     }
@@ -32,8 +33,4 @@ abstract class Container {
     abstract start()
 
     abstract stop()
-
-    abstract deploy(Object artifact)
-
-    abstract undeploy(Object artifact)
 }
