@@ -1,4 +1,4 @@
-package cn.blm.promise.buildsrc.external
+package cn.blm.promise.buildtool.external
 
 import org.gradle.api.Project
 

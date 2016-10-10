@@ -1,4 +1,4 @@
-package cn.blm.promise.buildsrc
+package cn.blm.promise.buildtool
 
 import com.sun.javafx.fxml.PropertyNotFoundException
 import org.apache.commons.lang3.BooleanUtils

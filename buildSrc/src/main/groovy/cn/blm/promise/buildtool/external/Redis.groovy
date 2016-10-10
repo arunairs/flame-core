@@ -1,9 +1,9 @@
-package cn.blm.promise.buildsrc.external
+package cn.blm.promise.buildtool.external
 
-import cn.blm.promise.buildsrc.Runner
+import cn.blm.promise.buildtool.Runner
 import org.gradle.api.Project
 import redis.clients.jedis.Jedis
-import cn.blm.promise.buildsrc.Runtime
+import cn.blm.promise.buildtool.Runtime
 
 /**
  * @author jiaan.zhang@oracle.com
@@ -19,29 +19,10 @@ class Redis extends Component {
     String config
     Integer database
 
-    Redis(String name, String host, String port, Integer database, Project project) {
-        super(name, project)
-        this.host = host
-        this.port = port
-        this.database = database
-
-        if (!this.homeDir)
-            this.homeDir = System.getenv("REDIS_HOME")
-
-        if (!this.homeDir)
-            Runner.fail("REDIS_HOME is not set")
-
-        if (!this.host)
-            this.host = System.getenv("REDIS_HOST")
-        if (!this.port)
-            this.port = System.getenv("REDIS_PORT")
-
-        if (!this.host)
-            this.host = '127.0.0.1'
-        if (!this.port)
-            this.port = '6379'
-
-        this.config = System.getenv("REDIS_CONFIG")
+    Redis(String name, Project project, Settings settings) {
+        super(name, project, settings)
+        this.config = settings.config
+        this.database = settings.database
         this.client = new Jedis(host, Integer.parseInt(port, 10))
     }
 
@@ -80,7 +61,16 @@ class Redis extends Component {
 
     @Override
     def stop() {
-        return null
+        println "Stopping redis..."
+        boolean success = waitStatus(State.RUNNING, 5 * 1000)
+        if (!success)
+            println "Redis is already stopped"
+        else {
+            controlRedis(State.STOPPED)
+            success = waitStatus(State.STOPPED, TIMEOUT)
+            if (!success)
+                Runner.fail("Fail to stop redis in ${TIMEOUT / 1000} seconds")
+        }
     }
 
     def waitStatus(State state, long timeout = 10 * 1000) {
@@ -120,5 +110,10 @@ class Redis extends Component {
 
     def executeScript(String[] commands) {
         Runtime.run(commands, new File(homeDir), [:], false)
+    }
+
+    static class Settings extends Component.Settings {
+        String config
+        Integer database
     }
 }

@@ -1,4 +1,4 @@
-package cn.blm.promise.buildsrc
+package cn.blm.promise.buildtool
 
 /**
  * @author jiaan.zhang@oracle.com

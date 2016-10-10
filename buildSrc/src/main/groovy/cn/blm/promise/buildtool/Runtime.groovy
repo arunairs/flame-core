@@ -1,4 +1,4 @@
-package cn.blm.promise.buildsrc
+package cn.blm.promise.buildtool
 
 import org.apache.commons.io.IOUtils
 

@@ -1,13 +1,16 @@
-import cn.blm.promise.buildsrc.TaskGroup
-import cn.blm.promise.buildsrc.external.Redis
+import cn.blm.promise.buildtool.TaskGroup
+import cn.blm.promise.buildtool.external.Redis
 
 task redisEnv(group: TaskGroup.REDIS, dependsOn: [':externalEnv']) {
     ext.addRedis = { String name ->
-        externalEnv.addComponent(name, new Redis(name,
-                env.getRequiredString('REDIS_HOST'),
-                env.getRequiredString('REDIS_PORT'),
-                env.getRequiredInteger('REDIS_DATABASE'),
-                project))
+        externalEnv.addComponent(name, new Redis(name, project,
+                new Redis.Settings(
+                        homeDir: env.getRequiredString('REDIS_HOME'),
+                        host: env.getRequiredString('REDIS_HOST'),
+                        port: env.getRequiredString('REDIS_PORT'),
+                        database: env.getRequiredInteger('REDIS_DATABASE'),
+                        config: env.getString('REDIS_CONFIG')
+                )))
     }
 
     ext.getRedis = { String name ->

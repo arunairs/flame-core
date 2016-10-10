@@ -1,4 +1,4 @@
-package cn.blm.promise.buildsrc
+package cn.blm.promise.buildtool
 
 /**
  * @author jiaan.zhang@oracle.com
@@ -6,6 +6,7 @@ package cn.blm.promise.buildsrc
  */
 class TaskGroup {
     static final String CONFIG = 'Config'
+    static final String MONGO = 'Mongo'
     static final String REDIS = 'Redis'
     static final String SERVER = 'Server';
     static final String TEST = 'Test';
