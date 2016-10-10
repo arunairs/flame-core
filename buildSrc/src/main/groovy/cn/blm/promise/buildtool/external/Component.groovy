@@ -9,12 +9,12 @@ import org.gradle.api.Project
  */
 abstract class Component {
 
-    enum State {
+    enum Status {
         RUNNING,
         STOPPED
     }
 
-    static final Environment environment
+    static final Environment environment = new Environment()
     String name = null
     String host = null
     String homeDir = null
@@ -38,13 +38,15 @@ abstract class Component {
         }
     }
 
-    abstract isAlive()
+    abstract boolean isAlive()
 
-    abstract getStatus()
+    Status getStatus() {
+        return isAlive() ? Status.RUNNING : Status.STOPPED
+    }
 
-    abstract start()
+    abstract void start()
 
-    abstract stop()
+    abstract void stop()
 
     static class Settings {
         String homeDir = null
