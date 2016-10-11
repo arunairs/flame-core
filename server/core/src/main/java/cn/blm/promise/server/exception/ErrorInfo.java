@@ -11,13 +11,13 @@ public class ErrorInfo
 
 	public ErrorInfo(Integer code)
 	{
-		this(null, code);
+		this(code, null);
 	}
 
-	public ErrorInfo(String message, Integer code)
+	public ErrorInfo(Integer code, String message)
 	{
-		this.message = message;
 		this.code = code;
+		this.message = message;
 	}
 
 	public String getMessage()

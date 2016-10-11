@@ -13,7 +13,7 @@ public class BadRequestException extends RuntimeException
 
 	public BadRequestException(String message, Integer code)
 	{
-		this(HttpStatus.BAD_REQUEST, null, code);
+		this(HttpStatus.BAD_REQUEST, code, null);
 	}
 
 	public BadRequestException(ErrorInfo errorInfo)
@@ -23,12 +23,12 @@ public class BadRequestException extends RuntimeException
 
 	public BadRequestException(HttpStatus httpStatus, String message)
 	{
-		this(httpStatus, message, null);
+		this(httpStatus, null, message);
 	}
 
-	public BadRequestException(HttpStatus httpStatus, String message, Integer code)
+	public BadRequestException(HttpStatus httpStatus, Integer code, String message)
 	{
-		this(httpStatus, new ErrorInfo(message, code));
+		this(httpStatus, new ErrorInfo(code, message));
 	}
 
 	public BadRequestException(HttpStatus httpStatus, ErrorInfo errorInfo)

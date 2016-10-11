@@ -6,5 +6,5 @@ package cn.blm.promise.server.exception;
  */
 public class Errors
 {
-	public static final ErrorInfo DOCUMENT_NAME_IS_BLANK = new ErrorInfo(1001);
+	public static final ErrorInfo DOCUMENT_NAME_IS_BLANK = new ErrorInfo(1001, "document name is blank");
 }
