@@ -1,9 +1,8 @@
 package cn.blm.promise.buildtool.external
 
-import cn.blm.promise.buildtool.Runner
+import cn.blm.promise.buildtool.Runtime
 import org.gradle.api.Project
 import redis.clients.jedis.Jedis
-import cn.blm.promise.buildtool.Runtime
 
 /**
  * @author jiaan.zhang@oracle.com
@@ -23,7 +22,7 @@ class Redis extends Component {
         super(name, project, settings)
         this.config = settings.config
         this.database = settings.database
-        this.client = new Jedis(host, Integer.parseInt(port, 10))
+        this.client = new Jedis(host, port)
     }
 
     @Override
@@ -39,56 +38,13 @@ class Redis extends Component {
     }
 
     @Override
-    void start() {
-        println "Starting redis..."
-        boolean success = waitStatus(Status.STOPPED, 5 * 1000)
-        if (!success)
-            println "Redis is already running"
-        else {
-            controlRedis(Status.RUNNING)
-            success = waitStatus(Status.RUNNING, TIMEOUT)
-            if (!success)
-                Runner.fail("Fail to start redis in ${TIMEOUT / 1000} seconds")
-        }
-        client.select(this.database)
-        controlRedis(Status.RUNNING)
+    String type() {
+        return "Redis"
     }
 
     @Override
-    void stop() {
-        println "Stopping redis..."
-        boolean success = waitStatus(Status.RUNNING, 5 * 1000)
-        if (!success)
-            println "Redis is already stopped"
-        else {
-            controlRedis(Status.STOPPED)
-            success = waitStatus(Status.STOPPED, TIMEOUT)
-            if (!success)
-                Runner.fail("Fail to stop redis in ${TIMEOUT / 1000} seconds")
-        }
-    }
-
-    def waitStatus(Status state, long timeout = 10 * 1000) {
-        long startTime = System.currentTimeMillis()
-        switch (state) {
-            case Status.RUNNING:
-                while (!isAlive() && (System.currentTimeMillis() - startTime <= timeout)) {
-                    Thread.sleep(1000)
-                    controlRedis(Status.RUNNING)
-                }
-                break
-            case Status.STOPPED:
-                while (isAlive() && (System.currentTimeMillis() - startTime <= timeout)) {
-                    Thread.sleep(1000)
-                    controlRedis(Status.STOPPED)
-                }
-                break
-        }
-        return System.currentTimeMillis() - startTime <= timeout
-    }
-
-    def controlRedis(Status state) {
-        switch (state) {
+    void execute(Status status) {
+        switch (status) {
             case Status.RUNNING:
                 if (this.config)
                     executeScript(["${homeDir}${File.separator}${REDIS_SERVER}", "${this.config}", "--port", port] as String[])
@@ -97,13 +53,18 @@ class Redis extends Component {
                 break
             case Status.STOPPED:
                 client.shutdown()
-                client = null
-                client = new Jedis(host, Integer.parseInt(port, 10))
+                client = new Jedis(host, port, 10)
                 break
         }
     }
 
-    def executeScript(String[] commands) {
+    @Override
+    void start(Long timeout) {
+        super.start(timeout)
+        client.select(this.database)
+    }
+
+    void executeScript(String[] commands) {
         Runtime.run(commands, new File(homeDir), [:], false)
     }
 

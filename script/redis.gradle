@@ -7,7 +7,7 @@ task redisEnv(group: TaskGroup.REDIS, dependsOn: [':externalEnv']) {
                 new Redis.Settings(
                         homeDir: env.getRequiredString('REDIS_HOME'),
                         host: env.getRequiredString('REDIS_HOST'),
-                        port: env.getRequiredString('REDIS_PORT'),
+                        port: env.getRequiredInteger('REDIS_PORT'),
                         database: env.getRequiredInteger('REDIS_DATABASE'),
                         config: env.getString('REDIS_CONFIG')
                 )))

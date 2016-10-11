@@ -1,0 +1,33 @@
+import cn.blm.promise.buildtool.TaskGroup
+import cn.blm.promise.buildtool.external.Mongo
+
+task mongoEnv(group: TaskGroup.MONGO, dependsOn: [':externalEnv']) {
+    ext.addMongo = { String name ->
+        externalEnv.addComponent(name, new Mongo(name, project,
+                new Mongo.Settings(
+                        homeDir: env.getRequiredString('MONGO_HOME'),
+                        host: env.getRequiredString('MONGO_HOST'),
+                        port: env.getRequiredInteger('MONGO_PORT'),
+                        dataDir: env.getRequiredString('MONGO_DATADIR'),
+                        database: env.getRequiredString('MONGO_DATABASE')
+                )))
+    }
+
+    ext.getMongo = { String name ->
+        return externalEnv.getComponent(name)
+    }
+
+    if (env.getString('MONGO_HOME')) {
+        addMongo('mongo')
+    }
+}
+
+task startMongo(group: TaskGroup.MONGO, dependsOn: [':mongoEnv']) << {
+    Mongo mongo = mongoEnv.getMongo('mongo')
+    mongo.start()
+}
+
+task stopMongo(group: TaskGroup.MONGO, dependsOn: [':mongoEnv']) << {
+    Mongo mongo = mongoEnv.getMongo('mongo')
+    mongo.stop()
+}
