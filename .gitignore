@@ -5,7 +5,7 @@
 .gradle/
 build/
 /classes/
-server/api/data/
+server/core/data/
 web/node_modules
 web/npm-debug.log
 web/client/dist
