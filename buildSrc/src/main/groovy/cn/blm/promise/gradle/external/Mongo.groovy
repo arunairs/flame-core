@@ -1,6 +1,6 @@
-package cn.blm.promise.buildtool.external
+package cn.blm.promise.gradle.external
 
-import cn.blm.promise.buildtool.Runtime
+import cn.blm.promise.gradle.util.Runtime
 import com.mongodb.BasicDBObject
 import com.mongodb.MongoClient
 import com.mongodb.MongoClientOptions

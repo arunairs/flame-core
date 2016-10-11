@@ -1,5 +1,5 @@
-import cn.blm.promise.buildtool.TaskGroup
-import cn.blm.promise.buildtool.external.Mongo
+import cn.blm.promise.gradle.TaskGroup
+import cn.blm.promise.gradle.external.Mongo
 
 task mongoEnv(group: TaskGroup.MONGO, dependsOn: [':externalEnv']) {
     ext.addMongo = { String name ->

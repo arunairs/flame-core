@@ -1,7 +1,7 @@
-package cn.blm.promise.buildtool.external
+package cn.blm.promise.gradle.external
 
-import cn.blm.promise.buildtool.Environment
-import cn.blm.promise.buildtool.Runner
+import cn.blm.promise.gradle.util.Environment
+import cn.blm.promise.gradle.util.Builder
 import org.gradle.api.Project
 
 /**
@@ -52,7 +52,7 @@ abstract class Component {
     void start(Long timeout = 10 * 1000) {
         println "Starting ${type()}:${name} at ${host}:${port} ..."
         if (!switchStatus(Status.RUNNING, timeout))
-            Runner.fail("Fail to start ${type()}:${name} in ${timeout / 1000} seconds.")
+            Builder.fail("Fail to start ${type()}:${name} in ${timeout / 1000} seconds.")
         else
             println "${type()}:${name} is started."
     }
@@ -70,7 +70,7 @@ abstract class Component {
     void stop(Long timeout = 10 * 1000) {
         println "Stopping ${type()}:${name} at ${host}:${port} ..."
         if (!switchStatus(Status.STOPPED, timeout))
-            Runner.fail("Fail to stop ${type()}:${name} in ${timeout / 1000} seconds.")
+            Builder.fail("Fail to stop ${type()}:${name} in ${timeout / 1000} seconds.")
         else
             println "${type()}:${name} is stopped."
     }

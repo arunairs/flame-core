@@ -1,4 +1,4 @@
-package cn.blm.promise.buildtool
+package cn.blm.promise.gradle.util
 
 import com.sun.javafx.fxml.PropertyNotFoundException
 import org.apache.commons.lang3.BooleanUtils

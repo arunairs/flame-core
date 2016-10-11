@@ -1,4 +1,4 @@
-package cn.blm.promise.buildtool
+package cn.blm.promise.gradle
 
 /**
  * @author jiaan.zhang@oracle.com
