@@ -8,43 +8,26 @@ import org.springframework.http.HttpStatus;
  */
 public class BadRequestException extends RuntimeException
 {
-	private HttpStatus httpStatus;
 	private ErrorInfo errorInfo;
 
 	public BadRequestException(String message, Integer code)
 	{
-		this(HttpStatus.BAD_REQUEST, code, null);
+		this(code, null);
+	}
+
+	public BadRequestException(String message)
+	{
+		this(null, message);
+	}
+
+	public BadRequestException(Integer code, String message)
+	{
+		this(new ErrorInfo(code, message));
 	}
 
 	public BadRequestException(ErrorInfo errorInfo)
 	{
-		this(HttpStatus.BAD_REQUEST, errorInfo);
-	}
-
-	public BadRequestException(HttpStatus httpStatus, String message)
-	{
-		this(httpStatus, null, message);
-	}
-
-	public BadRequestException(HttpStatus httpStatus, Integer code, String message)
-	{
-		this(httpStatus, new ErrorInfo(code, message));
-	}
-
-	public BadRequestException(HttpStatus httpStatus, ErrorInfo errorInfo)
-	{
-		this.httpStatus = httpStatus;
 		this.errorInfo = errorInfo;
-	}
-
-	public HttpStatus getHttpStatus()
-	{
-		return httpStatus;
-	}
-
-	public void setHttpStatus(HttpStatus httpStatus)
-	{
-		this.httpStatus = httpStatus;
 	}
 
 	public ErrorInfo getErrorInfo()
@@ -52,7 +35,7 @@ public class BadRequestException extends RuntimeException
 		return errorInfo;
 	}
 
-	public void setErrorInfo(ErrorInfo errorInfo)
+	private void setErrorInfo(ErrorInfo errorInfo)
 	{
 		this.errorInfo = errorInfo;
 	}
