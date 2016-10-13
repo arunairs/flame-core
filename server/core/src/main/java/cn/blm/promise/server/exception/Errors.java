@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
  */
 public class Errors
 {
-	public static final ErrorInfo DOCUMENT_NAME_IS_BLANK = new ErrorInfo(HttpStatus.BAD_REQUEST, 4000001, "document name is blank");
-	public static final ErrorInfo RESOURCE_ALREADY_EXISTS = new ErrorInfo(HttpStatus.CONFLICT, 4090000, "this resource already exists");
+	public static final ErrorInfo DOCUMENT_NAME_IS_BLANK = new ErrorInfo(HttpStatus.BAD_REQUEST, 4001001, "document name is blank");
+	public static final ErrorInfo ACCOUNT_NAME_IS_BLANK = new ErrorInfo(HttpStatus.BAD_REQUEST, 4002001, "name is blank");
+	public static final ErrorInfo ACCOUNT_PASSWORD_IS_BLANK = new ErrorInfo(HttpStatus.BAD_REQUEST, 4002002, "password is blank");
+	public static final ErrorInfo RESOURCE_ALREADY_EXISTS = new ErrorInfo(HttpStatus.CONFLICT, 4090001, "this resource already exists");
 }

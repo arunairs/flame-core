@@ -66,6 +66,11 @@ public abstract class AbstractMongoRepository<T, ID extends Serializable>
 		return mongoTemplate.exists(query, entityClass);
 	}
 
+	public List<T> findAll(Query query, Class<T> entityClass)
+	{
+		return mongoTemplate.find(query, entityClass);
+	}
+
 	public List<T> findAll()
 	{
 		return mongoTemplate.findAll(entityClass);

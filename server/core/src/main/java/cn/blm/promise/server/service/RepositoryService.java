@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
  * @date 04/10/2016 2:09 AM
  */
 @Service
-public class IdService
+public class RepositoryService
 {
 	@Autowired
 	private IdWorker idWorker;

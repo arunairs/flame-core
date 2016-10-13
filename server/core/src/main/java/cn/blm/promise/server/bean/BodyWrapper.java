@@ -1,9 +1,12 @@
 package cn.blm.promise.server.bean;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 /**
  * @author jiaan.zhang@oracle.com
  * @date 12/10/2016 12:03 AM
  */
+@JsonInclude(value = JsonInclude.Include.NON_NULL)
 public class BodyWrapper
 {
 	Long id;
