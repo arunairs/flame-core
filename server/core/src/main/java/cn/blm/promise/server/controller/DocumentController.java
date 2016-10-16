@@ -2,16 +2,10 @@ package cn.blm.promise.server.controller;
 
 import cn.blm.promise.server.annotation.Token;
 import cn.blm.promise.server.bean.BodyWrapper;
-import cn.blm.promise.server.exception.BadRequestException;
-import cn.blm.promise.server.exception.Errors;
-import cn.blm.promise.server.repository.ArchiveRepository;
 import cn.blm.promise.server.repository.DocumentRepository;
 import cn.blm.promise.server.repository.entity.Document;
 import cn.blm.promise.server.repository.entity.User;
-import cn.blm.promise.server.repository.enumeration.DocumentType;
 import cn.blm.promise.server.service.DocumentService;
-import cn.blm.promise.server.service.RepositoryService;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

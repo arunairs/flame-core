@@ -1,6 +1,7 @@
 archivesBaseName = "${archivePrefix}-repository"
 
 dependencies {
+    compile project(':server:bean')
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: libs.spring.boot.version
     //compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: libs.spring.boot.version
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-mongodb', version: libs.spring.boot.version

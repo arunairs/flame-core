@@ -1,6 +1,6 @@
 package cn.blm.promise.server.repository.entity;
 
-import cn.blm.promise.server.repository.enumeration.BranchType;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.*;
 
@@ -8,7 +8,7 @@ import java.util.*;
  * @author jiaan.zhang@oracle.com
  * @date 26/09/2016 2:40 PM
  */
-@org.springframework.data.mongodb.core.mapping.Document(collection = "archives")
+@Document(collection = "archives")
 public class Archive extends BaseEntity
 {
 	private Version version;

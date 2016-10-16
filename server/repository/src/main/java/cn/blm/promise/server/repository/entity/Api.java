@@ -1,5 +1,6 @@
 package cn.blm.promise.server.repository.entity;
 
+import cn.blm.promise.server.bean.web.Request;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
@@ -10,14 +11,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Api extends BaseEntity
 {
 	private String name;
-	private String url;
 	private String description;
-	private String requestMethods;
-	private String pathParam;
-	private String queryParam;
-	private String headerParam;
-	private String cookieParam;
-	private String binaryParam;
+	private Request request;
 
 	public String getName()
 	{
@@ -27,16 +22,6 @@ public class Api extends BaseEntity
 	public void setName(String name)
 	{
 		this.name = name;
-	}
-
-	public String getUrl()
-	{
-		return url;
-	}
-
-	public void setUrl(String url)
-	{
-		this.url = url;
 	}
 
 	public String getDescription()
@@ -49,63 +34,13 @@ public class Api extends BaseEntity
 		this.description = description;
 	}
 
-	public String getRequestMethods()
+	public Request getRequest()
 	{
-		return requestMethods;
+		return request;
 	}
 
-	public void setRequestMethods(String requestMethods)
+	public void setRequest(Request request)
 	{
-		this.requestMethods = requestMethods;
-	}
-
-	public String getPathParam()
-	{
-		return pathParam;
-	}
-
-	public void setPathParam(String pathParam)
-	{
-		this.pathParam = pathParam;
-	}
-
-	public String getQueryParam()
-	{
-		return queryParam;
-	}
-
-	public void setQueryParam(String queryParam)
-	{
-		this.queryParam = queryParam;
-	}
-
-	public String getHeaderParam()
-	{
-		return headerParam;
-	}
-
-	public void setHeaderParam(String headerParam)
-	{
-		this.headerParam = headerParam;
-	}
-
-	public String getCookieParam()
-	{
-		return cookieParam;
-	}
-
-	public void setCookieParam(String cookieParam)
-	{
-		this.cookieParam = cookieParam;
-	}
-
-	public String getBinaryParam()
-	{
-		return binaryParam;
-	}
-
-	public void setBinaryParam(String binaryParam)
-	{
-		this.binaryParam = binaryParam;
+		this.request = request;
 	}
 }

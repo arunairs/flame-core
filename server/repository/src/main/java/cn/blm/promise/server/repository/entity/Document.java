@@ -1,6 +1,5 @@
 package cn.blm.promise.server.repository.entity;
 
-import cn.blm.promise.server.repository.enumeration.DocumentType;
 import org.springframework.data.mongodb.core.index.CompoundIndex;
 
 /**

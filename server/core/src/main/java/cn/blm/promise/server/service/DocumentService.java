@@ -5,7 +5,7 @@ import cn.blm.promise.server.exception.Errors;
 import cn.blm.promise.server.repository.DocumentRepository;
 import cn.blm.promise.server.repository.entity.Document;
 import cn.blm.promise.server.repository.entity.User;
-import cn.blm.promise.server.repository.enumeration.DocumentType;
+import cn.blm.promise.server.repository.entity.DocumentType;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
