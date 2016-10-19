@@ -11,34 +11,36 @@ import java.util.Date;
  * @author jiaan.zhang@oracle.com
  * @date 26/09/2016 2:44 PM
  */
-abstract class BaseEntity
+abstract class BaseEntity implements Persistable<Long>
 {
 	private Long id;
-	private Long creatorId;
+	private Ref<Long> creatorRef;
 	private Date createdDate;
 	private Date updatedDate;
 	private User creator;
 
 	@Id
+	@Override
 	public Long getId()
 	{
 		return id;
 	}
 
+	@Override
 	public void setId(Long id)
 	{
 		this.id = id;
 	}
 
 	@JsonIgnore
-	public Long getCreatorId()
+	public Ref<Long> getCreatorRef()
 	{
-		return creatorId;
+		return creatorRef;
 	}
 
-	private void setCreatorId(Long creatorId)
+	private void setCreatorRef(Ref<Long> creatorRef)
 	{
-		this.creatorId = creatorId;
+		this.creatorRef = creatorRef;
 	}
 
 	public Date getCreatedDate()
@@ -66,6 +68,11 @@ abstract class BaseEntity
 		this.updatedDate = updatedDate;
 	}
 
+	public void writeUpdatedDate()
+	{
+		setUpdatedDate(new Date());
+	}
+
 	@Transient
 	@JsonIgnoreProperties({"id", "createdDate", "updatedDate"})
 	public User getCreator()
@@ -77,6 +84,7 @@ abstract class BaseEntity
 	{
 		this.creator = creator;
 		if (this.creator != null)
-			setCreatorId(this.creator.getId());
+			setCreatorRef(new Ref<>(this.creator));
+		else setCreatorRef(null);
 	}
 }

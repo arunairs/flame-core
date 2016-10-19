@@ -1,7 +1,7 @@
 package cn.blm.promise.server.controller;
 
 import cn.blm.promise.server.annotation.Token;
-import cn.blm.promise.server.bean.BodyWrapper;
+import cn.blm.promise.server.bean.web.ObjectId;
 import cn.blm.promise.server.repository.DocumentRepository;
 import cn.blm.promise.server.repository.entity.Document;
 import cn.blm.promise.server.repository.entity.User;
@@ -27,7 +27,7 @@ public class DocumentController
 
 	@Token
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<Document> get(@PathVariable("id") long id, @RequestAttribute User user)
+	public ResponseEntity<Document> get(@PathVariable(name = "id") long id, @RequestAttribute User user)
 	{
 		return ResponseEntity.ok(documentRepository.findOne(id));
 	}
@@ -35,9 +35,9 @@ public class DocumentController
 	@Token
 	@PostMapping
 	@ResponseStatus(code = HttpStatus.CREATED)
-	public ResponseEntity<BodyWrapper> create(@RequestBody Document documentData, @RequestAttribute User user)
+	public ResponseEntity<ObjectId> create(@RequestBody Document documentData, @RequestAttribute User user)
 	{
 		Document document = documentService.create(documentData, user);
-		return ResponseEntity.ok(BodyWrapper.builder().id(document.getId()).build());
+		return ResponseEntity.ok(new ObjectId(document.getId()));
 	}
 }

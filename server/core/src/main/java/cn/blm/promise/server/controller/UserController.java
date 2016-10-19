@@ -1,6 +1,6 @@
 package cn.blm.promise.server.controller;
 
-import cn.blm.promise.server.bean.BodyWrapper;
+import cn.blm.promise.server.bean.web.ObjectId;
 import cn.blm.promise.server.repository.entity.User;
 import cn.blm.promise.server.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +21,9 @@ public class UserController
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public ResponseEntity<BodyWrapper> create(@RequestBody User userData)
+	public ResponseEntity<ObjectId> create(@RequestBody User userData)
 	{
 		User user = userService.create(userData);
-		return ResponseEntity.ok(BodyWrapper.builder().id(user.getId()).build());
+		return ResponseEntity.ok(new ObjectId(user.getId()));
 	}
 }

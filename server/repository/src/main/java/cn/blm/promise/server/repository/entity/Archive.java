@@ -1,6 +1,7 @@
 package cn.blm.promise.server.repository.entity;
 
-import org.springframework.data.mongodb.core.mapping.Document;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.data.annotation.Transient;
 
 import java.util.*;
 
@@ -8,13 +9,15 @@ import java.util.*;
  * @author jiaan.zhang@oracle.com
  * @date 26/09/2016 2:40 PM
  */
-@Document(collection = "archives")
+@org.springframework.data.mongodb.core.mapping.Document(collection = "archives")
 public class Archive extends BaseEntity
 {
 	private Version version;
 	private String description;
-	private BranchType branchType;
+	private Branch branch;
+	private Ref<Long> documentRef;
 	private Document document;
+	private Map<Ref<Long>, LinkedHashSet<Ref<Long>>> structure = new LinkedHashMap<>();
 	private Set<Module> modules = new LinkedHashSet<>();
 
 	public Version getVersion()
@@ -27,6 +30,18 @@ public class Archive extends BaseEntity
 		this.version = version;
 	}
 
+	@JsonIgnore
+	public Ref<Long> getDocumentRef()
+	{
+		return documentRef;
+	}
+
+	private void setDocumentRef(Ref<Long> documentRef)
+	{
+		this.documentRef = documentRef;
+	}
+
+	@Transient
 	public Document getDocument()
 	{
 		return document;
@@ -35,6 +50,9 @@ public class Archive extends BaseEntity
 	public void setDocument(Document document)
 	{
 		this.document = document;
+		if (this.document != null)
+			setDocumentRef(new Ref<>(this.document));
+		else setDocumentRef(null);
 	}
 
 	public String getDescription()
@@ -47,16 +65,28 @@ public class Archive extends BaseEntity
 		this.description = description;
 	}
 
-	public BranchType getBranchType()
+	public Branch getBranch()
 	{
-		return branchType;
+		return branch;
 	}
 
-	public void setBranchType(BranchType branchType)
+	public void setBranch(Branch branch)
 	{
-		this.branchType = branchType;
+		this.branch = branch;
 	}
 
+	@JsonIgnore
+	public Map<Ref<Long>, LinkedHashSet<Ref<Long>>> getStructure()
+	{
+		return structure;
+	}
+
+	public void setStructure(Map<Ref<Long>, LinkedHashSet<Ref<Long>>> structure)
+	{
+		this.structure = structure;
+	}
+
+	@Transient
 	public Set<Module> getModules()
 	{
 		return modules;

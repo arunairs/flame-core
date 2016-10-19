@@ -15,19 +15,9 @@ public class Version
 		return major;
 	}
 
-	public void setMajor(Integer major)
-	{
-		this.major = major;
-	}
-
 	public Integer getMinor()
 	{
 		return minor;
-	}
-
-	public void setMinor(Integer minor)
-	{
-		this.minor = minor;
 	}
 
 	public Integer getPatch()
@@ -35,9 +25,8 @@ public class Version
 		return patch;
 	}
 
-	public void setPatch(Integer patch)
+	private Version()
 	{
-		this.patch = patch;
 	}
 
 	public Version(Integer major, Integer minor, Integer patch)
@@ -47,37 +36,26 @@ public class Version
 		this.patch = patch;
 	}
 
-	public Version()
+	@Override
+	public boolean equals(Object o)
 	{
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+
+		Version version = (Version) o;
+
+		if (!major.equals(version.major)) return false;
+		if (!minor.equals(version.minor)) return false;
+		return patch.equals(version.patch);
+
 	}
 
-	public static class Builder
+	@Override
+	public int hashCode()
 	{
-		private Integer major;
-		private Integer minor;
-		private Integer patch;
-
-		public Builder major(Integer major)
-		{
-			this.major = major;
-			return this;
-		}
-
-		public Builder minor(Integer minor)
-		{
-			this.minor = minor;
-			return this;
-		}
-
-		public Builder patch(Integer patch)
-		{
-			this.patch = patch;
-			return this;
-		}
-
-		public Version build()
-		{
-			return new Version(this.major, this.minor, this.patch);
-		}
+		int result = major.hashCode();
+		result = 31 * result + minor.hashCode();
+		result = 31 * result + patch.hashCode();
+		return result;
 	}
 }
