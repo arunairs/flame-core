@@ -6,7 +6,7 @@ package cn.blinkmind.promise.server.exception;
  */
 public class InvalidRequestException extends RuntimeException
 {
-	private ErrorInfo errorInfo;
+	private Error error;
 
 	public InvalidRequestException(String message, Integer code)
 	{
@@ -20,21 +20,21 @@ public class InvalidRequestException extends RuntimeException
 
 	public InvalidRequestException(Integer code, String message)
 	{
-		this(new ErrorInfo(code, message));
+		this(new Error(code, message));
 	}
 
-	public InvalidRequestException(ErrorInfo errorInfo)
+	public InvalidRequestException(Error error)
 	{
-		this.errorInfo = errorInfo;
+		this.error = error;
 	}
 
-	public ErrorInfo getErrorInfo()
+	public Error getError()
 	{
-		return errorInfo;
+		return error;
 	}
 
-	private void setErrorInfo(ErrorInfo errorInfo)
+	private void setError(Error error)
 	{
-		this.errorInfo = errorInfo;
+		this.error = error;
 	}
 }

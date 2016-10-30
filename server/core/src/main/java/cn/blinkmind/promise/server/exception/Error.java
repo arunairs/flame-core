@@ -7,23 +7,23 @@ import org.springframework.http.HttpStatus;
  * @author jiaan.zhang@oracle.com
  * @date 05/10/2016 5:30 PM
  */
-public class ErrorInfo
+public class Error
 {
 	private HttpStatus httpStatus;
 	private String message;
 	private Integer code;
 
-	public ErrorInfo(Integer code)
+	public Error(Integer code)
 	{
 		this(HttpStatus.BAD_REQUEST, code, null);
 	}
 
-	public ErrorInfo(Integer code, String message)
+	public Error(Integer code, String message)
 	{
 		this(HttpStatus.BAD_REQUEST, code, message);
 	}
 
-	public ErrorInfo(HttpStatus httpStatus, Integer code, String message)
+	public Error(HttpStatus httpStatus, Integer code, String message)
 	{
 		this.httpStatus = httpStatus;
 		this.code = code;
@@ -59,5 +59,10 @@ public class ErrorInfo
 	public void setHttpStatus(HttpStatus httpStatus)
 	{
 		this.httpStatus = httpStatus;
+	}
+
+	public static void occurs(Error error)
+	{
+		throw new InvalidDataException(error);
 	}
 }
