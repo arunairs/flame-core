@@ -1,6 +1,7 @@
 package cn.blinkmind.promise.server.repository.entity;
 
 import cn.blinkmind.promise.server.bean.web.Request;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
@@ -12,6 +13,7 @@ public class Api extends BaseEntity
 {
 	private String name;
 	private String description;
+	private boolean isFrozen = false;
 	private Request request;
 
 	public String getName()
@@ -32,6 +34,17 @@ public class Api extends BaseEntity
 	public void setDescription(String description)
 	{
 		this.description = description;
+	}
+
+	@JsonIgnore
+	public boolean isFrozen()
+	{
+		return isFrozen;
+	}
+
+	public void setFrozen(boolean frozen)
+	{
+		isFrozen = frozen;
 	}
 
 	public Request getRequest()

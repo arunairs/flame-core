@@ -1,5 +1,6 @@
 package cn.blinkmind.promise.server.repository.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.LinkedHashSet;
@@ -13,6 +14,7 @@ public class Module extends BaseEntity
 {
 	private String name;
 	private String url;
+	private boolean isFrozen = false;
 	private LinkedHashSet<Api> apis = new LinkedHashSet<>();
 
 	public String getName()
@@ -33,6 +35,17 @@ public class Module extends BaseEntity
 	public void setUrl(String url)
 	{
 		this.url = url;
+	}
+
+	@JsonIgnore
+	public boolean isFrozen()
+	{
+		return isFrozen;
+	}
+
+	public void setFrozen(boolean frozen)
+	{
+		isFrozen = frozen;
 	}
 
 	public LinkedHashSet<Api> getApis()

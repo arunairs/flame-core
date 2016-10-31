@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.core.index.CompoundIndex;
  * @date 26/09/2016 1:42 PM
  */
 @org.springframework.data.mongodb.core.mapping.Document(collection = "documents")
-@CompoundIndex(name = "unique_index", unique = true, def = "{'name':1,'type':1,'creatorId':1}")
+@CompoundIndex(name = "unique_index", unique = true, def = "{'name':1,'type':1,'creatorRef._id':1}")
 public class Document extends BaseEntity
 {
 	private String name;
