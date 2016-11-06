@@ -9,12 +9,12 @@ import java.util.*;
 public class Request
 {
 	private String url;
-	private Set<RequestMethod> requestMethods = new LinkedHashSet<>();
-	private Set<RequestParameter> headers = new LinkedHashSet<>();
-	private Set<RequestParameter> paths = new LinkedHashSet<>();
-	private Set<RequestParameter> queries = new LinkedHashSet<>();
-	private Set<RequestParameter> cookies = new LinkedHashSet<>();
-	private RequestParameter body;
+	private Set<RequestMethod> methods = new LinkedHashSet<>();
+	private Set<SingleFieldRequestParameter> headers = new LinkedHashSet<>();
+	private Set<SingleFieldRequestParameter> paths = new LinkedHashSet<>();
+	private Set<SingleFieldRequestParameter> queries = new LinkedHashSet<>();
+	private Set<SingleFieldRequestParameter> cookies = new LinkedHashSet<>();
+	private Body body;
 
 	public String getUrl()
 	{
@@ -26,38 +26,66 @@ public class Request
 		this.url = url;
 	}
 
-	public Set<RequestMethod> getRequestMethods()
+	public Set<RequestMethod> getMethods()
 	{
-		return requestMethods;
+		return methods;
 	}
 
-	public Set<RequestParameter> getHeaders()
+	public Set<SingleFieldRequestParameter> getHeaders()
 	{
 		return headers;
 	}
 
-	public Set<RequestParameter> getPaths()
+	public Set<SingleFieldRequestParameter> getPaths()
 	{
 		return paths;
 	}
 
-	public Set<RequestParameter> getQueries()
+	public Set<SingleFieldRequestParameter> getQueries()
 	{
 		return queries;
 	}
 
-	public Set<RequestParameter> getCookies()
+	public Set<SingleFieldRequestParameter> getCookies()
 	{
 		return cookies;
 	}
 
-	public RequestParameter getBody()
+	public Body getBody()
 	{
 		return body;
 	}
 
-	public void setBody(RequestParameter body)
+	public void setBody(Body body)
 	{
 		this.body = body;
+	}
+
+	public static class Body
+	{
+		private Set<SingleFieldRequestParameter> parameters = new LinkedHashSet<>();
+		private String text;
+
+		public Set<SingleFieldRequestParameter> getParameters()
+		{
+			return parameters;
+		}
+
+		public void setParameters(Set<SingleFieldRequestParameter> parameters)
+		{
+			this.text = null;
+			this.parameters = parameters;
+		}
+
+		public String getText()
+		{
+			return text;
+		}
+
+		public void setText(String text)
+		{
+			this.parameters.clear();
+			this.text = text;
+		}
 	}
 }
