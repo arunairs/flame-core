@@ -11,7 +11,7 @@ import java.util.Date;
  * @author jiaan.zhang@oracle.com
  * @date 26/09/2016 2:44 PM
  */
-abstract class BaseEntity implements Indexable<Long>
+abstract class BaseEntity implements Indexable<Long>, Cleanable
 {
 	private Long id;
 	private Ref<Long> creatorRef;
@@ -53,9 +53,9 @@ abstract class BaseEntity implements Indexable<Long>
 		this.createdDate = createdDate;
 	}
 
-	public void writeCreatedDate()
+	public void refreshCreatedDate()
 	{
-		setCreatedDate(new Date());
+		this.createdDate = new Date();
 	}
 
 	public Date getUpdatedDate()
@@ -68,7 +68,7 @@ abstract class BaseEntity implements Indexable<Long>
 		this.updatedDate = updatedDate;
 	}
 
-	public void writeUpdatedDate()
+	public void refreshUpdatedDate()
 	{
 		setUpdatedDate(new Date());
 	}
@@ -86,5 +86,15 @@ abstract class BaseEntity implements Indexable<Long>
 		if (this.creator != null)
 			setCreatorRef(new Ref<>(this.creator));
 		else setCreatorRef(null);
+	}
+
+	@Override
+	public void clean()
+	{
+		this.id = null;
+		this.creatorRef = null;
+		this.createdDate = null;
+		this.updatedDate = null;
+		this.creator = null;
 	}
 }

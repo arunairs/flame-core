@@ -2,9 +2,9 @@ package cn.blinkmind.promise.server.repository.entity;
 
 /**
  * @author jiaan.zhang@oracle.com
- * @date 21/10/2016 7:07 PM
+ * @date 01/11/2016 11:40 AM
  */
-public enum ArchiveStatus
+public interface Cleanable
 {
-	PENDING, RELEASED
+	void clean();
 }

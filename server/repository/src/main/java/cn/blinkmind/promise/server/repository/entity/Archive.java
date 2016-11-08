@@ -1,5 +1,6 @@
 package cn.blinkmind.promise.server.repository.entity;
 
+import cn.blinkmind.promise.server.bean.web.Request;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.annotation.Transient;
 
@@ -10,16 +11,22 @@ import java.util.*;
  * @date 26/09/2016 2:40 PM
  */
 @org.springframework.data.mongodb.core.mapping.Document(collection = "archives")
-public class Archive extends BaseEntity
+public class Archive extends BaseEntity implements Locatable
 {
+	public enum Status
+	{
+		OPEN, RELEASED
+	}
+
 	private Version version;
 	private String description;
 	private Branch branch;
-	private ArchiveStatus status;
+	private Status status = Status.OPEN;
 	private Ref<Long> documentRef;
 	private Document document;
-	private Set<Node> nodes = new LinkedHashSet<>();
-	private Set<Module> modules = new LinkedHashSet<>();
+	private LinkedHashSet<Node> nodes;
+	private LinkedHashSet<Module> modules;
+	private Request request;
 
 	public Version getVersion()
 	{
@@ -76,12 +83,12 @@ public class Archive extends BaseEntity
 		this.branch = branch;
 	}
 
-	public ArchiveStatus getStatus()
+	public Status getStatus()
 	{
 		return status;
 	}
 
-	public void setStatus(ArchiveStatus status)
+	public void setStatus(Status status)
 	{
 		this.status = status;
 	}
@@ -89,22 +96,52 @@ public class Archive extends BaseEntity
 	@JsonIgnore
 	public Set<Node> getNodes()
 	{
+		if (nodes == null) nodes = new LinkedHashSet<>();
 		return nodes;
 	}
 
-	public void setNodes(Set<Node> nodes)
+	public void setNodes(LinkedHashSet<Node> nodes)
 	{
 		this.nodes = nodes;
 	}
 
 	@Transient
-	public Set<Module> getModules()
+	public LinkedHashSet<Module> getModules()
 	{
 		return modules;
 	}
 
-	public void setModules(Set<Module> modules)
+	public void setModules(LinkedHashSet<Module> modules)
 	{
 		this.modules = modules;
+	}
+
+	public Request getRequest()
+	{
+		return request;
+	}
+
+	public void setRequest(Request request)
+	{
+		this.request = request;
+	}
+
+	@Override
+	public void clean()
+	{
+		super.clean();
+		this.status = Status.OPEN;
+	}
+
+	@Override
+	public String getScheme()
+	{
+		return this.request != null ? this.request.getScheme() : null;
+	}
+
+	@Override
+	public String getUri()
+	{
+		return this.request != null ? this.request.getUri() : null;
 	}
 }

@@ -2,7 +2,7 @@ package cn.blinkmind.promise.server.service;
 
 import cn.blinkmind.promise.common.util.CodecUtil;
 import cn.blinkmind.promise.common.util.SecurityUtil;
-import cn.blinkmind.promise.server.exception.InvalidRequestException;
+import cn.blinkmind.promise.server.exception.Error;
 import cn.blinkmind.promise.server.exception.Errors;
 import cn.blinkmind.promise.server.repository.UserRepository;
 import cn.blinkmind.promise.server.repository.entity.User;
@@ -23,17 +23,17 @@ public class UserService
 	@Autowired
 	private RepositoryService repositoryService;
 
-	public User create(User userData)
+	public User create(User user)
 	{
-		if (StringUtils.isBlank(userData.getUsername()))
-			throw new InvalidRequestException(Errors.ACCOUNT_NAME_IS_BLANK);
-		if (StringUtils.isBlank(userData.getPassword()))
-			throw new InvalidRequestException(Errors.ACCOUNT_PASSWORD_IS_BLANK);
+		if (StringUtils.isBlank(user.getUsername()))
+			Error.occurs(Errors.ACCOUNT_NAME_IS_BLANK);
+		if (StringUtils.isBlank(user.getPassword()))
+			Error.occurs(Errors.ACCOUNT_PASSWORD_IS_BLANK);
 
-		User user = new User();
+		user.clean();
 		user.setId(repositoryService.newId());
-		user.setPassword(CodecUtil.sha256(userData.getPassword(), SecurityUtil.randomSalt()));
-		user.writeCreatedDate();
+		user.setPassword(CodecUtil.sha256(user.getPassword(), SecurityUtil.randomSalt()));
+		user.refreshCreatedDate();
 		userRepository.insert(user);
 		return user;
 	}

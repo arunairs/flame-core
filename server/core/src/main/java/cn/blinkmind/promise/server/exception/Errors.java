@@ -22,6 +22,8 @@ public final class Errors
 
 	public static final Error REQUEST_URL_IS_BLANK = new Error(HttpStatus.BAD_REQUEST, 40014001, "request url is blank");
 	public static final Error REQUEST_URL_IS_INVALID = new Error(HttpStatus.BAD_REQUEST, 40014002, "request url is invalid");
+	public static final Error REQUEST_SCHEME_IS_BLANK = new Error(HttpStatus.BAD_REQUEST, 40014003, "request scheme is invalid");
+	public static final Error REQUEST_URI_IS_BLANK = new Error(HttpStatus.BAD_REQUEST, 40014004, "request uri is invalid");
 
 	public static final Error ACCOUNT_NAME_IS_BLANK = new Error(HttpStatus.BAD_REQUEST, 4004001, "account name is blank");
 	public static final Error ACCOUNT_PASSWORD_IS_BLANK = new Error(HttpStatus.BAD_REQUEST, 4004002, "password is blank");

@@ -1,11 +1,11 @@
-package cn.blm.promise.server.service;
+package cn.blinkmind.promise.server.service;
 
-import cn.blm.promise.server.exception.InvalidRequestException;
-import cn.blm.promise.server.exception.Errors;
-import cn.blm.promise.server.repository.DocumentRepository;
-import cn.blm.promise.server.repository.entity.Document;
-import cn.blm.promise.server.repository.entity.User;
-import cn.blm.promise.server.repository.entity.DocumentType;
+import cn.blinkmind.promise.server.exception.Error;
+import cn.blinkmind.promise.server.exception.Errors;
+import cn.blinkmind.promise.server.repository.DocumentRepository;
+import cn.blinkmind.promise.server.repository.entity.Document;
+import cn.blinkmind.promise.server.repository.entity.DocumentType;
+import cn.blinkmind.promise.server.repository.entity.User;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,17 +23,16 @@ public class DocumentService
 	@Autowired
 	private RepositoryService repositoryService;
 
-	public Document create(Document documentData, User creator)
+	public Document create(Document document, User creator)
 	{
-		if (StringUtils.isBlank(documentData.getName()))
-			throw new InvalidRequestException(Errors.DOCUMENT_NAME_IS_BLANK);
+		if (StringUtils.isBlank(document.getName()))
+			Error.occurs(Errors.DOCUMENT_NAME_IS_BLANK);
 
-		Document document = new Document();
+		document.clean();
 		document.setId(repositoryService.newId());
-		document.setName(documentData.getName());
-		document.setDocumentType(DocumentType.REST_API);
+		document.setType(DocumentType.REST_API);
 		document.setCreator(creator);
-		document.writeCreatedDate();
+		document.refreshCreatedDate();
 		documentRepository.insert(document);
 		return document;
 	}

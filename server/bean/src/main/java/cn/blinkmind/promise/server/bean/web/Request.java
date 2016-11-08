@@ -8,47 +8,90 @@ import java.util.*;
  */
 public class Request
 {
-	private String url;
-	private Set<RequestMethod> methods = new LinkedHashSet<>();
-	private Set<SingleFieldRequestParameter> headers = new LinkedHashSet<>();
-	private Set<SingleFieldRequestParameter> paths = new LinkedHashSet<>();
-	private Set<SingleFieldRequestParameter> queries = new LinkedHashSet<>();
-	private Set<SingleFieldRequestParameter> cookies = new LinkedHashSet<>();
+	private String uri;
+	private String scheme;
+	private LinkedHashSet<RequestMethod> methods;
+	private LinkedHashSet<SingleFieldRequestParameter> headers;
+	private LinkedHashSet<SingleFieldRequestParameter> paths;
+	private LinkedHashSet<SingleFieldRequestParameter> queries;
+	private LinkedHashSet<SingleFieldRequestParameter> cookies;
 	private Body body;
+
+	public String getUri()
+	{
+		return uri;
+	}
+
+	public void setUri(String uri)
+	{
+		this.uri = uri;
+	}
+
+	public String getScheme()
+	{
+		return scheme;
+	}
+
+	public void setScheme(String scheme)
+	{
+		this.scheme = scheme;
+	}
 
 	public String getUrl()
 	{
+		String url = this.scheme == null ? "unknown" : this.scheme + "://";
+		url += this.uri == null ? "empty" : this.uri;
 		return url;
 	}
 
-	public void setUrl(String url)
-	{
-		this.url = url;
-	}
-
-	public Set<RequestMethod> getMethods()
+	public LinkedHashSet<RequestMethod> getMethods()
 	{
 		return methods;
 	}
 
-	public Set<SingleFieldRequestParameter> getHeaders()
+	public void setMethods(LinkedHashSet<RequestMethod> methods)
+	{
+		this.methods = methods;
+	}
+
+	public LinkedHashSet<SingleFieldRequestParameter> getHeaders()
 	{
 		return headers;
 	}
 
-	public Set<SingleFieldRequestParameter> getPaths()
+	public void setHeaders(LinkedHashSet<SingleFieldRequestParameter> headers)
+	{
+		this.headers = headers;
+	}
+
+	public LinkedHashSet<SingleFieldRequestParameter> getPaths()
 	{
 		return paths;
 	}
 
-	public Set<SingleFieldRequestParameter> getQueries()
+	public void setPaths(LinkedHashSet<SingleFieldRequestParameter> paths)
+	{
+		this.paths = paths;
+	}
+
+	public LinkedHashSet<SingleFieldRequestParameter> getQueries()
 	{
 		return queries;
 	}
 
-	public Set<SingleFieldRequestParameter> getCookies()
+	public void setQueries(LinkedHashSet<SingleFieldRequestParameter> queries)
+	{
+		this.queries = queries;
+	}
+
+	public LinkedHashSet<SingleFieldRequestParameter> getCookies()
 	{
 		return cookies;
+	}
+
+	public void setCookies(LinkedHashSet<SingleFieldRequestParameter> cookies)
+	{
+		this.cookies = cookies;
 	}
 
 	public Body getBody()
@@ -63,15 +106,15 @@ public class Request
 
 	public static class Body
 	{
-		private Set<SingleFieldRequestParameter> parameters = new LinkedHashSet<>();
+		private LinkedHashSet<SingleFieldRequestParameter> parameters;
 		private String text;
 
-		public Set<SingleFieldRequestParameter> getParameters()
+		public LinkedHashSet<SingleFieldRequestParameter> getParameters()
 		{
 			return parameters;
 		}
 
-		public void setParameters(Set<SingleFieldRequestParameter> parameters)
+		public void setParameters(LinkedHashSet<SingleFieldRequestParameter> parameters)
 		{
 			this.text = null;
 			this.parameters = parameters;

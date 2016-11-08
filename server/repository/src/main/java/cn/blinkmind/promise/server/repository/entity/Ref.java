@@ -18,6 +18,10 @@ public class Ref<ID>
 		this.id = id;
 	}
 
+	private Ref()
+	{
+	}
+
 	public Ref(Indexable indexable)
 	{
 		this.id = (ID) indexable.getId();

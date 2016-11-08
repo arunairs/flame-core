@@ -5,12 +5,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.mongodb.core.BulkOperations;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 
 import javax.annotation.PostConstruct;
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -112,6 +114,12 @@ public abstract class AbstractMongoRepository<T, ID extends Serializable>
 		return (List<S>) entities;
 	}
 
+	public void insertAll(Collection<? extends Object> objectsToSave)
+	{
+		if (objectsToSave == null || objectsToSave.size() < 1) return;
+		mongoTemplate.insertAll(objectsToSave);
+	}
+
 	public Iterable<T> findAll(Iterable<ID> ids)
 	{
 		return null;
@@ -148,5 +156,15 @@ public abstract class AbstractMongoRepository<T, ID extends Serializable>
 	public void deleteAll()
 	{
 		mongoTemplate.dropCollection(entityClass);
+	}
+
+	public BulkOperations bulkOps(BulkOperations.BulkMode bulkMode)
+	{
+		return mongoTemplate.bulkOps(bulkMode, entityClass);
+	}
+
+	private BulkOperations bulkOps(BulkOperations.BulkMode bulkMode, Class<T> entityClass)
+	{
+		return mongoTemplate.bulkOps(bulkMode, entityClass);
 	}
 }
