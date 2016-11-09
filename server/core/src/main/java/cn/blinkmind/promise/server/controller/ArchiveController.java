@@ -37,7 +37,7 @@ public class ArchiveController
 	public ResponseEntity<ObjectId> create(@PathVariable(name = "documentId") long documentId, @RequestBody Archive archiveData, @RequestAttribute User user)
 	{
 		Document document = documentRepository.require(documentId);
-		Archive archive = archiveService.fill(archiveData, document, user);
+		Archive archive = archiveService.fillAndPersist(archiveData, document, user);
 		return ResponseEntity.ok(new ObjectId(archive.getId()));
 	}
 

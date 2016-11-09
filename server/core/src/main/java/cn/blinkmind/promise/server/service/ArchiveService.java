@@ -10,10 +10,7 @@ import cn.blinkmind.promise.server.util.BeanUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author jiaan.zhang@oracle.com
@@ -30,9 +27,6 @@ public class ArchiveService
 
 	@Autowired
 	private ModuleRepository moduleRepository;
-
-	@Autowired
-	private ApiService apiService;
 
 	@Autowired
 	private RepositoryService repositoryService;
@@ -59,8 +53,27 @@ public class ArchiveService
 	public Archive fillAndPersist(Archive archive, Document document, User creator)
 	{
 		fill(archive, document, creator);
+		persistApis(archive);
+		moduleRepository.insertAll(archive.getModules());
 		archiveRepository.insert(archive);
 		return archive;
+	}
+
+	private void persistApis(Archive archive)
+	{
+		Set<Module> modules = archive.getModules();
+		Set<Api> apisToPersist = new LinkedHashSet<>();
+		if (modules != null)
+			for (Module module : modules)
+			{
+				Set<Api> apis = module.getApis();
+				if (apis != null)
+				{
+					apisToPersist.addAll(apis);
+				}
+			}
+		if (apisToPersist.size() > 0)
+			apiRepository.insertAll(apisToPersist);
 	}
 
 	private Archive addModuleNode(Archive archive, Module module)
