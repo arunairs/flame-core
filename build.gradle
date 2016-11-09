@@ -1,19 +1,20 @@
-apply from:'script/env.gradle'
-apply from:'script/external.gradle'
-apply from:'script/redis.gradle'
-apply from:'script/mongo.gradle'
+apply from: 'script/env.gradle'
+apply from: 'script/external.gradle'
+apply from: 'script/redis.gradle'
+apply from: 'script/mongo.gradle'
 
 buildscript {
     repositories {
-        jcenter()
+        //jcenter()
+        maven { url 'http://maven.aliyun.com/nexus/content/groups/public' }
         maven { url 'http://repo.spring.io/plugins-release' }
     }
 
     ext {
         libs = [
                 spring: [
-                        'mvc' : ['version': '4.3.3.RELEASE'],
-                        'boot': ['version': '1.4.1.RELEASE']
+                        'mvc' : ['version': '4.3.4.RELEASE'],
+                        'boot': ['version': '1.4.2.RELEASE']
                 ]
         ]
     }
@@ -38,6 +39,7 @@ allprojects { project ->
     }
 
     repositories {
+        maven { url 'http://maven.aliyun.com/nexus/content/groups/public' }
         jcenter()
     }
 
