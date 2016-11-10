@@ -7,7 +7,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.LinkedHashSet;
+import java.util.ArrayList;
 
 /**
  * @author jiaan.zhang@oracle.com
@@ -19,7 +19,7 @@ public class Module extends BaseEntity implements Locatable
 	private String name;
 	private Request request;
 	private boolean isFrozen = false;
-	private LinkedHashSet<Api> apis;
+	private ArrayList<Api> apis;
 	private Archive archive;
 
 	public String getName()
@@ -54,12 +54,12 @@ public class Module extends BaseEntity implements Locatable
 	}
 
 	@Transient
-	public LinkedHashSet<Api> getApis()
+	public ArrayList<Api> getApis()
 	{
 		return apis;
 	}
 
-	public void setApis(LinkedHashSet<Api> apis)
+	public void setApis(ArrayList<Api> apis)
 	{
 		this.apis = apis;
 	}

@@ -25,7 +25,7 @@ public class Archive extends BaseEntity implements Locatable
 	private Ref<Long> documentRef;
 	private Document document;
 	private LinkedHashSet<Node> nodes;
-	private LinkedHashSet<Module> modules;
+	private ArrayList<Module> modules;
 	private Request request;
 
 	public Version getVersion()
@@ -106,12 +106,12 @@ public class Archive extends BaseEntity implements Locatable
 	}
 
 	@Transient
-	public LinkedHashSet<Module> getModules()
+	public ArrayList<Module> getModules()
 	{
 		return modules;
 	}
 
-	public void setModules(LinkedHashSet<Module> modules)
+	public void setModules(ArrayList<Module> modules)
 	{
 		this.modules = modules;
 	}

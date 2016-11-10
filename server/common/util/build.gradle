@@ -1,4 +1,4 @@
-archivesBaseName = "${archivePrefix}-util"
+archivesBaseName = "${archivePrefix}-common-util"
 
 dependencies {
     compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.4'
