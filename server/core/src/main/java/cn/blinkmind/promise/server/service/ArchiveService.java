@@ -61,12 +61,12 @@ public class ArchiveService
 
 	private void persistApis(Archive archive)
 	{
-		Set<Module> modules = archive.getModules();
+		List<Module> modules = archive.getModules();
 		Set<Api> apisToPersist = new LinkedHashSet<>();
 		if (modules != null)
 			for (Module module : modules)
 			{
-				Set<Api> apis = module.getApis();
+				List<Api> apis = module.getApis();
 				if (apis != null)
 				{
 					apisToPersist.addAll(apis);
@@ -76,16 +76,19 @@ public class ArchiveService
 			apiRepository.insertAll(apisToPersist);
 	}
 
-	private Archive addModuleNode(Archive archive, Module module)
+	private Archive addModuleNode(Archive archive, Module module, int ordinal)
 	{
-		Node moduleNode = new Node(module.getId());
-		Set<Api> apis = module.getApis();
+		Node moduleNode = new Node(module.getId(), ordinal);
+		List<Api> apis = module.getApis();
 		if (apis != null)
+		{
+			int apiOrdinal = 0;
 			for (Api api : apis)
 			{
-				Node apiNode = new Node(api.getId());
+				Node apiNode = new Node(api.getId(), apiOrdinal++);
 				moduleNode.addChild(apiNode);
 			}
+		}
 		archive.getNodes().add(moduleNode);
 		return archive;
 	}
@@ -93,8 +96,11 @@ public class ArchiveService
 	private Archive addModuleNodes(Archive archive, Collection<Module> modules)
 	{
 		if (modules != null)
+		{
+			int ordinal = 0;
 			for (Module module : modules)
-				addModuleNode(archive, module);
+				addModuleNode(archive, module, ordinal++);
+		}
 		return archive;
 	}
 
@@ -104,5 +110,52 @@ public class ArchiveService
 		BeanUtil.patch(current, "", patch, "");
 		current.refreshCreatedDate();
 		return current;
+	}
+
+	public Archive get(final long id, final User user)
+	{
+		Archive archive = archiveRepository.require(id);
+		Set<Node> moduleNodes = archive.getNodes();
+		if (moduleNodes != null && moduleNodes.size() > 0)
+		{
+			final LinkedList<Long> moduleIds = new LinkedList<>();
+			final LinkedList<Long> apiIds = new LinkedList<>();
+			final Map<Long, Long> parentMap = new HashMap<>();
+			final Map<Long, Node> apiNodeMap = new HashMap<>();
+			final Map<Long, Module> moduleMap = new HashMap<>();
+			for (Node moduleNode : moduleNodes)
+			{
+				moduleIds.add(moduleNode.getId());
+				Set<Node> apiNodes = moduleNode.getChildren();
+				if (apiNodes != null)
+				{
+					for (Node apiNode : apiNodes)
+					{
+						apiIds.add(apiNode.getId());
+						parentMap.put(apiNode.getId(), moduleNode.getId());
+						apiNodeMap.put(apiNode.getId(), apiNode);
+					}
+				}
+			}
+			ArrayList<Module> modules = (ArrayList<Module>) moduleRepository.findIn(moduleIds);
+			if (modules != null)
+			{
+				for (Module module : modules)
+				{
+					moduleMap.put(module.getId(), module);
+				}
+			}
+			ArrayList<Api> apis = (ArrayList<Api>) apiRepository.findIn(apiIds);
+			if (apis != null)
+			{
+				apis.sort((o1, o2) -> apiNodeMap.get(o1.getId()).getOrdinal() - apiNodeMap.get(o2.getId()).getOrdinal());
+				for (Api api : apis)
+				{
+					moduleMap.get(parentMap.get(api.getId())).addApi(api);
+				}
+			}
+			archive.setModules(modules);
+		}
+		return archive;
 	}
 }

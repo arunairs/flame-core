@@ -41,10 +41,11 @@ public class ArchiveController
 		return ResponseEntity.ok(new ObjectId(archive.getId()));
 	}
 
+	@Token(required = false)
 	@GetMapping(path = "archives/{id}")
-	public ResponseEntity<Archive> get(@PathVariable(name = "id") long id)
+	public ResponseEntity<Archive> get(@PathVariable(name = "id") long id, @RequestAttribute(required = false) User user)
 	{
-		return ResponseEntity.ok(archiveRepository.findOne(id));
+		return ResponseEntity.ok(archiveService.get(id, user));
 	}
 
 	@Token

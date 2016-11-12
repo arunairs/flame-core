@@ -118,4 +118,10 @@ public class Module extends BaseEntity implements Locatable
 		}
 		return stringBuilder.toString();
 	}
+
+	public void addApi(Api api)
+	{
+		if (apis == null) apis = new ArrayList<>();
+		apis.add(api);
+	}
 }

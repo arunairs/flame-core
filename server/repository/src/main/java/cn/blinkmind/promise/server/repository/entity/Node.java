@@ -1,7 +1,6 @@
 package cn.blinkmind.promise.server.repository.entity;
 
 import java.util.LinkedHashSet;
-import java.util.Set;
 
 /**
  * @author jiaan.zhang@oracle.com
@@ -10,14 +9,17 @@ import java.util.Set;
 public class Node implements Indexable<Long>
 {
 	private Long id;
-	private Set<Node> children = new LinkedHashSet<>();
+	private int ordinal;
+	private LinkedHashSet<Node> children = new LinkedHashSet<>();
 
-	public Node(Long id)
+	public Node(Long id, int ordinal)
 	{
 		this.id = id;
+		this.ordinal = ordinal;
 	}
 
-	private Node(){
+	private Node()
+	{
 
 	}
 
@@ -33,12 +35,22 @@ public class Node implements Indexable<Long>
 		this.id = id;
 	}
 
-	public Set<Node> getChildren()
+	public int getOrdinal()
+	{
+		return ordinal;
+	}
+
+	public void setOrdinal(int ordinal)
+	{
+		this.ordinal = ordinal;
+	}
+
+	public LinkedHashSet<Node> getChildren()
 	{
 		return children;
 	}
 
-	public void setChildren(Set<Node> children)
+	public void setChildren(LinkedHashSet<Node> children)
 	{
 		this.children = children;
 	}
