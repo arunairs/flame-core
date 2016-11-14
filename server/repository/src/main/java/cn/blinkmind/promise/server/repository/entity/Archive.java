@@ -11,7 +11,7 @@ import java.util.*;
  * @date 26/09/2016 2:40 PM
  */
 @org.springframework.data.mongodb.core.mapping.Document(collection = "archives")
-public class Archive extends BaseEntity implements Locatable
+public class Archive extends BaseEntity implements Resource
 {
 	public enum Status
 	{
@@ -143,5 +143,12 @@ public class Archive extends BaseEntity implements Locatable
 	public String getUri()
 	{
 		return this.request != null ? this.request.getUri() : null;
+	}
+
+	@JsonIgnore
+	@Override
+	public Resource getParent()
+	{
+		return null;
 	}
 }

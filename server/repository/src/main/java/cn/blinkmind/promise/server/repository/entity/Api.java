@@ -12,7 +12,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
  * @date 26/09/2016 4:13 PM
  */
 @Document(collection = "apis")
-public class Api extends BaseEntity implements Locatable
+public class Api extends BaseEntity implements Resource
 {
 	private String name;
 	private String description;
@@ -73,6 +73,16 @@ public class Api extends BaseEntity implements Locatable
 		this.module = module;
 	}
 
+	public String getUrl()
+	{
+		String scheme = getScheme();
+		String uri = getUri();
+		String url = scheme == null ? null : scheme + "://";
+		if (uri != null)
+			url += uri;
+		return url;
+	}
+
 	@Override
 	public void clean()
 	{
@@ -80,6 +90,7 @@ public class Api extends BaseEntity implements Locatable
 		this.isFrozen = false;
 	}
 
+	@JsonIgnore
 	@Override
 	public String getScheme()
 	{
@@ -87,25 +98,33 @@ public class Api extends BaseEntity implements Locatable
 		{
 			return this.request.getScheme();
 		}
-		if (this.module != null && StringUtils.isNotBlank(this.module.getScheme()))
+		if (getParent() != null && StringUtils.isNotBlank(getParent().getScheme()))
 		{
-			return this.module.getScheme();
+			return getParent().getScheme();
 		}
 		return null;
 	}
 
+	@JsonIgnore
 	@Override
 	public String getUri()
 	{
 		UrlStringBuilder stringBuilder = new UrlStringBuilder();
-		if (this.module != null)
+		if (getParent() != null)
 		{
-			stringBuilder.append(this.module.getUri());
+			stringBuilder.append(getParent().getUri());
 		}
 		if (this.request != null && StringUtils.isNotBlank(this.request.getUri()))
 		{
 			stringBuilder.append(this.request.getUri());
 		}
 		return stringBuilder.toString();
+	}
+
+	@JsonIgnore
+	@Override
+	public Resource getParent()
+	{
+		return module;
 	}
 }

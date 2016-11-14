@@ -142,6 +142,7 @@ public class ArchiveService
 			{
 				for (Module module : modules)
 				{
+					module.setArchive(archive);
 					moduleMap.put(module.getId(), module);
 				}
 			}

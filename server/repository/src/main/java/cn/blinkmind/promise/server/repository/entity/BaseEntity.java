@@ -2,6 +2,7 @@ package cn.blinkmind.promise.server.repository.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
 
@@ -11,6 +12,7 @@ import java.util.Date;
  * @author jiaan.zhang@oracle.com
  * @date 26/09/2016 2:44 PM
  */
+@JsonInclude(value = JsonInclude.Include.NON_NULL)
 abstract class BaseEntity implements Indexable<Long>, Cleanable
 {
 	private Long id;

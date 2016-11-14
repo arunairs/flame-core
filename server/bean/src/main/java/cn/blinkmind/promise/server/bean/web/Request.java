@@ -1,11 +1,14 @@
 package cn.blinkmind.promise.server.bean.web;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import java.util.*;
 
 /**
  * @author jiaan.zhang@oracle.com
  * @date 11/10/2016 12:07 AM
  */
+@JsonInclude(value = JsonInclude.Include.NON_NULL)
 public class Request
 {
 	private String uri;
@@ -35,13 +38,6 @@ public class Request
 	public void setScheme(String scheme)
 	{
 		this.scheme = scheme;
-	}
-
-	public String getUrl()
-	{
-		String url = this.scheme == null ? "unknown" : this.scheme + "://";
-		url += this.uri == null ? "empty" : this.uri;
-		return url;
 	}
 
 	public LinkedHashSet<RequestMethod> getMethods()

@@ -1,1 +1,5 @@
 archivesBaseName = "${archivePrefix}-bean"
+
+dependencies {
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: libs.jackson.version
+}

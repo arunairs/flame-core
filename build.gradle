@@ -12,9 +12,12 @@ buildscript {
 
     ext {
         libs = [
-                spring: [
+                spring : [
                         'mvc' : ['version': '4.3.4.RELEASE'],
                         'boot': ['version': '1.4.2.RELEASE']
+                ],
+                jackson: [
+                        'version': '2.8.4'
                 ]
         ]
     }

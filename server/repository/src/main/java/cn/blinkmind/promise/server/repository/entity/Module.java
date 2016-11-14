@@ -14,7 +14,7 @@ import java.util.ArrayList;
  * @date 26/09/2016 3:57 PM
  */
 @Document(collection = "modules")
-public class Module extends BaseEntity implements Locatable
+public class Module extends BaseEntity implements Resource
 {
 	private String name;
 	private Request request;
@@ -76,6 +76,13 @@ public class Module extends BaseEntity implements Locatable
 		this.archive = archive;
 	}
 
+	public void addApi(Api api)
+	{
+		if (apis == null) apis = new ArrayList<>();
+		apis.add(api);
+		api.setModule(this);
+	}
+
 	@Override
 	public void clean()
 	{
@@ -97,9 +104,9 @@ public class Module extends BaseEntity implements Locatable
 		{
 			return this.request.getScheme();
 		}
-		if (this.archive != null && StringUtils.isNotBlank(this.archive.getScheme()))
+		if (getParent() != null && StringUtils.isNotBlank(getParent().getScheme()))
 		{
-			return this.archive.getScheme();
+			return getParent().getScheme();
 		}
 		return null;
 	}
@@ -108,9 +115,9 @@ public class Module extends BaseEntity implements Locatable
 	public String getUri()
 	{
 		UrlStringBuilder stringBuilder = new UrlStringBuilder();
-		if (this.archive != null)
+		if (getParent() != null)
 		{
-			stringBuilder.append(this.archive.getUri());
+			stringBuilder.append(getParent().getUri());
 		}
 		if (this.request != null && StringUtils.isNotBlank(this.request.getUri()))
 		{
@@ -119,9 +126,10 @@ public class Module extends BaseEntity implements Locatable
 		return stringBuilder.toString();
 	}
 
-	public void addApi(Api api)
+	@JsonIgnore
+	@Override
+	public Resource getParent()
 	{
-		if (apis == null) apis = new ArrayList<>();
-		apis.add(api);
+		return archive;
 	}
 }
