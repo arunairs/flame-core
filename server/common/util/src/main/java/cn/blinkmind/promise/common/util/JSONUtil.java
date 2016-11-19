@@ -15,7 +15,7 @@ import java.util.Map;
  * @author jiaan.zhang@oracle.com
  * @date 21/10/2016 2:41 PM
  */
-public class JsonUtil
+public class JSONUtil
 {
 	private static final ObjectMapper _objectMapper;
 
