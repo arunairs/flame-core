@@ -16,7 +16,7 @@ public class Api extends BaseEntity implements Resource
 {
 	private String name;
 	private String description;
-	private boolean isFrozen = false;
+	private boolean isUpdatable = true;
 	private Request request;
 	private Module module;
 
@@ -41,14 +41,15 @@ public class Api extends BaseEntity implements Resource
 	}
 
 	@JsonIgnore
-	public boolean isFrozen()
+	@Override
+	public boolean isUpdatable()
 	{
-		return isFrozen;
+		return isUpdatable;
 	}
 
-	public void setFrozen(boolean frozen)
+	public void setUpdatable(boolean updatable)
 	{
-		isFrozen = frozen;
+		this.isUpdatable = updatable;
 	}
 
 	public Request getRequest()
@@ -87,7 +88,7 @@ public class Api extends BaseEntity implements Resource
 	public void clean()
 	{
 		super.clean();
-		this.isFrozen = false;
+		this.isUpdatable = true;
 	}
 
 	@JsonIgnore

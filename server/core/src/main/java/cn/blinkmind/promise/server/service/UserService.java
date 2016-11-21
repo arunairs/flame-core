@@ -1,7 +1,7 @@
 package cn.blinkmind.promise.server.service;
 
-import cn.blinkmind.promise.common.util.CodecUtil;
-import cn.blinkmind.promise.common.util.SecurityUtil;
+import cn.blinkmind.promise.server.util.CodecUtil;
+import cn.blinkmind.promise.server.util.SecurityUtil;
 import cn.blinkmind.promise.server.exception.Error;
 import cn.blinkmind.promise.server.exception.Errors;
 import cn.blinkmind.promise.server.repository.UserRepository;

@@ -18,7 +18,7 @@ public class Module extends BaseEntity implements Resource
 {
 	private String name;
 	private Request request;
-	private boolean isFrozen = false;
+	private boolean isUpdatable = true;
 	private ArrayList<Api> apis;
 	private Archive archive;
 
@@ -43,14 +43,15 @@ public class Module extends BaseEntity implements Resource
 	}
 
 	@JsonIgnore
-	public boolean isFrozen()
+	@Override
+	public boolean isUpdatable()
 	{
-		return isFrozen;
+		return isUpdatable;
 	}
 
-	public void setFrozen(boolean frozen)
+	public void setUpdatable(boolean updatable)
 	{
-		isFrozen = frozen;
+		isUpdatable = updatable;
 	}
 
 	@Transient
@@ -87,7 +88,7 @@ public class Module extends BaseEntity implements Resource
 	public void clean()
 	{
 		super.clean();
-		this.isFrozen = false;
+		this.isUpdatable = true;
 		if (this.request != null)
 		{
 			Request request = new Request();

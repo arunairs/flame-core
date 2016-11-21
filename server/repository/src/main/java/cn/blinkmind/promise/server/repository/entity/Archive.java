@@ -151,4 +151,11 @@ public class Archive extends BaseEntity implements Resource
 	{
 		return null;
 	}
+
+	@JsonIgnore
+	@Override
+	public boolean isUpdatable()
+	{
+		return !Status.RELEASED.equals(this.getStatus());
+	}
 }

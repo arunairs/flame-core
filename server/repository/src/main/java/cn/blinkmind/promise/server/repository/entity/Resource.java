@@ -7,4 +7,6 @@ package cn.blinkmind.promise.server.repository.entity;
 public interface Resource extends Locatable
 {
 	Resource getParent();
+
+	boolean isUpdatable();
 }
