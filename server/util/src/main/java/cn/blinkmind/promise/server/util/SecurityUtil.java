@@ -1,4 +1,4 @@
-package cn.blinkmind.promise.common.util;
+package cn.blinkmind.promise.server.util;
 
 import org.apache.commons.codec.binary.Base64;
 

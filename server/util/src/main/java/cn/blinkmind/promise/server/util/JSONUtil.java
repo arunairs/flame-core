@@ -1,4 +1,4 @@
-package cn.blinkmind.promise.common.util;
+package cn.blinkmind.promise.server.util;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JavaType;
@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author jiaan.zhang@oracle.com

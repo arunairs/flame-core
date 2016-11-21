@@ -1,7 +1,7 @@
 apply plugin: 'spring-boot'
 
 dependencies {
-    compile project(':server:common:util')
+    compile project(':server:util')
     compile project(':server:repository')
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: libs.spring.boot.version
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-elasticsearch', version: libs.spring.boot.version

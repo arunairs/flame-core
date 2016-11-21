@@ -1,6 +1,6 @@
-package cn.blinkmind.promise.server.util.patch;
+package cn.blinkmind.promise.server.bean.patch;
 
-import cn.blinkmind.promise.common.util.JSONUtil;
+import cn.blinkmind.promise.server.util.JSONUtil;
 
 import java.util.Map;
 
@@ -17,8 +17,13 @@ public class JSONPatch<T> extends Patch<Map, T>
 	}
 
 	@Override
-	protected boolean contains(Map source, String fieldName, Class<?> fieldClass)
+	protected boolean contains(Map source, String fieldName)
 	{
 		return source.containsKey(fieldName);
+	}
+
+	public static JSONPatch newInstance()
+	{
+		return new JSONPatch<>();
 	}
 }
