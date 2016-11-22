@@ -14,6 +14,7 @@ import java.lang.reflect.Method;
  * @author jiaan.zhang@oracle.com
  * @date 08/10/2016 7:52 PM
  */
+@SuppressWarnings("unchecked")
 public class TokenAuthenticationInterceptor extends AbstractAuthenticationInterceptor
 {
 	@Override

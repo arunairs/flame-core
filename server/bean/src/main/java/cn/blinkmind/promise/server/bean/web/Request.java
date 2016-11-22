@@ -127,4 +127,12 @@ public class Request
 			this.text = text;
 		}
 	}
+
+	public static Request getBriefCopy(Request request)
+	{
+		Request copy = new Request();
+		copy.setUri(request.getUri());
+		copy.setScheme(request.getScheme());
+		return copy;
+	}
 }

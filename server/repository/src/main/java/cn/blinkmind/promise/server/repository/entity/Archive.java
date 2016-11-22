@@ -126,11 +126,21 @@ public class Archive extends BaseEntity implements Resource
 		this.request = request;
 	}
 
+	@JsonIgnore
+	public boolean isReleased()
+	{
+		return Status.RELEASED.equals(this.getStatus());
+	}
+
 	@Override
 	public void clean()
 	{
 		super.clean();
 		this.status = Status.OPEN;
+		if (this.request != null)
+		{
+			this.request = Request.getBriefCopy(request);
+		}
 	}
 
 	@Override
@@ -156,6 +166,6 @@ public class Archive extends BaseEntity implements Resource
 	@Override
 	public boolean isUpdatable()
 	{
-		return !Status.RELEASED.equals(this.getStatus());
+		return !isReleased();
 	}
 }

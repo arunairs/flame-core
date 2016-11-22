@@ -4,6 +4,7 @@ package cn.blinkmind.promise.server.repository.entity;
  * @author jiaan.zhang@oracle.com
  * @date 18/10/2016 11:44 AM
  */
+@SuppressWarnings("unchecked")
 public class Ref<ID>
 {
 	ID id;

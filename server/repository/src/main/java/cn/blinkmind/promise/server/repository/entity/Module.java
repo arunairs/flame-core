@@ -91,10 +91,7 @@ public class Module extends BaseEntity implements Resource
 		this.isUpdatable = true;
 		if (this.request != null)
 		{
-			Request request = new Request();
-			request.setUri(this.request.getUri());
-			request.setScheme(this.request.getScheme());
-			this.request = request;
+			this.request = Request.getBriefCopy(request);
 		}
 	}
 
