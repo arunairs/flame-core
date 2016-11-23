@@ -1,6 +1,6 @@
 package cn.blinkmind.promise.server.repository.entity;
 
-import cn.blinkmind.promise.server.bean.web.Request;
+import cn.blinkmind.promise.server.bean.web.GeneralRequest;
 import cn.blinkmind.promise.server.repository.util.UrlStringBuilder;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.lang3.StringUtils;
@@ -17,7 +17,7 @@ import java.util.ArrayList;
 public class Module extends BaseEntity implements Resource
 {
 	private String name;
-	private Request request;
+	private GeneralRequest request;
 	private boolean isUpdatable = true;
 	private ArrayList<Api> apis;
 	private Archive archive;
@@ -32,12 +32,12 @@ public class Module extends BaseEntity implements Resource
 		this.name = name;
 	}
 
-	public Request getRequest()
+	public GeneralRequest getRequest()
 	{
 		return request;
 	}
 
-	public void setRequest(Request request)
+	public void setRequest(GeneralRequest request)
 	{
 		this.request = request;
 	}
@@ -90,9 +90,7 @@ public class Module extends BaseEntity implements Resource
 		super.clean();
 		this.isUpdatable = true;
 		if (this.request != null)
-		{
-			this.request = Request.getBriefCopy(request);
-		}
+			this.request.setMethods(null);
 	}
 
 	@Override

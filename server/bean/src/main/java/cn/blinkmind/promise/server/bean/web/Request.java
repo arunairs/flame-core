@@ -9,46 +9,13 @@ import java.util.*;
  * @date 11/10/2016 12:07 AM
  */
 @JsonInclude(value = JsonInclude.Include.NON_NULL)
-public class Request
+public class Request extends GeneralRequest
 {
-	private String uri;
-	private String scheme;
-	private LinkedHashSet<RequestMethod> methods;
 	private LinkedHashSet<SingleFieldRequestParameter> headers;
 	private LinkedHashSet<SingleFieldRequestParameter> paths;
 	private LinkedHashSet<SingleFieldRequestParameter> queries;
 	private LinkedHashSet<SingleFieldRequestParameter> cookies;
 	private Body body;
-
-	public String getUri()
-	{
-		return uri;
-	}
-
-	public void setUri(String uri)
-	{
-		this.uri = uri;
-	}
-
-	public String getScheme()
-	{
-		return scheme;
-	}
-
-	public void setScheme(String scheme)
-	{
-		this.scheme = scheme;
-	}
-
-	public LinkedHashSet<RequestMethod> getMethods()
-	{
-		return methods;
-	}
-
-	public void setMethods(LinkedHashSet<RequestMethod> methods)
-	{
-		this.methods = methods;
-	}
 
 	public LinkedHashSet<SingleFieldRequestParameter> getHeaders()
 	{
@@ -128,9 +95,9 @@ public class Request
 		}
 	}
 
-	public static Request getBriefCopy(Request request)
+	public static GeneralRequest getGeneralCopy(Request request)
 	{
-		Request copy = new Request();
+		GeneralRequest copy = new GeneralRequest();
 		copy.setUri(request.getUri());
 		copy.setScheme(request.getScheme());
 		return copy;

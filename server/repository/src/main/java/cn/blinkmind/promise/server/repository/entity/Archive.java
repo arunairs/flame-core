@@ -1,10 +1,12 @@
 package cn.blinkmind.promise.server.repository.entity;
 
-import cn.blinkmind.promise.server.bean.web.Request;
+import cn.blinkmind.promise.server.bean.web.GeneralRequest;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.annotation.Transient;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 /**
  * @author jiaan.zhang@oracle.com
@@ -26,7 +28,7 @@ public class Archive extends BaseEntity implements Resource
 	private Document document;
 	private LinkedHashSet<Node> nodes;
 	private ArrayList<Module> modules;
-	private Request request;
+	private GeneralRequest request;
 
 	public Version getVersion()
 	{
@@ -116,12 +118,12 @@ public class Archive extends BaseEntity implements Resource
 		this.modules = modules;
 	}
 
-	public Request getRequest()
+	public GeneralRequest getRequest()
 	{
 		return request;
 	}
 
-	public void setRequest(Request request)
+	public void setRequest(GeneralRequest request)
 	{
 		this.request = request;
 	}
@@ -138,9 +140,7 @@ public class Archive extends BaseEntity implements Resource
 		super.clean();
 		this.status = Status.OPEN;
 		if (this.request != null)
-		{
-			this.request = Request.getBriefCopy(request);
-		}
+			this.request.setMethods(null);
 	}
 
 	@Override
