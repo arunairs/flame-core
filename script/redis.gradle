@@ -22,17 +22,23 @@ task redisEnv(group: TaskGroup.REDIS, dependsOn: [':externalEnv']) {
     }
 }
 
-task startRedis(group: TaskGroup.REDIS, dependsOn: [':redisEnv']) << {
-    Redis redis = redisEnv.getRedis('redis')
-    redis.start()
+task startRedis(group: TaskGroup.REDIS, dependsOn: [':redisEnv']) {
+    doLast {
+        Redis redis = redisEnv.getRedis('redis')
+        redis.start()
+    }
 }
 
-task stopRedis(group: TaskGroup.REDIS, dependsOn: [':redisEnv']) << {
-    Redis redis = redisEnv.getRedis('redis')
-    redis.stop()
+task stopRedis(group: TaskGroup.REDIS, dependsOn: [':redisEnv']) {
+    doLast {
+        Redis redis = redisEnv.getRedis('redis')
+        redis.stop()
+    }
 }
 
-task flushDB(group: TaskGroup.REDIS, dependsOn: [':redisEnv', ':startRedis']) << {
-    Redis redis = redisEnv.getRedis('redis')
-    redis.client.flushDB()
+task flushDB(group: TaskGroup.REDIS, dependsOn: [':redisEnv', ':startRedis']) {
+    doLast {
+        Redis redis = redisEnv.getRedis('redis')
+        redis.client.flushDB()
+    }
 }

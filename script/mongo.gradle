@@ -22,12 +22,16 @@ task mongoEnv(group: TaskGroup.MONGO, dependsOn: [':externalEnv']) {
     }
 }
 
-task startMongo(group: TaskGroup.MONGO, dependsOn: [':mongoEnv']) << {
-    Mongo mongo = mongoEnv.getMongo('mongo')
-    mongo.start()
+task startMongo(group: TaskGroup.MONGO, dependsOn: [':mongoEnv']) {
+    doLast {
+        Mongo mongo = mongoEnv.getMongo('mongo')
+        mongo.start()
+    }
 }
 
-task stopMongo(group: TaskGroup.MONGO, dependsOn: [':mongoEnv']) << {
-    Mongo mongo = mongoEnv.getMongo('mongo')
-    mongo.stop()
+task stopMongo(group: TaskGroup.MONGO, dependsOn: [':mongoEnv']) {
+    doLast {
+        Mongo mongo = mongoEnv.getMongo('mongo')
+        mongo.stop()
+    }
 }
