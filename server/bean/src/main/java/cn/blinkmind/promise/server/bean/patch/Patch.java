@@ -63,37 +63,37 @@ public abstract class Patch<S, T>
 
 	protected abstract boolean contains(final S source, final String fieldName);
 
-	public PatchOperation build(ConvertCallback<T> convertCallback)
+	public Operation build(ConvertCallback<T> convertCallback)
 	{
 		if (convertCallback != null)
 			this.converted = convertCallback.converted(getConverted());
-		return new PatchOperation();
+		return new Operation();
 	}
 
-	public PatchOperation build()
+	public Operation build()
 	{
 		return build(null);
 	}
 
-	public class PatchOperation
+	public class Operation
 	{
-		public PatchOperation update(final String sourceFieldName, final String targetFieldName, final PatchCallback<?, T> callback)
+		public Operation update(final String sourceFieldName, final String targetFieldName, final PatchCallback<?, T> callback)
 		{
 			update(getSource(), sourceFieldName, getConverted(), getTarget(), targetFieldName, callback);
 			return this;
 		}
 
-		public PatchOperation update(final String sourceFieldName, final String targetFieldName)
+		public Operation update(final String sourceFieldName, final String targetFieldName)
 		{
 			return update(sourceFieldName, targetFieldName, null);
 		}
 
-		public PatchOperation update(final String fieldName, final PatchCallback<?, T> callback)
+		public Operation update(final String fieldName, final PatchCallback<?, T> callback)
 		{
 			return update(fieldName, fieldName, callback);
 		}
 
-		public PatchOperation update(final String fieldName)
+		public Operation update(final String fieldName)
 		{
 			return update(fieldName, fieldName);
 		}
