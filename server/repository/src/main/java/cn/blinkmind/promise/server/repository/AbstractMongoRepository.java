@@ -48,7 +48,7 @@ public abstract class AbstractMongoRepository<T, ID extends Serializable>
 		return (List<S>) entites;
 	}
 
-	public <S extends T> S update(final S entity)
+	public T update(final T entity)
 	{
 		return save(entity);
 	}
