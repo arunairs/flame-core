@@ -13,7 +13,7 @@ import java.util.Date;
  * @date 26/09/2016 2:44 PM
  */
 @JsonInclude(value = JsonInclude.Include.NON_NULL)
-abstract class BaseEntity implements Indexable<Long>, Cleanable
+class BaseEntity implements Indexable<Long>, Cleanable
 {
 	private Long id;
 	private Ref<Long> creatorRef;
@@ -28,6 +28,7 @@ abstract class BaseEntity implements Indexable<Long>, Cleanable
 		return id;
 	}
 
+	@JsonIgnore
 	@Override
 	public void setId(Long id)
 	{
@@ -40,6 +41,7 @@ abstract class BaseEntity implements Indexable<Long>, Cleanable
 		return creatorRef;
 	}
 
+	@JsonIgnore
 	private void setCreatorRef(Ref<Long> creatorRef)
 	{
 		this.creatorRef = creatorRef;
@@ -50,6 +52,7 @@ abstract class BaseEntity implements Indexable<Long>, Cleanable
 		return createdDate;
 	}
 
+	@JsonIgnore
 	public void setCreatedDate(Date createdDate)
 	{
 		this.createdDate = createdDate;
@@ -65,6 +68,7 @@ abstract class BaseEntity implements Indexable<Long>, Cleanable
 		return updatedDate;
 	}
 
+	@JsonIgnore
 	public void setUpdatedDate(Date updatedDate)
 	{
 		this.updatedDate = updatedDate;
@@ -82,6 +86,7 @@ abstract class BaseEntity implements Indexable<Long>, Cleanable
 		return creator;
 	}
 
+	@JsonIgnore
 	public void setCreator(User creator)
 	{
 		this.creator = creator;
@@ -91,12 +96,7 @@ abstract class BaseEntity implements Indexable<Long>, Cleanable
 	}
 
 	@Override
-	public void clean()
+	public void cleanup(CRUD operation)
 	{
-		this.id = null;
-		this.creatorRef = null;
-		this.createdDate = null;
-		this.updatedDate = null;
-		this.creator = null;
 	}
 }

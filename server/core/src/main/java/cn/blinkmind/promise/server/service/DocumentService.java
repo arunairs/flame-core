@@ -1,12 +1,12 @@
 package cn.blinkmind.promise.server.service;
 
-import cn.blinkmind.promise.server.exception.Error;
+import cn.blinkmind.promise.server.exception.Assertion;
 import cn.blinkmind.promise.server.exception.Errors;
 import cn.blinkmind.promise.server.repository.DocumentRepository;
+import cn.blinkmind.promise.server.repository.entity.CRUD;
 import cn.blinkmind.promise.server.repository.entity.Document;
 import cn.blinkmind.promise.server.repository.entity.DocumentType;
 import cn.blinkmind.promise.server.repository.entity.User;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,10 +25,9 @@ public class DocumentService
 
 	public Document create(Document document, User creator)
 	{
-		if (StringUtils.isBlank(document.getName()))
-			Error.occurs(Errors.DOCUMENT_NAME_IS_BLANK);
+		Assertion.notBlank(document.getName(), Errors.DOCUMENT_NAME_IS_BLANK);
 
-		document.clean();
+		document.cleanup(CRUD.CREATE);
 		document.setId(repositoryService.newId());
 		document.setType(DocumentType.REST_API);
 		document.setCreator(creator);

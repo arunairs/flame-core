@@ -1,5 +1,7 @@
 package cn.blinkmind.promise.server.repository.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.LinkedHashSet;
 
 /**
@@ -29,6 +31,7 @@ public class Node implements Indexable<Long>
 		return id;
 	}
 
+	@JsonIgnore
 	@Override
 	public void setId(Long id)
 	{
@@ -40,6 +43,7 @@ public class Node implements Indexable<Long>
 		return ordinal;
 	}
 
+	@JsonIgnore
 	public void setOrdinal(int ordinal)
 	{
 		this.ordinal = ordinal;

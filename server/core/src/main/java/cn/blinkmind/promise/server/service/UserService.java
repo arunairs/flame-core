@@ -1,12 +1,12 @@
 package cn.blinkmind.promise.server.service;
 
-import cn.blinkmind.promise.server.util.CodecUtil;
-import cn.blinkmind.promise.server.util.SecurityUtil;
-import cn.blinkmind.promise.server.exception.Error;
+import cn.blinkmind.promise.server.exception.Assertion;
 import cn.blinkmind.promise.server.exception.Errors;
 import cn.blinkmind.promise.server.repository.UserRepository;
+import cn.blinkmind.promise.server.repository.entity.CRUD;
 import cn.blinkmind.promise.server.repository.entity.User;
-import org.apache.commons.lang3.StringUtils;
+import cn.blinkmind.promise.server.util.CodecUtil;
+import cn.blinkmind.promise.server.util.SecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,12 +25,10 @@ public class UserService
 
 	public User create(User user)
 	{
-		if (StringUtils.isBlank(user.getUsername()))
-			Error.occurs(Errors.ACCOUNT_NAME_IS_BLANK);
-		if (StringUtils.isBlank(user.getPassword()))
-			Error.occurs(Errors.ACCOUNT_PASSWORD_IS_BLANK);
+		Assertion.notBlank(user.getUsername(), Errors.ACCOUNT_NAME_IS_BLANK);
+		Assertion.notBlank(user.getPassword(), Errors.ACCOUNT_PASSWORD_IS_BLANK);
 
-		user.clean();
+		user.cleanup(CRUD.CREATE);
 		user.setId(repositoryService.newId());
 		user.setPassword(CodecUtil.sha256(user.getPassword(), SecurityUtil.randomSalt()));
 		user.refreshCreatedDate();

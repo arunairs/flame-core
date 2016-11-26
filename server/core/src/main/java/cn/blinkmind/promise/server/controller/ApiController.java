@@ -26,10 +26,10 @@ public class ApiController
 
 	@Token
 	@PostMapping("modules/{moduleId}/apis")
-	public ResponseEntity<ObjectId> create(@PathVariable(name = "moduleId") long moduleId, @RequestBody Api apiData, @RequestAttribute User user)
+	public ResponseEntity<ObjectId> create(@PathVariable(name = "moduleId") long moduleId, @RequestBody Api api, @RequestAttribute User user)
 	{
 		Module module = moduleRepository.require(moduleId);
-		Api api = apiService.fill(apiData, module, user);
+		apiService.create(api, module, user);
 		return ResponseEntity.ok(new ObjectId(api.getId()));
 	}
 }

@@ -1,6 +1,8 @@
 package cn.blinkmind.promise.server.repository;
 
 import cn.blinkmind.promise.server.repository.entity.Archive;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -14,5 +16,14 @@ public class ArchiveRepository extends AbstractMongoRepository<Archive, Long>
 	protected Class<Archive> getEntityClass()
 	{
 		return Archive.class;
+	}
+
+	@Override
+	public Archive update(final Archive archive)
+	{
+		Criteria criteria = Criteria.where("status").ne(Archive.Status.RELEASED);
+		Query query = new Query();
+		query.addCriteria(criteria);
+		return update(query, archive);
 	}
 }

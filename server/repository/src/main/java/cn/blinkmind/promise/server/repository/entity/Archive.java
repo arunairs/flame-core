@@ -2,6 +2,7 @@ package cn.blinkmind.promise.server.repository.entity;
 
 import cn.blinkmind.promise.server.bean.web.GeneralRequest;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.data.annotation.Transient;
 
 import java.util.ArrayList;
@@ -22,7 +23,6 @@ public class Archive extends BaseEntity implements Resource
 
 	private Version version;
 	private String description;
-	private Branch branch;
 	private Status status = Status.OPEN;
 	private Ref<Long> documentRef;
 	private Document document;
@@ -46,6 +46,7 @@ public class Archive extends BaseEntity implements Resource
 		return documentRef;
 	}
 
+	@JsonIgnore
 	private void setDocumentRef(Ref<Long> documentRef)
 	{
 		this.documentRef = documentRef;
@@ -75,16 +76,6 @@ public class Archive extends BaseEntity implements Resource
 		this.description = description;
 	}
 
-	public Branch getBranch()
-	{
-		return branch;
-	}
-
-	public void setBranch(Branch branch)
-	{
-		this.branch = branch;
-	}
-
 	public Status getStatus()
 	{
 		return status;
@@ -102,6 +93,7 @@ public class Archive extends BaseEntity implements Resource
 		return nodes;
 	}
 
+	@JsonIgnore
 	public void setNodes(LinkedHashSet<Node> nodes)
 	{
 		this.nodes = nodes;
@@ -123,6 +115,7 @@ public class Archive extends BaseEntity implements Resource
 		return request;
 	}
 
+	@JsonIgnoreProperties(value = {"methods"})
 	public void setRequest(GeneralRequest request)
 	{
 		this.request = request;
@@ -135,12 +128,9 @@ public class Archive extends BaseEntity implements Resource
 	}
 
 	@Override
-	public void clean()
+	public void cleanup(CRUD operation)
 	{
-		super.clean();
-		this.status = Status.OPEN;
-		if (this.request != null)
-			this.request.setMethods(null);
+		super.cleanup(operation);
 	}
 
 	@Override

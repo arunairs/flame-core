@@ -3,6 +3,7 @@ package cn.blinkmind.promise.server.repository.entity;
 import cn.blinkmind.promise.server.bean.web.GeneralRequest;
 import cn.blinkmind.promise.server.repository.util.UrlStringBuilder;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -37,6 +38,7 @@ public class Module extends BaseEntity implements Resource
 		return request;
 	}
 
+	@JsonIgnoreProperties(value = {"methods"})
 	public void setRequest(GeneralRequest request)
 	{
 		this.request = request;
@@ -49,6 +51,7 @@ public class Module extends BaseEntity implements Resource
 		return isUpdatable;
 	}
 
+	@JsonIgnore
 	public void setUpdatable(boolean updatable)
 	{
 		isUpdatable = updatable;
@@ -85,12 +88,9 @@ public class Module extends BaseEntity implements Resource
 	}
 
 	@Override
-	public void clean()
+	public void cleanup(CRUD operation)
 	{
-		super.clean();
-		this.isUpdatable = true;
-		if (this.request != null)
-			this.request.setMethods(null);
+		super.cleanup(operation);
 	}
 
 	@Override

@@ -1,5 +1,7 @@
 package cn.blinkmind.promise.server.repository.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * @author jiaan.zhang@oracle.com
  * @date 18/10/2016 11:44 AM
@@ -14,6 +16,7 @@ public class Ref<ID>
 		return id;
 	}
 
+	@JsonIgnore
 	public void setId(ID id)
 	{
 		this.id = id;

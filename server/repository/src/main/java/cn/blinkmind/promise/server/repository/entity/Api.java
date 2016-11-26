@@ -47,6 +47,7 @@ public class Api extends BaseEntity implements Resource
 		return isUpdatable;
 	}
 
+	@JsonIgnore
 	public void setUpdatable(boolean updatable)
 	{
 		this.isUpdatable = updatable;
@@ -85,10 +86,9 @@ public class Api extends BaseEntity implements Resource
 	}
 
 	@Override
-	public void clean()
+	public void cleanup(CRUD operation)
 	{
-		super.clean();
-		this.isUpdatable = true;
+		super.cleanup(operation);
 	}
 
 	@JsonIgnore

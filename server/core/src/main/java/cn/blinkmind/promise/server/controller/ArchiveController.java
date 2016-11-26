@@ -34,10 +34,10 @@ public class ArchiveController
 	@Token
 	@PostMapping(path = "documents/{documentId}/archives")
 	@ResponseStatus(code = HttpStatus.CREATED)
-	public ResponseEntity<ObjectId> create(@PathVariable(name = "documentId") long documentId, @RequestBody Archive archiveData, @RequestAttribute User user)
+	public ResponseEntity<ObjectId> create(@PathVariable(name = "documentId") long documentId, @RequestBody Archive archive, @RequestAttribute User user)
 	{
 		Document document = documentRepository.require(documentId);
-		Archive archive = archiveService.fillAndPersist(archiveData, document, user);
+		archiveService.create(archive, document, user);
 		return ResponseEntity.ok(new ObjectId(archive.getId()));
 	}
 

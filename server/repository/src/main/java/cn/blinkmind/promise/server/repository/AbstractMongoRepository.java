@@ -1,11 +1,13 @@
 package cn.blinkmind.promise.server.repository;
 
 import cn.blinkmind.promise.server.repository.exception.ResourceNotFoundException;
+import com.mongodb.DBObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.BulkOperations;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 
 import javax.annotation.PostConstruct;
 import java.io.Serializable;
@@ -44,6 +46,23 @@ public abstract class AbstractMongoRepository<T, ID extends Serializable>
 		for (S entity : entites)
 			save(entity);
 		return (List<S>) entites;
+	}
+
+	public <S extends T> S update(final S entity)
+	{
+		return save(entity);
+	}
+
+	public T update(final Query query, final T entity)
+	{
+		return update(query, entityClass, entity);
+	}
+
+	private T update(final Query query, final Class<T> entityClass, final T entity)
+	{
+		DBObject object = (DBObject) mongoTemplate.getConverter().convertToMongoType(entity);
+		Update update = Update.fromDBObject(object);
+		return mongoTemplate.findAndModify(query, update, entityClass);
 	}
 
 	public T require(final ID id)

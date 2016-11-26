@@ -1,12 +1,13 @@
 package cn.blinkmind.promise.server.service;
 
-import cn.blinkmind.promise.server.exception.Error;
+import cn.blinkmind.promise.server.bean.patch.JSONPatch;
+import cn.blinkmind.promise.server.bean.patch.Patch;
+import cn.blinkmind.promise.server.exception.Assertion;
 import cn.blinkmind.promise.server.exception.Errors;
 import cn.blinkmind.promise.server.repository.ApiRepository;
 import cn.blinkmind.promise.server.repository.ArchiveRepository;
 import cn.blinkmind.promise.server.repository.ModuleRepository;
 import cn.blinkmind.promise.server.repository.entity.*;
-import cn.blinkmind.promise.server.util.BeanUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,25 +35,23 @@ public class ArchiveService
 	@Autowired
 	private ModuleService moduleService;
 
-	//创建document后应调用create创建一个临时的archive，临时的archive没有版本号和分支信息
-	public Archive fill(Archive archive, Document document, User creator)
+	public Archive assemble(Archive archive, Document document, User creator)
 	{
-		if (document == null || document.getId() == null)
-			Error.occurs(Errors.ARCHIVE_DOCUMENT_IS_NOT_SPECIFIED);
+		Assertion.isFalse(document == null || document.getId() == null, Errors.ARCHIVE_DOCUMENT_IS_NOT_SPECIFIED);
 
-		archive.clean();
+		archive.cleanup(CRUD.CREATE);
 		archive.setId(repositoryService.newId());
 		archive.setCreator(creator);
 		archive.setDocument(document);
 		archive.refreshCreatedDate();
-		moduleService.fill(archive.getModules(), archive, creator);
+		moduleService.assemble(archive.getModules(), archive, creator);
 		addModuleNodes(archive, archive.getModules());
 		return archive;
 	}
 
-	public Archive fillAndPersist(Archive archive, Document document, User creator)
+	public Archive create(Archive archive, Document document, User creator)
 	{
-		fill(archive, document, creator);
+		assemble(archive, document, creator);
 		persistApis(archive);
 		moduleRepository.insertAll(archive.getModules());
 		archiveRepository.insert(archive);
@@ -104,12 +103,40 @@ public class ArchiveService
 		return archive;
 	}
 
-	//手动发布后archive带上版本消息，并且不再是临时文件，其他人也能看到
-	public Archive update(Archive current, Map<String, Object> patch, User user)
+	@SuppressWarnings("unchecked")
+	public Archive update(Archive archive, Map<String, Object> patch, User user)
 	{
-		BeanUtil.patch(current, "", patch, "");
-		current.refreshCreatedDate();
-		return current;
+		Assertion.isTrue(archive.isUpdatable(), Errors.ARCHIVE_IS_ALREADY_RELEASED);
+
+		final Patch.Operation operation = new JSONPatch<Archive>().source(patch).target(archive)
+				.build((Archive converted) ->
+				{
+					if (converted.getRequest() != null)
+						converted.getRequest().setMethods(null);
+					return converted;
+				})
+				.update("description")
+				.update("status")
+				.update("request");
+
+		if (archive.isReleased())
+		{
+			operation.update("version");
+		}
+
+		this.validate(archive);
+		archive.refreshUpdatedDate();
+		//archiveRepository.update(archive);
+		return archive;
+	}
+
+	private void validate(Archive archive)
+	{
+		Assertion.notNull(archive.getStatus(), Errors.ARCHIVE_STATUS_IS_NULL);
+		if (archive.isReleased())
+		{
+			Assertion.notNull(archive.getVersion(), Errors.ARCHIVE_VERSION_IS_NULL);
+		}
 	}
 
 	public Archive get(final long id, final User user)
@@ -149,7 +176,7 @@ public class ArchiveService
 			ArrayList<Api> apis = (ArrayList<Api>) apiRepository.findIn(apiIds);
 			if (apis != null)
 			{
-				apis.sort((o1, o2) -> apiNodeMap.get(o1.getId()).getOrdinal() - apiNodeMap.get(o2.getId()).getOrdinal());
+				apis.sort(Comparator.comparingInt(o -> apiNodeMap.get(o.getId()).getOrdinal()));
 				for (Api api : apis)
 				{
 					moduleMap.get(parentMap.get(api.getId())).addApi(api);

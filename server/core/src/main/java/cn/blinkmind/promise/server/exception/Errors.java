@@ -10,10 +10,14 @@ public final class Errors
 {
 	public static final Error DOCUMENT_NAME_IS_BLANK = new Error(HttpStatus.BAD_REQUEST, 40010001, "document name is blank");
 
+	public static final Error BRANCH_NAME_IS_BLANK = new Error(HttpStatus.BAD_REQUEST, 40010001, "branch name is blank");
+	public static final Error BRANCH_DOCUMENT_IS_NOT_SPECIFIED = new Error(HttpStatus.BAD_REQUEST, 40010001, "document is not specified");
+
+	public static final Error ARCHIVE_STATUS_IS_NULL = new Error(HttpStatus.BAD_REQUEST, 40011001, "archive status is null");
 	public static final Error ARCHIVE_VERSION_IS_NULL = new Error(HttpStatus.BAD_REQUEST, 40011001, "archive version is null");
 	public static final Error ARCHIVE_VERSION_IS_INVALID = new Error(HttpStatus.BAD_REQUEST, 40011002, "archive version is invalid");
-	public static final Error ARCHIVE_BRANCH_IS_INVALID = new Error(HttpStatus.BAD_REQUEST, 40011003, "archive branch is invalid");
 	public static final Error ARCHIVE_DOCUMENT_IS_NOT_SPECIFIED = new Error(HttpStatus.BAD_REQUEST, 40011004, "document is not specified");
+	public static final Error ARCHIVE_IS_ALREADY_RELEASED = new Error(HttpStatus.BAD_REQUEST, 40011005, "can not modify the archive since it is already released");
 
 	public static final Error MODULE_NAME_IS_BLANK = new Error(HttpStatus.BAD_REQUEST, 40012001, "module name is blank");
 

@@ -1,12 +1,12 @@
 package cn.blinkmind.promise.server.service;
 
-import cn.blinkmind.promise.server.exception.Error;
+import cn.blinkmind.promise.server.exception.Assertion;
 import cn.blinkmind.promise.server.exception.Errors;
 import cn.blinkmind.promise.server.repository.ModuleRepository;
 import cn.blinkmind.promise.server.repository.entity.Archive;
+import cn.blinkmind.promise.server.repository.entity.CRUD;
 import cn.blinkmind.promise.server.repository.entity.Module;
 import cn.blinkmind.promise.server.repository.entity.User;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,31 +28,30 @@ public class ModuleService
 	@Autowired
 	private RepositoryService repositoryService;
 
-	public Module fill(Module module, Archive archive, User creator)
+	public Module assemble(Module module, Archive archive, User creator)
 	{
-		if (StringUtils.isBlank(module.getName()))
-			Error.occurs(Errors.MODULE_NAME_IS_BLANK);
+		Assertion.notBlank(module.getName(), Errors.MODULE_NAME_IS_BLANK);
 
-		module.clean();
+		module.cleanup(CRUD.CREATE);
 		module.setId(repositoryService.newId());
 		module.setCreator(creator);
 		module.refreshCreatedDate();
 		module.setArchive(archive);
-		apiService.fill(module.getApis(), module, creator);
+		apiService.assemble(module.getApis(), module, creator);
 		return module;
 	}
 
-	public Collection<Module> fill(Collection<Module> modules, Archive archive, User creator)
+	public Collection<Module> assemble(Collection<Module> modules, Archive archive, User creator)
 	{
 		if (modules != null)
 			for (Module module : modules)
-				fill(module, archive, creator);
+				assemble(module, archive, creator);
 		return modules;
 	}
 
-	public Module fillAndPersist(Module module, Archive archive, User creator)
+	public Module create(Module module, Archive archive, User creator)
 	{
-		fill(module, archive, creator);
+		assemble(module, archive, creator);
 		moduleRepository.insert(module);
 		return module;
 	}

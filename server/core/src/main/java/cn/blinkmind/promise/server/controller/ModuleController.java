@@ -31,7 +31,7 @@ public class ModuleController
 	public ResponseEntity<ObjectId> create(@PathVariable(name = "archiveId") long archiveId, @RequestBody Module moduleData, @RequestAttribute User creator)
 	{
 		Archive archive = archiveRepository.require(archiveId);
-		Module module = moduleService.fill(moduleData, archive, creator);
+		Module module = moduleService.create(moduleData, archive, creator);
 		return ResponseEntity.ok(new ObjectId(module.getId()));
 	}
 }
