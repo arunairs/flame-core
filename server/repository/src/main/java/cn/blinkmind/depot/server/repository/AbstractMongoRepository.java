@@ -9,7 +9,6 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 
-import javax.annotation.PostConstruct;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
@@ -23,27 +22,19 @@ public abstract class AbstractMongoRepository<T, ID extends Serializable> implem
 	@Autowired
 	protected MongoTemplate mongoTemplate;
 
-	private Class<T> entityClass;
-
 	protected abstract Class<T> getEntityClass();
 
-	@PostConstruct
-	private void init()
-	{
-		this.entityClass = getEntityClass();
-	}
-
-	public <S extends T> S save(final S entity)
+	public T save(final T entity)
 	{
 		mongoTemplate.save(entity);
 		return entity;
 	}
 
-	public <S extends T> List<S> save(final Iterable<S> entites)
+	public List<T> save(final Iterable<T> entites)
 	{
-		for (S entity : entites)
+		for (T entity : entites)
 			save(entity);
-		return (List<S>) entites;
+		return (List<T>) entites;
 	}
 
 	public T update(final T entity)
@@ -53,93 +44,68 @@ public abstract class AbstractMongoRepository<T, ID extends Serializable> implem
 
 	public T update(final Query query, final T entity)
 	{
-		return update(query, entityClass, entity);
-	}
-
-	private T update(final Query query, final Class<T> entityClass, final T entity)
-	{
 		DBObject object = (DBObject) mongoTemplate.getConverter().convertToMongoType(entity);
 		Update update = Update.fromDBObject(object);
-		return mongoTemplate.findAndModify(query, update, entityClass);
+		return mongoTemplate.findAndModify(query, update, getEntityClass());
 	}
 
 	public T require(final ID id)
 	{
-		return require(id, entityClass);
-	}
-
-	private T require(final ID id, final Class<T> entityClass)
-	{
-		T entity = findOne(id, entityClass);
+		T entity = get(id);
 		if (entity == null) throw new ResourceNotFoundException();
 		return entity;
 	}
 
-	public T findOne(final ID id)
+	public T get(final ID id)
 	{
-		return findOne(id, entityClass);
+		return mongoTemplate.findById(id, getEntityClass());
 	}
 
-	private T findOne(final ID id, final Class<T> entityClass)
+	public T findOne(final Query query)
 	{
-		return mongoTemplate.findById(id, entityClass);
-	}
-
-	public T findOne(final Query query, final ID id)
-	{
-		return findOne(query, id, entityClass);
-	}
-
-	private T findOne(final Query query, final ID id, final Class<T> entityClass)
-	{
-		return mongoTemplate.findById(id, entityClass);
+		return mongoTemplate.findOne(query, getEntityClass());
 	}
 
 	public boolean exists(final ID id)
 	{
-		return exists(id, entityClass);
-	}
-
-	private boolean exists(final ID id, final Class<T> entityClass)
-	{
 		Query query = new Query();
 		query.addCriteria(Criteria.where(ID).is(id));
-		return mongoTemplate.exists(query, entityClass);
+		return mongoTemplate.exists(query, getEntityClass());
 	}
 
-	public List<T> findAll(final Query query, final Class<T> entityClass)
+	public boolean exists(final Query query)
 	{
-		return mongoTemplate.find(query, entityClass);
+		return mongoTemplate.exists(query, getEntityClass());
+	}
+
+	public List<T> findAll(final Query query)
+	{
+		return mongoTemplate.find(query, getEntityClass());
 	}
 
 	public List<T> findAll()
 	{
-		return mongoTemplate.findAll(entityClass);
+		return mongoTemplate.findAll(getEntityClass());
 	}
 
-	public List<T> findIn(final Collection<?> collection)
-	{
-		return findIn(collection, entityClass);
-	}
-
-	private List<T> findIn(final Collection<?> collection, final Class<T> entityClass)
+	public List<T> findAll(final Iterable<ID> ids)
 	{
 		Query query = new Query();
-		query.addCriteria(Criteria.where(ID).in(collection));
-		return mongoTemplate.find(query, entityClass);
+		query.addCriteria(Criteria.where(ID).in(ids));
+		return mongoTemplate.find(query, getEntityClass());
 	}
 
-	public <S extends T> S insert(final S entity)
+	public T insert(final T entity)
 	{
 		mongoTemplate.insert(entity);
 		return entity;
 	}
 
-	public <S extends T> List<S> insert(final Iterable<S> entities)
+	public List<T> insert(final Iterable<T> entities)
 	{
-		for (S entity : entities)
+		for (T entity : entities)
 			insert(entity);
-		return (List<S>) entities;
+		return (List<T>) entities;
 	}
 
 	public void insertAll(final Collection<? extends Object> objectsToSave)
@@ -148,26 +114,16 @@ public abstract class AbstractMongoRepository<T, ID extends Serializable> implem
 		mongoTemplate.insertAll(objectsToSave);
 	}
 
-	public Iterable<T> findAll(final Iterable<ID> ids)
+	public long count(final Query query)
 	{
-		return null;
-	}
-
-	public long count()
-	{
-		return count(entityClass);
-	}
-
-	private long count(final Class<T> entityClass)
-	{
-		return mongoTemplate.count(null, entityClass);
+		return mongoTemplate.count(query, getEntityClass());
 	}
 
 	public void delete(final ID id)
 	{
 		Query query = new Query();
 		query.addCriteria(Criteria.where("_id").is(id));
-		mongoTemplate.remove(query, entityClass);
+		mongoTemplate.remove(query, getEntityClass());
 	}
 
 	public void delete(final T entity)
@@ -177,27 +133,17 @@ public abstract class AbstractMongoRepository<T, ID extends Serializable> implem
 
 	public void delete(final Query query)
 	{
-		mongoTemplate.remove(query, entityClass);
+		mongoTemplate.remove(query, getEntityClass());
 	}
 
-	private void delete(final Query query, final Class<T> entityClass)
+	public void delete(final Iterable<T> entities)
 	{
-		mongoTemplate.remove(query, entityClass);
-	}
-
-	public <S extends T> void delete(final Iterable<S> entities)
-	{
-		for (S entity : entities)
+		for (T entity : entities)
 			delete(entity);
 	}
 
 	public BulkOperations bulkOps(final BulkOperations.BulkMode bulkMode)
 	{
-		return mongoTemplate.bulkOps(bulkMode, entityClass);
-	}
-
-	private BulkOperations bulkOps(final BulkOperations.BulkMode bulkMode, final Class<T> entityClass)
-	{
-		return mongoTemplate.bulkOps(bulkMode, entityClass);
+		return mongoTemplate.bulkOps(bulkMode, getEntityClass());
 	}
 }
