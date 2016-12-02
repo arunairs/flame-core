@@ -13,7 +13,7 @@ import java.util.Date;
  * @date 26/09/2016 2:44 PM
  */
 @JsonInclude(value = JsonInclude.Include.NON_NULL)
-class EntityBean implements Indexable<Long>, Cleanable
+public class EntityBean implements Indexable<Long>, Cleanable
 {
 	private Long id;
 	private Ref<Long> creatorRef;

@@ -1,6 +1,7 @@
 package cn.blinkmind.depot.server.repository.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.index.CompoundIndex;
 
@@ -16,6 +17,14 @@ public class Branch extends EntityBean
 	private Ref<Long> documentRef;
 	private Document document;
 	private Archive archive;
+	private Long version;
+
+	@JsonView(View.WithBranchId.class)
+	@Override
+	public void setId(Long id)
+	{
+		super.setId(id);
+	}
 
 	public String getName()
 	{
@@ -58,9 +67,19 @@ public class Branch extends EntityBean
 		return archive;
 	}
 
-	@JsonIgnore
 	public void setArchive(Archive archive)
 	{
 		this.archive = archive;
+	}
+
+	@org.springframework.data.annotation.Version
+	public Long getVersion()
+	{
+		return version;
+	}
+
+	public void setVersion(Long version)
+	{
+		this.version = version;
 	}
 }

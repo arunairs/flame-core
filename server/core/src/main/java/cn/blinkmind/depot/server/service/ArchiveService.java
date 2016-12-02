@@ -24,11 +24,11 @@ public class ArchiveService
 	@Autowired
 	private BranchRepository branchRepository;
 
-	@Autowired
-	private RepositoryService repositoryService;
-
-	@Autowired
-	private ModuleService moduleService;
+	public Archive get(final Branch branch, final User user)
+	{
+		Archive archive = archiveRepository.get(branch);
+		return archive;
+	}
 
 	public Archive patch(final Map<String, Object> patch, final Branch branch, final User user)
 	{
@@ -38,13 +38,7 @@ public class ArchiveService
 				.update("description")
 				.update("request");
 		archive.refreshUpdatedDate();
-		branchRepository.update(branch);
-		return archive;
-	}
-
-	public Archive get(final long branchId, final User user)
-	{
-		Archive archive = archiveRepository.get(branchId);
+		branchRepository.update(branch,branch.getId());
 		return archive;
 	}
 }

@@ -23,15 +23,23 @@ public class DocumentService
 	@Autowired
 	private RepositoryService repositoryService;
 
+	public Document get(long id, User user)
+	{
+		return documentRepository.get(id);
+	}
+
+	public Document require(long id, User user)
+	{
+		return documentRepository.require(id);
+	}
+
 	public Document create(Document document, User creator)
 	{
 		Assertion.notBlank(document.getName(), Errors.DOCUMENT_NAME_IS_BLANK);
 
-		document.cleanup(CRUD.CREATE);
 		document.setId(repositoryService.newId());
 		document.setType(DocumentType.REST_API);
 		document.setCreator(creator);
-		document.refreshCreatedDate();
 		documentRepository.insert(document);
 		return document;
 	}

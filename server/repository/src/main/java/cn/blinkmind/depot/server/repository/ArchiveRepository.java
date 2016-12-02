@@ -3,7 +3,6 @@ package cn.blinkmind.depot.server.repository;
 import cn.blinkmind.depot.server.repository.entity.Archive;
 import cn.blinkmind.depot.server.repository.entity.Branch;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 
@@ -17,11 +16,8 @@ public class ArchiveRepository implements cn.blinkmind.depot.server.repository.R
 	@Autowired
 	private BranchRepository branchRepository;
 
-	public Archive get(long branchId)
+	public Archive get(final Branch branch)
 	{
-		Query query = new Query();
-		query.fields().include("archive");
-		Branch branch = branchRepository.findOne(query, branchId);
-		return branch.getArchive();
+		return null;
 	}
 }

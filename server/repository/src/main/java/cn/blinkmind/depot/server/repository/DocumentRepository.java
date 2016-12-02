@@ -22,16 +22,16 @@ public class DocumentRepository extends AbstractMongoRepository<Document, Long>
 	}
 
 	@Override
-	public Document findOne(Long id)
+	public Document get(Long id)
 	{
 		Aggregation aggregation = Aggregation.newAggregation(
 				Aggregation.match(Criteria.where("_id").is(id)),
 				Aggregation.lookup("users", "creatorId", "_id", "joinCreators")
 		);
-		DBObject result = mongoTemplate.aggregate(aggregation, Document.class, DBObject.class).getUniqueMappedResult();
-		Document document = this.mongoTemplate.getConverter().read(Document.class, result);
+		DBObject result = getMongoTemplate().aggregate(aggregation, Document.class, DBObject.class).getUniqueMappedResult();
+		Document document = getMongoTemplate().getConverter().read(Document.class, result);
 		BasicDBList joinCreators = (BasicDBList) result.get("joinCreators");
-		User creator = this.mongoTemplate.getConverter().read(User.class, (DBObject) joinCreators.get(0));
+		User creator = getMongoTemplate().getConverter().read(User.class, (DBObject) joinCreators.get(0));
 		document.setCreator(creator);
 		return document;
 	}

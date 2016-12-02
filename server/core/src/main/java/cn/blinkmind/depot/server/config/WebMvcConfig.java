@@ -1,7 +1,9 @@
 package cn.blinkmind.depot.server.config;
 
+import cn.blinkmind.depot.server.converter.SnapshotConverter;
 import cn.blinkmind.depot.server.filter.TokenAuthenticationInterceptor;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.format.FormatterRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
@@ -16,5 +18,11 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter
 	public void addInterceptors(InterceptorRegistry registry)
 	{
 		registry.addInterceptor(new TokenAuthenticationInterceptor());
+	}
+
+	@Override
+	public void addFormatters(FormatterRegistry registry)
+	{
+		registry.addConverter(new SnapshotConverter());
 	}
 }

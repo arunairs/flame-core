@@ -31,7 +31,7 @@ public class BranchController
 
 	@Token
 	@PostMapping(path = "documents/{documentId}/branches")
-	public ResponseEntity<ObjectId> create(@PathVariable(name = "documentId") long documentId, @RequestBody Branch branch, @RequestAttribute User user)
+	public ResponseEntity<ObjectId> create(@PathVariable(name = "documentId") long documentId, @RequestBody Branch branch, @RequestAttribute(name = "user") User user)
 	{
 		Document document = documentRepository.require(documentId);
 		branchService.create(branch, document, user);
@@ -40,12 +40,10 @@ public class BranchController
 
 	@Token
 	@DeleteMapping(path = "branches/{id}")
-	public ResponseEntity<Void> delete(@PathVariable(name = "id") long id, @RequestAttribute User user)
+	public ResponseEntity<Void> delete(@PathVariable(name = "id") long id, @RequestAttribute(name = "user") User user)
 	{
 		Branch branch = branchRepository.require(id);
 		branchService.delete(branch, user);
 		return ResponseEntity.noContent().build();
 	}
-
-
 }

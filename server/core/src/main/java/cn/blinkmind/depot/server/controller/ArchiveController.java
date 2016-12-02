@@ -29,7 +29,8 @@ public class ArchiveController
 	@GetMapping(path = "branches/{branchId}/archive")
 	public ResponseEntity<Archive> get(@PathVariable(name = "branchId") long branchId, @RequestAttribute User user)
 	{
-		return ResponseEntity.ok(archiveService.get(branchId, user));
+		Branch branch = branchRepository.require(branchId);
+		return ResponseEntity.ok(archiveService.get(branch, user));
 	}
 
 	@Token

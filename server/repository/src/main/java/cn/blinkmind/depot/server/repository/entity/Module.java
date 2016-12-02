@@ -8,6 +8,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.annotation.Transient;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author jiaan.zhang@oracle.com
@@ -17,7 +18,7 @@ public class Module extends EntityBean implements Resource
 {
 	private String name;
 	private GeneralRequest request;
-	private ArrayList<Api> apis;
+	private List<Api> apis;
 	private Archive archive;
 
 	public String getName()
@@ -41,12 +42,12 @@ public class Module extends EntityBean implements Resource
 		this.request = request;
 	}
 
-	public ArrayList<Api> getApis()
+	public List<Api> getApis()
 	{
 		return apis;
 	}
 
-	public void setApis(ArrayList<Api> apis)
+	public void setApis(List<Api> apis)
 	{
 		this.apis = apis;
 	}

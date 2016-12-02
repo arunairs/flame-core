@@ -10,8 +10,11 @@ public final class Errors
 {
 	public static final Error DOCUMENT_NAME_IS_BLANK = new Error(HttpStatus.BAD_REQUEST, 40010001, "document name is blank");
 
-	public static final Error BRANCH_NAME_IS_BLANK = new Error(HttpStatus.BAD_REQUEST, 40010001, "branch name is blank");
+	public static final Error BRANCH_NOT_FOUND = new Error(HttpStatus.BAD_REQUEST, 40010001, "branch is not found");
 	public static final Error BRANCH_DOCUMENT_IS_NOT_SPECIFIED = new Error(HttpStatus.BAD_REQUEST, 40010001, "document is not specified");
+	public static final Error BRANCH_NAME_IS_BLANK = new Error(HttpStatus.BAD_REQUEST, 40010001, "branch name is blank");
+
+	public static final Error SNAPSHOT_BRANCH_IS_NOT_SPECIFIED = new Error(HttpStatus.BAD_REQUEST, 40010001, "branch is not specified");
 
 	public static final Error ARCHIVE_STATUS_IS_NULL = new Error(HttpStatus.BAD_REQUEST, 40011001, "archive status is null");
 	public static final Error ARCHIVE_VERSION_IS_NULL = new Error(HttpStatus.BAD_REQUEST, 40011001, "archive version is null");
@@ -33,6 +36,6 @@ public final class Errors
 	public static final Error ACCOUNT_NAME_IS_BLANK = new Error(HttpStatus.BAD_REQUEST, 4004001, "account name is blank");
 	public static final Error ACCOUNT_PASSWORD_IS_BLANK = new Error(HttpStatus.BAD_REQUEST, 4004002, "password is blank");
 
-	public static final Error RESOURCE_NOT_FOUND = new Error(HttpStatus.NOT_FOUND, 40400001, "resource not found");
+	public static final Error RESOURCE_NOT_FOUND = new Error(HttpStatus.NOT_FOUND, 40400001, "resource is not found");
 	public static final Error RESOURCE_ALREADY_EXISTS = new Error(HttpStatus.CONFLICT, 40900001, "resource already exists");
 }

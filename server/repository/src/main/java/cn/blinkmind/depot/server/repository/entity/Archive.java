@@ -4,7 +4,7 @@ import cn.blinkmind.depot.server.bean.web.GeneralRequest;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author jiaan.zhang@oracle.com
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class Archive extends EntityBean implements Resource
 {
 	private String description;
-	private ArrayList<Module> modules;
+	private List<Module> modules;
 	private GeneralRequest request;
 
 	public String getDescription()
@@ -26,12 +26,12 @@ public class Archive extends EntityBean implements Resource
 		this.description = description;
 	}
 
-	public ArrayList<Module> getModules()
+	public List<Module> getModules()
 	{
 		return modules;
 	}
 
-	public void setModules(ArrayList<Module> modules)
+	public void setModules(List<Module> modules)
 	{
 		this.modules = modules;
 	}

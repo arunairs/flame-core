@@ -1,4 +1,4 @@
-rootProject.name = 'promise'
+rootProject.name = 'depot'
 include ':buildSrc'
 include ':deployment:init'
 include ':server'
