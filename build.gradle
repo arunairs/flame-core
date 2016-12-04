@@ -1,8 +1,3 @@
-apply from: 'script/env.gradle'
-apply from: 'script/external.gradle'
-apply from: 'script/redis.gradle'
-apply from: 'script/mongo.gradle'
-
 buildscript {
     repositories {
         //jcenter()

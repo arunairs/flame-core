@@ -1,5 +1,6 @@
 rootProject.name = 'depot'
 include ':buildSrc'
+include ':external'
 include ':deployment:init'
 include ':server'
 include ':server:bean'
