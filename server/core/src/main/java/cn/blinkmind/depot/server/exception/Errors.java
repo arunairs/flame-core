@@ -8,9 +8,10 @@ import org.springframework.http.HttpStatus;
  */
 public final class Errors
 {
+	public static final Error DOCUMENT_IS_NOT_FOUND = new Error(HttpStatus.NOT_FOUND, 40410001, "document is not found");
 	public static final Error DOCUMENT_NAME_IS_BLANK = new Error(HttpStatus.BAD_REQUEST, 40010001, "document name is blank");
 
-	public static final Error BRANCH_NOT_FOUND = new Error(HttpStatus.BAD_REQUEST, 40010001, "branch is not found");
+	public static final Error BRANCH_IS_NOT_FOUND = new Error(HttpStatus.NOT_FOUND, 40410001, "branch is not found");
 	public static final Error BRANCH_DOCUMENT_IS_NOT_SPECIFIED = new Error(HttpStatus.BAD_REQUEST, 40010001, "document is not specified");
 	public static final Error BRANCH_NAME_IS_BLANK = new Error(HttpStatus.BAD_REQUEST, 40010001, "branch name is blank");
 

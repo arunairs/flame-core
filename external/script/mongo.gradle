@@ -1,7 +1,7 @@
 import cn.blinkmind.depot.gradle.TaskGroup
 import cn.blinkmind.depot.gradle.external.Mongo
 
-task mongoEnv(group: TaskGroup.MONGO, dependsOn: [':externalEnv']) {
+task mongoEnv(group: TaskGroup.MONGO, dependsOn: ['externalEnv']) {
     ext.addMongo = { String name ->
         externalEnv.addComponent(name, new Mongo(name, project,
                 new Mongo.Settings(
@@ -22,14 +22,14 @@ task mongoEnv(group: TaskGroup.MONGO, dependsOn: [':externalEnv']) {
     }
 }
 
-task startMongo(group: TaskGroup.MONGO, dependsOn: [':mongoEnv']) {
+task startMongo(group: TaskGroup.MONGO, dependsOn: ['mongoEnv']) {
     doLast {
         Mongo mongo = mongoEnv.getMongo('mongo')
         mongo.start()
     }
 }
 
-task stopMongo(group: TaskGroup.MONGO, dependsOn: [':mongoEnv']) {
+task stopMongo(group: TaskGroup.MONGO, dependsOn: ['mongoEnv']) {
     doLast {
         Mongo mongo = mongoEnv.getMongo('mongo')
         mongo.stop()
