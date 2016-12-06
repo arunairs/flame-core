@@ -3,6 +3,7 @@ package cn.blinkmind.depot.server.repository.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
 
@@ -23,12 +24,12 @@ public class EntityBean implements Indexable<Long>, Cleanable
 
 	@Id
 	@Override
-	public Long getId()
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    public Long getId()
 	{
 		return id;
 	}
 
-	@JsonIgnore
 	@Override
 	public void setId(Long id)
 	{
@@ -41,18 +42,17 @@ public class EntityBean implements Indexable<Long>, Cleanable
 		return creatorRef;
 	}
 
-	@JsonIgnore
 	private void setCreatorRef(Ref<Long> creatorRef)
 	{
 		this.creatorRef = creatorRef;
 	}
 
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	public Date getCreatedDate()
 	{
 		return createdDate;
 	}
 
-	@JsonIgnore
 	public void setCreatedDate(Date createdDate)
 	{
 		this.createdDate = createdDate;
@@ -63,12 +63,12 @@ public class EntityBean implements Indexable<Long>, Cleanable
 		this.createdDate = new Date();
 	}
 
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	public Date getUpdatedDate()
 	{
 		return updatedDate;
 	}
 
-	@JsonIgnore
 	public void setUpdatedDate(Date updatedDate)
 	{
 		this.updatedDate = updatedDate;
@@ -80,13 +80,13 @@ public class EntityBean implements Indexable<Long>, Cleanable
 	}
 
 	@Transient
-	@JsonIgnoreProperties({"id", "createdDate", "updatedDate"})
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    @JsonIgnoreProperties({"id", "createdDate", "updatedDate"})
 	public User getCreator()
 	{
 		return creator;
 	}
 
-	@JsonIgnore
 	public void setCreator(User creator)
 	{
 		this.creator = creator;

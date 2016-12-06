@@ -25,8 +25,8 @@ public class DocumentRepository extends AbstractMongoRepository<Document, Long>
 	public Document get(Long id)
 	{
 		Aggregation aggregation = Aggregation.newAggregation(
-				Aggregation.match(Criteria.where("_id").is(id)),
-				Aggregation.lookup("users", "creatorId", "_id", "joinCreators")
+				Aggregation.match(Criteria.where(ID).is(id)),
+				Aggregation.lookup("users", "creatorRef._id", ID, "joinCreators")
 		);
 		DBObject result = getMongoTemplate().aggregate(aggregation, Document.class, DBObject.class).getUniqueMappedResult();
 		Document document = getMongoTemplate().getConverter().read(Document.class, result);

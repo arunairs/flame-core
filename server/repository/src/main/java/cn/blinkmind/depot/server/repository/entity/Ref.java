@@ -1,6 +1,7 @@
 package cn.blinkmind.depot.server.repository.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * @author jiaan.zhang@oracle.com
@@ -11,12 +12,12 @@ public class Ref<ID>
 {
 	ID id;
 
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	public ID getId()
 	{
 		return id;
 	}
 
-	@JsonIgnore
 	public void setId(ID id)
 	{
 		this.id = id;

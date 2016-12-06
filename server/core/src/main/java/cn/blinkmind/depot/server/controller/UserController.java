@@ -14,16 +14,14 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping(path = "users")
-public class UserController
-{
-	@Autowired
-	private UserService userService;
+public class UserController {
 
-	@PostMapping
-	@ResponseStatus(HttpStatus.CREATED)
-	public ResponseEntity<ObjectId> create(@RequestBody User userData)
-	{
-		User user = userService.create(userData);
-		return ResponseEntity.ok(new ObjectId(user.getId()));
-	}
+    @Autowired
+    private UserService userService;
+
+    @PostMapping
+    public ResponseEntity<ObjectId> create(@RequestBody User user) {
+        userService.create(user);
+        return ResponseEntity.status(HttpStatus.CREATED).body(new ObjectId(user.getId()));
+    }
 }

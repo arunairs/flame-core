@@ -2,6 +2,7 @@ package cn.blinkmind.depot.server.repository.entity;
 
 import cn.blinkmind.depot.server.repository.json.SnapshotDeserializer;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.index.CompoundIndex;
@@ -23,17 +24,16 @@ public class Snapshot extends EntityBean {
         return branchRef;
     }
 
-    @JsonIgnore
     private void setBranchRef(Ref<Long> branchRef) {
         this.branchRef = branchRef;
     }
 
     @Transient
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     public Branch getBranch() {
         return branch;
     }
 
-    @JsonIgnore
     public void setBranch(Branch branch) {
         this.branch = branch;
         if (this.branch != null)
@@ -41,11 +41,11 @@ public class Snapshot extends EntityBean {
         else setBranchRef(null);
     }
 
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     public Archive getArchive() {
         return archive;
     }
 
-    @JsonIgnore
     public void setArchive(Archive archive) {
         this.archive = archive;
     }
