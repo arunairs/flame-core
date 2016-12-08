@@ -2,6 +2,7 @@ package cn.blinkmind.depot.server.repository.entity;
 
 import cn.blinkmind.depot.server.repository.json.SnapshotDeserializer;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import org.springframework.data.annotation.Transient;
@@ -30,6 +31,7 @@ public class Snapshot extends EntityBean {
 
     @Transient
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    @JsonIgnoreProperties(value = {"createdDate", "archive", "version"})
     public Branch getBranch() {
         return branch;
     }

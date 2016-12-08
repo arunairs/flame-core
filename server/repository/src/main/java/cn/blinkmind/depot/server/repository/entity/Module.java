@@ -21,6 +21,13 @@ public class Module extends EntityBean implements Resource
 	private List<Api> apis;
 	private Archive archive;
 
+	@Override
+	@Transient
+	public Long getId()
+	{
+		return super.getId();
+	}
+
 	public String getName()
 	{
 		return name;

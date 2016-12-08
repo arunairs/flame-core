@@ -17,6 +17,13 @@ public class Api extends EntityBean implements Resource
 	private Request request;
 	private Module module;
 
+	@Override
+	@Transient
+	public Long getId()
+	{
+		return super.getId();
+	}
+
 	public String getName()
 	{
 		return name;

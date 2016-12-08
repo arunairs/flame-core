@@ -1,51 +1,45 @@
 package cn.blinkmind.depot.server.repository.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.io.Serializable;
 
 /**
  * @author jiaan.zhang@oracle.com
  * @date 18/10/2016 11:44 AM
  */
-@SuppressWarnings("unchecked")
-public class Ref<ID>
-{
-	ID id;
+public class Ref<ID extends Serializable> {
 
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	public ID getId()
-	{
-		return id;
-	}
+    private ID id;
 
-	public void setId(ID id)
-	{
-		this.id = id;
-	}
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    public ID getId() {
+        return id;
+    }
 
-	private Ref()
-	{
-	}
+    public void setId(ID id) {
+        this.id = id;
+    }
 
-	public Ref(Indexable indexable)
-	{
-		this.id = (ID) indexable.getId();
-	}
+    private Ref() {
+    }
 
-	@Override
-	public boolean equals(Object o)
-	{
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
+    public Ref(Indexable<ID> indexable) {
+        this.id = indexable.getId();
+    }
 
-		Ref<?> ref = (Ref<?>) o;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
-		return id.equals(ref.id);
-	}
+        Ref<?> ref = (Ref<?>) o;
 
-	@Override
-	public int hashCode()
-	{
-		return id.hashCode();
-	}
+        return id.equals(ref.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode();
+    }
 }

@@ -1,12 +1,14 @@
 package cn.blinkmind.depot.server.service;
 
 import cn.blinkmind.depot.server.exception.Assertion;
+import cn.blinkmind.depot.server.exception.Error;
 import cn.blinkmind.depot.server.exception.Errors;
 import cn.blinkmind.depot.server.repository.SnapshotRepository;
 import cn.blinkmind.depot.server.repository.entity.Archive;
 import cn.blinkmind.depot.server.repository.entity.Branch;
 import cn.blinkmind.depot.server.repository.entity.Snapshot;
 import cn.blinkmind.depot.server.repository.entity.User;
+import cn.blinkmind.depot.server.repository.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,6 +37,25 @@ public class SnapshotService {
         snapshot.setArchive(new Archive());
         snapshotRepository.insert(snapshot);
         return snapshot;
+    }
+
+    public Snapshot get(long id, User user) {
+        return snapshotRepository.get(id);
+    }
+
+    public Snapshot require(long id, User user) {
+        Snapshot snapshot = snapshotRepository.require(id);
+        return snapshot;
+    }
+
+    public Snapshot require(long id, User user, Error error) {
+        try {
+            Snapshot snapshot = require(id, user);
+            return snapshot;
+        } catch (ResourceNotFoundException e) {
+            Error.occurs(error);
+            return null;
+        }
     }
 
     public Snapshot get(Branch branch, User user) {

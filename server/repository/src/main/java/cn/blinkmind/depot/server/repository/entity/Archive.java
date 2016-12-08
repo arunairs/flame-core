@@ -3,6 +3,7 @@ package cn.blinkmind.depot.server.repository.entity;
 import cn.blinkmind.depot.server.bean.web.GeneralRequest;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.springframework.data.annotation.Transient;
 
 import java.util.List;
 
@@ -15,6 +16,13 @@ public class Archive extends EntityBean implements Resource
 	private String description;
 	private List<Module> modules;
 	private GeneralRequest request;
+
+	@Override
+	@Transient
+	public Long getId()
+	{
+		return super.getId();
+	}
 
 	public String getDescription()
 	{
