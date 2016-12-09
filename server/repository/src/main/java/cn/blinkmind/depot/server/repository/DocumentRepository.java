@@ -9,7 +9,7 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.stereotype.Repository;
 
 /**
- * @author jiaan.zhang@oracle.com
+ * @author jiaan.zhang@outlook.com
  * @date 26/09/2016 1:43 PM
  */
 @Repository

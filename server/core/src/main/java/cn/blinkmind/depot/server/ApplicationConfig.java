@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * @author jiaan.zhang@oracle.com
+ * @author jiaan.zhang@outlook.com
  * @date 26/09/2016 10:54 PM
  */
 @Configuration

@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author jiaan.zhang@oracle.com
+ * @author jiaan.zhang@outlook.com
  * @date 26/09/2016 3:57 PM
  */
 public class Module extends EntityBean implements Resource

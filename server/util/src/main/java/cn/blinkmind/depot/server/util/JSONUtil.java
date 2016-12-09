@@ -11,7 +11,7 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * @author jiaan.zhang@oracle.com
+ * @author jiaan.zhang@outlook.com
  * @date 21/10/2016 2:41 PM
  */
 public class JSONUtil

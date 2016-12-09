@@ -1,7 +1,7 @@
 package cn.blinkmind.depot.server.repository.entity;
 
 /**
- * @author jiaan.zhang@oracle.com
+ * @author jiaan.zhang@outlook.com
  * @date 28/11/2016 2:42 PM
  */
 @org.springframework.data.mongodb.core.mapping.Document(collection = "releases")

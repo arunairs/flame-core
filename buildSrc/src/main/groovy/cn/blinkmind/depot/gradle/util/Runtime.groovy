@@ -5,7 +5,7 @@ import org.apache.commons.io.IOUtils
 import java.nio.charset.StandardCharsets
 
 /**
- * @author jiaan.zhang@oracle.com
+ * @author jiaan.zhang@outlook.com
  * @date 12/27/15 1:34 AM
  */
 enum OS {

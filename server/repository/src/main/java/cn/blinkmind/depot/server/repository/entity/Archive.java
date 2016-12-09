@@ -8,7 +8,7 @@ import org.springframework.data.annotation.Transient;
 import java.util.List;
 
 /**
- * @author jiaan.zhang@oracle.com
+ * @author jiaan.zhang@outlook.com
  * @date 26/09/2016 2:40 PM
  */
 public class Archive extends EntityBean implements Resource

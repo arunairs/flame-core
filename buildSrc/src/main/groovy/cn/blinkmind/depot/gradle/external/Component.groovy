@@ -5,7 +5,7 @@ import cn.blinkmind.depot.gradle.util.Builder
 import org.gradle.api.Project
 
 /**
- * @author jiaan.zhang@oracle.com
+ * @author jiaan.zhang@outlook.com
  * @date 06/10/2016 1:50 AM
  */
 abstract class Component {

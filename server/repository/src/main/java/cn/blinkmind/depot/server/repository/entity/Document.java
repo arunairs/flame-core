@@ -3,7 +3,7 @@ package cn.blinkmind.depot.server.repository.entity;
 import org.springframework.data.mongodb.core.index.CompoundIndex;
 
 /**
- * @author jiaan.zhang@oracle.com
+ * @author jiaan.zhang@outlook.com
  * @date 26/09/2016 1:42 PM
  */
 @org.springframework.data.mongodb.core.mapping.Document(collection = "documents")

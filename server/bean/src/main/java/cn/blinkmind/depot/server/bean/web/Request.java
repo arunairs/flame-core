@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import java.util.*;
 
 /**
- * @author jiaan.zhang@oracle.com
+ * @author jiaan.zhang@outlook.com
  * @date 11/10/2016 12:07 AM
  */
 @JsonInclude(value = JsonInclude.Include.NON_NULL)

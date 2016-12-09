@@ -3,7 +3,7 @@ package cn.blinkmind.depot.server.repository.entity;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * @author jiaan.zhang@oracle.com
+ * @author jiaan.zhang@outlook.com
  * @date 26/09/2016 4:13 PM
  */
 public class Account extends EntityBean {

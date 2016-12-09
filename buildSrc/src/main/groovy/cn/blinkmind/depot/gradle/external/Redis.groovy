@@ -5,7 +5,7 @@ import org.gradle.api.Project
 import redis.clients.jedis.Jedis
 
 /**
- * @author jiaan.zhang@oracle.com
+ * @author jiaan.zhang@outlook.com
  * @date 06/10/2016 12:46 AM
  */
 class Redis extends Component {

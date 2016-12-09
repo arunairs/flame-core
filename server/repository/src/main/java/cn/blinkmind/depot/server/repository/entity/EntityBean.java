@@ -10,7 +10,7 @@ import org.springframework.data.annotation.Transient;
 import java.util.Date;
 
 /**
- * @author jiaan.zhang@oracle.com
+ * @author jiaan.zhang@outlook.com
  * @date 26/09/2016 2:44 PM
  */
 @JsonInclude(value = JsonInclude.Include.NON_NULL)

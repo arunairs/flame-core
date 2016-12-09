@@ -5,7 +5,7 @@ import cn.blinkmind.depot.server.util.JSONUtil;
 import java.util.Map;
 
 /**
- * @author jiaan.zhang@oracle.com
+ * @author jiaan.zhang@outlook.com
  * @date 19/11/2016 11:55 PM
  */
 public class JSONPatch<T> extends Patch<Map, T>

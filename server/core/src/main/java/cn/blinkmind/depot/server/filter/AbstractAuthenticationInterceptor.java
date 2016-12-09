@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * @author jiaan.zhang@oracle.com
+ * @author jiaan.zhang@outlook.com
  * @date 08/10/2016 8:17 PM
  */
 public abstract class AbstractAuthenticationInterceptor extends HandlerInterceptorAdapter

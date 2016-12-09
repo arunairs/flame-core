@@ -4,7 +4,7 @@ import cn.blinkmind.depot.server.repository.entity.User;
 import org.springframework.stereotype.Repository;
 
 /**
- * @author jiaan.zhang@oracle.com
+ * @author jiaan.zhang@outlook.com
  * @date 26/09/2016 4:24 PM
  */
 @Repository

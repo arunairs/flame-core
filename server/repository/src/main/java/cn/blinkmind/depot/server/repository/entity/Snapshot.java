@@ -9,7 +9,7 @@ import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.index.CompoundIndex;
 
 /**
- * @author jiaan.zhang@oracle.com
+ * @author jiaan.zhang@outlook.com
  * @date 29/11/2016 3:45 PM
  */
 @JsonDeserialize(using = SnapshotDeserializer.class)

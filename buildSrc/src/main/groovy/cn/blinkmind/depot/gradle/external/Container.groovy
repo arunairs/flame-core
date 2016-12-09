@@ -3,7 +3,7 @@ package cn.blinkmind.depot.gradle.external
 import org.gradle.api.Project
 
 /**
- * @author jiaan.zhang@oracle.com
+ * @author jiaan.zhang@outlook.com
  * @date 06/10/2016 12:46 AM
  */
 abstract class Container extends Component {

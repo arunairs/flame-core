@@ -9,7 +9,7 @@ import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.annotations.Test;
 
 /**
- * @author jiaan.zhang@oracle.com
+ * @author jiaan.zhang@outlook.com
  * @date 9/19/16 5:27 PM
  */
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)

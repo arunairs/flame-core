@@ -1,7 +1,7 @@
 package cn.blinkmind.depot.server.repository.entity;
 
 /**
- * @author jiaan.zhang@oracle.com
+ * @author jiaan.zhang@outlook.com
  * @date 04/10/2016 11:29 PM
  */
 public class Version

@@ -4,7 +4,7 @@ import com.sun.javafx.fxml.PropertyNotFoundException
 import org.apache.commons.lang3.BooleanUtils
 
 /**
- * @author jiaan.zhang@oracle.com
+ * @author jiaan.zhang@outlook.com
  * @date 4/5/16 11:35 PM
  */
 class Environment {

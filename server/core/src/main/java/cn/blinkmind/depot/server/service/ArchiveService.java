@@ -12,33 +12,31 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 
 /**
- * @author jiaan.zhang@oracle.com
+ * @author jiaan.zhang@outlook.com
  * @date 17/10/2016 12:41 AM
  */
 @Service
-public class ArchiveService
-{
-	@Autowired
-	private ArchiveRepository archiveRepository;
+public class ArchiveService {
 
-	@Autowired
-	private BranchRepository branchRepository;
+    @Autowired
+    private ArchiveRepository archiveRepository;
 
-	public Archive get(final Branch branch, final User user)
-	{
-		Archive archive = archiveRepository.get(branch);
-		return archive;
-	}
+    @Autowired
+    private BranchRepository branchRepository;
 
-	public Archive patch(final Map<String, Object> patch, final Branch branch, final User user)
-	{
-		final Archive archive = branch.getArchive();
-		new JSONPatch<Archive>().source(patch).target(archive)
-				.build()
-				.update("description")
-				.update("request");
-		archive.refreshUpdatedDate();
-		branchRepository.update(branch,branch.getId());
-		return archive;
-	}
+    public Archive get(final Branch branch, final User user) {
+        Archive archive = archiveRepository.get(branch);
+        return archive;
+    }
+
+    public Archive patch(final Map<String, Object> patch, final Branch branch, final User user) {
+        final Archive archive = branch.getArchive();
+        new JSONPatch<Archive>().source(patch).target(archive)
+                .build()
+                .update("description")
+                .update("request");
+        archive.refreshUpdatedDate();
+        branchRepository.update(branch);
+        return archive;
+    }
 }

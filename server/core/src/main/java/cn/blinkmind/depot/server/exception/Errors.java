@@ -3,7 +3,7 @@ package cn.blinkmind.depot.server.exception;
 import org.springframework.http.HttpStatus;
 
 /**
- * @author jiaan.zhang@oracle.com
+ * @author jiaan.zhang@outlook.com
  * @date 05/10/2016 10:27 PM
  */
 public final class Errors

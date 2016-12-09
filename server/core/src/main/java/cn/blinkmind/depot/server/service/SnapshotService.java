@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
- * @author jiaan.zhang@oracle.com
+ * @author jiaan.zhang@outlook.com
  * @date 29/11/2016 4:21 PM
  */
 @Service
@@ -67,5 +67,10 @@ public class SnapshotService {
         Snapshot snapshot = get(branch, user);
         Assertion.notNull(snapshot, Errors.RESOURCE_NOT_FOUND);
         return snapshot;
+    }
+
+    public void updateArchive(Snapshot snapshot, Archive archive, User user) {
+        snapshot.setArchive(archive);
+        snapshotRepository.update(snapshot);
     }
 }

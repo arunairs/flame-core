@@ -15,164 +15,139 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * @author jiaan.zhang@oracle.com
+ * @author jiaan.zhang@outlook.com
  * @date 01/10/2016 1:53 PM
  */
-public abstract class AbstractMongoRepository<T extends EntityBean, ID extends Serializable> implements Repository
-{
-	@Autowired
-	private MongoTemplate mongoTemplate;
+public abstract class AbstractMongoRepository<T extends EntityBean, ID extends Serializable> implements Repository {
 
-	protected MongoTemplate getMongoTemplate()
-	{
-		return mongoTemplate;
-	}
+    @Autowired
+    private MongoTemplate mongoTemplate;
 
-	protected abstract Class<T> getEntityClass();
+    protected MongoTemplate getMongoTemplate() {
+        return mongoTemplate;
+    }
 
-	public T upsert(final T entity)
-	{
-		doBeforeUpsert(entity);
-		getMongoTemplate().save(entity);
-		return entity;
-	}
+    protected abstract Class<T> getEntityClass();
 
-	public List<T> upsert(final Iterable<T> entites)
-	{
-		for (T entity : entites)
-			upsert(entity);
-		return (List<T>) entites;
-	}
+    public T upsert(final T entity) {
+        doBeforeUpsert(entity);
+        getMongoTemplate().save(entity);
+        return entity;
+    }
 
-	public T update(final T entity, final ID id)
-	{
-		Query query = new Query();
-		query.addCriteria(Criteria.where(ID).is(id));
-		doBeforeUpdate(entity);
-		return update(query, entity);
-	}
+    public List<T> upsert(final Iterable<T> entites) {
+        for (T entity : entites)
+            upsert(entity);
+        return (List<T>) entites;
+    }
 
-	public T update(final Query query, final T entity)
-	{
-		DBObject object = (DBObject) getMongoTemplate().getConverter().convertToMongoType(entity);
-		Update update = Update.fromDBObject(object);
-		doBeforeUpdate(entity);
-		return getMongoTemplate().findAndModify(query, update, getEntityClass());
-	}
+    public T update(final T entity) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where(ID).is(entity.getId()));
+        doBeforeUpdate(entity);
+        return update(query, entity);
+    }
 
-	public T require(final ID id)
-	{
-		T entity = get(id);
-		if (entity == null) throw new ResourceNotFoundException();
-		return entity;
-	}
+    public T update(final Query query, final T entity) {
+        DBObject object = (DBObject) getMongoTemplate().getConverter().convertToMongoType(entity);
+        Update update = Update.fromDBObject(object);
+        doBeforeUpdate(entity);
+        return getMongoTemplate().findAndModify(query, update, getEntityClass());
+    }
 
-	public T get(final ID id)
-	{
-		return getMongoTemplate().findById(id, getEntityClass());
-	}
+    public T require(final ID id) {
+        T entity = get(id);
+        if (entity == null) throw new ResourceNotFoundException();
+        return entity;
+    }
 
-	public T findOne(final Query query)
-	{
-		return getMongoTemplate().findOne(query, getEntityClass());
-	}
+    public T get(final ID id) {
+        return getMongoTemplate().findById(id, getEntityClass());
+    }
 
-	public boolean exists(final ID id)
-	{
-		Query query = new Query();
-		query.addCriteria(Criteria.where(ID).is(id));
-		return getMongoTemplate().exists(query, getEntityClass());
-	}
+    public T findOne(final Query query) {
+        return getMongoTemplate().findOne(query, getEntityClass());
+    }
 
-	public boolean exists(final Query query)
-	{
-		return getMongoTemplate().exists(query, getEntityClass());
-	}
+    public boolean exists(final ID id) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where(ID).is(id));
+        return getMongoTemplate().exists(query, getEntityClass());
+    }
 
-	public List<T> findAll(final Query query)
-	{
-		return getMongoTemplate().find(query, getEntityClass());
-	}
+    public boolean exists(final Query query) {
+        return getMongoTemplate().exists(query, getEntityClass());
+    }
 
-	public List<T> findAll()
-	{
-		return getMongoTemplate().findAll(getEntityClass());
-	}
+    public List<T> findAll(final Query query) {
+        return getMongoTemplate().find(query, getEntityClass());
+    }
 
-	public List<T> findAll(final Iterable<ID> ids)
-	{
-		Query query = new Query();
-		query.addCriteria(Criteria.where(ID).in(ids));
-		return getMongoTemplate().find(query, getEntityClass());
-	}
+    public List<T> findAll() {
+        return getMongoTemplate().findAll(getEntityClass());
+    }
 
-	public T insert(final T entity)
-	{
-		doBeforeInsert(entity);
-		getMongoTemplate().insert(entity);
-		return entity;
-	}
+    public List<T> findAll(final Iterable<ID> ids) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where(ID).in(ids));
+        return getMongoTemplate().find(query, getEntityClass());
+    }
 
-	public List<T> insert(final Iterable<T> entities)
-	{
-		for (T entity : entities)
-			insert(entity);
-		return (List<T>) entities;
-	}
+    public T insert(final T entity) {
+        doBeforeInsert(entity);
+        getMongoTemplate().insert(entity);
+        return entity;
+    }
 
-	public void insertAll(final Collection<? extends T> objectsToSave)
-	{
-		if (objectsToSave == null || objectsToSave.size() < 1) return;
-		getMongoTemplate().insertAll(objectsToSave);
-	}
+    public List<T> insert(final Iterable<T> entities) {
+        for (T entity : entities)
+            insert(entity);
+        return (List<T>) entities;
+    }
 
-	public long count(final Query query)
-	{
-		return getMongoTemplate().count(query, getEntityClass());
-	}
+    public void insertAll(final Collection<? extends T> objectsToSave) {
+        if (objectsToSave == null || objectsToSave.size() < 1) return;
+        getMongoTemplate().insertAll(objectsToSave);
+    }
 
-	public void delete(final ID id)
-	{
-		Query query = new Query();
-		query.addCriteria(Criteria.where("_id").is(id));
-		getMongoTemplate().remove(query, getEntityClass());
-	}
+    public long count(final Query query) {
+        return getMongoTemplate().count(query, getEntityClass());
+    }
 
-	public void delete(final T entity)
-	{
-		getMongoTemplate().remove(entity);
-	}
+    public void delete(final ID id) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where("_id").is(id));
+        getMongoTemplate().remove(query, getEntityClass());
+    }
 
-	public void delete(final Query query)
-	{
-		getMongoTemplate().remove(query, getEntityClass());
-	}
+    public void delete(final T entity) {
+        getMongoTemplate().remove(entity);
+    }
 
-	public void delete(final Iterable<T> entities)
-	{
-		for (T entity : entities)
-			delete(entity);
-	}
+    public void delete(final Query query) {
+        getMongoTemplate().remove(query, getEntityClass());
+    }
 
-	public BulkOperations bulkOps(final BulkOperations.BulkMode bulkMode)
-	{
-		return getMongoTemplate().bulkOps(bulkMode, getEntityClass());
-	}
+    public void delete(final Iterable<T> entities) {
+        for (T entity : entities)
+            delete(entity);
+    }
 
-	private void doBeforeInsert(T entity)
-	{
-		if (entity.getCreatedDate() == null)
-			entity.refreshCreatedDate();
-	}
+    public BulkOperations bulkOps(final BulkOperations.BulkMode bulkMode) {
+        return getMongoTemplate().bulkOps(bulkMode, getEntityClass());
+    }
 
-	private void doBeforeUpdate(T entity)
-	{
-		entity.refreshUpdatedDate();
-	}
+    private void doBeforeInsert(T entity) {
+        if (entity.getCreatedDate() == null)
+            entity.refreshCreatedDate();
+    }
 
-	private void doBeforeUpsert(T entity)
-	{
-		doBeforeInsert(entity);
-		doBeforeUpdate(entity);
-	}
+    private void doBeforeUpdate(T entity) {
+        entity.refreshUpdatedDate();
+    }
+
+    private void doBeforeUpsert(T entity) {
+        doBeforeInsert(entity);
+        doBeforeUpdate(entity);
+    }
 }

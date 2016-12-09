@@ -1,7 +1,7 @@
 package cn.blinkmind.depot.gradle
 
 /**
- * @author jiaan.zhang@oracle.com
+ * @author jiaan.zhang@outlook.com
  * @date 27/09/2016 12:22 AM
  */
 class TaskGroup {

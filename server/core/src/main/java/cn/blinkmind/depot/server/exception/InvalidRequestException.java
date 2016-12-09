@@ -3,7 +3,7 @@ package cn.blinkmind.depot.server.exception;
 import java.lang.*;
 
 /**
- * @author jiaan.zhang@oracle.com
+ * @author jiaan.zhang@outlook.com
  * @date 05/10/2016 5:29 PM
  */
 public class InvalidRequestException extends RuntimeException

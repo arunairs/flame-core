@@ -6,7 +6,7 @@ import java.security.SecureRandom;
 import java.util.Random;
 
 /**
- * @author jiaan.zhang@oracle.com
+ * @author jiaan.zhang@outlook.com
  * @date 12/10/2016 3:55 PM
  */
 public class SecurityUtil
