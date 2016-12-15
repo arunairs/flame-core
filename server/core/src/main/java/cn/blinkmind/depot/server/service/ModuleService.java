@@ -4,7 +4,7 @@ import cn.blinkmind.depot.server.exception.Assertion;
 import cn.blinkmind.depot.server.exception.Errors;
 import cn.blinkmind.depot.server.repository.ModuleRepository;
 import cn.blinkmind.depot.server.repository.entity.Archive;
-import cn.blinkmind.depot.server.repository.entity.CRUD;
+import cn.blinkmind.depot.server.repository.entity.CrudType;
 import cn.blinkmind.depot.server.repository.entity.Module;
 import cn.blinkmind.depot.server.repository.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +32,7 @@ public class ModuleService
 	{
 		Assertion.notBlank(module.getName(), Errors.MODULE_NAME_IS_BLANK);
 
-		module.cleanup(CRUD.CREATE);
+		module.cleanup(CrudType.CREATE);
 		module.setId(repositoryService.newId());
 		module.setCreator(creator);
 		module.refreshCreatedDate();

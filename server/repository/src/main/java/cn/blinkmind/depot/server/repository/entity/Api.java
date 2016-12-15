@@ -3,7 +3,9 @@ package cn.blinkmind.depot.server.repository.entity;
 import cn.blinkmind.depot.server.bean.web.Request;
 import cn.blinkmind.depot.server.repository.util.UrlStringBuilder;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
 
 /**
@@ -16,9 +18,11 @@ public class Api extends EntityBean implements Resource
 	private String description;
 	private Request request;
 	private Module module;
+	private int ordinal;
 
+	@Id
 	@Override
-	@Transient
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	public Long getId()
 	{
 		return super.getId();
@@ -66,6 +70,14 @@ public class Api extends EntityBean implements Resource
 		this.module = module;
 	}
 
+	public int getOrdinal() {
+		return ordinal;
+	}
+
+	public void setOrdinal(int ordinal) {
+		this.ordinal = ordinal;
+	}
+
 	public String getUrl()
 	{
 		String scheme = getScheme();
@@ -77,9 +89,9 @@ public class Api extends EntityBean implements Resource
 	}
 
 	@Override
-	public void cleanup(CRUD operation)
+	public void cleanup(CrudType crudType)
 	{
-		super.cleanup(operation);
+		super.cleanup(crudType);
 	}
 
 	@JsonIgnore

@@ -1,7 +1,6 @@
 package cn.blinkmind.depot.server.service;
 
 import cn.blinkmind.depot.server.exception.Errors;
-import cn.blinkmind.depot.server.repository.entity.CRUD;
 import cn.blinkmind.depot.server.repository.entity.Document;
 import cn.blinkmind.depot.server.repository.entity.DocumentType;
 import cn.blinkmind.depot.server.repository.entity.User;

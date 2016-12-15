@@ -3,6 +3,7 @@ package cn.blinkmind.depot.server.controller;
 import cn.blinkmind.depot.server.annotation.Token;
 import cn.blinkmind.depot.server.bean.web.ObjectId;
 import cn.blinkmind.depot.server.repository.entity.Archive;
+import cn.blinkmind.depot.server.repository.entity.Module;
 import cn.blinkmind.depot.server.repository.entity.Snapshot;
 import cn.blinkmind.depot.server.repository.entity.User;
 import cn.blinkmind.depot.server.service.BranchService;
@@ -11,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * @author jiaan.zhang@outlook.com
@@ -27,9 +30,16 @@ public class SnapshotController {
 
     @Token
     @PostMapping(path = "workspace/snapshots")
-    public ResponseEntity<ObjectId> create(@RequestBody Snapshot snapshot, @RequestAttribute(name = "user") User user) {
+    public ResponseEntity<ObjectId> createSnapshot(@RequestBody Snapshot snapshot, @RequestAttribute(name = "user") User user) {
         snapshot = snapshotService.create(snapshot, user);
         return ResponseEntity.status(HttpStatus.CREATED).body(new ObjectId(snapshot.getId()));
+    }
+
+    @Token
+    @DeleteMapping(path = "workspace/snapshots/{id}")
+    public ResponseEntity<Void> deleteSnapshot(@PathVariable(name = "id") long id, @RequestAttribute(name = "user") User user) {
+        snapshotService.delete(id, user);
+        return ResponseEntity.noContent().build();
     }
 
     @Token

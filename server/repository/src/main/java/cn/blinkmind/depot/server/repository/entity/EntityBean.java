@@ -96,7 +96,7 @@ public class EntityBean implements Indexable<Long>, Cleanable
 	}
 
 	@Override
-	public void cleanup(CRUD operation)
+	public void cleanup(CrudType crudType)
 	{
 	}
 }

@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class SnapshotService {
+
     @Autowired
     private SnapshotRepository snapshotRepository;
 
@@ -67,6 +68,10 @@ public class SnapshotService {
         Snapshot snapshot = get(branch, user);
         Assertion.notNull(snapshot, Errors.RESOURCE_NOT_FOUND);
         return snapshot;
+    }
+
+    public void delete(long id, User user) {
+        snapshotRepository.delete(id);
     }
 
     public void updateArchive(Snapshot snapshot, Archive archive, User user) {

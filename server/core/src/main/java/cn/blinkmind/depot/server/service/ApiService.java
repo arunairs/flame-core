@@ -2,7 +2,7 @@ package cn.blinkmind.depot.server.service;
 
 import cn.blinkmind.depot.server.bean.web.Request;
 import cn.blinkmind.depot.server.exception.Errors;
-import cn.blinkmind.depot.server.repository.entity.CRUD;
+import cn.blinkmind.depot.server.repository.entity.CrudType;
 import cn.blinkmind.depot.server.repository.entity.Module;
 import cn.blinkmind.depot.server.repository.entity.User;
 import cn.blinkmind.depot.server.exception.Assertion;
@@ -32,7 +32,7 @@ public class ApiService
 		Assertion.notBlank(api.getScheme(), Errors.REQUEST_SCHEME_IS_BLANK);
 		Assertion.notBlank(api.getUri(), Errors.REQUEST_URI_IS_BLANK);
 
-		api.cleanup(CRUD.CREATE);
+		api.cleanup(CrudType.CREATE);
 		api.setId(repositoryService.newId());
 		api.setCreator(creator);
 		api.refreshCreatedDate();

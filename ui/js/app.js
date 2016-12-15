@@ -12,7 +12,7 @@ app.config(function ($stateProvider, $urlRouterProvider) {
         })
         .state('dashboard.editor', {
             url: '/editor?doc',
-            templateUrl: '../ui/html/editor.html',
+            templateUrl: 'html/editor.html',
             controller: 'editor',
             abstract: true
         })
