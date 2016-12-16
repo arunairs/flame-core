@@ -1,5 +1,5 @@
-import cn.blinkmind.depot.gradle.TaskGroup
-import cn.blinkmind.depot.gradle.external.Mongo
+import cn.blinkmind.duck.gradle.TaskGroup
+import cn.blinkmind.duck.gradle.external.Mongo
 
 task mongoEnv(group: TaskGroup.MONGO, dependsOn: ['externalEnv']) {
     ext.addMongo = { String name ->

@@ -1,5 +1,5 @@
-import cn.blinkmind.depot.gradle.TaskGroup
-import cn.blinkmind.depot.gradle.external.Redis
+import cn.blinkmind.duck.gradle.TaskGroup
+import cn.blinkmind.duck.gradle.external.Redis
 
 task redisEnv(group: TaskGroup.REDIS, dependsOn: ['externalEnv']) {
     ext.addRedis = { String name ->

@@ -1,4 +1,4 @@
-rootProject.name = 'depot'
+rootProject.name = 'duck'
 include ':buildSrc'
 include ':external'
 include ':deployment:init'
