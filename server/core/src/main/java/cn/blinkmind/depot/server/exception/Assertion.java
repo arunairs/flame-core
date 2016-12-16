@@ -2,10 +2,6 @@ package cn.blinkmind.depot.server.exception;
 
 import org.apache.commons.lang3.StringUtils;
 
-/**
- * @author jiaan.zhang@outlook.com
- * @date 25/11/2016 12:59 AM
- */
 public class Assertion
 {
 	public static void notNull(Object object, Error error)

@@ -5,10 +5,6 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 
-/**
- * @author jiaan.zhang@outlook.com
- * @date 25/11/2016 1:47 PM
- */
 @Repository
 public class BranchRepository extends AbstractMongoRepository<Branch, Long>
 {

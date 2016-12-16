@@ -8,10 +8,6 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.index.CompoundIndex;
 
-/**
- * @author jiaan.zhang@outlook.com
- * @date 29/11/2016 3:45 PM
- */
 @JsonDeserialize(using = SnapshotDeserializer.class)
 @org.springframework.data.mongodb.core.mapping.Document(collection = "snapshots")
 @CompoundIndex(name = "unique_index", unique = true, def = "{'branchRef._id':1,'creatorRef._id':1}")

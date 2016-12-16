@@ -12,10 +12,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 
-/**
- * @author jiaan.zhang@outlook.com
- * @date 27/10/2016 11:20 PM
- */
 @Service
 public class ModuleService
 {

@@ -6,10 +6,6 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- * @author jiaan.zhang@outlook.com
- * @date 08/10/2016 8:17 PM
- */
 public abstract class AbstractAuthenticationInterceptor extends HandlerInterceptorAdapter
 {
 	public final boolean preHandle(HttpServletRequest request, HttpServletResponse response,

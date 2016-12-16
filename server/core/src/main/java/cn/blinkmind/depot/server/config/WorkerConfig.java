@@ -3,10 +3,6 @@ package cn.blinkmind.depot.server.config;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
-/**
- * @author jiaan.zhang@outlook.com
- * @date 04/10/2016 2:12 AM
- */
 @Configuration
 @ConfigurationProperties(prefix = "worker")
 public class WorkerConfig

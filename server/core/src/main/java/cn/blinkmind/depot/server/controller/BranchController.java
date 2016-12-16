@@ -13,10 +13,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-/**
- * @author jiaan.zhang@outlook.com
- * @date 25/11/2016 1:05 PM
- */
 @RestController
 public class BranchController
 {

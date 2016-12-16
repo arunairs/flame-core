@@ -1,5 +1,6 @@
 package cn.blinkmind.depot.server.repository;
 
+import cn.blinkmind.depot.server.repository.entity.Archive;
 import cn.blinkmind.depot.server.repository.entity.Branch;
 import cn.blinkmind.depot.server.repository.entity.Snapshot;
 import cn.blinkmind.depot.server.repository.entity.User;
@@ -9,11 +10,8 @@ import com.mongodb.DBObject;
 import org.springframework.data.mongodb.core.aggregation.Aggregation;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 
-/**
- * @author jiaan.zhang@outlook.com
- * @date 29/11/2016 4:16 PM
- */
 @org.springframework.stereotype.Repository
 public class SnapshotRepository extends AbstractMongoRepository<Snapshot, Long> {
 
@@ -56,5 +54,13 @@ public class SnapshotRepository extends AbstractMongoRepository<Snapshot, Long> 
                 .and("creatorRef._id").is(user.getId());
         query.addCriteria(criteria);
         return this.exists(query);
+    }
+
+    public Snapshot updateArchive(long snapshotId, Archive archive, User user) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where(ID).is(snapshotId));
+        Update update = new Update();
+        update.set("archive", archive);
+        return this.update(query, update);
     }
 }

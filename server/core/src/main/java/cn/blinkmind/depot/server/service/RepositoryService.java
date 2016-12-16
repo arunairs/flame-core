@@ -5,10 +5,6 @@ import com.ge.snowizard.exceptions.InvalidSystemClock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-/**
- * @author jiaan.zhang@outlook.com
- * @date 04/10/2016 2:09 AM
- */
 @Service
 public class RepositoryService
 {

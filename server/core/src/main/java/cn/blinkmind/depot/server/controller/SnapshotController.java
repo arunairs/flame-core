@@ -15,10 +15,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-/**
- * @author jiaan.zhang@outlook.com
- * @date 29/11/2016 4:09 PM
- */
 @RestController
 public class SnapshotController {
 
@@ -52,8 +48,7 @@ public class SnapshotController {
     @Token
     @PutMapping(path = "workspace/snapshots/{id}/archive")
     public ResponseEntity<Void> updateArchive(@PathVariable(name = "id") long id, @RequestBody Archive archive, @RequestAttribute(name = "user") User user) {
-        Snapshot snapshot = snapshotService.require(id, user);
-        snapshotService.updateArchive(snapshot, archive, user);
+        snapshotService.updateArchive(id, archive, user);
         return ResponseEntity.ok().build();
     }
 }

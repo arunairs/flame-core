@@ -2,10 +2,6 @@ package cn.blinkmind.depot.server.util;
 
 import cn.blinkmind.depot.server.repository.entity.Version;
 
-/**
- * @author jiaan.zhang@outlook.com
- * @date 19/10/2016 2:38 PM
- */
 public class VersionUtil
 {
 	public static boolean isValid(Version version)

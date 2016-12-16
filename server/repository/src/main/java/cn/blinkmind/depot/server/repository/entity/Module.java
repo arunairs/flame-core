@@ -12,10 +12,6 @@ import org.springframework.data.annotation.Transient;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @author jiaan.zhang@outlook.com
- * @date 26/09/2016 3:57 PM
- */
 public class Module extends EntityBean implements Resource {
 
     private String name;

@@ -8,10 +8,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
 
-/**
- * @author jiaan.zhang@outlook.com
- * @date 26/09/2016 4:13 PM
- */
 public class Api extends EntityBean implements Resource
 {
 	private String name;

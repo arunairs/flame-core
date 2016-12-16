@@ -2,10 +2,6 @@ package cn.blinkmind.depot.server.repository.util;
 
 import org.apache.commons.lang3.StringUtils;
 
-/**
- * @author jiaan.zhang@outlook.com
- * @date 08/11/2016 2:26 PM
- */
 public class UrlStringBuilder
 {
 	private static final String SPLIT = "/";

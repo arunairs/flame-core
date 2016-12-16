@@ -11,10 +11,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.*;
 
-/**
- * @author jiaan.zhang@outlook.com
- * @date 17/10/2016 12:41 AM
- */
 @Service
 public class ArchiveService {
 

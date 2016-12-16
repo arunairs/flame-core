@@ -5,10 +5,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.data.annotation.Transient;
 
-/**
- * @author jiaan.zhang@outlook.com
- * @date 28/11/2016 2:42 PM
- */
 @org.springframework.data.mongodb.core.mapping.Document(collection = "releases")
 public class Release extends EntityBean {
 

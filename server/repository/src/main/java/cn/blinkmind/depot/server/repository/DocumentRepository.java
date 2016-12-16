@@ -8,10 +8,6 @@ import org.springframework.data.mongodb.core.aggregation.Aggregation;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.stereotype.Repository;
 
-/**
- * @author jiaan.zhang@outlook.com
- * @date 26/09/2016 1:43 PM
- */
 @Repository
 public class DocumentRepository extends AbstractMongoRepository<Document, Long>
 {

@@ -8,10 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-/**
- * @author jiaan.zhang@outlook.com
- * @date 12/10/2016 3:11 PM
- */
 @RestController
 @RequestMapping(path = "users")
 public class UserController {

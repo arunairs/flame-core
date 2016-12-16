@@ -11,9 +11,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 
 import java.io.IOException;
 
-/**
- * Created by eric on 05/12/2016.
- */
 public class SnapshotDeserializer extends JsonDeserializer<Snapshot> {
     @Override
     public Snapshot deserialize(JsonParser p, DeserializationContext ctxt) throws IOException, JsonProcessingException {

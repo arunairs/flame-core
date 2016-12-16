@@ -10,10 +10,6 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-/**
- * @author jiaan.zhang@outlook.com
- * @date 08/10/2016 7:52 PM
- */
 @SuppressWarnings("unchecked")
 public class TokenAuthenticationInterceptor extends AbstractAuthenticationInterceptor
 {

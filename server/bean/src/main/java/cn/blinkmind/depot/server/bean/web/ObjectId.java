@@ -1,9 +1,5 @@
 package cn.blinkmind.depot.server.bean.web;
 
-/**
- * @author jiaan.zhang@outlook.com
- * @date 17/10/2016 12:35 AM
- */
 public class ObjectId
 {
 	Long id;

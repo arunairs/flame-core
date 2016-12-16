@@ -12,10 +12,6 @@ import cn.blinkmind.depot.server.repository.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-/**
- * @author jiaan.zhang@outlook.com
- * @date 29/11/2016 4:21 PM
- */
 @Service
 public class SnapshotService {
 
@@ -74,8 +70,8 @@ public class SnapshotService {
         snapshotRepository.delete(id);
     }
 
-    public void updateArchive(Snapshot snapshot, Archive archive, User user) {
-        snapshot.setArchive(archive);
-        snapshotRepository.update(snapshot);
+    public void updateArchive(long snapshotId, Archive archive, User user) {
+        Snapshot snapshot = snapshotRepository.updateArchive(snapshotId, archive, user);
+        Assertion.notNull(snapshot, Errors.RESOURCE_NOT_FOUND);
     }
 }

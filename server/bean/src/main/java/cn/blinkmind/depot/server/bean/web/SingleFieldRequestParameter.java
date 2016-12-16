@@ -1,9 +1,5 @@
 package cn.blinkmind.depot.server.bean.web;
 
-/**
- * @author jiaan.zhang@outlook.com
- * @date 14/10/2016 3:50 PM
- */
 public class SingleFieldRequestParameter implements RequestParameter
 {
 	private String name;

@@ -10,10 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-/**
- * @author jiaan.zhang@outlook.com
- * @date 27/09/2016 12:04 AM
- */
 @RestController
 @RequestMapping(path = "documents")
 public class DocumentController

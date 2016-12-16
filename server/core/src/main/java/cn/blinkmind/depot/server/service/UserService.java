@@ -10,10 +10,6 @@ import cn.blinkmind.depot.server.util.SecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-/**
- * @author jiaan.zhang@outlook.com
- * @date 13/10/2016 11:42 PM
- */
 @Service
 public class UserService
 {

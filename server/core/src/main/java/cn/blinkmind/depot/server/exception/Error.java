@@ -3,10 +3,6 @@ package cn.blinkmind.depot.server.exception;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.http.HttpStatus;
 
-/**
- * @author jiaan.zhang@outlook.com
- * @date 05/10/2016 5:30 PM
- */
 public class Error
 {
 	private HttpStatus httpStatus;

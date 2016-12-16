@@ -12,12 +12,11 @@ import org.springframework.data.mongodb.core.query.Update;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
-/**
- * @author jiaan.zhang@outlook.com
- * @date 01/10/2016 1:53 PM
- */
+import static org.springframework.data.mongodb.core.FindAndModifyOptions.options;
+
 public abstract class AbstractMongoRepository<T extends EntityBean, ID extends Serializable> implements Repository {
 
     @Autowired
@@ -28,18 +27,6 @@ public abstract class AbstractMongoRepository<T extends EntityBean, ID extends S
     }
 
     protected abstract Class<T> getEntityClass();
-
-    public T upsert(final T entity) {
-        doBeforeUpsert(entity);
-        getMongoTemplate().save(entity);
-        return entity;
-    }
-
-    public List<T> upsert(final Iterable<T> entites) {
-        for (T entity : entites)
-            upsert(entity);
-        return (List<T>) entites;
-    }
 
     public T update(final T entity) {
         Query query = new Query();
@@ -52,7 +39,12 @@ public abstract class AbstractMongoRepository<T extends EntityBean, ID extends S
         DBObject object = (DBObject) getMongoTemplate().getConverter().convertToMongoType(entity);
         Update update = Update.fromDBObject(object);
         doBeforeUpdate(entity);
-        return getMongoTemplate().findAndModify(query, update, getEntityClass());
+        return getMongoTemplate().findAndModify(query, update, options().upsert(false), getEntityClass());
+    }
+
+    public T update(final Query query, final Update update) {
+        doBeforeUpdate(update);
+        return getMongoTemplate().findAndModify(query, update, options().upsert(false), getEntityClass());
     }
 
     public T require(final ID id) {
@@ -137,17 +129,20 @@ public abstract class AbstractMongoRepository<T extends EntityBean, ID extends S
         return getMongoTemplate().bulkOps(bulkMode, getEntityClass());
     }
 
-    private void doBeforeInsert(T entity) {
-        if (entity.getCreatedDate() == null)
+    private void doBeforeInsert(final T entity) {
+        if (entity.getCreatedDate() != null)
             entity.refreshCreatedDate();
     }
 
-    private void doBeforeUpdate(T entity) {
+    private void doBeforeInsert(final Update update) {
+        update.set("createdDate", new Date());
+    }
+
+    private void doBeforeUpdate(final T entity) {
         entity.refreshUpdatedDate();
     }
 
-    private void doBeforeUpsert(T entity) {
-        doBeforeInsert(entity);
-        doBeforeUpdate(entity);
+    private void doBeforeUpdate(final Update update) {
+        update.set("updatedDate", new Date());
     }
 }

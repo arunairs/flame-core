@@ -2,10 +2,6 @@ package cn.blinkmind.depot.server.bean.web;
 
 import java.util.LinkedHashSet;
 
-/**
- * @author jiaan.zhang@outlook.com
- * @date 23/11/2016 5:47 PM
- */
 public class GeneralRequest
 {
 	private String uri;
