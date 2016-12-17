@@ -1,4 +1,4 @@
-rootProject.name = 'duck'
+rootProject.name = 'flame'
 include ':buildSrc'
 include ':external'
 include ':deployment:init'
