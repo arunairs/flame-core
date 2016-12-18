@@ -57,6 +57,7 @@ public class SnapshotRepository extends AbstractMongoRepository<Snapshot, Long> 
     }
 
     public Snapshot updateArchive(long snapshotId, Archive archive, User user) {
+        archive.refresh();
         Query query = new Query();
         query.addCriteria(Criteria.where(ID).is(snapshotId));
         Update update = new Update();

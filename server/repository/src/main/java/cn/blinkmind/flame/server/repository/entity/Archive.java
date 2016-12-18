@@ -5,16 +5,18 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.data.annotation.Transient;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
-public class Archive extends EntityBean implements Resource {
+public class Archive extends EntityBean implements Resource<Long> {
     private String description;
     private List<Module> modules;
     private GeneralRequest request;
-    private Set<Long> moduleIdSet;
-    private Set<Long> apiIdSet;
+    private Set<Long> moduleIds;
+    private Set<Long> apiIds;
 
     @Override
     @Transient
@@ -48,39 +50,21 @@ public class Archive extends EntityBean implements Resource {
     }
 
     @JsonIgnore
-    public Set<Long> getModuleIdSet() {
-        return moduleIdSet;
+    public Set<Long> getModuleIds() {
+        return moduleIds;
     }
 
-    public void setModuleIdSet(Set<Long> moduleIdSet) {
-        this.moduleIdSet = moduleIdSet;
-    }
-
-    public void refreshIdSet() {
-        if (this.modules == null || this.modules.size() < 1) this.moduleIdSet = null;
-        if (this.moduleIdSet == null) this.moduleIdSet = new HashSet<>();
-        else this.moduleIdSet.clear();
-        for (Module module : this.modules) {
-            this.moduleIdSet.add(module.getId());
-            this.refreshApiIdSet(module);
-        }
-    }
-
-    private void refreshApiIdSet(Module module) {
-        if (module.getApis() == null || module.getApis().size() < 1) this.apiIdSet = null;
-        if (this.apiIdSet == null) this.apiIdSet = new HashSet<>();
-        else this.apiIdSet.clear();
-        for (Api api : module.getApis())
-            this.apiIdSet.add(api.getId());
+    private void setModuleIds(Set<Long> moduleIds) {
+        this.moduleIds = moduleIds;
     }
 
     @JsonIgnore
-    public Set<Long> getApiIdSet() {
-        return apiIdSet;
+    public Set<Long> getApiIds() {
+        return apiIds;
     }
 
-    public void setApiIdSet(Set<Long> apiIdSet) {
-        this.apiIdSet = apiIdSet;
+    private void setApiIds(Set<Long> apiIds) {
+        this.apiIds = apiIds;
     }
 
     @Override
@@ -102,5 +86,26 @@ public class Archive extends EntityBean implements Resource {
     @Override
     public Resource getParent() {
         return null;
+    }
+
+    @JsonIgnore
+    @Override
+    public Set<Long> getChildrenId() {
+        return this.modules == null || this.modules.size() < 1 ?
+                null : this.modules.stream().filter(module -> module.getId() != null).map(Module::getId).collect(Collectors.toCollection(HashSet<Long>::new));
+    }
+
+    public void refresh() {
+        refreshModuleIds();
+        refreshApiIds();
+    }
+
+    private void refreshModuleIds() {
+        this.moduleIds = this.getChildrenId();
+    }
+
+    private void refreshApiIds() {
+        this.modules.stream().filter(module -> module.getApis() != null && module.getApis().size() > 0)
+                .forEach(module -> this.apiIds.addAll(module.getChildrenId()));
     }
 }
