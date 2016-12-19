@@ -9,8 +9,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Module extends EntityBean implements Resource<Long> {
 
@@ -108,12 +108,5 @@ public class Module extends EntityBean implements Resource<Long> {
     @Override
     public Resource getParent() {
         return archive;
-    }
-
-    @JsonIgnore
-    @Override
-    public Set<Long> getChildrenId() {
-        return this.apis == null || this.apis.size() < 1 ?
-                null : this.apis.stream().filter(api -> api.getId() != null).map(Api::getId).collect(Collectors.toCollection(HashSet<Long>::new));
     }
 }

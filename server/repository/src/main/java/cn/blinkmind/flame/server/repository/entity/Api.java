@@ -8,8 +8,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
 
-import java.util.Collection;
-
 public class Api extends EntityBean implements Resource<Long> {
     private String name;
     private String description;
@@ -109,11 +107,5 @@ public class Api extends EntityBean implements Resource<Long> {
     @Override
     public Resource getParent() {
         return module;
-    }
-
-    @JsonIgnore
-    @Override
-    public Collection<Long> getChildrenId() {
-        return null;
     }
 }

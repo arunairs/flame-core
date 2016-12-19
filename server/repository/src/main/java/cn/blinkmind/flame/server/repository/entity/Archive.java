@@ -5,18 +5,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.data.annotation.Transient;
 
-import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 public class Archive extends EntityBean implements Resource<Long> {
     private String description;
     private List<Module> modules;
     private GeneralRequest request;
-    private Set<Long> moduleIds;
-    private Set<Long> apiIds;
 
     @Override
     @Transient
@@ -49,24 +43,6 @@ public class Archive extends EntityBean implements Resource<Long> {
         this.request = request;
     }
 
-    @JsonIgnore
-    public Set<Long> getModuleIds() {
-        return moduleIds;
-    }
-
-    private void setModuleIds(Set<Long> moduleIds) {
-        this.moduleIds = moduleIds;
-    }
-
-    @JsonIgnore
-    public Set<Long> getApiIds() {
-        return apiIds;
-    }
-
-    private void setApiIds(Set<Long> apiIds) {
-        this.apiIds = apiIds;
-    }
-
     @Override
     public void cleanup(CrudType crudType) {
         super.cleanup(crudType);
@@ -86,26 +62,5 @@ public class Archive extends EntityBean implements Resource<Long> {
     @Override
     public Resource getParent() {
         return null;
-    }
-
-    @JsonIgnore
-    @Override
-    public Set<Long> getChildrenId() {
-        return this.modules == null || this.modules.size() < 1 ?
-                null : this.modules.stream().filter(module -> module.getId() != null).map(Module::getId).collect(Collectors.toCollection(HashSet<Long>::new));
-    }
-
-    public void refresh() {
-        refreshModuleIds();
-        refreshApiIds();
-    }
-
-    private void refreshModuleIds() {
-        this.moduleIds = this.getChildrenId();
-    }
-
-    private void refreshApiIds() {
-        this.modules.stream().filter(module -> module.getApis() != null && module.getApis().size() > 0)
-                .forEach(module -> this.apiIds.addAll(module.getChildrenId()));
     }
 }
