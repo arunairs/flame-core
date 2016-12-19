@@ -18,9 +18,6 @@ public class BranchService extends PersistenceService
     @Autowired
     private BranchRepository branchRepository;
 
-    @Autowired
-    private PersistenceService persistenceService;
-
     public Branch get(long id, User user)
     {
         return branchRepository.get(id);
@@ -51,7 +48,7 @@ public class BranchService extends PersistenceService
         Assertion.isFalse(document == null || document.getId() == null, Errors.BRANCH_DOCUMENT_IS_NOT_SPECIFIED);
         Assertion.notBlank(branch.getName(), Errors.BRANCH_NAME_IS_BLANK);
 
-        branch.setId(persistenceService.newId());
+        branch.setId(newId());
         branch.setCreator(creator);
         branch.setDocument(document);
         branch.setArchive(new Archive());

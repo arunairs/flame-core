@@ -16,16 +16,13 @@ public class UserService extends PersistenceService
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private PersistenceService persistenceService;
-
     public User create(User user)
     {
         Assertion.notBlank(user.getUsername(), Errors.ACCOUNT_NAME_IS_BLANK);
         Assertion.notBlank(user.getPassword(), Errors.ACCOUNT_PASSWORD_IS_BLANK);
 
         user.cleanup(CrudType.CREATE);
-        user.setId(persistenceService.newId());
+        user.setId(newId());
         user.setPassword(CodecUtil.sha256(user.getPassword(), SecurityUtil.randomSalt()));
         user.refreshCreatedDate();
         userRepository.insert(user);
