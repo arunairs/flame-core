@@ -11,24 +11,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserService
+public class UserService extends PersistenceService
 {
-	@Autowired
-	private UserRepository userRepository;
+    @Autowired
+    private UserRepository userRepository;
 
-	@Autowired
-	private RepositoryService repositoryService;
+    @Autowired
+    private PersistenceService persistenceService;
 
-	public User create(User user)
-	{
-		Assertion.notBlank(user.getUsername(), Errors.ACCOUNT_NAME_IS_BLANK);
-		Assertion.notBlank(user.getPassword(), Errors.ACCOUNT_PASSWORD_IS_BLANK);
+    public User create(User user)
+    {
+        Assertion.notBlank(user.getUsername(), Errors.ACCOUNT_NAME_IS_BLANK);
+        Assertion.notBlank(user.getPassword(), Errors.ACCOUNT_PASSWORD_IS_BLANK);
 
-		user.cleanup(CrudType.CREATE);
-		user.setId(repositoryService.newId());
-		user.setPassword(CodecUtil.sha256(user.getPassword(), SecurityUtil.randomSalt()));
-		user.refreshCreatedDate();
-		userRepository.insert(user);
-		return user;
-	}
+        user.cleanup(CrudType.CREATE);
+        user.setId(persistenceService.newId());
+        user.setPassword(CodecUtil.sha256(user.getPassword(), SecurityUtil.randomSalt()));
+        user.refreshCreatedDate();
+        userRepository.insert(user);
+        return user;
+    }
 }

@@ -10,26 +10,27 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class DocumentService {
+public class DocumentService extends PersistenceService
+{
     @Autowired
     private DocumentRepository documentRepository;
 
-    @Autowired
-    private RepositoryService repositoryService;
-
-    public Document get(long id, User user) {
+    public Document get(long id, User user)
+    {
         return documentRepository.get(id);
     }
 
-    public Document require(long id, User user) {
+    public Document require(long id, User user)
+    {
         Document document = documentRepository.require(id);
         return document;
     }
 
-    public Document create(Document document, User creator) {
+    public Document create(Document document, User creator)
+    {
         Assertion.notBlank(document.getName(), Errors.DOCUMENT_NAME_IS_BLANK);
 
-        document.setId(repositoryService.newId());
+        document.setId(newId());
         document.setType(DocumentType.REST_API);
         document.setCreator(creator);
         documentRepository.insert(document);

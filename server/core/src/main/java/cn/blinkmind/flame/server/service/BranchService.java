@@ -13,37 +13,45 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class BranchService {
+public class BranchService extends PersistenceService
+{
     @Autowired
     private BranchRepository branchRepository;
 
     @Autowired
-    private RepositoryService repositoryService;
+    private PersistenceService persistenceService;
 
-    public Branch get(long id, User user) {
+    public Branch get(long id, User user)
+    {
         return branchRepository.get(id);
     }
 
-    public Branch require(long id, User user) {
+    public Branch require(long id, User user)
+    {
         Branch branch = branchRepository.require(id);
         return branch;
     }
 
-    public Branch require(long id, User user, Error error) {
-        try {
+    public Branch require(long id, User user, Error error)
+    {
+        try
+        {
             Branch branch = require(id, user);
             return branch;
-        } catch (ResourceNotFoundException e) {
+        }
+        catch (ResourceNotFoundException e)
+        {
             Error.occurs(error);
             return null;
         }
     }
 
-    public Branch create(Branch branch, Document document, User creator) {
+    public Branch create(Branch branch, Document document, User creator)
+    {
         Assertion.isFalse(document == null || document.getId() == null, Errors.BRANCH_DOCUMENT_IS_NOT_SPECIFIED);
         Assertion.notBlank(branch.getName(), Errors.BRANCH_NAME_IS_BLANK);
 
-        branch.setId(repositoryService.newId());
+        branch.setId(persistenceService.newId());
         branch.setCreator(creator);
         branch.setDocument(document);
         branch.setArchive(new Archive());
@@ -51,7 +59,8 @@ public class BranchService {
         return branch;
     }
 
-    public void delete(Branch branch, User user) {
+    public void delete(Branch branch, User user)
+    {
         branchRepository.delete(branch);
     }
 }

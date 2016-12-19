@@ -22,14 +22,14 @@ public class ModuleService
 	private ApiService apiService;
 
 	@Autowired
-	private RepositoryService repositoryService;
+	private PersistenceService persistenceService;
 
 	public Module assemble(Module module, Archive archive, User creator)
 	{
 		Assertion.notBlank(module.getName(), Errors.MODULE_NAME_IS_BLANK);
 
 		module.cleanup(CrudType.CREATE);
-		module.setId(repositoryService.newId());
+		module.setId(persistenceService.newId());
 		module.setCreator(creator);
 		module.refreshCreatedDate();
 		module.setArchive(archive);

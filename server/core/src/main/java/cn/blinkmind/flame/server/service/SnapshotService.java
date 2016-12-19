@@ -9,26 +9,25 @@ import cn.blinkmind.flame.server.repository.entity.Branch;
 import cn.blinkmind.flame.server.repository.entity.Snapshot;
 import cn.blinkmind.flame.server.repository.entity.User;
 import cn.blinkmind.flame.server.repository.exception.ResourceNotFoundException;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class SnapshotService {
-
+public class SnapshotService extends PersistenceService
+{
     @Autowired
     private SnapshotRepository snapshotRepository;
 
     @Autowired
     private BranchService branchService;
 
-    @Autowired
-    private RepositoryService repositoryService;
-
-    public Snapshot create(Snapshot snapshot, User creator) {
+    public Snapshot create(Snapshot snapshot, User creator)
+    {
         Assertion.isFalse(snapshot.getBranch() == null || snapshot.getBranch().getId() == null, Errors.SNAPSHOT_BRANCH_IS_NOT_SPECIFIED);
         Branch branch = branchService.require(snapshot.getBranch().getId(), creator, Errors.BRANCH_IS_NOT_FOUND);
         Assertion.isFalse(snapshotRepository.exists(branch, creator), Errors.RESOURCE_ALREADY_EXISTS);
-        snapshot.setId(repositoryService.newId());
+        snapshot.setId(newId());
         snapshot.setCreator(creator);
         snapshot.setBranch(branch);
         snapshot.setArchive(new Archive());
@@ -36,41 +35,64 @@ public class SnapshotService {
         return snapshot;
     }
 
-    public Snapshot get(long id, User user) {
+    public Snapshot get(long id, User user)
+    {
         return snapshotRepository.get(id);
     }
 
-    public Snapshot require(long id, User user) {
+    public Snapshot require(long id, User user)
+    {
         Snapshot snapshot = snapshotRepository.require(id);
         return snapshot;
     }
 
-    public Snapshot require(long id, User user, Error error) {
-        try {
+    public Snapshot require(long id, User user, Error error)
+    {
+        try
+        {
             Snapshot snapshot = require(id, user);
             return snapshot;
-        } catch (ResourceNotFoundException e) {
+        }
+        catch (ResourceNotFoundException e)
+        {
             Error.occurs(error);
             return null;
         }
     }
 
-    public Snapshot get(Branch branch, User user) {
+    public Snapshot get(Branch branch, User user)
+    {
         Snapshot snapshot = snapshotRepository.get(branch, user);
         return snapshot;
     }
 
-    public Snapshot require(Branch branch, User user) {
+    public Snapshot require(Branch branch, User user)
+    {
         Snapshot snapshot = get(branch, user);
         Assertion.notNull(snapshot, Errors.RESOURCE_NOT_FOUND);
         return snapshot;
     }
 
-    public void delete(long id, User user) {
+    public void delete(long id, User user)
+    {
         snapshotRepository.delete(id);
     }
 
-    public void updateArchive(long snapshotId, Archive archive, User user) {
+    public void updateArchive(long snapshotId, Archive archive, User user)
+    {
+        if (CollectionUtils.isNotEmpty(archive.getModules()))
+        {
+            archive.getModules().forEach(module ->
+            {
+                if (module.getId() == null) module.setId(newId());
+                if (CollectionUtils.isNotEmpty(module.getApis()))
+                {
+                    module.getApis().stream()
+                            .filter(api -> api.getId() == null)
+                            .forEach(api -> api.setId(newId()));
+                }
+            });
+        }
         Snapshot snapshot = snapshotRepository.updateArchive(snapshotId, archive, user);
         Assertion.notNull(snapshot, Errors.RESOURCE_NOT_FOUND);
     }

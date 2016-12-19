@@ -16,7 +16,7 @@ import java.util.Collection;
 public class ApiService
 {
 	@Autowired
-	private RepositoryService repositoryService;
+	private PersistenceService persistenceService;
 
 	public Api assemble(Api api, Module module, User creator)
 	{
@@ -29,7 +29,7 @@ public class ApiService
 		Assertion.notBlank(api.getUri(), Errors.REQUEST_URI_IS_BLANK);
 
 		api.cleanup(CrudType.CREATE);
-		api.setId(repositoryService.newId());
+		api.setId(persistenceService.newId());
 		api.setCreator(creator);
 		api.refreshCreatedDate();
 		return api;
