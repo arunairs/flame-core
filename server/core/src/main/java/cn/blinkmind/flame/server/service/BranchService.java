@@ -56,8 +56,8 @@ public class BranchService extends PersistenceService
         return branch;
     }
 
-    public void delete(Branch branch, User user)
+    public void delete(long id, User user)
     {
-        branchRepository.delete(branch);
+        branchRepository.delete(id);
     }
 }

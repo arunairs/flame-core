@@ -82,14 +82,19 @@ public class SnapshotService extends PersistenceService
     {
         if (CollectionUtils.isNotEmpty(archive.getModules()))
         {
+            final int[] ordinals = {0, 0};
             archive.getModules().forEach(module ->
             {
+                module.setOrdinal(ordinals[0]++);
                 if (module.getId() == null) module.setId(newId());
                 if (CollectionUtils.isNotEmpty(module.getApis()))
                 {
-                    module.getApis().stream()
-                            .filter(api -> api.getId() == null)
-                            .forEach(api -> api.setId(newId()));
+                    module.getApis().forEach(api ->
+                    {
+                        api.setOrdinal(ordinals[1]++);
+                        if (api.getId() == null)
+                            api.setId(newId());
+                    });
                 }
             });
         }

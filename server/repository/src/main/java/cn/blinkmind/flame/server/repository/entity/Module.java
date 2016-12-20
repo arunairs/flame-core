@@ -62,6 +62,7 @@ public class Module extends EntityBean implements Resource<Long> {
         this.archive = archive;
     }
 
+    @JsonIgnore
     public int getOrdinal() {
         return ordinal;
     }

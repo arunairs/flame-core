@@ -16,30 +16,29 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class BranchController
 {
-	@Autowired
-	private BranchRepository branchRepository;
+    @Autowired
+    private BranchRepository branchRepository;
 
-	@Autowired
-	private DocumentRepository documentRepository;
+    @Autowired
+    private DocumentRepository documentRepository;
 
-	@Autowired
-	private BranchService branchService;
+    @Autowired
+    private BranchService branchService;
 
-	@Token
-	@PostMapping(path = "documents/{documentId}/branches")
-	public ResponseEntity<ObjectId> create(@PathVariable(name = "documentId") long documentId, @RequestBody Branch branch, @RequestAttribute(name = "user") User user)
-	{
-		Document document = documentRepository.require(documentId);
-		branchService.create(branch, document, user);
-		return ResponseEntity.status(HttpStatus.CREATED).body(new ObjectId(branch.getId()));
-	}
+    @Token
+    @PostMapping(path = "documents/{documentId}/branches")
+    public ResponseEntity<ObjectId> create(@PathVariable(name = "documentId") long documentId, @RequestBody Branch branch, @RequestAttribute(name = "user") User user)
+    {
+        Document document = documentRepository.require(documentId);
+        branchService.create(branch, document, user);
+        return ResponseEntity.status(HttpStatus.CREATED).body(new ObjectId(branch.getId()));
+    }
 
-	@Token
-	@DeleteMapping(path = "branches/{id}")
-	public ResponseEntity<Void> delete(@PathVariable(name = "id") long id, @RequestAttribute(name = "user") User user)
-	{
-		Branch branch = branchRepository.require(id);
-		branchService.delete(branch, user);
-		return ResponseEntity.noContent().build();
-	}
+    @Token
+    @DeleteMapping(path = "branches/{id}")
+    public ResponseEntity<Void> delete(@PathVariable(name = "id") long id, @RequestAttribute(name = "user") User user)
+    {
+        branchService.delete(id, user);
+        return ResponseEntity.noContent().build();
+    }
 }
