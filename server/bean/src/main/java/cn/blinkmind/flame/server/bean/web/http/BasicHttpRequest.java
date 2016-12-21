@@ -1,12 +1,12 @@
-package cn.blinkmind.flame.server.bean.web;
+package cn.blinkmind.flame.server.bean.web.http;
 
 import java.util.LinkedHashSet;
 
-public class GeneralRequest
+public class BasicHttpRequest
 {
 	private String uri;
 	private String scheme;
-	private LinkedHashSet<RequestMethod> methods;
+	private LinkedHashSet<HttpRequestMethod> methods;
 
 	public String getUri()
 	{
@@ -28,12 +28,12 @@ public class GeneralRequest
 		this.scheme = scheme;
 	}
 
-	public LinkedHashSet<RequestMethod> getMethods()
+	public LinkedHashSet<HttpRequestMethod> getMethods()
 	{
 		return methods;
 	}
 
-	public void setMethods(LinkedHashSet<RequestMethod> methods)
+	public void setMethods(LinkedHashSet<HttpRequestMethod> methods)
 	{
 		this.methods = methods;
 	}

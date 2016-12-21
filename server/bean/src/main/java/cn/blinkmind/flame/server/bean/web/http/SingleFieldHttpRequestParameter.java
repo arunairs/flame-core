@@ -1,11 +1,11 @@
-package cn.blinkmind.flame.server.bean.web;
+package cn.blinkmind.flame.server.bean.web.http;
 
-public class SingleFieldRequestParameter implements RequestParameter
+public class SingleFieldHttpRequestParameter implements HttpRequestParameter
 {
 	private String name;
 	private String value;
 	private Boolean isRequired;
-	private ParameterType parameterType;
+	private HttpParameterType httpParameterType;
 	private String comment;
 
 	public String getName()
@@ -38,14 +38,14 @@ public class SingleFieldRequestParameter implements RequestParameter
 		isRequired = required;
 	}
 
-	public ParameterType getParameterType()
+	public HttpParameterType getHttpParameterType()
 	{
-		return parameterType;
+		return httpParameterType;
 	}
 
-	public void setParameterType(ParameterType parameterType)
+	public void setHttpParameterType(HttpParameterType httpParameterType)
 	{
-		this.parameterType = parameterType;
+		this.httpParameterType = httpParameterType;
 	}
 
 	public String getComment()
