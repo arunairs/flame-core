@@ -1,6 +1,6 @@
 package cn.blinkmind.flame.server.repository.entity;
 
-import cn.blinkmind.flame.server.bean.web.Request;
+import cn.blinkmind.flame.server.bean.web.http.HttpRequest;
 import cn.blinkmind.flame.server.repository.util.UrlStringBuilder;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -12,9 +12,8 @@ public class Api extends EntityBean implements Resource<Long>
 {
     private String name;
     private String description;
-    private Request request;
+    private HttpRequest request;
     private Module module;
-    private int ordinal;
 
     @Id
     @Override
@@ -44,12 +43,12 @@ public class Api extends EntityBean implements Resource<Long>
         this.description = description;
     }
 
-    public Request getRequest()
+    public HttpRequest getRequest()
     {
         return request;
     }
 
-    public void setRequest(Request request)
+    public void setRequest(HttpRequest request)
     {
         this.request = request;
     }
@@ -64,17 +63,6 @@ public class Api extends EntityBean implements Resource<Long>
     public void setModule(Module module)
     {
         this.module = module;
-    }
-
-    @JsonIgnore
-    public int getOrdinal()
-    {
-        return ordinal;
-    }
-
-    public void setOrdinal(int ordinal)
-    {
-        this.ordinal = ordinal;
     }
 
     public String getUrl()

@@ -1,7 +1,6 @@
 package cn.blinkmind.flame.server.service;
 
 import cn.blinkmind.flame.server.bean.patch.JSONPatch;
-import cn.blinkmind.flame.server.repository.ArchiveRepository;
 import cn.blinkmind.flame.server.repository.BranchRepository;
 import cn.blinkmind.flame.server.repository.entity.Archive;
 import cn.blinkmind.flame.server.repository.entity.Branch;
@@ -15,15 +14,7 @@ import java.util.*;
 public class ArchiveService {
 
     @Autowired
-    private ArchiveRepository archiveRepository;
-
-    @Autowired
     private BranchRepository branchRepository;
-
-    public Archive get(final Branch branch, final User user) {
-        Archive archive = archiveRepository.get(branch);
-        return archive;
-    }
 
     public Archive patch(final Map<String, Object> patch, final Branch branch, final User user) {
         final Archive archive = branch.getArchive();

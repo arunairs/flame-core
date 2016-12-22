@@ -1,6 +1,6 @@
 package cn.blinkmind.flame.server.repository.entity;
 
-import cn.blinkmind.flame.server.bean.web.GeneralRequest;
+import cn.blinkmind.flame.server.bean.web.http.BasicHttpRequest;
 import cn.blinkmind.flame.server.repository.util.UrlStringBuilder;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -15,10 +15,9 @@ import java.util.List;
 public class Module extends EntityBean implements Resource<Long> {
 
     private String name;
-    private GeneralRequest request;
+    private BasicHttpRequest request;
     private List<Api> apis;
     private Archive archive;
-    private int ordinal;
 
     @Id
     @Override
@@ -35,12 +34,12 @@ public class Module extends EntityBean implements Resource<Long> {
         this.name = name;
     }
 
-    public GeneralRequest getRequest() {
+    public BasicHttpRequest getRequest() {
         return request;
     }
 
     @JsonIgnoreProperties(value = {"methods"})
-    public void setRequest(GeneralRequest request) {
+    public void setRequest(BasicHttpRequest request) {
         this.request = request;
     }
 
@@ -60,15 +59,6 @@ public class Module extends EntityBean implements Resource<Long> {
 
     public void setArchive(Archive archive) {
         this.archive = archive;
-    }
-
-    @JsonIgnore
-    public int getOrdinal() {
-        return ordinal;
-    }
-
-    public void setOrdinal(int ordinal) {
-        this.ordinal = ordinal;
     }
 
     public void addApi(Api api) {

@@ -60,4 +60,10 @@ public class BranchService extends PersistenceService
     {
         branchRepository.delete(id);
     }
+
+    public Archive getArchive(Long branchId, User user)
+    {
+        return branchRepository.getArchive(branchId);
+    }
+
 }

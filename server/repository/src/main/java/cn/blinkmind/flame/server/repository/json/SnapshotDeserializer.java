@@ -11,16 +11,20 @@ import com.fasterxml.jackson.databind.JsonNode;
 
 import java.io.IOException;
 
-public class SnapshotDeserializer extends JsonDeserializer<Snapshot> {
+public class SnapshotDeserializer extends JsonDeserializer<Snapshot>
+{
     @Override
-    public Snapshot deserialize(JsonParser p, DeserializationContext ctxt) throws IOException, JsonProcessingException {
+    public Snapshot deserialize(JsonParser p, DeserializationContext ctxt) throws IOException, JsonProcessingException
+    {
         Snapshot snapshot = new Snapshot();
         ObjectCodec codec = p.getCodec();
         JsonNode rootNode = codec.readTree(p);
         JsonNode branchNode = rootNode.get("branch");
-        if (branchNode != null) {
+        if (branchNode != null)
+        {
             JsonNode branchIdNode = branchNode.get("id");
-            if (branchIdNode != null) {
+            if (branchIdNode != null)
+            {
                 Branch branch = new Branch();
                 branch.setId(branchIdNode.asLong());
                 snapshot.setBranch(branch);
