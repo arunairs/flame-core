@@ -1,5 +1,8 @@
 package cn.blinkmind.flame.server.service;
 
+import cn.blinkmind.flame.server.bean.patch.JSONPatch;
+import cn.blinkmind.flame.server.bean.patch.PatchEvent;
+import cn.blinkmind.flame.server.bean.patch.PatchListener;
 import cn.blinkmind.flame.server.exception.Assertion;
 import cn.blinkmind.flame.server.exception.Error;
 import cn.blinkmind.flame.server.exception.Errors;
@@ -12,15 +15,30 @@ import cn.blinkmind.flame.server.repository.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
+
 @Service
 public class BranchService extends PersistenceService
 {
     @Autowired
     private BranchRepository branchRepository;
 
+    @Autowired
+    private DocumentService documentService;
+
     public Branch get(long id, User user)
     {
         return branchRepository.get(id);
+    }
+
+    public Branch get(Branch entity, User user)
+    {
+        return branchRepository.get(entity);
     }
 
     public Branch require(long id, User user)
@@ -33,25 +51,34 @@ public class BranchService extends PersistenceService
     {
         try
         {
-            Branch branch = require(id, user);
-            return branch;
+            return require(id, user);
         }
         catch (ResourceNotFoundException e)
         {
             Error.occurs(error);
-            return null;
         }
+        return null;
     }
 
-    public Branch create(Branch branch, Document document, User creator)
+    public Branch create(long documentId, Branch rawData, User creator)
     {
-        Assertion.isFalse(document == null || document.getId() == null, Errors.BRANCH_DOCUMENT_IS_NOT_SPECIFIED);
-        Assertion.notBlank(branch.getName(), Errors.BRANCH_NAME_IS_BLANK);
+        Document document = documentService.get(documentId, creator);
+        Assertion.notNull(document, Errors.DOCUMENT_IS_NOT_FOUND);
+        Assertion.notBlank(rawData.getName(), Errors.BRANCH_NAME_IS_BLANK);
 
+        Branch source = this.get(rawData.getSource(), creator);
+        if (source != null)
+        {
+            source.setArchive(this.getArchive(source.getId(), creator));
+        }
+
+        Branch branch = new Branch();
         branch.setId(newId());
+        branch.setName(rawData.getName());
         branch.setCreator(creator);
         branch.setDocument(document);
-        branch.setArchive(new Archive());
+        branch.setSource(source);
+        branch.setArchive(source.getArchive() == null ? new Archive() : source.getArchive());
         branchRepository.insert(branch);
         return branch;
     }
@@ -59,6 +86,17 @@ public class BranchService extends PersistenceService
     public void delete(long id, User user)
     {
         branchRepository.delete(id);
+    }
+
+    public Branch patch(long id, final Map<String, Object> rawData, final User user)
+    {
+        Branch branch = this.require(id, user);
+        JSONPatch.on(branch)
+                .mappedBy(rawData)
+                .fields("name")
+                .apply();
+        branchRepository.update(branch);
+        return branch;
     }
 
     public Archive getArchive(Long branchId, User user)

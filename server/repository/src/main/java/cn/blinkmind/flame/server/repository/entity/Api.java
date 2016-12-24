@@ -1,6 +1,6 @@
 package cn.blinkmind.flame.server.repository.entity;
 
-import cn.blinkmind.flame.server.bean.web.http.HttpRequest;
+import cn.blinkmind.flame.server.bean.request.http.HttpRequest;
 import cn.blinkmind.flame.server.repository.util.UrlStringBuilder;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -8,7 +8,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
 
-public class Api extends EntityBean implements Resource<Long>
+public class Api extends BasicEntity<Long> implements Resource<Long>
 {
     private String name;
     private String description;
@@ -17,7 +17,7 @@ public class Api extends EntityBean implements Resource<Long>
 
     @Id
     @Override
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    @JsonProperty(access = JsonProperty.Access.READ_WRITE)
     public Long getId()
     {
         return super.getId();
@@ -73,12 +73,6 @@ public class Api extends EntityBean implements Resource<Long>
         if (uri != null)
             url += uri;
         return url;
-    }
-
-    @Override
-    public void cleanup(CrudType crudType)
-    {
-        super.cleanup(crudType);
     }
 
     @JsonIgnore

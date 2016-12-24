@@ -4,8 +4,8 @@ import org.springframework.data.mongodb.core.query.Update;
 
 import java.util.Date;
 
-public class RepositoryUtil {
-
+public class EntityUtil
+{
     private static final String UPDATED_DATE = "updatedDate";
 
     public static void setUpdatedDate(Update update) {

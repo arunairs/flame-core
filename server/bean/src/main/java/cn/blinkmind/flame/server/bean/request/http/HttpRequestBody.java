@@ -1,4 +1,4 @@
-package cn.blinkmind.flame.server.bean.web.http;
+package cn.blinkmind.flame.server.bean.request.http;
 
 import java.util.LinkedHashSet;
 

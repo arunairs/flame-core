@@ -4,22 +4,22 @@ import cn.blinkmind.flame.server.util.JSONUtil;
 
 import java.util.Map;
 
-public class JSONPatch<T> extends Patch<Map, T>
+public class JSONPatch<T> extends Patch<T, Map>
 {
-	@Override
-	protected T convert(Map source)
-	{
-		return JSONUtil.convert(source, getTargetClass());
-	}
+    @Override
+    protected T convert(final Map source)
+    {
+        return JSONUtil.convert(source, getTargetClass());
+    }
 
-	@Override
-	protected boolean contains(Map source, String fieldName)
-	{
-		return source.containsKey(fieldName);
-	}
+    @Override
+    protected boolean contains(final Map source, final String fieldName)
+    {
+        return source.containsKey(fieldName);
+    }
 
-	public static JSONPatch newInstance()
-	{
-		return new JSONPatch<>();
-	}
+    public static <T> JSONPatch<T> on(final T target)
+    {
+        return (JSONPatch<T>) new JSONPatch<T>().bind(target);
+    }
 }

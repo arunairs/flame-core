@@ -1,13 +1,13 @@
 package cn.blinkmind.flame.server.repository.entity;
 
-import cn.blinkmind.flame.server.bean.web.http.BasicHttpRequest;
+import cn.blinkmind.flame.server.bean.request.http.BasicHttpRequest;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.data.annotation.Transient;
 
 import java.util.List;
 
-public class Archive extends EntityBean implements Resource<Long>
+public class Archive extends BasicEntity<Long> implements Resource<Long>
 {
     private String description;
     private List<Module> modules;
@@ -49,12 +49,6 @@ public class Archive extends EntityBean implements Resource<Long>
     public void setRequest(BasicHttpRequest request)
     {
         this.request = request;
-    }
-
-    @Override
-    public void cleanup(CrudType crudType)
-    {
-        super.cleanup(crudType);
     }
 
     @Override

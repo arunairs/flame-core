@@ -1,4 +1,4 @@
-package cn.blinkmind.flame.server.controller;
+package cn.blinkmind.flame.server.resource;
 
 import cn.blinkmind.flame.server.bean.web.ObjectId;
 import cn.blinkmind.flame.server.service.UserService;
@@ -10,14 +10,15 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(path = "users")
-public class UserController {
-
+public class UserResource extends AbstractResource
+{
     @Autowired
     private UserService userService;
 
     @PostMapping
-    public ResponseEntity<ObjectId> create(@RequestBody User user) {
-        userService.create(user);
+    public ResponseEntity<ObjectId> create(@RequestBody User user)
+    {
+        user = userService.create(user);
         return ResponseEntity.status(HttpStatus.CREATED).body(new ObjectId(user.getId()));
     }
 }

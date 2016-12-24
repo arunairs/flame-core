@@ -1,6 +1,6 @@
 package cn.blinkmind.flame.server.repository;
 
-import cn.blinkmind.flame.server.repository.entity.EntityBean;
+import cn.blinkmind.flame.server.repository.entity.BasicEntity;
 import cn.blinkmind.flame.server.repository.exception.ResourceNotFoundException;
 import com.mongodb.DBObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,7 @@ import java.util.List;
 
 import static org.springframework.data.mongodb.core.FindAndModifyOptions.options;
 
-public abstract class AbstractMongoRepository<T extends EntityBean, ID extends Serializable> implements Repository
+public abstract class AbstractMongoRepository<T extends BasicEntity<ID>, ID extends Serializable> implements Repository
 {
     @Autowired
     private MongoTemplate mongoTemplate;
@@ -60,8 +60,14 @@ public abstract class AbstractMongoRepository<T extends EntityBean, ID extends S
 
     public T get(final ID id)
     {
-        return getMongoTemplate().findById(id, getEntityClass());
+        return id == null ? null : getMongoTemplate().findById(id, getEntityClass());
     }
+
+    public T get(final T entity)
+    {
+        return entity == null ? null : get((ID) entity.getId());
+    }
+
 
     public T findOne(final Query query)
     {
@@ -156,7 +162,7 @@ public abstract class AbstractMongoRepository<T extends EntityBean, ID extends S
 
     private void doBeforeInsert(final T entity)
     {
-        if (entity.getCreatedDate() != null)
+        if (entity.getCreatedDate() == null)
             entity.refreshCreatedDate();
     }
 

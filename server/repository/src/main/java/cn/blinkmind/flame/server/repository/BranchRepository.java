@@ -18,6 +18,7 @@ public class BranchRepository extends AbstractMongoRepository<Branch, Long>
     @Override
     public Branch get(Long id)
     {
+        if (id == null) return null;
         Query query = new Query();
         query.addCriteria(Criteria.where(ID).is(id));
         query.fields().exclude("archive");
@@ -26,6 +27,7 @@ public class BranchRepository extends AbstractMongoRepository<Branch, Long>
 
     public Archive getArchive(Long branchId)
     {
+        if (branchId == null) return null;
         Query query = new Query();
         query.addCriteria(Criteria.where(ID).is(branchId));
         query.fields().include("archive");

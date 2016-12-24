@@ -1,6 +1,6 @@
 package cn.blinkmind.flame.server.repository.entity;
 
-import cn.blinkmind.flame.server.bean.web.http.BasicHttpRequest;
+import cn.blinkmind.flame.server.bean.request.http.BasicHttpRequest;
 import cn.blinkmind.flame.server.repository.util.UrlStringBuilder;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -12,7 +12,7 @@ import org.springframework.data.annotation.Transient;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Module extends EntityBean implements Resource<Long> {
+public class Module extends BasicEntity<Long> implements Resource<Long> {
 
     private String name;
     private BasicHttpRequest request;
@@ -65,11 +65,6 @@ public class Module extends EntityBean implements Resource<Long> {
         if (apis == null) apis = new ArrayList<>();
         apis.add(api);
         api.setModule(this);
-    }
-
-    @Override
-    public void cleanup(CrudType crudType) {
-        super.cleanup(crudType);
     }
 
     @Override

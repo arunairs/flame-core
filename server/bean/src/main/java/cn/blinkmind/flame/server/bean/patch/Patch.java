@@ -5,125 +5,167 @@ import org.apache.commons.lang3.StringUtils;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @SuppressWarnings("unchecked")
-public abstract class Patch<S, T>
+public abstract class Patch<T, S>
 {
-	private static final String METHOD_PREFIX_GET = "get";
-	private static final String METHOD_PREFIX_IS = "is";
-	private static final String METHOD_PREFIX_SET = "set";
+    private static final String METHOD_PREFIX_GET = "get";
+    private static final String METHOD_PREFIX_IS = "is";
+    private static final String METHOD_PREFIX_SET = "set";
 
-	private Class<T> targetClass;
-	private T target;
-	private T converted;
-	private S source;
+    private Class<T> targetClass;
+    private T target;
+    private T converted;
+    private S source;
+    private PatchListener.UpdateCallback updateCallback;
+    private Set<PatchField> fields = new LinkedHashSet<>();
 
-	protected Class<T> getTargetClass()
-	{
-		return targetClass;
-	}
+    protected Class<T> getTargetClass()
+    {
+        return targetClass;
+    }
 
-	protected S getSource()
-	{
-		return source;
-	}
+    protected S getSource()
+    {
+        return source;
+    }
 
-	protected T getTarget()
-	{
-		return target;
-	}
+    protected T getTarget()
+    {
+        return target;
+    }
 
-	public Patch<S, T> source(final S source)
-	{
-		this.source = source;
-		return this;
-	}
+    public Patch<T, S> mappedBy(final S source)
+    {
+        this.source = source;
+        this.converted = null;
+        return this;
+    }
 
-	public Patch<S, T> target(final T target)
-	{
-		this.target = target;
-		this.targetClass = (Class<T>) this.target.getClass();
-		return this;
-	}
+    protected Patch<T, S> bind(final T target)
+    {
+        this.target = target;
+        this.targetClass = (Class<T>) this.target.getClass();
+        return this;
+    }
 
-	protected T getConverted()
-	{
-		if (this.converted == null)
-		{
-			this.converted = convert(source);
-		}
-		return converted;
-	}
+    public Patch<T, S> onUpdated(final PatchListener.UpdateCallback updateCallback)
+    {
+        this.updateCallback = updateCallback;
+        return this;
+    }
 
-	protected abstract T convert(S source);
+    public Patch<T, S> fields(final String... fields)
+    {
+        for (String field : fields)
+        {
+            this.fields.add(new PatchField(field));
+        }
+        return this;
+    }
 
-	protected abstract boolean contains(final S source, final String fieldName);
+    public PatchField fields()
+    {
+        return new PatchField(this);
+    }
 
-	public Operation build(ConvertCallback<T> convertCallback)
-	{
-		if (convertCallback != null)
-			this.converted = convertCallback.converted(getConverted());
-		return new Operation();
-	}
+    public void apply()
+    {
+        fields.forEach(field ->
+                apply(getTarget(), field.name, getSource(), field.mappedBy, getConverted())
+        );
+    }
 
-	public Operation build()
-	{
-		return build(null);
-	}
+    public void apply(final T target)
+    {
+        this.bind(target);
+        this.apply();
+    }
 
-	public class Operation
-	{
-		public Operation update(final String sourceFieldName, final String targetFieldName, final PatchCallback<?, T> callback)
-		{
-			update(getSource(), sourceFieldName, getConverted(), getTarget(), targetFieldName, callback);
-			return this;
-		}
+    protected T getConverted()
+    {
+        if (this.converted == null)
+        {
+            this.converted = convert(source);
+        }
+        return converted;
+    }
 
-		public Operation update(final String sourceFieldName, final String targetFieldName)
-		{
-			return update(sourceFieldName, targetFieldName, null);
-		}
+    protected abstract T convert(final S source);
 
-		public Operation update(final String fieldName, final PatchCallback<?, T> callback)
-		{
-			return update(fieldName, fieldName, callback);
-		}
+    protected abstract boolean contains(final S source, final String fieldName);
 
-		public Operation update(final String fieldName)
-		{
-			return update(fieldName, fieldName);
-		}
+    protected <V> boolean apply(final T target, final String targetFieldName, final S source, final String mappedBy, final T converted)
+    {
+        if (source == null || !contains(source, mappedBy)) return false;
+        try
+        {
+            Class<T> targetClass = getTargetClass();
+            Field field = targetClass.getDeclaredField(targetFieldName);
+            field.setAccessible(true);
+            Class<?> targetFieldClass = field.getType();
+            String fieldName = StringUtils.capitalize(targetFieldName);
+            Method setterMethod = targetClass.getDeclaredMethod(METHOD_PREFIX_SET + fieldName, targetFieldClass);
+            setterMethod.setAccessible(true);
 
-		protected <V> boolean update(final S source, final String sourceFieldName, final T converted, final T target, final String targetFieldName, final PatchCallback<V, T> callback)
-		{
-			if (source == null || !contains(source, sourceFieldName)) return false;
-			try
-			{
-				Class<T> targetClass = getTargetClass();
-				Field field = targetClass.getDeclaredField(targetFieldName);
-				field.setAccessible(true);
-				Class<?> targetFieldClass = field.getType();
-				String fieldName = StringUtils.capitalize(targetFieldName);
-				Method setterMethod = targetClass.getDeclaredMethod(METHOD_PREFIX_SET + fieldName, targetFieldClass);
-				setterMethod.setAccessible(true);
+            Method getterMethod;
+            if (boolean.class.equals(targetFieldClass) || Boolean.class.equals(targetFieldClass))
+                getterMethod = targetClass.getDeclaredMethod(METHOD_PREFIX_IS + fieldName);
+            else
+                getterMethod = targetClass.getDeclaredMethod(METHOD_PREFIX_GET + fieldName);
+            getterMethod.setAccessible(true);
+            V previous = (V) getterMethod.invoke(target);
+            V current = (V) getterMethod.invoke(converted);
+            setterMethod.invoke(target, current);
+            if (updateCallback != null)
+                updateCallback.callback(new PatchEvent.UpdateEvent<>(targetFieldName, mappedBy, previous, current, getConverted()));
+        }
+        catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException | NoSuchFieldException e)
+        {
+            throw new RuntimeException(e);
+        }
+        return true;
+    }
 
-				Method getterMethod;
-				if (boolean.class.equals(targetFieldClass) || Boolean.class.equals(targetFieldClass))
-					getterMethod = targetClass.getDeclaredMethod(METHOD_PREFIX_IS + fieldName);
-				else
-					getterMethod = targetClass.getDeclaredMethod(METHOD_PREFIX_GET + fieldName);
-				getterMethod.setAccessible(true);
-				V previous = (V) getterMethod.invoke(target);
-				V current = (V) getterMethod.invoke(converted);
-				setterMethod.invoke(target, current);
-				if (callback != null)
-					callback.updated(previous, current, getConverted());
-			}
-			catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException | NoSuchFieldException e)
-			{
-				throw new RuntimeException(e);
-			}
-			return true;
-		}
-	}
+    public class PatchField
+    {
+        private Patch<T, S> patch;
+        private String name;
+        private String mappedBy;
+
+        private PatchField(final String name, final String mappedBy)
+        {
+            this.name = name;
+            this.mappedBy = mappedBy;
+        }
+
+        private PatchField(final String field)
+        {
+            this(field, null);
+        }
+
+        private PatchField(final Patch<T, S> patch)
+        {
+            this.patch = patch;
+        }
+
+        public PatchField add(final String field)
+        {
+            fields.add(new PatchField(field));
+            return this;
+        }
+
+        public PatchField add(final String field, final String mappedBy)
+        {
+            fields.add(new PatchField(field, mappedBy));
+            return this;
+        }
+
+        public Patch<T, S> end()
+        {
+            return this.patch;
+        }
+    }
 }

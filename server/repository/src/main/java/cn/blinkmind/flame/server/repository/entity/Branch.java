@@ -1,23 +1,30 @@
 package cn.blinkmind.flame.server.repository.entity;
 
-import cn.blinkmind.flame.server.repository.json.BranchDeserializer;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.index.CompoundIndex;
 
-@JsonDeserialize(using = BranchDeserializer.class)
 @org.springframework.data.mongodb.core.mapping.Document(collection = "branches")
 @CompoundIndex(name = "unique_index", unique = true, def = "{'name':1,'documentRef._id':1}")
-public class Branch extends EntityBean
+public class Branch extends BasicEntity<Long>
 {
     private String name;
     private Ref<Long> documentRef;
     private Document document;
-    private Archive archive = new Archive();
+    private Archive archive;
     private Ref<Long> sourceRef;
     private Branch source;
     private Long version;
+
+    @Id
+    @Override
+    @JsonProperty(access = JsonProperty.Access.READ_WRITE)
+    public Long getId()
+    {
+        return super.getId();
+    }
 
     public String getName()
     {
@@ -76,6 +83,7 @@ public class Branch extends EntityBean
         this.sourceRef = sourceRef;
     }
 
+    @Transient
     public Branch getSource()
     {
         return source;

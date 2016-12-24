@@ -26,11 +26,14 @@ public class DocumentService extends PersistenceService
         return document;
     }
 
-    public Document create(Document document, User creator)
+    public Document create(Document rawData, User creator)
     {
-        Assertion.notBlank(document.getName(), Errors.DOCUMENT_NAME_IS_BLANK);
+        Assertion.notBlank(rawData.getName(), Errors.DOCUMENT_NAME_IS_BLANK);
 
+        Document document = new Document();
         document.setId(newId());
+        document.setName(rawData.getName());
+        document.setDescription(rawData.getDescription());
         document.setType(DocumentType.REST_API);
         document.setCreator(creator);
         documentRepository.insert(document);
