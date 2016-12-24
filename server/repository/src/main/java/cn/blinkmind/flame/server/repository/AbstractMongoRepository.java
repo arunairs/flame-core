@@ -33,15 +33,14 @@ public abstract class AbstractMongoRepository<T extends BasicEntity<ID>, ID exte
     {
         Query query = new Query();
         query.addCriteria(Criteria.where(ID).is(entity.getId()));
-        doBeforeUpdate(entity);
         return update(query, entity);
     }
 
     public T update(final Query query, final T entity)
     {
+        doBeforeUpdate(entity);
         DBObject object = (DBObject) getMongoTemplate().getConverter().convertToMongoType(entity);
         Update update = Update.fromDBObject(object);
-        doBeforeUpdate(entity);
         return getMongoTemplate().findAndModify(query, update, options().upsert(false), getEntityClass());
     }
 

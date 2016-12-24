@@ -78,7 +78,7 @@ public class BranchService extends PersistenceService
         branch.setCreator(creator);
         branch.setDocument(document);
         branch.setSource(source);
-        branch.setArchive(source.getArchive() == null ? new Archive() : source.getArchive());
+        branch.setArchive(source != null && source.getArchive() != null ? source.getArchive() : new Archive());
         branchRepository.insert(branch);
         return branch;
     }

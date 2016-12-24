@@ -78,7 +78,7 @@ public class Branch extends BasicEntity<Long>
         return sourceRef;
     }
 
-    public void setSourceRef(Ref<Long> sourceRef)
+    private void setSourceRef(Ref<Long> sourceRef)
     {
         this.sourceRef = sourceRef;
     }
@@ -92,6 +92,9 @@ public class Branch extends BasicEntity<Long>
     public void setSource(Branch source)
     {
         this.source = source;
+        if (this.source != null)
+            setSourceRef(new Ref<>(this.source));
+        else setSourceRef(null);
     }
 
     @org.springframework.data.annotation.Version

@@ -57,7 +57,7 @@ public class BasicEntity<ID extends Serializable> implements Indexable<ID>
 
     public void refreshCreatedDate()
     {
-        this.createdDate = new Date();
+        setCreatedDate(new Date());
     }
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)

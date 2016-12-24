@@ -143,7 +143,7 @@ public abstract class Patch<T, S>
 
         private PatchField(final String field)
         {
-            this(field, null);
+            this(field, field);
         }
 
         private PatchField(final Patch<T, S> patch)
@@ -153,7 +153,7 @@ public abstract class Patch<T, S>
 
         public PatchField add(final String field)
         {
-            fields.add(new PatchField(field));
+            fields.add(new PatchField(field, field));
             return this;
         }
 
