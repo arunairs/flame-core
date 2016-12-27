@@ -1,9 +1,10 @@
 import cn.blinkmind.flame.gradle.TaskGroup
 import cn.blinkmind.flame.gradle.external.Mongo
+import com.bmuschko.gradle.docker.tasks.image.DockerPullImage
 
-task mongoEnv(group: TaskGroup.MONGO, dependsOn: ['externalEnv']) {
+task mongoEnv(group: TaskGroup.MONGO, dependsOn: ['componentEnv']) {
     ext.addMongo = { String name ->
-        externalEnv.addComponent(name, new Mongo(name, project,
+        componentEnv.add(name, new Mongo(name, project,
                 new Mongo.Settings(
                         homeDir: env.getRequiredString('MONGO_HOME'),
                         host: env.getRequiredString('MONGO_HOST'),
@@ -14,24 +15,29 @@ task mongoEnv(group: TaskGroup.MONGO, dependsOn: ['externalEnv']) {
     }
 
     ext.getMongo = { String name ->
-        return externalEnv.getComponent(name)
+        return componentEnv.get(name)
     }
 
     if (env.getString('MONGO_HOME')) {
-        addMongo('mongo')
+        addMongo('build')
     }
 }
 
 task startMongo(group: TaskGroup.MONGO, dependsOn: ['mongoEnv']) {
     doLast {
-        Mongo mongo = mongoEnv.getMongo('mongo')
+        Mongo mongo = mongoEnv.getMongo('build')
         mongo.start()
     }
 }
 
 task stopMongo(group: TaskGroup.MONGO, dependsOn: ['mongoEnv']) {
     doLast {
-        Mongo mongo = mongoEnv.getMongo('mongo')
+        Mongo mongo = mongoEnv.getMongo('build')
         mongo.stop()
     }
+}
+
+task pullMongoImage(type: DockerPullImage, group: TaskGroup.MONGO) {
+    repository = 'build'
+    tag = 'latest'
 }

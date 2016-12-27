@@ -1,0 +1,20 @@
+subprojects { project ->
+    println project
+    buildscript {
+        repositories {
+            maven { url 'http://maven.aliyun.com/nexus/content/groups/public' }
+        }
+
+        dependencies {
+            classpath group: 'com.bmuschko', name: 'gradle-docker-plugin', version: '3.0.4'
+        }
+    }
+
+    apply plugin: 'com.bmuschko.docker-remote-api'
+    apply from: "../../gradle/env.gradle"
+
+    docker {
+        url = 'unix:///var/run/docker.sock'
+        registryCredentials { url = 'http://aad0405c.m.daocloud.io' }
+    }
+}

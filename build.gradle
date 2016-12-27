@@ -19,6 +19,7 @@ buildscript {
     dependencies {
         classpath group: 'org.springframework.boot', name: 'spring-boot-gradle-plugin', version: libs.spring.boot.version
         classpath group: 'org.springframework.build.gradle', name: 'propdeps-plugin', version: '0.0.7'
+        classpath group: 'com.bmuschko', name: 'gradle-docker-plugin', version: '3.0.4'
     }
 }
 

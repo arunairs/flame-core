@@ -1,9 +1,9 @@
 import cn.blinkmind.flame.gradle.TaskGroup
 import cn.blinkmind.flame.gradle.external.Redis
 
-task redisEnv(group: TaskGroup.REDIS, dependsOn: ['externalEnv']) {
+task redisEnv(group: TaskGroup.REDIS, dependsOn: ['componentEnv']) {
     ext.addRedis = { String name ->
-        externalEnv.addComponent(name, new Redis(name, project,
+        componentEnv.add(name, new Redis(name, project,
                 new Redis.Settings(
                         homeDir: env.getRequiredString('REDIS_HOME'),
                         host: env.getRequiredString('REDIS_HOST'),
@@ -14,31 +14,31 @@ task redisEnv(group: TaskGroup.REDIS, dependsOn: ['externalEnv']) {
     }
 
     ext.getRedis = { String name ->
-        return externalEnv.getComponent(name)
+        return componentEnv.get(name)
     }
 
     if (env.getString('REDIS_HOME')) {
-        addRedis('redis')
+        addRedis('build')
     }
 }
 
 task startRedis(group: TaskGroup.REDIS, dependsOn: ['redisEnv']) {
     doLast {
-        Redis redis = redisEnv.getRedis('redis')
+        Redis redis = redisEnv.getRedis('build')
         redis.start()
     }
 }
 
 task stopRedis(group: TaskGroup.REDIS, dependsOn: ['redisEnv']) {
     doLast {
-        Redis redis = redisEnv.getRedis('redis')
+        Redis redis = redisEnv.getRedis('build')
         redis.stop()
     }
 }
 
 task flushDB(group: TaskGroup.REDIS, dependsOn: ['redisEnv', 'startRedis']) {
     doLast {
-        Redis redis = redisEnv.getRedis('redis')
+        Redis redis = redisEnv.getRedis('build')
         redis.client.flushDB()
     }
 }
