@@ -1,5 +1,15 @@
-subprojects { project ->
-    println project
+import cn.blinkmind.flame.gradle.TaskGroup
+import cn.blinkmind.flame.gradle.external.DockerContainer
+import com.bmuschko.gradle.docker.tasks.container.DockerCreateContainer
+import com.bmuschko.gradle.docker.tasks.container.DockerKillContainer
+import com.bmuschko.gradle.docker.tasks.container.DockerRemoveContainer
+import com.bmuschko.gradle.docker.tasks.container.DockerRestartContainer
+import com.bmuschko.gradle.docker.tasks.container.DockerStartContainer
+import com.bmuschko.gradle.docker.tasks.container.DockerStopContainer
+import com.bmuschko.gradle.docker.tasks.image.DockerPullImage
+import org.gradle.internal.os.OperatingSystem
+
+allprojects { project ->
     buildscript {
         repositories {
             maven { url 'http://maven.aliyun.com/nexus/content/groups/public' }
@@ -11,10 +21,68 @@ subprojects { project ->
     }
 
     apply plugin: 'com.bmuschko.docker-remote-api'
-    apply from: "../../gradle/env.gradle"
+    apply from: "$rootProject.projectDir/gradle/env.gradle"
 
     docker {
-        url = 'unix:///var/run/docker.sock'
+        url = System.getenv('DOCKER_URL')
+        if (!url)
+            url = OperatingSystem.current().isWindows() ? 'tcp://127.0.0.1:2375' : 'unix:///var/run/docker.sock'
         registryCredentials { url = 'http://aad0405c.m.daocloud.io' }
+    }
+}
+
+def images = ['mongo']
+images.each { image ->
+    def componentName = image.capitalize()
+    if (DockerContainer.isEnabled(componentName)) {
+        def container = DockerContainer.load(image)
+
+        task "pull${componentName}Image"(type: DockerPullImage, dependsOn: ['externalEnv'], group: TaskGroup.DOCKER) {
+            repository = container.getImage().repository
+            tag = container.getImage().tag
+        }
+
+        task "create${componentName}Container"(type: DockerCreateContainer, dependsOn: ["pull${componentName}Image"], group: TaskGroup.DOCKER) {
+            containerName = container.name
+            portBindings = container.ports
+            binds = container.binds
+            targetImageId { container.getImage().id }
+            onError { exception ->
+                if (!exception.message.contains('already in use'))
+                    throw exception
+            }
+        }
+
+        task "remove${componentName}Container"(type: DockerRemoveContainer, group: TaskGroup.DOCKER) {
+            removeVolumes = false
+            force = false
+            targetContainerId {
+                container.name
+            }
+        }
+
+        task "start${componentName}Container"(type: DockerStartContainer, group: TaskGroup.DOCKER) {
+            targetContainerId {
+                container.name
+            }
+        }
+
+        task "stop${componentName}Container"(type: DockerStopContainer, group: TaskGroup.DOCKER) {
+            targetContainerId {
+                container.name
+            }
+        }
+
+        task "restart${componentName}Container"(type: DockerRestartContainer, group: TaskGroup.DOCKER) {
+            targetContainerId {
+                container.name
+            }
+        }
+
+        task "kill${componentName}Container"(type: DockerKillContainer, group: TaskGroup.DOCKER) {
+            targetContainerId {
+                container.name
+            }
+        }
     }
 }

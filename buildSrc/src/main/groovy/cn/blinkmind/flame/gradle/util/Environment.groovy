@@ -9,6 +9,8 @@ import org.apache.commons.lang3.BooleanUtils
  */
 class Environment {
 
+    static Environment getInstance() { return new Environment() }
+
     Properties properties = new Properties()
 
     String getString(String key) {
@@ -19,9 +21,25 @@ class Environment {
         return getPropertyOrDefault(key, defaultValue)
     }
 
+    String[] getStringArray(String key, String split) {
+        return getStringArray(key, split, null)
+    }
+
+    String[] getStringArray(String key, String split, String[] defaultValue) {
+        String value = getString(key)
+        return value ? value.split(split) : defaultValue
+    }
+
+    String[] getRequiredStringArray(String key, String split) {
+        String[] value = getStringArray(key, split)
+        if (!value)
+            throw new PropertyNotFoundException(key)
+        return value
+    }
+
     String getRequiredString(String key) {
         String value = getString(key)
-        if (value == null)
+        if (!value)
             throw new PropertyNotFoundException(key)
         return value
     }
@@ -43,7 +61,7 @@ class Environment {
 
     int getRequiredInteger(String key) {
         Integer value = getInteger(key)
-        if (value == null)
+        if (!value)
             throw new PropertyNotFoundException(key)
         return value
     }

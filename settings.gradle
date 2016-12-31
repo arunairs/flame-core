@@ -1,7 +1,6 @@
 rootProject.name = 'flame'
 include ':buildSrc'
 include ':docker'
-include ':docker:mongo'
 include ':docker:redis'
 include ':server'
 include ':server:bean'

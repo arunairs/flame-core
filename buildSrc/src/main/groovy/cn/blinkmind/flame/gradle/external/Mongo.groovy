@@ -68,7 +68,7 @@ class Mongo extends Component {
     MongoClient newClient() {
         MongoClientOptions mongoClientOptions = MongoClientOptions.builder()
                 .serverSelectionTimeout(1000)
-                .build();
+                .build()
         this.client = new MongoClient(new ServerAddress(this.host, this.port), mongoClientOptions)
     }
 
@@ -79,6 +79,5 @@ class Mongo extends Component {
 
     static class Settings extends Component.Settings {
         String database
-        String dataDir
     }
 }
