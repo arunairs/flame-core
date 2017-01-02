@@ -1,5 +1,6 @@
 import cn.blinkmind.flame.gradle.TaskGroup
-import cn.blinkmind.flame.gradle.external.DockerContainer
+import cn.blinkmind.flame.gradle.external.docker.DockerSetting
+import cn.blinkmind.flame.gradle.external.docker.DockerContainerSetting
 import com.bmuschko.gradle.docker.tasks.container.DockerCreateContainer
 import com.bmuschko.gradle.docker.tasks.container.DockerKillContainer
 import com.bmuschko.gradle.docker.tasks.container.DockerRemoveContainer
@@ -7,8 +8,8 @@ import com.bmuschko.gradle.docker.tasks.container.DockerRestartContainer
 import com.bmuschko.gradle.docker.tasks.container.DockerStartContainer
 import com.bmuschko.gradle.docker.tasks.container.DockerStopContainer
 import com.bmuschko.gradle.docker.tasks.image.DockerPullImage
-import org.gradle.internal.os.OperatingSystem
 
+def dockerSetting = DockerSetting.load()
 allprojects { project ->
     buildscript {
         repositories {
@@ -21,23 +22,23 @@ allprojects { project ->
     }
 
     apply plugin: 'com.bmuschko.docker-remote-api'
-    apply from: "$rootProject.projectDir/gradle/env.gradle"
 
     docker {
-        url = System.getenv('DOCKER_URL')
-        if (!url)
-            url = OperatingSystem.current().isWindows() ? 'tcp://127.0.0.1:2375' : 'unix:///var/run/docker.sock'
-        registryCredentials { url = 'http://aad0405c.m.daocloud.io' }
+        url = dockerSetting.url
+        registryCredentials {
+            if (dockerSetting.registryUrl)
+                url = dockerSetting.registryUrl
+        }
     }
 }
 
-def images = ['mongo']
+def images = ['mongo', 'redis']
 images.each { image ->
     def componentName = image.capitalize()
-    if (DockerContainer.isEnabled(componentName)) {
-        def container = DockerContainer.load(image)
+    if (DockerContainerSetting.isEnabled(componentName)) {
+        def container = DockerContainerSetting.load(image)
 
-        task "pull${componentName}Image"(type: DockerPullImage, dependsOn: ['externalEnv'], group: TaskGroup.DOCKER) {
+        task "pull${componentName}Image"(type: DockerPullImage, group: TaskGroup.DOCKER) {
             repository = container.getImage().repository
             tag = container.getImage().tag
         }
@@ -46,6 +47,9 @@ images.each { image ->
             containerName = container.name
             portBindings = container.ports
             binds = container.binds
+            if (container.cmd) {
+                cmd = container.cmd
+            }
             targetImageId { container.getImage().id }
             onError { exception ->
                 if (!exception.message.contains('already in use'))

@@ -7,10 +7,6 @@ import com.mongodb.MongoClientOptions
 import com.mongodb.ServerAddress
 import org.gradle.api.Project
 
-/**
- * @author jiaan.zhang@outlook.com
- * @date 10/10/2016 12:38 AM
- */
 class Mongo extends Component {
 
     static final BasicDBObject COMMAND_PING = new BasicDBObject("ping", "1")

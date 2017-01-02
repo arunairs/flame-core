@@ -1,13 +1,9 @@
 package cn.blinkmind.flame.gradle.external
 
-import cn.blinkmind.flame.gradle.util.Environment
+import cn.blinkmind.flame.gradle.Environment
 import cn.blinkmind.flame.gradle.util.Builder
 import org.gradle.api.Project
 
-/**
- * @author jiaan.zhang@outlook.com
- * @date 06/10/2016 1:50 AM
- */
 abstract class Component {
 
     enum Status {

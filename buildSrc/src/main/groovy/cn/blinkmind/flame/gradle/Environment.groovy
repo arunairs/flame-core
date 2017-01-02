@@ -1,6 +1,7 @@
-package cn.blinkmind.flame.gradle.util
+package cn.blinkmind.flame.gradle
 
 import com.sun.javafx.fxml.PropertyNotFoundException
+import groovy.json.JsonSlurper
 import org.apache.commons.lang3.BooleanUtils
 
 /**
@@ -42,6 +43,11 @@ class Environment {
         if (!value)
             throw new PropertyNotFoundException(key)
         return value
+    }
+
+    def getJson(String key) {
+        String value = getString(key)
+        return value ? new JsonSlurper().parseText(value) : null
     }
 
     Integer getInteger(String key) {
@@ -100,7 +106,7 @@ class Environment {
         return defaultValue
     }
 
-    void addProperties(InputStream inputStream) {
+    Environment addProperties(InputStream inputStream) {
         Properties properties = new Properties()
         try {
             properties.load(inputStream)
@@ -109,5 +115,6 @@ class Environment {
         catch (Exception e) {
             throw new RuntimeException(e)
         }
+        return this
     }
 }

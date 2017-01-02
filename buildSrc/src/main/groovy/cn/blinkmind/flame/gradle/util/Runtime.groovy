@@ -4,24 +4,7 @@ import org.apache.commons.io.IOUtils
 
 import java.nio.charset.StandardCharsets
 
-/**
- * @author jiaan.zhang@outlook.com
- * @date 12/27/15 1:34 AM
- */
-enum OS {
-    WINDOWS,
-    LINUX,
-    OSX,
-}
-
 final class Runtime {
-
-    static OS getCurrentOS() {
-        String os = System.getProperty("os.name").toUpperCase()
-        if (os.contains("WINDOWS")) return OS.WINDOWS
-        if (os.contains("LINUX")) return OS.LINUX
-        if (os.contains("MAC")) return OS.OSX
-    }
 
     static Process run(String[] commands, File directory, Map<String, String> environment, boolean wait = false) {
         ProcessBuilder processBuilder = new ProcessBuilder(commands)
@@ -39,13 +22,13 @@ final class Runtime {
     }
 
     static void kill(String processName) {
-        Process p1 = java.lang.Runtime.getRuntime().exec(["ps"] as String[]);
-        InputStream input = p1.getInputStream();
-        Process p2 = java.lang.Runtime.getRuntime().exec(["grep", processName] as String[]);
-        OutputStream output = p2.getOutputStream();
-        IOUtils.copy(input, output);
-        output.close();
-        List<String> results = IOUtils.readLines(p2.getInputStream(), StandardCharsets.UTF_8);
+        Process p1 = java.lang.Runtime.getRuntime().exec(["ps"] as String[])
+        InputStream input = p1.getInputStream()
+        Process p2 = java.lang.Runtime.getRuntime().exec(["grep", processName] as String[])
+        OutputStream output = p2.getOutputStream()
+        IOUtils.copy(input, output)
+        output.close()
+        List<String> results = IOUtils.readLines(p2.getInputStream(), StandardCharsets.UTF_8)
         if (results != null) {
             String[] array
             String pid

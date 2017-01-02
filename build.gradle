@@ -1,3 +1,5 @@
+import cn.blinkmind.flame.gradle.Environment
+
 buildscript {
     repositories {
         maven { url 'http://maven.aliyun.com/nexus/content/groups/public' }
@@ -22,6 +24,9 @@ buildscript {
         classpath group: 'com.bmuschko', name: 'gradle-docker-plugin', version: '3.0.4'
     }
 }
+
+def env = Environment.getInstance().addProperties(rootProject.file('gradle.properties').newDataInputStream())
+rootProject.ext.env = env
 
 allprojects { project ->
     apply plugin: 'java'

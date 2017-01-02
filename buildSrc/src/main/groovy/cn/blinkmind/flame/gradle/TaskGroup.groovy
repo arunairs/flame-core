@@ -1,9 +1,5 @@
 package cn.blinkmind.flame.gradle
 
-/**
- * @author jiaan.zhang@outlook.com
- * @date 27/09/2016 12:22 AM
- */
 class TaskGroup {
     static final String CONFIG = 'Config'
     static final String DOCKER = 'Docker'
