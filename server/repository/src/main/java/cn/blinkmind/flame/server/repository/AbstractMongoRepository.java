@@ -12,7 +12,6 @@ import org.springframework.data.mongodb.core.query.Update;
 
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 
 import static org.springframework.data.mongodb.core.FindAndModifyOptions.options;
@@ -38,7 +37,6 @@ public abstract class AbstractMongoRepository<T extends BasicEntity<ID>, ID exte
 
     public T update(final Query query, final T entity)
     {
-        doBeforeUpdate(entity);
         DBObject object = (DBObject) getMongoTemplate().getConverter().convertToMongoType(entity);
         Update update = Update.fromDBObject(object);
         return getMongoTemplate().findAndModify(query, update, options().upsert(false), getEntityClass());
@@ -46,7 +44,6 @@ public abstract class AbstractMongoRepository<T extends BasicEntity<ID>, ID exte
 
     public T update(final Query query, final Update update)
     {
-        doBeforeUpdate(update);
         return getMongoTemplate().findAndModify(query, update, options().upsert(false), getEntityClass());
     }
 
@@ -104,7 +101,6 @@ public abstract class AbstractMongoRepository<T extends BasicEntity<ID>, ID exte
 
     public T insert(final T entity)
     {
-        doBeforeInsert(entity);
         getMongoTemplate().insert(entity);
         return entity;
     }
@@ -157,26 +153,5 @@ public abstract class AbstractMongoRepository<T extends BasicEntity<ID>, ID exte
     public BulkOperations bulkOps(final BulkOperations.BulkMode bulkMode)
     {
         return getMongoTemplate().bulkOps(bulkMode, getEntityClass());
-    }
-
-    private void doBeforeInsert(final T entity)
-    {
-        if (entity.getCreatedDate() == null)
-            entity.refreshCreatedDate();
-    }
-
-    private void doBeforeInsert(final Update update)
-    {
-        update.set("createdDate", new Date());
-    }
-
-    private void doBeforeUpdate(final T entity)
-    {
-        entity.refreshUpdatedDate();
-    }
-
-    private void doBeforeUpdate(final Update update)
-    {
-        update.set("updatedDate", new Date());
     }
 }
