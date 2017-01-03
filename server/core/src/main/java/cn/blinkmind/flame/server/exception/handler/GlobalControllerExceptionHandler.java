@@ -1,17 +1,15 @@
 package cn.blinkmind.flame.server.exception.handler;
 
-import cn.blinkmind.flame.server.exception.Errors;
-import cn.blinkmind.flame.server.repository.exception.ResourceNotFoundException;
-import cn.blinkmind.flame.server.exception.InvalidRequestException;
 import cn.blinkmind.flame.server.exception.Error;
+import cn.blinkmind.flame.server.exception.Errors;
+import cn.blinkmind.flame.server.exception.InvalidRequestException;
+import cn.blinkmind.flame.server.repository.exception.ResourceNotFoundException;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-@ControllerAdvice
-@ResponseBody
+@RestControllerAdvice
 public class GlobalControllerExceptionHandler
 {
 	@ExceptionHandler(value = InvalidRequestException.class)
