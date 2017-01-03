@@ -11,24 +11,24 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(path = "documents")
+@RequestMapping
 public class DocumentResource extends AbstractResource
 {
     @Autowired
     private DocumentService documentService;
 
     @Token
-    @GetMapping(value = "/{id}")
-    public ResponseEntity<Document> get(@PathVariable(name = "id") long id, @RequestAttribute(name = USER_KEY) User user)
-    {
-        return ResponseEntity.ok(documentService.require(id, user));
-    }
-
-    @Token
-    @PostMapping
-    public ResponseEntity<ObjectId> create(@RequestBody Document document, @RequestAttribute(name = USER_KEY) User user)
+    @PostMapping(value = "documents")
+    public ResponseEntity<ObjectId> create(@RequestBody Document document, @RequestAttribute(name = ATTR_USER) User user)
     {
         document = documentService.create(document, user);
         return ResponseEntity.status(HttpStatus.CREATED).body(new ObjectId(document.getId()));
+    }
+
+    @Token
+    @GetMapping(value = "documents/{id}")
+    public ResponseEntity<Document> get(@PathVariable(name = "id") long id, @RequestAttribute(name = ATTR_USER) User user)
+    {
+        return ResponseEntity.ok(documentService.require(id, user));
     }
 }

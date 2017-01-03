@@ -5,7 +5,7 @@ import com.ge.snowizard.exceptions.InvalidSystemClock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-abstract class PersistenceService
+abstract class AbstractPersistenceService
 {
     @Autowired
     private IdWorker idWorker;

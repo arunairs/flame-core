@@ -14,7 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class SnapshotService extends PersistenceService
+public class SnapshotService extends AbstractPersistenceService
 {
     @Autowired
     private SnapshotRepository snapshotRepository;

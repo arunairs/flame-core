@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class DocumentService extends PersistenceService
+public class DocumentService extends AbstractPersistenceService
 {
     @Autowired
     private DocumentRepository documentRepository;

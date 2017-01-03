@@ -1,8 +1,6 @@
 package cn.blinkmind.flame.server.service;
 
 import cn.blinkmind.flame.server.bean.patch.JSONPatch;
-import cn.blinkmind.flame.server.bean.patch.PatchEvent;
-import cn.blinkmind.flame.server.bean.patch.PatchListener;
 import cn.blinkmind.flame.server.exception.Assertion;
 import cn.blinkmind.flame.server.exception.Error;
 import cn.blinkmind.flame.server.exception.Errors;
@@ -15,15 +13,10 @@ import cn.blinkmind.flame.server.repository.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
 import java.util.Map;
 
 @Service
-public class BranchService extends PersistenceService
+public class BranchService extends AbstractPersistenceService
 {
     @Autowired
     private BranchRepository branchRepository;

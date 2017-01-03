@@ -25,16 +25,16 @@ public class BranchResource extends AbstractResource
     private BranchService branchService;
 
     @Token
-    @PostMapping(path = "documents/{documentId}/branches")
-    public ResponseEntity<ObjectId> create(@PathVariable(name = "documentId") long documentId, @RequestBody Branch branch, @RequestAttribute(name = USER_KEY) User user)
+    @PostMapping(path = "documents/{id}/branches")
+    public ResponseEntity<ObjectId> create(@PathVariable(name = "id") long id, @RequestBody Branch branch, @RequestAttribute(name = ATTR_USER) User user)
     {
-        branch = branchService.create(documentId, branch, user);
+        branch = branchService.create(id, branch, user);
         return ResponseEntity.status(HttpStatus.CREATED).body(new ObjectId(branch.getId()));
     }
 
     @Token
     @PatchMapping(path = "branches/{id}")
-    public ResponseEntity<ObjectId> patch(@PathVariable(name = "id") long id, @RequestBody Map<String, Object> map, @RequestAttribute(name = USER_KEY) User user)
+    public ResponseEntity<ObjectId> patch(@PathVariable(name = "id") long id, @RequestBody Map<String, Object> map, @RequestAttribute(name = ATTR_USER) User user)
     {
         branchService.patch(id, map, user);
         return ResponseEntity.ok().build();
@@ -42,7 +42,7 @@ public class BranchResource extends AbstractResource
 
     @Token
     @DeleteMapping(path = "branches/{id}")
-    public ResponseEntity<Void> delete(@PathVariable(name = "id") long id, @RequestAttribute(name = USER_KEY) User user)
+    public ResponseEntity<Void> delete(@PathVariable(name = "id") long id, @RequestAttribute(name = ATTR_USER) User user)
     {
         branchService.delete(id, user);
         return ResponseEntity.noContent().build();
