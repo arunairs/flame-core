@@ -1,4 +1,4 @@
-package cn.blinkmind.flame.server.repository.aspect;
+package cn.blinkmind.flame.server.advice;
 
 import cn.blinkmind.flame.server.repository.entity.BasicEntity;
 import org.aspectj.lang.annotation.Aspect;
@@ -10,7 +10,7 @@ import java.util.Date;
 
 @Aspect
 @Component
-public class RepositoryAspect
+public class RepositoryAdvice
 {
     @Before(
             value = "(execution(* cn.blinkmind.flame.server.repository.AbstractMongoRepository.update(cn.blinkmind.flame.server.repository.entity.BasicEntity)) && args(entity)) ||" +

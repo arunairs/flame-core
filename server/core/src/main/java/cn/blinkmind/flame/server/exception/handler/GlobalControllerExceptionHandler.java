@@ -1,4 +1,4 @@
-package cn.blinkmind.flame.server.advice;
+package cn.blinkmind.flame.server.exception.handler;
 
 import cn.blinkmind.flame.server.exception.Errors;
 import cn.blinkmind.flame.server.repository.exception.ResourceNotFoundException;
