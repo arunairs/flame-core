@@ -1,7 +1,7 @@
 package cn.blinkmind.flame.server.service;
 
 import cn.blinkmind.flame.server.util.patch.JSONPatch;
-import cn.blinkmind.flame.server.exception.Assertion;
+import cn.blinkmind.flame.server.util.Assert;
 import cn.blinkmind.flame.server.exception.Error;
 import cn.blinkmind.flame.server.exception.Errors;
 import cn.blinkmind.flame.server.repository.BranchRepository;
@@ -56,8 +56,8 @@ public class BranchService extends AbstractPersistenceService
     public Branch create(long documentId, Branch rawData, final User creator)
     {
         Document document = documentService.get(documentId, creator);
-        Assertion.notNull(document, Errors.DOCUMENT_IS_NOT_FOUND);
-        Assertion.notBlank(rawData.getName(), Errors.BRANCH_NAME_IS_BLANK);
+        Assert.notNull(document, Errors.DOCUMENT_IS_NOT_FOUND);
+        Assert.notBlank(rawData.getName(), Errors.BRANCH_NAME_IS_BLANK);
 
         Branch source = this.get(rawData.getSource(), creator);
         if (source != null)

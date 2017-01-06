@@ -1,7 +1,7 @@
 package cn.blinkmind.flame.server.service;
 
 import cn.blinkmind.flame.server.exception.Errors;
-import cn.blinkmind.flame.server.exception.Assertion;
+import cn.blinkmind.flame.server.util.Assert;
 import cn.blinkmind.flame.server.repository.entity.Document;
 import cn.blinkmind.flame.server.repository.entity.DocumentType;
 import cn.blinkmind.flame.server.repository.entity.User;
@@ -28,7 +28,7 @@ public class DocumentService extends AbstractPersistenceService
 
     public Document create(Document rawData, User creator)
     {
-        Assertion.notBlank(rawData.getName(), Errors.DOCUMENT_NAME_IS_BLANK);
+        Assert.notBlank(rawData.getName(), Errors.DOCUMENT_NAME_IS_BLANK);
 
         Document document = new Document();
         document.setId(newId());

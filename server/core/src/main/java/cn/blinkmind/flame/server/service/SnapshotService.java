@@ -1,7 +1,7 @@
 package cn.blinkmind.flame.server.service;
 
 import cn.blinkmind.flame.server.util.patch.JSONPatch;
-import cn.blinkmind.flame.server.exception.Assertion;
+import cn.blinkmind.flame.server.util.Assert;
 import cn.blinkmind.flame.server.exception.Error;
 import cn.blinkmind.flame.server.exception.Errors;
 import cn.blinkmind.flame.server.repository.SnapshotRepository;
@@ -27,9 +27,9 @@ public class SnapshotService extends AbstractPersistenceService
 
     public Snapshot create(Snapshot snapshot, User creator)
     {
-        Assertion.isFalse(snapshot.getBranch() == null || snapshot.getBranch().getId() == null, Errors.SNAPSHOT_BRANCH_IS_NOT_SPECIFIED);
+        Assert.isFalse(snapshot.getBranch() == null || snapshot.getBranch().getId() == null, Errors.SNAPSHOT_BRANCH_IS_NOT_SPECIFIED);
         Branch branch = branchService.require(snapshot.getBranch().getId(), creator, Errors.BRANCH_IS_NOT_FOUND);
-        Assertion.isFalse(snapshotRepository.exists(branch, creator), Errors.RESOURCE_ALREADY_EXISTS);
+        Assert.isFalse(snapshotRepository.exists(branch, creator), Errors.RESOURCE_ALREADY_EXISTS);
         snapshot.setId(newId());
         snapshot.setCreator(creator);
         snapshot.setBranch(branch);
@@ -72,7 +72,7 @@ public class SnapshotService extends AbstractPersistenceService
     public Snapshot require(Branch branch, User user)
     {
         Snapshot snapshot = get(branch, user);
-        Assertion.notNull(snapshot, Errors.RESOURCE_NOT_FOUND);
+        Assert.notNull(snapshot, Errors.RESOURCE_NOT_FOUND);
         return snapshot;
     }
 
@@ -107,6 +107,6 @@ public class SnapshotService extends AbstractPersistenceService
             });
         }
         Snapshot snapshot = snapshotRepository.updateArchive(snapshotId, archive, user);
-        Assertion.notNull(snapshot, Errors.RESOURCE_NOT_FOUND);
+        Assert.notNull(snapshot, Errors.RESOURCE_NOT_FOUND);
     }
 }

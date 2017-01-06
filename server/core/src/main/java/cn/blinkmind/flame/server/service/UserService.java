@@ -1,6 +1,6 @@
 package cn.blinkmind.flame.server.service;
 
-import cn.blinkmind.flame.server.exception.Assertion;
+import cn.blinkmind.flame.server.util.Assert;
 import cn.blinkmind.flame.server.exception.Errors;
 import cn.blinkmind.flame.server.repository.UserRepository;
 import cn.blinkmind.flame.server.repository.entity.User;
@@ -17,8 +17,8 @@ public class UserService extends AbstractPersistenceService
 
     public User create(User rawData)
     {
-        Assertion.notBlank(rawData.getUsername(), Errors.ACCOUNT_NAME_IS_BLANK);
-        Assertion.notBlank(rawData.getPassword(), Errors.ACCOUNT_PASSWORD_IS_BLANK);
+        Assert.notBlank(rawData.getUsername(), Errors.ACCOUNT_NAME_IS_BLANK);
+        Assert.notBlank(rawData.getPassword(), Errors.ACCOUNT_PASSWORD_IS_BLANK);
 
         User user = new User();
         user.setId(newId());

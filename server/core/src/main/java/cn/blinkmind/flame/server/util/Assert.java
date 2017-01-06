@@ -1,10 +1,11 @@
-package cn.blinkmind.flame.server.exception;
+package cn.blinkmind.flame.server.util;
 
+import cn.blinkmind.flame.server.exception.Error;
 import org.apache.commons.lang3.StringUtils;
 
 import java.lang.*;
 
-public class Assertion
+public class Assert
 {
 	public static void notNull(Object object, Error error)
 	{
