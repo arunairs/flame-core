@@ -1,0 +1,10 @@
+archivesBaseName = "${archivePrefix}-common-util"
+
+dependencies {
+    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.4'
+    compile group: 'commons-beanutils', name: 'commons-beanutils', version: '1.9.3'
+    compile group: 'commons-codec', name: 'commons-codec', version: '1.10'
+    compile group: 'commons-validator', name: 'commons-validator', version: '1.5.1'
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: libs.jackson.version
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: libs.jackson.version
+}

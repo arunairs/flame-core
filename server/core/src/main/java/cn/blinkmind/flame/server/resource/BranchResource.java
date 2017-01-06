@@ -1,7 +1,7 @@
 package cn.blinkmind.flame.server.resource;
 
 import cn.blinkmind.flame.server.annotation.Token;
-import cn.blinkmind.flame.server.bean.web.ObjectId;
+import cn.blinkmind.flame.server.bean.ObjectId;
 import cn.blinkmind.flame.server.repository.entity.Branch;
 import cn.blinkmind.flame.server.repository.entity.User;
 import cn.blinkmind.flame.server.service.BranchService;

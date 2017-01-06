@@ -1,10 +1,9 @@
 archivesBaseName = "${archivePrefix}-repository"
 
 dependencies {
-    compile project(':server:bean')
+    compile project(':server:common:web')
     compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.4'
     compile group: 'org.aspectj', name: 'aspectjweaver', version: '1.8.9'
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-mongodb', version: libs.spring.boot.version
     compile group: 'com.smoketurner.snowizard', name: 'snowizard-core', version: '1.9.2'
-    //runtime group: 'mysql', name: 'mysql-connector-java', version: '6.0.4'
 }

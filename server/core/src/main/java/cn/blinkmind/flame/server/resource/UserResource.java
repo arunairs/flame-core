@@ -1,6 +1,6 @@
 package cn.blinkmind.flame.server.resource;
 
-import cn.blinkmind.flame.server.bean.web.ObjectId;
+import cn.blinkmind.flame.server.bean.ObjectId;
 import cn.blinkmind.flame.server.service.UserService;
 import cn.blinkmind.flame.server.repository.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;

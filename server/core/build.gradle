@@ -2,13 +2,16 @@ apply plugin: 'org.springframework.boot'
 
 archivesBaseName = "${archivePrefix}-core"
 
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
 dependencies {
-    compile project(':server:util')
+    compile project(':server:common:util')
     compile project(':server:repository')
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: libs.spring.boot.version
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-elasticsearch', version: libs.spring.boot.version
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-redis', version: libs.spring.boot.version
-    optional 'org.springframework.boot:spring-boot-configuration-processor'
+//    compile group: 'org.springframework.boot', name: 'spring-boot-starter-amqp', version: libs.spring.boot.version
 
     testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: libs.spring.boot.version
     testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: libs.spring.boot.version

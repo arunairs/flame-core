@@ -1,0 +1,6 @@
+archivesBaseName = "${archivePrefix}-common-web"
+
+dependencies {
+    compile project(':server:common:util')
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: libs.jackson.version
+}

@@ -1,5 +1,6 @@
 package cn.blinkmind.flame.server.service;
 
+import cn.blinkmind.flame.server.util.patch.JSONPatch;
 import cn.blinkmind.flame.server.exception.Assertion;
 import cn.blinkmind.flame.server.exception.Error;
 import cn.blinkmind.flame.server.exception.Errors;
@@ -12,6 +13,8 @@ import cn.blinkmind.flame.server.repository.exception.ResourceNotFoundException;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Map;
 
 @Service
 public class SnapshotService extends AbstractPersistenceService
@@ -70,6 +73,17 @@ public class SnapshotService extends AbstractPersistenceService
     {
         Snapshot snapshot = get(branch, user);
         Assertion.notNull(snapshot, Errors.RESOURCE_NOT_FOUND);
+        return snapshot;
+    }
+
+    public Snapshot patch(long id, final Map<String, Object> rawData, final User user)
+    {
+        Snapshot snapshot = this.require(id, user);
+        JSONPatch.on(snapshot)
+                .mappedBy(rawData)
+                .fields("name")
+                .apply();
+        snapshotRepository.update(snapshot);
         return snapshot;
     }
 

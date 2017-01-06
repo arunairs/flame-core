@@ -1,6 +1,6 @@
 package cn.blinkmind.flame.server.service;
 
-import cn.blinkmind.flame.server.bean.patch.JSONPatch;
+import cn.blinkmind.flame.server.util.patch.JSONPatch;
 import cn.blinkmind.flame.server.exception.Assertion;
 import cn.blinkmind.flame.server.exception.Error;
 import cn.blinkmind.flame.server.exception.Errors;
@@ -24,23 +24,23 @@ public class BranchService extends AbstractPersistenceService
     @Autowired
     private DocumentService documentService;
 
-    public Branch get(long id, User user)
+    public Branch get(long id, final User user)
     {
         return branchRepository.get(id);
     }
 
-    public Branch get(Branch entity, User user)
+    public Branch get(Branch entity, final User user)
     {
         return branchRepository.get(entity);
     }
 
-    public Branch require(long id, User user)
+    public Branch require(long id, final User user)
     {
         Branch branch = branchRepository.require(id);
         return branch;
     }
 
-    public Branch require(long id, User user, Error error)
+    public Branch require(long id, final User user, final Error error)
     {
         try
         {
@@ -53,7 +53,7 @@ public class BranchService extends AbstractPersistenceService
         return null;
     }
 
-    public Branch create(long documentId, Branch rawData, User creator)
+    public Branch create(long documentId, Branch rawData, final User creator)
     {
         Document document = documentService.get(documentId, creator);
         Assertion.notNull(document, Errors.DOCUMENT_IS_NOT_FOUND);
@@ -76,7 +76,7 @@ public class BranchService extends AbstractPersistenceService
         return branch;
     }
 
-    public void delete(long id, User user)
+    public void delete(long id, final User user)
     {
         branchRepository.delete(id);
     }
@@ -92,7 +92,7 @@ public class BranchService extends AbstractPersistenceService
         return branch;
     }
 
-    public Archive getArchive(Long branchId, User user)
+    public Archive getArchive(final Long branchId, final User user)
     {
         return branchRepository.getArchive(branchId);
     }
