@@ -8,15 +8,15 @@ import org.springframework.data.mongodb.core.index.CompoundIndex;
 
 @org.springframework.data.mongodb.core.mapping.Document(collection = "branches")
 @CompoundIndex(name = "unique_index", unique = true, def = "{'name':1,'documentRef._id':1}")
-public class Branch extends BasicEntity<Long>
+public class Branch extends BasicEntity<Long> implements Commit<Archive>
 {
     private String name;
     private Ref<Long> documentRef;
     private Document document;
+    private Headers headers = new Headers();
     private Archive archive;
-    private Ref<Long> sourceRef;
-    private Branch source;
-    private Long version;
+    private Ref<Long> originRef;
+    private Branch origin;
 
     @Id
     @Override
@@ -62,6 +62,18 @@ public class Branch extends BasicEntity<Long>
         else setDocumentRef(null);
     }
 
+    @Override
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    public Headers getHeaders()
+    {
+        return headers;
+    }
+
+    private void setHeaders(Headers headers)
+    {
+        this.headers = headers;
+    }
+
     public Archive getArchive()
     {
         return archive;
@@ -73,38 +85,34 @@ public class Branch extends BasicEntity<Long>
     }
 
     @JsonIgnore
-    public Ref<Long> getSourceRef()
+    public Ref<Long> getOriginRef()
     {
-        return sourceRef;
+        return originRef;
     }
 
-    private void setSourceRef(Ref<Long> sourceRef)
+    private void setOriginRef(Ref<Long> originRef)
     {
-        this.sourceRef = sourceRef;
+        this.originRef = originRef;
     }
 
     @Transient
-    public Branch getSource()
+    public Branch getOrigin()
     {
-        return source;
+        return origin;
     }
 
-    public void setSource(Branch source)
+    public void setOrigin(Branch origin)
     {
-        this.source = source;
-        if (this.source != null)
-            setSourceRef(new Ref<>(this.source));
-        else setSourceRef(null);
+        this.origin = origin;
+        if (this.origin != null)
+            setOriginRef(new Ref<>(this.origin));
+        else setOriginRef(null);
     }
 
-    @org.springframework.data.annotation.Version
-    public Long getVersion()
+    @Override
+    @JsonIgnore
+    public Archive getPayload()
     {
-        return version;
-    }
-
-    public void setVersion(Long version)
-    {
-        this.version = version;
+        return this.archive;
     }
 }
