@@ -10,8 +10,9 @@ import org.springframework.data.annotation.Transient;
 import java.io.Serializable;
 import java.util.Date;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(value = JsonInclude.Include.NON_NULL)
-public class BasicEntity<ID extends Serializable> implements Indexable<ID>
+public class BasicEntity<ID extends Serializable> implements Persistable<ID>
 {
     private ID id;
     private Ref<ID> creatorRef;
@@ -27,7 +28,6 @@ public class BasicEntity<ID extends Serializable> implements Indexable<ID>
         return id;
     }
 
-    @Override
     public void setId(ID id)
     {
         this.id = id;
@@ -55,11 +55,6 @@ public class BasicEntity<ID extends Serializable> implements Indexable<ID>
         this.createdDate = createdDate;
     }
 
-    public void refreshCreatedDate()
-    {
-        setCreatedDate(new Date());
-    }
-
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     public Date getUpdatedDate()
     {
@@ -69,11 +64,6 @@ public class BasicEntity<ID extends Serializable> implements Indexable<ID>
     public void setUpdatedDate(Date updatedDate)
     {
         this.updatedDate = updatedDate;
-    }
-
-    public void refreshUpdatedDate()
-    {
-        setUpdatedDate(new Date());
     }
 
     @Transient
@@ -89,7 +79,7 @@ public class BasicEntity<ID extends Serializable> implements Indexable<ID>
     {
         this.creator = creator;
         if (this.creator != null)
-            setCreatorRef(new Ref<>((Indexable<ID>) this.creator));
+            setCreatorRef(new Ref<>((Persistable<ID>) this.creator));
         else setCreatorRef(null);
     }
 }

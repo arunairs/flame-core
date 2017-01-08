@@ -8,6 +8,7 @@ import cn.blinkmind.flame.server.repository.event.BeforeEntityCreatedEvent;
 import cn.blinkmind.flame.server.repository.event.BeforeEntityUpdatedEvent;
 import cn.blinkmind.flame.server.repository.event.BeforeUpdateAppliedEvent;
 import cn.blinkmind.flame.server.repository.exception.ResourceNotFoundException;
+import cn.blinkmind.flame.server.repository.query.Keys;
 import com.mongodb.DBObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
@@ -22,7 +23,6 @@ import java.util.Collection;
 import java.util.List;
 
 import static org.springframework.data.mongodb.core.FindAndModifyOptions.options;
-import static cn.blinkmind.flame.server.repository.query.Keys.ID;
 
 public abstract class AbstractMongoRepository<T extends Persistable<ID>, ID extends Serializable>
 {
@@ -42,7 +42,7 @@ public abstract class AbstractMongoRepository<T extends Persistable<ID>, ID exte
     public T update(final T entity)
     {
         Query query = new Query();
-        query.addCriteria(Criteria.where(ID).is(entity.getId()));
+        query.addCriteria(Criteria.where(Keys.ID).is(entity.getId()));
         return update(query, entity);
     }
 
@@ -90,7 +90,7 @@ public abstract class AbstractMongoRepository<T extends Persistable<ID>, ID exte
     public boolean exists(final ID id)
     {
         Query query = new Query();
-        query.addCriteria(Criteria.where(ID).is(id));
+        query.addCriteria(Criteria.where(Keys.ID).is(id));
         return getMongoTemplate().exists(query, getEntityClass());
     }
 
@@ -112,7 +112,7 @@ public abstract class AbstractMongoRepository<T extends Persistable<ID>, ID exte
     public List<T> findAll(final Iterable<ID> ids)
     {
         Query query = new Query();
-        query.addCriteria(Criteria.where(ID).in(ids));
+        query.addCriteria(Criteria.where(Keys.ID).in(ids));
         return getMongoTemplate().find(query, getEntityClass());
     }
 

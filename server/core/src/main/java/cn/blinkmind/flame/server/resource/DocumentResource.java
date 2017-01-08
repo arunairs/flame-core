@@ -2,6 +2,7 @@ package cn.blinkmind.flame.server.resource;
 
 import cn.blinkmind.flame.server.annotation.Token;
 import cn.blinkmind.flame.server.bean.ObjectId;
+import cn.blinkmind.flame.server.constant.Attributes;
 import cn.blinkmind.flame.server.repository.entity.Document;
 import cn.blinkmind.flame.server.repository.entity.User;
 import cn.blinkmind.flame.server.service.DocumentService;
@@ -19,7 +20,7 @@ public class DocumentResource extends AbstractResource
 
     @Token
     @PostMapping(value = "documents")
-    public ResponseEntity<ObjectId> create(@RequestBody Document document, @RequestAttribute(name = ATTR_USER) User user)
+    public ResponseEntity<ObjectId> create(@RequestBody Document document, @RequestAttribute(name = Attributes.USER) User user)
     {
         document = documentService.create(document, user);
         return ResponseEntity.status(HttpStatus.CREATED).body(new ObjectId(document.getId()));
@@ -27,7 +28,7 @@ public class DocumentResource extends AbstractResource
 
     @Token
     @GetMapping(value = "documents/{id}")
-    public ResponseEntity<Document> get(@PathVariable(name = "id") long id, @RequestAttribute(name = ATTR_USER) User user)
+    public ResponseEntity<Document> get(@PathVariable(name = "id") long id, @RequestAttribute(name = Attributes.USER) User user)
     {
         return ResponseEntity.ok(documentService.require(id, user));
     }

@@ -2,6 +2,7 @@ package cn.blinkmind.flame.server.resource;
 
 import cn.blinkmind.flame.server.annotation.Token;
 import cn.blinkmind.flame.server.bean.ObjectId;
+import cn.blinkmind.flame.server.constant.Attributes;
 import cn.blinkmind.flame.server.repository.entity.Archive;
 import cn.blinkmind.flame.server.repository.entity.Snapshot;
 import cn.blinkmind.flame.server.repository.entity.User;
@@ -29,7 +30,7 @@ public class SnapshotResource extends AbstractResource
 
     @Token
     @PostMapping(path = "workspace/snapshots")
-    public ResponseEntity<ObjectId> create(@RequestBody Snapshot snapshot, @RequestAttribute(name = ATTR_USER) User user)
+    public ResponseEntity<ObjectId> create(@RequestBody Snapshot snapshot, @RequestAttribute(name = Attributes.USER) User user)
     {
         snapshot = snapshotService.create(snapshot, user);
         return ResponseEntity.status(HttpStatus.CREATED).body(new ObjectId(snapshot.getId()));
@@ -37,7 +38,7 @@ public class SnapshotResource extends AbstractResource
 
     @Token
     @DeleteMapping(path = "workspace/snapshots/{id}")
-    public ResponseEntity<Void> delete(@PathVariable(name = "id") long id, @RequestAttribute(name = ATTR_USER) User user)
+    public ResponseEntity<Void> delete(@PathVariable(name = "id") long id, @RequestAttribute(name = Attributes.USER) User user)
     {
         snapshotService.delete(id, user);
         return ResponseEntity.noContent().build();
@@ -45,7 +46,7 @@ public class SnapshotResource extends AbstractResource
 
     @Token
     @GetMapping(path = "workspace/snapshots/{id}")
-    public ResponseEntity<Snapshot> get(@PathVariable(name = "id") long id, @RequestAttribute(name = ATTR_USER) User user)
+    public ResponseEntity<Snapshot> get(@PathVariable(name = "id") long id, @RequestAttribute(name = Attributes.USER) User user)
     {
         Snapshot snapshot = snapshotService.require(id, user);
         return ResponseEntity.ok(snapshot);
@@ -53,7 +54,7 @@ public class SnapshotResource extends AbstractResource
 
     @Token
     @PatchMapping(path = "workspace/snapshots/{id}")
-    public ResponseEntity<Void> patch(@PathVariable(name = "id") long id, @RequestBody Map<String, Object> map, @RequestAttribute(name = ATTR_USER) User user)
+    public ResponseEntity<Void> patch(@PathVariable(name = "id") long id, @RequestBody Map<String, Object> map, @RequestAttribute(name = Attributes.USER) User user)
     {
         snapshotService.patch(id, map, user);
         return ResponseEntity.ok().build();
@@ -61,7 +62,7 @@ public class SnapshotResource extends AbstractResource
 
     @Token
     @PutMapping(path = "workspace/snapshots/{id}/archive")
-    public ResponseEntity<Void> updateArchive(@PathVariable(name = "id") long id, @RequestBody Archive archive, @RequestAttribute(name = ATTR_USER) User user)
+    public ResponseEntity<Void> updateArchive(@PathVariable(name = "id") long id, @RequestBody Archive archive, @RequestAttribute(name = Attributes.USER) User user)
     {
         snapshotService.updateArchive(id, archive, user);
         return ResponseEntity.ok().build();

@@ -4,28 +4,33 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
 
-public class Ref<ID extends Serializable> {
-
+public class Ref<ID extends Serializable>
+{
     private ID id;
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    public ID getId() {
+    public ID getId()
+    {
         return id;
     }
 
-    public void setId(ID id) {
+    public void setId(ID id)
+    {
         this.id = id;
     }
 
-    private Ref() {
+    private Ref()
+    {
     }
 
-    public Ref(Indexable<ID> indexable) {
-        this.id = indexable.getId();
+    public Ref(Persistable<ID> persistable)
+    {
+        this.id = persistable.getId();
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(Object o)
+    {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
@@ -35,7 +40,8 @@ public class Ref<ID extends Serializable> {
     }
 
     @Override
-    public int hashCode() {
+    public int hashCode()
+    {
         return id.hashCode();
     }
 }

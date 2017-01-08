@@ -2,6 +2,7 @@ package cn.blinkmind.flame.server.resource;
 
 import cn.blinkmind.flame.server.annotation.Token;
 import cn.blinkmind.flame.server.bean.ObjectId;
+import cn.blinkmind.flame.server.constant.Attributes;
 import cn.blinkmind.flame.server.repository.entity.Branch;
 import cn.blinkmind.flame.server.repository.entity.User;
 import cn.blinkmind.flame.server.service.BranchService;
@@ -26,7 +27,7 @@ public class BranchResource extends AbstractResource
 
     @Token
     @PostMapping(path = "documents/{id}/branches")
-    public ResponseEntity<ObjectId> create(@PathVariable(name = "id") long id, @RequestBody Branch branch, @RequestAttribute(name = ATTR_USER) User user)
+    public ResponseEntity<ObjectId> create(@PathVariable(name = "id") long id, @RequestBody Branch branch, @RequestAttribute(name = Attributes.USER) User user)
     {
         branch = branchService.create(id, branch, user);
         return ResponseEntity.status(HttpStatus.CREATED).body(new ObjectId(branch.getId()));
@@ -34,7 +35,7 @@ public class BranchResource extends AbstractResource
 
     @Token
     @PatchMapping(path = "branches/{id}")
-    public ResponseEntity<ObjectId> patch(@PathVariable(name = "id") long id, @RequestBody Map<String, Object> map, @RequestAttribute(name = ATTR_USER) User user)
+    public ResponseEntity<ObjectId> patch(@PathVariable(name = "id") long id, @RequestBody Map<String, Object> map, @RequestAttribute(name = Attributes.USER) User user)
     {
         branchService.patch(id, map, user);
         return ResponseEntity.ok().build();
@@ -42,7 +43,7 @@ public class BranchResource extends AbstractResource
 
     @Token
     @DeleteMapping(path = "branches/{id}")
-    public ResponseEntity<Void> delete(@PathVariable(name = "id") long id, @RequestAttribute(name = ATTR_USER) User user)
+    public ResponseEntity<Void> delete(@PathVariable(name = "id") long id, @RequestAttribute(name = Attributes.USER) User user)
     {
         branchService.delete(id, user);
         return ResponseEntity.noContent().build();
