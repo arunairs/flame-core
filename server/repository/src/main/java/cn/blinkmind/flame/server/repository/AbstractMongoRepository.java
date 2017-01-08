@@ -1,9 +1,16 @@
 package cn.blinkmind.flame.server.repository;
 
-import cn.blinkmind.flame.server.repository.entity.BasicEntity;
+import cn.blinkmind.flame.server.repository.entity.Persistable;
+import cn.blinkmind.flame.server.repository.event.AfterEntityCreatedEvent;
+import cn.blinkmind.flame.server.repository.event.AfterEntityUpdatedEvent;
+import cn.blinkmind.flame.server.repository.event.AfterUpdateAppliedEvent;
+import cn.blinkmind.flame.server.repository.event.BeforeEntityCreatedEvent;
+import cn.blinkmind.flame.server.repository.event.BeforeEntityUpdatedEvent;
+import cn.blinkmind.flame.server.repository.event.BeforeUpdateAppliedEvent;
 import cn.blinkmind.flame.server.repository.exception.ResourceNotFoundException;
 import com.mongodb.DBObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.mongodb.core.BulkOperations;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -15,9 +22,13 @@ import java.util.Collection;
 import java.util.List;
 
 import static org.springframework.data.mongodb.core.FindAndModifyOptions.options;
+import static cn.blinkmind.flame.server.repository.query.Keys.ID;
 
-public abstract class AbstractMongoRepository<T extends BasicEntity<ID>, ID extends Serializable> implements Repository
+public abstract class AbstractMongoRepository<T extends Persistable<ID>, ID extends Serializable>
 {
+    @Autowired
+    private ApplicationEventPublisher publisher;
+
     @Autowired
     private MongoTemplate mongoTemplate;
 
@@ -37,14 +48,20 @@ public abstract class AbstractMongoRepository<T extends BasicEntity<ID>, ID exte
 
     public T update(final Query query, final T entity)
     {
+        this.publisher.publishEvent(new BeforeEntityUpdatedEvent<>(entity));
         DBObject object = (DBObject) getMongoTemplate().getConverter().convertToMongoType(entity);
         Update update = Update.fromDBObject(object);
-        return getMongoTemplate().findAndModify(query, update, options().upsert(false), getEntityClass());
+        T result = update(query, update);
+        this.publisher.publishEvent(new AfterEntityUpdatedEvent<>(entity));
+        return result;
     }
 
     public T update(final Query query, final Update update)
     {
-        return getMongoTemplate().findAndModify(query, update, options().upsert(false), getEntityClass());
+        this.publisher.publishEvent(new BeforeUpdateAppliedEvent(update));
+        T result = getMongoTemplate().findAndModify(query, update, options().upsert(false), getEntityClass());
+        this.publisher.publishEvent(new AfterUpdateAppliedEvent(update));
+        return result;
     }
 
     public T require(final ID id)
@@ -61,7 +78,7 @@ public abstract class AbstractMongoRepository<T extends BasicEntity<ID>, ID exte
 
     public T get(final T entity)
     {
-        return entity == null ? null : get((ID) entity.getId());
+        return entity == null ? null : get(entity.getId());
     }
 
 
@@ -101,7 +118,9 @@ public abstract class AbstractMongoRepository<T extends BasicEntity<ID>, ID exte
 
     public T insert(final T entity)
     {
+        this.publisher.publishEvent(new BeforeEntityCreatedEvent<>(entity));
         getMongoTemplate().insert(entity);
+        this.publisher.publishEvent(new AfterEntityCreatedEvent<>(entity));
         return entity;
     }
 
