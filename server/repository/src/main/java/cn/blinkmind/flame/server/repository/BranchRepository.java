@@ -1,9 +1,13 @@
 package cn.blinkmind.flame.server.repository;
 
+import cn.blinkmind.flame.server.repository.query.Keys;
 import cn.blinkmind.flame.server.repository.entity.Archive;
 import cn.blinkmind.flame.server.repository.entity.Branch;
+import cn.blinkmind.flame.server.repository.entity.Commit;
+import cn.blinkmind.flame.server.repository.entity.User;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -20,17 +24,36 @@ public class BranchRepository extends AbstractMongoRepository<Branch, Long>
     {
         if (id == null) return null;
         Query query = new Query();
-        query.addCriteria(Criteria.where(ID).is(id));
-        query.fields().exclude("archive");
+        query.addCriteria(Criteria.where(Keys.ID).is(id));
+        query.fields().exclude(Keys.ARCHIVE);
         return this.findOne(query);
     }
 
-    public Archive getArchive(Long branchId)
+    public boolean exists(String name, long documentId)
     {
-        if (branchId == null) return null;
         Query query = new Query();
-        query.addCriteria(Criteria.where(ID).is(branchId));
-        query.fields().include("archive");
+        Criteria criteria = Criteria.where("documentRef._id").is(documentId)
+                .and("name").is(name);
+        query.addCriteria(criteria);
+        return this.exists(query);
+    }
+
+    public Archive getArchive(Long id)
+    {
+        if (id == null) return null;
+        Query query = new Query();
+        query.addCriteria(Criteria.where(Keys.ID).is(id));
+        query.fields().include(Keys.ARCHIVE);
         return this.findOne(query).getArchive();
+    }
+
+    public Branch updateArchive(Long branchId, Commit<Archive> commit, User user)
+    {
+        Query query = new Query();
+        query.addCriteria(Criteria.where(Keys.ID).is(branchId).and(Keys.Headers.VERSION).lte(commit.getHeaders().getLong(Commit.VERSION)));
+        Update update = new Update();
+        update.set(Keys.ARCHIVE, commit.getPayload());
+        update.inc(Keys.Headers.VERSION, 1);
+        return this.update(query, update);
     }
 }

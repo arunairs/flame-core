@@ -27,9 +27,9 @@ public class BranchResource extends AbstractResource
 
     @Token
     @PostMapping(path = "documents/{id}/branches")
-    public ResponseEntity<ObjectId> create(@PathVariable(name = "id") long id, @RequestBody Branch branch, @RequestAttribute(name = Attributes.USER) User user)
+    public ResponseEntity<ObjectId> create(@PathVariable(name = "id") long documentId, @RequestBody Branch branch, @RequestAttribute(name = Attributes.USER) User user)
     {
-        branch = branchService.create(id, branch, user);
+        branch = branchService.create(documentId, branch, user);
         return ResponseEntity.status(HttpStatus.CREATED).body(new ObjectId(branch.getId()));
     }
 

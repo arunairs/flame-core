@@ -7,13 +7,24 @@ import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.index.CompoundIndex;
 
 @org.springframework.data.mongodb.core.mapping.Document(collection = "snapshots")
-@CompoundIndex(name = "unique_index", unique = true, def = "{'branchRef._id':1,'creatorRef._id':1}")
+@CompoundIndex(name = "unique_index", unique = true, def = "{'name':1,'branchRef._id':1,'creatorRef._id':1}")
 public class Snapshot extends BasicEntity<Long> implements Commit<Archive>
 {
+    private String name;
     private Ref<Long> branchRef;
     private Branch branch;
     private Headers headers = new Headers();
     private Archive archive;
+
+    public String getName()
+    {
+        return name;
+    }
+
+    public void setName(String name)
+    {
+        this.name = name;
+    }
 
     @JsonIgnore
     public Ref<Long> getBranchRef()

@@ -34,7 +34,7 @@ public class DocumentService extends AbstractPersistenceService
         document.setId(newId());
         document.setName(rawData.getName());
         document.setDescription(rawData.getDescription());
-        document.setType(DocumentType.REST_API);
+        document.setType(DocumentType.REST);
         document.setCreator(creator);
         documentRepository.insert(document);
         return document;

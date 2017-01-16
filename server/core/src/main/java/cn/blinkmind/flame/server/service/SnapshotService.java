@@ -1,6 +1,6 @@
 package cn.blinkmind.flame.server.service;
 
-import cn.blinkmind.flame.server.util.patch.JSONPatch;
+import cn.blinkmind.flame.server.util.patch.JsonPatch;
 import cn.blinkmind.flame.server.util.Assert;
 import cn.blinkmind.flame.server.exception.Error;
 import cn.blinkmind.flame.server.exception.Errors;
@@ -25,13 +25,16 @@ public class SnapshotService extends AbstractPersistenceService
     @Autowired
     private BranchService branchService;
 
-    public Snapshot create(Snapshot snapshot, User creator)
+    public Snapshot create(long branchId, Snapshot rawData, User creator)
     {
-        Assert.isFalse(snapshot.getBranch() == null || snapshot.getBranch().getId() == null, Errors.SNAPSHOT_BRANCH_IS_NOT_SPECIFIED);
-        Branch branch = branchService.require(snapshot.getBranch().getId(), creator, Errors.BRANCH_IS_NOT_FOUND);
-        Assert.isFalse(snapshotRepository.exists(branch, creator), Errors.RESOURCE_ALREADY_EXISTS);
+        Branch branch = branchService.require(branchId, creator, Errors.BRANCH_IS_NOT_FOUND);
+        Assert.notBlank(rawData.getName(), Errors.SNAPSHOT_NAME_IS_BLANK);
+        Assert.isFalse(snapshotRepository.exists(rawData.getName(), branch.getId(), creator), Errors.RESOURCE_ALREADY_EXISTS);
+
+        Snapshot snapshot = new Snapshot();
         snapshot.setId(newId());
         snapshot.setCreator(creator);
+        snapshot.setName(rawData.getName());
         snapshot.setBranch(branch);
         snapshot.setArchive(branchService.getArchive(branch.getId(), creator));
         snapshotRepository.insert(snapshot);
@@ -79,7 +82,7 @@ public class SnapshotService extends AbstractPersistenceService
     public Snapshot patch(long id, final Map<String, Object> rawData, final User user)
     {
         Snapshot snapshot = this.require(id, user);
-        JSONPatch.on(snapshot)
+        JsonPatch.on(snapshot)
                 .mappedBy(rawData)
                 .fields("name")
                 .apply();

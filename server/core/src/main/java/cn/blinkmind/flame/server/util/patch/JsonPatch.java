@@ -4,7 +4,7 @@ import cn.blinkmind.flame.server.util.JSONUtil;
 
 import java.util.Map;
 
-public class JSONPatch<T> extends Patch<T, Map>
+public class JsonPatch<T> extends Patch<T, Map>
 {
     @Override
     protected T convert(final Map source)
@@ -18,8 +18,8 @@ public class JSONPatch<T> extends Patch<T, Map>
         return source.containsKey(fieldName);
     }
 
-    public static <T> JSONPatch<T> on(final T target)
+    public static <T> JsonPatch<T> on(final T target)
     {
-        return (JSONPatch<T>) new JSONPatch<T>().bind(target);
+        return (JsonPatch<T>) new JsonPatch<T>().bind(target);
     }
 }

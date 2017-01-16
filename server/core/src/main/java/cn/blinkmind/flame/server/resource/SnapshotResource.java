@@ -29,15 +29,15 @@ public class SnapshotResource extends AbstractResource
     private SnapshotService snapshotService;
 
     @Token
-    @PostMapping(path = "workspace/snapshots")
-    public ResponseEntity<ObjectId> create(@RequestBody Snapshot snapshot, @RequestAttribute(name = Attributes.USER) User user)
+    @PostMapping(path = "branches/{id}/snapshots")
+    public ResponseEntity<ObjectId> create(@PathVariable(name = "id") long branchId, @RequestBody Snapshot snapshot, @RequestAttribute(name = Attributes.USER) User user)
     {
-        snapshot = snapshotService.create(snapshot, user);
+        snapshot = snapshotService.create(branchId, snapshot, user);
         return ResponseEntity.status(HttpStatus.CREATED).body(new ObjectId(snapshot.getId()));
     }
 
     @Token
-    @DeleteMapping(path = "workspace/snapshots/{id}")
+    @DeleteMapping(path = "snapshots/{id}")
     public ResponseEntity<Void> delete(@PathVariable(name = "id") long id, @RequestAttribute(name = Attributes.USER) User user)
     {
         snapshotService.delete(id, user);
@@ -45,7 +45,7 @@ public class SnapshotResource extends AbstractResource
     }
 
     @Token
-    @GetMapping(path = "workspace/snapshots/{id}")
+    @GetMapping(path = "snapshots/{id}")
     public ResponseEntity<Snapshot> get(@PathVariable(name = "id") long id, @RequestAttribute(name = Attributes.USER) User user)
     {
         Snapshot snapshot = snapshotService.require(id, user);
@@ -53,7 +53,7 @@ public class SnapshotResource extends AbstractResource
     }
 
     @Token
-    @PatchMapping(path = "workspace/snapshots/{id}")
+    @PatchMapping(path = "snapshots/{id}")
     public ResponseEntity<Void> patch(@PathVariable(name = "id") long id, @RequestBody Map<String, Object> map, @RequestAttribute(name = Attributes.USER) User user)
     {
         snapshotService.patch(id, map, user);
@@ -61,7 +61,7 @@ public class SnapshotResource extends AbstractResource
     }
 
     @Token
-    @PutMapping(path = "workspace/snapshots/{id}/archive")
+    @PutMapping(path = "snapshots/{id}/archive")
     public ResponseEntity<Void> updateArchive(@PathVariable(name = "id") long id, @RequestBody Archive archive, @RequestAttribute(name = Attributes.USER) User user)
     {
         snapshotService.updateArchive(id, archive, user);

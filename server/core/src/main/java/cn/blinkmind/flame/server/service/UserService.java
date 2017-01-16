@@ -22,6 +22,7 @@ public class UserService extends AbstractPersistenceService
 
         User user = new User();
         user.setId(newId());
+        user.setUsername(rawData.getUsername());
         user.setSalt(SecurityUtil.randomSalt());
         user.setPassword(CodecUtil.sha256(rawData.getPassword(), user.getSalt()));
         userRepository.insert(user);

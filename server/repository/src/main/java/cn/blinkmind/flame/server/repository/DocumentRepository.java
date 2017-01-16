@@ -5,6 +5,7 @@ import cn.blinkmind.flame.server.repository.entity.User;
 import cn.blinkmind.flame.server.repository.query.Keys;
 import com.mongodb.BasicDBList;
 import com.mongodb.DBObject;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.data.mongodb.core.aggregation.Aggregation;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.stereotype.Repository;
@@ -23,13 +24,23 @@ public class DocumentRepository extends AbstractMongoRepository<Document, Long>
     {
         Aggregation aggregation = Aggregation.newAggregation(
                 Aggregation.match(Criteria.where(Keys.ID).is(id)),
-                Aggregation.lookup("users", "creatorRef._id", Keys.ID, "joinCreators")
+                Aggregation.lookup("users", "creatorRef._id", Keys.ID, "creators")
         );
         DBObject result = getMongoTemplate().aggregate(aggregation, Document.class, DBObject.class).getUniqueMappedResult();
-        Document document = getMongoTemplate().getConverter().read(Document.class, result);
-        BasicDBList joinCreators = (BasicDBList) result.get("joinCreators");
-        User creator = getMongoTemplate().getConverter().read(User.class, (DBObject) joinCreators.get(0));
-        document.setCreator(creator);
+        Document document = null;
+        if (result != null)
+        {
+            document = getMongoTemplate().getConverter().read(Document.class, result);
+            if (document != null)
+            {
+                BasicDBList creators = (BasicDBList) result.get("creators");
+                if (CollectionUtils.isNotEmpty(creators))
+                {
+                    User creator = getMongoTemplate().getConverter().read(User.class, (DBObject) creators.get(0));
+                    document.setCreator(creator);
+                }
+            }
+        }
         return document;
     }
 }

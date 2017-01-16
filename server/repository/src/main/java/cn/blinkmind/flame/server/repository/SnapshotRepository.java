@@ -53,11 +53,12 @@ public class SnapshotRepository extends AbstractMongoRepository<Snapshot, Long>
         return snapshot;
     }
 
-    public boolean exists(Branch branch, User user)
+    public boolean exists(String name, long branchId, User user)
     {
         Query query = new Query();
-        Criteria criteria = Criteria.where("branchRef._id").is(branch.getId())
-                .and("creatorRef._id").is(user.getId());
+        Criteria criteria = Criteria.where("branchRef._id").is(branchId)
+                .and("creatorRef._id").is(user.getId())
+                .and("name").is(name);
         query.addCriteria(criteria);
         return this.exists(query);
     }
