@@ -25,15 +25,22 @@ public class SnapshotRepository extends AbstractMongoRepository<Snapshot, Long>
     @Override
     public Snapshot get(Long id)
     {
+        Snapshot snapshot = null;
         Aggregation aggregation = Aggregation.newAggregation(
                 Aggregation.match(Criteria.where(Keys.ID).is(id)),
-                Aggregation.lookup("branches", "branchRef._id", Keys.ID, "joinBranches")
+                Aggregation.lookup("branches", "branchRef._id", Keys.ID, "branches")
         );
         DBObject result = getMongoTemplate().aggregate(aggregation, Snapshot.class, DBObject.class).getUniqueMappedResult();
-        Snapshot snapshot = getMongoTemplate().getConverter().read(Snapshot.class, result);
-        BasicDBList joinBranches = (BasicDBList) result.get("joinBranches");
-        Branch branch = getMongoTemplate().getConverter().read(Branch.class, (DBObject) joinBranches.get(0));
-        snapshot.setBranch(branch);
+        if (result != null)
+        {
+            snapshot = getMongoTemplate().getConverter().read(Snapshot.class, result);
+            if (snapshot != null)
+            {
+                BasicDBList branches = (BasicDBList) result.get("branches");
+                Branch branch = getMongoTemplate().getConverter().read(Branch.class, (DBObject) branches.get(0));
+                snapshot.setBranch(branch);
+            }
+        }
         return snapshot;
     }
 

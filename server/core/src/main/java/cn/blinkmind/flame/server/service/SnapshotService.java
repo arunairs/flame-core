@@ -52,7 +52,7 @@ public class SnapshotService extends AbstractPersistenceService
         return snapshot;
     }
 
-    public Snapshot require(long id, User user, Error error)
+    public Snapshot require(long id, User user, RuntimeException exception)
     {
         try
         {
@@ -61,8 +61,7 @@ public class SnapshotService extends AbstractPersistenceService
         }
         catch (ResourceNotFoundException e)
         {
-            Error.occurs(error);
-            return null;
+            throw exception;
         }
     }
 

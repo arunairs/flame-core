@@ -5,60 +5,50 @@ import org.springframework.http.HttpStatus;
 
 public class Error
 {
-	private HttpStatus httpStatus;
-	private String message;
-	private Integer code;
+    private HttpStatus httpStatus;
+    private String message;
+    private Integer code;
 
-	public Error(Integer code)
-	{
-		this(HttpStatus.BAD_REQUEST, code, null);
-	}
+    public Error(Integer code, String message)
+    {
+        this(HttpStatus.BAD_REQUEST, code, message);
+    }
 
-	public Error(Integer code, String message)
-	{
-		this(HttpStatus.BAD_REQUEST, code, message);
-	}
+    public Error(HttpStatus httpStatus, Integer code, String message)
+    {
+        this.httpStatus = httpStatus;
+        this.code = code;
+        this.message = message;
+    }
 
-	public Error(HttpStatus httpStatus, Integer code, String message)
-	{
-		this.httpStatus = httpStatus;
-		this.code = code;
-		this.message = message;
-	}
+    public String getMessage()
+    {
+        return message;
+    }
 
-	public String getMessage()
-	{
-		return message;
-	}
+    public void setMessage(String message)
+    {
+        this.message = message;
+    }
 
-	public void setMessage(String message)
-	{
-		this.message = message;
-	}
+    public Integer getCode()
+    {
+        return code;
+    }
 
-	public Integer getCode()
-	{
-		return code;
-	}
+    public void setCode(Integer code)
+    {
+        this.code = code;
+    }
 
-	public void setCode(Integer code)
-	{
-		this.code = code;
-	}
+    @JsonIgnore
+    public HttpStatus getHttpStatus()
+    {
+        return httpStatus;
+    }
 
-	@JsonIgnore
-	public HttpStatus getHttpStatus()
-	{
-		return httpStatus;
-	}
-
-	public void setHttpStatus(HttpStatus httpStatus)
-	{
-		this.httpStatus = httpStatus;
-	}
-
-	public static void occurs(Error error)
-	{
-		throw new InvalidDataException(error);
-	}
+    public void setHttpStatus(HttpStatus httpStatus)
+    {
+        this.httpStatus = httpStatus;
+    }
 }

@@ -22,12 +22,12 @@ public class DocumentRepository extends AbstractMongoRepository<Document, Long>
     @Override
     public Document get(Long id)
     {
+        Document document = null;
         Aggregation aggregation = Aggregation.newAggregation(
                 Aggregation.match(Criteria.where(Keys.ID).is(id)),
                 Aggregation.lookup("users", "creatorRef._id", Keys.ID, "creators")
         );
         DBObject result = getMongoTemplate().aggregate(aggregation, Document.class, DBObject.class).getUniqueMappedResult();
-        Document document = null;
         if (result != null)
         {
             document = getMongoTemplate().getConverter().read(Document.class, result);
