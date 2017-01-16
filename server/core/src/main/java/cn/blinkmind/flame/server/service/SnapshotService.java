@@ -36,6 +36,7 @@ public class SnapshotService extends AbstractPersistenceService
         snapshot.setCreator(creator);
         snapshot.setName(rawData.getName());
         snapshot.setBranch(branch);
+        snapshot.getHeaders().putAll(branch.getHeaders());
         snapshot.setArchive(branchService.getArchive(branch.getId(), creator));
         snapshotRepository.insert(snapshot);
         return snapshot;
