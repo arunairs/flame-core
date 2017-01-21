@@ -20,7 +20,7 @@ public class DocumentRepository extends AbstractMongoRepository<Document, Long>
     }
 
     @Override
-    public Document get(Long id)
+    public Document get(final Long id)
     {
         Document document = null;
         Aggregation aggregation = Aggregation.newAggregation(

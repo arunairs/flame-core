@@ -2,6 +2,7 @@ package cn.blinkmind.flame.server.repository;
 
 import cn.blinkmind.flame.server.repository.entity.Archive;
 import cn.blinkmind.flame.server.repository.entity.Branch;
+import cn.blinkmind.flame.server.repository.entity.Headers;
 import cn.blinkmind.flame.server.repository.entity.Snapshot;
 import cn.blinkmind.flame.server.repository.entity.User;
 import cn.blinkmind.flame.server.repository.exception.ResourceNotFoundException;
@@ -23,7 +24,7 @@ public class SnapshotRepository extends AbstractMongoRepository<Snapshot, Long>
     }
 
     @Override
-    public Snapshot get(Long id)
+    public Snapshot get(final Long id)
     {
         Snapshot snapshot = null;
         Aggregation aggregation = Aggregation.newAggregation(
@@ -44,7 +45,7 @@ public class SnapshotRepository extends AbstractMongoRepository<Snapshot, Long>
         return snapshot;
     }
 
-    public Snapshot get(Branch branch, User user)
+    public Snapshot get(final Branch branch, final User user)
     {
         Query query = new Query();
         Criteria criteria = Criteria.where("branchRef._id").is(branch.getId())
@@ -53,14 +54,14 @@ public class SnapshotRepository extends AbstractMongoRepository<Snapshot, Long>
         return this.findOne(query);
     }
 
-    public Snapshot require(Branch branch, User user)
+    public Snapshot require(final Branch branch, final User user)
     {
         Snapshot snapshot = get(branch, user);
         if (snapshot == null) throw new ResourceNotFoundException();
         return snapshot;
     }
 
-    public boolean exists(String name, long branchId, User user)
+    public boolean exists(final String name, final Long branchId, final User user)
     {
         Query query = new Query();
         Criteria criteria = Criteria.where("branchRef._id").is(branchId)
@@ -70,12 +71,29 @@ public class SnapshotRepository extends AbstractMongoRepository<Snapshot, Long>
         return this.exists(query);
     }
 
-    public Snapshot updateArchive(long snapshotId, Archive archive, User user)
+    public boolean exists(final Long id, final Long branchId)
+    {
+        Query query = new Query();
+        Criteria criteria = Criteria.where(Keys.ID).is(id).and("branchRef._id").is(branchId);
+        query.addCriteria(criteria);
+        return this.exists(query);
+    }
+
+    public Snapshot updateArchive(final Long snapshotId, final Archive archive)
     {
         Query query = new Query();
         query.addCriteria(Criteria.where(Keys.ID).is(snapshotId));
         Update update = new Update();
-        update.set("archive", archive);
+        update.set(Keys.ARCHIVE, archive);
+        return this.update(query, update);
+    }
+
+    public Snapshot updateHeaders(final Long snapshotId, final Headers headers)
+    {
+        Query query = new Query();
+        query.addCriteria(Criteria.where(Keys.ID).is(snapshotId));
+        Update update = new Update();
+        update.set(Keys.HEADERS, headers);
         return this.update(query, update);
     }
 }

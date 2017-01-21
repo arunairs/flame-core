@@ -59,7 +59,7 @@ public abstract class AbstractMongoRepository<T extends Persistable<ID>, ID exte
     public T update(final Query query, final Update update)
     {
         this.publisher.publishEvent(new BeforeUpdateAppliedEvent(update));
-        T result = getMongoTemplate().findAndModify(query, update, options().upsert(false), getEntityClass());
+        T result = getMongoTemplate().findAndModify(query, update, options().upsert(false).returnNew(true), getEntityClass());
         this.publisher.publishEvent(new AfterUpdateAppliedEvent(update));
         return result;
     }

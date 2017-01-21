@@ -3,6 +3,7 @@ package cn.blinkmind.flame.server.repository.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.index.CompoundIndex;
 
@@ -15,6 +16,14 @@ public class Snapshot extends BasicEntity<Long> implements Commit<Archive>
     private Branch branch;
     private Headers headers = new Headers();
     private Archive archive;
+
+    @Id
+    @Override
+    @JsonProperty(access = JsonProperty.Access.READ_WRITE)
+    public Long getId()
+    {
+        return super.getId();
+    }
 
     public String getName()
     {

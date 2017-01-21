@@ -15,18 +15,18 @@ public class DocumentService extends AbstractPersistenceService
     @Autowired
     private DocumentRepository documentRepository;
 
-    public Document get(long id, User user)
+    public Document get(final Long id,final User user)
     {
         return documentRepository.get(id);
     }
 
-    public Document require(long id, User user)
+    public Document require(final long id, final User user)
     {
         Document document = documentRepository.require(id);
         return document;
     }
 
-    public Document create(Document rawData, User creator)
+    public Document create(final Document rawData,final User creator)
     {
         Assert.notBlank(rawData.getName(), Errors.DOCUMENT_NAME_IS_BLANK);
 

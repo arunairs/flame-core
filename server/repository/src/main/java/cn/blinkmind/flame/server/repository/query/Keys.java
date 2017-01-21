@@ -4,9 +4,10 @@ public interface Keys
 {
     String ID = "_id";
     String ARCHIVE = "archive";
+    String HEADERS = "headers";
 
     interface Headers
     {
-        String VERSION = "header.version";
+        String VERSION = "headers.version";
     }
 }

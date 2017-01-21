@@ -15,7 +15,7 @@ public class UserService extends AbstractPersistenceService
     @Autowired
     private UserRepository userRepository;
 
-    public User create(User rawData)
+    public User create(final User rawData)
     {
         Assert.notBlank(rawData.getUsername(), Errors.ACCOUNT_NAME_IS_BLANK);
         Assert.notBlank(rawData.getPassword(), Errors.ACCOUNT_PASSWORD_IS_BLANK);

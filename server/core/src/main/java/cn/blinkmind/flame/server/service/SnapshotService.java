@@ -1,5 +1,6 @@
 package cn.blinkmind.flame.server.service;
 
+import cn.blinkmind.flame.server.repository.entity.Headers;
 import cn.blinkmind.flame.server.util.patch.JsonPatch;
 import cn.blinkmind.flame.server.util.Assert;
 import cn.blinkmind.flame.server.exception.Error;
@@ -25,7 +26,7 @@ public class SnapshotService extends AbstractPersistenceService
     @Autowired
     private BranchService branchService;
 
-    public Snapshot create(long branchId, Snapshot rawData, User creator)
+    public Snapshot create(final Long branchId, final Snapshot rawData, final User creator)
     {
         Branch branch = branchService.require(branchId, creator, Errors.BRANCH_IS_NOT_FOUND);
         Assert.notBlank(rawData.getName(), Errors.SNAPSHOT_NAME_IS_BLANK);
@@ -42,18 +43,18 @@ public class SnapshotService extends AbstractPersistenceService
         return snapshot;
     }
 
-    public Snapshot get(long id, User user)
+    public Snapshot get(final Long id, final User user)
     {
         return snapshotRepository.get(id);
     }
 
-    public Snapshot require(long id, User user)
+    public Snapshot require(final Long id, final User user)
     {
         Snapshot snapshot = snapshotRepository.require(id);
         return snapshot;
     }
 
-    public Snapshot require(long id, User user, RuntimeException exception)
+    public Snapshot require(final Long id, final User user, final RuntimeException exception)
     {
         try
         {
@@ -66,20 +67,20 @@ public class SnapshotService extends AbstractPersistenceService
         }
     }
 
-    public Snapshot get(Branch branch, User user)
+    public Snapshot get(final Branch branch, final User user)
     {
         Snapshot snapshot = snapshotRepository.get(branch, user);
         return snapshot;
     }
 
-    public Snapshot require(Branch branch, User user)
+    public Snapshot require(final Branch branch, final User user)
     {
         Snapshot snapshot = get(branch, user);
         Assert.notNull(snapshot, Errors.RESOURCE_NOT_FOUND);
         return snapshot;
     }
 
-    public Snapshot patch(long id, final Map<String, Object> rawData, final User user)
+    public Snapshot patch(final Long id, final Map<String, Object> rawData, final User user)
     {
         Snapshot snapshot = this.require(id, user);
         JsonPatch.on(snapshot)
@@ -90,12 +91,17 @@ public class SnapshotService extends AbstractPersistenceService
         return snapshot;
     }
 
-    public void delete(long id, User user)
+    public boolean exists(final Long id, final Long branchId)
+    {
+        return snapshotRepository.exists(id, branchId);
+    }
+
+    public void delete(final Long id, final User user)
     {
         snapshotRepository.delete(id);
     }
 
-    public void updateArchive(long snapshotId, Archive archive, User user)
+    public void updateArchive(final Long snapshotId, final Archive archive, final User user)
     {
         if (CollectionUtils.isNotEmpty(archive.getModules()))
         {
@@ -109,7 +115,12 @@ public class SnapshotService extends AbstractPersistenceService
                 }
             });
         }
-        Snapshot snapshot = snapshotRepository.updateArchive(snapshotId, archive, user);
+        Snapshot snapshot = snapshotRepository.updateArchive(snapshotId, archive);
         Assert.notNull(snapshot, Errors.RESOURCE_NOT_FOUND);
+    }
+
+    public void updateHeaders(final Snapshot snapshot, final Headers headers)
+    {
+        snapshotRepository.updateHeaders(snapshot.getId(), headers);
     }
 }
