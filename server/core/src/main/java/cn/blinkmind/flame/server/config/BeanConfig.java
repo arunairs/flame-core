@@ -1,7 +1,8 @@
 package cn.blinkmind.flame.server.config;
 
 import cn.blinkmind.flame.server.env.Env;
-import com.ge.snowizard.core.IdWorker;
+import cn.blinkmind.flame.server.repository.util.IdGenerator;
+import cn.blinkmind.flame.server.repository.util.SnowflakeIdGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,9 +14,9 @@ public class BeanConfig
     private Env env;
 
     @Bean
-    public IdWorker idWorker()
+    public IdGenerator<Long> idGenerator()
     {
-        IdWorker idWorker = new IdWorker(env.getHostWorkId(), env.getHostDataCenterId());
-        return idWorker;
+        IdGenerator<Long> idGenerator = new SnowflakeIdGenerator(env.getHostWorkId(), env.getHostDataCenterId());
+        return idGenerator;
     }
 }

@@ -21,7 +21,6 @@ public class UserService extends AbstractPersistenceService
         Assert.notBlank(rawData.getPassword(), Errors.ACCOUNT_PASSWORD_IS_BLANK);
 
         User user = new User();
-        user.setId(newId());
         user.setUsername(rawData.getUsername());
         user.setSalt(SecurityUtil.randomSalt());
         user.setPassword(CodecUtil.sha256(rawData.getPassword(), user.getSalt()));

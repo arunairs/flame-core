@@ -31,7 +31,6 @@ public class DocumentService extends AbstractPersistenceService
         Assert.notBlank(rawData.getName(), Errors.DOCUMENT_NAME_IS_BLANK);
 
         Document document = new Document();
-        document.setId(newId());
         document.setName(rawData.getName());
         document.setDescription(rawData.getDescription());
         document.setType(DocumentType.REST);

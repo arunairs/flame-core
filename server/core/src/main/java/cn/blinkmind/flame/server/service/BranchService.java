@@ -68,7 +68,6 @@ public class BranchService extends AbstractPersistenceService
         }
 
         Branch branch = new Branch();
-        branch.setId(newId());
         branch.setName(rawData.getName());
         branch.setCreator(creator);
         branch.getHeaders().putLong(Commit.VERSION, 0L);

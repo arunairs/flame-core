@@ -9,6 +9,7 @@ import cn.blinkmind.flame.server.repository.event.BeforeEntityUpdatedEvent;
 import cn.blinkmind.flame.server.repository.event.BeforeUpdateAppliedEvent;
 import cn.blinkmind.flame.server.repository.exception.ResourceNotFoundException;
 import cn.blinkmind.flame.server.repository.query.Keys;
+import cn.blinkmind.flame.server.repository.util.IdGenerator;
 import com.mongodb.DBObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
@@ -26,6 +27,9 @@ import static org.springframework.data.mongodb.core.FindAndModifyOptions.options
 
 public abstract class AbstractMongoRepository<T extends Persistable<ID>, ID extends Serializable>
 {
+    @Autowired(required = false)
+    private IdGenerator<ID> idGenerator;
+
     @Autowired
     private ApplicationEventPublisher publisher;
 
@@ -119,6 +123,8 @@ public abstract class AbstractMongoRepository<T extends Persistable<ID>, ID exte
     public T insert(final T entity)
     {
         this.publisher.publishEvent(new BeforeEntityCreatedEvent<>(entity));
+        if (idGenerator != null)
+            entity.setId(idGenerator.nextId());
         getMongoTemplate().insert(entity);
         this.publisher.publishEvent(new AfterEntityCreatedEvent<>(entity));
         return entity;
@@ -131,12 +137,6 @@ public abstract class AbstractMongoRepository<T extends Persistable<ID>, ID exte
             insert(entity);
         }
         return (List<T>) entities;
-    }
-
-    public void insertAll(final Collection<? extends T> objectsToSave)
-    {
-        if (objectsToSave == null || objectsToSave.size() < 1) return;
-        getMongoTemplate().insertAll(objectsToSave);
     }
 
     public long count(final Query query)

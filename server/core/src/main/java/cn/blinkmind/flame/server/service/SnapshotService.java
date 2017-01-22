@@ -1,6 +1,7 @@
 package cn.blinkmind.flame.server.service;
 
 import cn.blinkmind.flame.server.repository.entity.Headers;
+import cn.blinkmind.flame.server.repository.util.IdGenerator;
 import cn.blinkmind.flame.server.util.patch.JsonPatch;
 import cn.blinkmind.flame.server.util.Assert;
 import cn.blinkmind.flame.server.exception.Error;
@@ -21,6 +22,9 @@ import java.util.Map;
 public class SnapshotService extends AbstractPersistenceService
 {
     @Autowired
+    private IdGenerator<Long> idGenerator;
+
+    @Autowired
     private SnapshotRepository snapshotRepository;
 
     @Autowired
@@ -33,7 +37,6 @@ public class SnapshotService extends AbstractPersistenceService
         Assert.isFalse(snapshotRepository.exists(rawData.getName(), branch.getId(), creator), Errors.RESOURCE_ALREADY_EXISTS);
 
         Snapshot snapshot = new Snapshot();
-        snapshot.setId(newId());
         snapshot.setCreator(creator);
         snapshot.setName(rawData.getName());
         snapshot.setBranch(branch);
@@ -107,11 +110,11 @@ public class SnapshotService extends AbstractPersistenceService
         {
             archive.getModules().forEach(module ->
             {
-                if (module.getId() == null) module.setId(newId());
+                if (module.getId() == null) module.setId(idGenerator.nextId());
                 if (CollectionUtils.isNotEmpty(module.getApis()))
                 {
                     module.getApis().stream().filter(api -> api.getId() == null)
-                            .forEach(api -> api.setId(newId()));
+                            .forEach(api -> api.setId(idGenerator.nextId()));
                 }
             });
         }

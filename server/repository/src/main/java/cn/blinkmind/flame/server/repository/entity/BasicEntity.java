@@ -28,6 +28,7 @@ public class BasicEntity<ID extends Serializable> implements Persistable<ID>
         return id;
     }
 
+    @Override
     public void setId(ID id)
     {
         this.id = id;
