@@ -1,6 +1,8 @@
 package cn.blinkmind.flame.server.service;
 
+import cn.blinkmind.flame.server.repository.entity.Commit;
 import cn.blinkmind.flame.server.repository.entity.Headers;
+import cn.blinkmind.flame.server.repository.entity.Push;
 import cn.blinkmind.flame.server.repository.util.IdGenerator;
 import cn.blinkmind.flame.server.util.patch.JsonPatch;
 import cn.blinkmind.flame.server.util.Assert;
@@ -125,5 +127,21 @@ public class SnapshotService extends AbstractPersistenceService
     public void updateHeaders(final Snapshot snapshot, final Headers headers)
     {
         snapshotRepository.updateHeaders(snapshot.getId(), headers);
+    }
+
+    public void push(final Long documentId, final Snapshot rawData, final User user)
+    {
+        Assert.isTrue(rawData != null && rawData.getId() != null, Errors.PUSH_SNAPSHOT_IS_NOT_SPECIFIED);
+        Snapshot snapshot = this.require(rawData.getId(), user, Errors.SNAPSHOT_IS_NOT_FOUND);
+
+        Branch branch = snapshot.getBranch();
+        Assert.notNull(branch, Errors.BRANCH_IS_NOT_FOUND);
+        Assert.equals(branch.getDocumentRef().getId(), documentId, Errors.BRANCH_NOT_MATCHES_DOCUMENT);
+
+        Assert.isTrue(snapshot.getHeaders().getLong(Commit.VERSION) >= branch.getHeaders().getLong(Commit.VERSION), Errors.SNAPSHOT_IS_OUTDATED);
+        Branch result = branchService.updateArchive(branch, snapshot, user);
+        Assert.notNull(result, Errors.SNAPSHOT_IS_OUTDATED);
+
+        this.updateHeaders(snapshot, result.getHeaders());
     }
 }
