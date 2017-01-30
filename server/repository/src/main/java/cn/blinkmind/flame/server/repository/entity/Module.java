@@ -1,7 +1,6 @@
 package cn.blinkmind.flame.server.repository.entity;
 
 import cn.blinkmind.flame.server.web.request.http.BasicHttpRequest;
-import cn.blinkmind.flame.server.repository.util.UrlStringBuilder;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -11,11 +10,12 @@ import org.springframework.data.annotation.Transient;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringJoiner;
 
 public class Module extends BasicEntity<Long> implements Resource<Long> {
 
     private String name;
-    private BasicHttpRequest request;
+    private BasicHttpRequest request = new BasicHttpRequest();
     private List<Api> apis;
     private Archive archive;
 
@@ -39,7 +39,7 @@ public class Module extends BasicEntity<Long> implements Resource<Long> {
     }
 
     @JsonIgnoreProperties(value = {"methods"})
-    public void setRequest(BasicHttpRequest request) {
+    private void setRequest(BasicHttpRequest request) {
         this.request = request;
     }
 
@@ -80,14 +80,14 @@ public class Module extends BasicEntity<Long> implements Resource<Long> {
 
     @Override
     public String getUri() {
-        UrlStringBuilder stringBuilder = new UrlStringBuilder();
+        StringJoiner joiner = new StringJoiner("/");
         if (getParent() != null) {
-            stringBuilder.append(getParent().getUri());
+            joiner.add(getParent().getUri());
         }
         if (this.request != null && StringUtils.isNotBlank(this.request.getUri())) {
-            stringBuilder.append(this.request.getUri());
+            joiner.add(this.request.getUri());
         }
-        return stringBuilder.toString();
+        return joiner.toString();
     }
 
     @JsonIgnore

@@ -1,6 +1,6 @@
 package cn.blinkmind.flame.server.repository.entity;
 
-public class Push extends Command {
+public class Pull extends Command {
 
     private Snapshot snapshot;
 

@@ -11,31 +11,26 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class DocumentRepository extends AbstractMongoRepository<Document, Long>
-{
+public class DocumentRepository extends AbstractMongoRepository<Document, Long> {
+
     @Override
-    protected Class<Document> getEntityClass()
-    {
+    protected Class<Document> getEntityClass() {
         return Document.class;
     }
 
     @Override
-    public Document get(final Long id)
-    {
+    public Document get(final Long id) {
         Document document = null;
         Aggregation aggregation = Aggregation.newAggregation(
                 Aggregation.match(Criteria.where(Keys.ID).is(id)),
                 Aggregation.lookup("users", "creatorRef._id", Keys.ID, "creators")
         );
         DBObject result = getMongoTemplate().aggregate(aggregation, Document.class, DBObject.class).getUniqueMappedResult();
-        if (result != null)
-        {
+        if (result != null) {
             document = getMongoTemplate().getConverter().read(Document.class, result);
-            if (document != null)
-            {
+            if (document != null) {
                 BasicDBList creators = (BasicDBList) result.get("creators");
-                if (CollectionUtils.isNotEmpty(creators))
-                {
+                if (CollectionUtils.isNotEmpty(creators)) {
                     User creator = getMongoTemplate().getConverter().read(User.class, (DBObject) creators.get(0));
                     document.setCreator(creator);
                 }

@@ -3,8 +3,8 @@ package cn.blinkmind.flame.server.repository.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class Account extends BasicEntity<Long>
-{
+public class Account extends BasicEntity<Long> {
+
     private String username;
     private String password;
     private String salt;
@@ -27,13 +27,11 @@ public class Account extends BasicEntity<Long>
     }
 
     @JsonIgnore
-    public String getSalt()
-    {
+    public String getSalt() {
         return salt;
     }
 
-    public void setSalt(String salt)
-    {
+    public void setSalt(String salt) {
         this.salt = salt;
     }
 }

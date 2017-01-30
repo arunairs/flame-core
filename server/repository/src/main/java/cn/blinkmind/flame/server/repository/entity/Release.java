@@ -6,8 +6,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.data.annotation.Transient;
 
 @org.springframework.data.mongodb.core.mapping.Document(collection = "releases")
-public class Release extends BasicEntity<Long>
-{
+public class Release extends BasicEntity<Long> {
+
     private Version version;
     private Archive archive;
     private Ref<Long> branchRef;

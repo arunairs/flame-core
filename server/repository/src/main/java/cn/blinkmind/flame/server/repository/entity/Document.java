@@ -4,39 +4,33 @@ import org.springframework.data.mongodb.core.index.CompoundIndex;
 
 @org.springframework.data.mongodb.core.mapping.Document(collection = "documents")
 @CompoundIndex(name = "unique_index", unique = true, def = "{'name':1,'type':1,'creatorRef._id':1}")
-public class Document extends BasicEntity<Long>
-{
-	private String name;
-	private String description;
-	private DocumentType type;
+public class Document extends BasicEntity<Long> {
 
-	public String getName()
-	{
-		return name;
-	}
+    private String name;
+    private String description;
+    private DocumentType type;
 
-	public void setName(String name)
-	{
-		this.name = name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public String getDescription()
-	{
-		return description;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setDescription(String description)
-	{
-		this.description = description;
-	}
+    public String getDescription() {
+        return description;
+    }
 
-	public DocumentType getType()
-	{
-		return type;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	public void setType(DocumentType type)
-	{
-		this.type = type;
-	}
+    public DocumentType getType() {
+        return type;
+    }
+
+    public void setType(DocumentType type) {
+        this.type = type;
+    }
 }

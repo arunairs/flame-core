@@ -1,7 +1,6 @@
 package cn.blinkmind.flame.server.resource;
 
 import cn.blinkmind.flame.server.annotation.Token;
-import cn.blinkmind.flame.server.bean.ObjectId;
 import cn.blinkmind.flame.server.constant.Attributes;
 import cn.blinkmind.flame.server.repository.entity.Push;
 import cn.blinkmind.flame.server.repository.entity.User;
@@ -23,7 +22,7 @@ public class PushResource extends AbstractResource
 
     @Token
     @PostMapping(path = "documents/{id}/pushes")
-    public ResponseEntity<ObjectId> create(@PathVariable(name = "id") long documentId, @RequestBody Push push, @RequestAttribute(name = Attributes.USER) User user)
+    public ResponseEntity<Void> create(@PathVariable(name = "id") long documentId, @RequestBody Push push, @RequestAttribute(name = Attributes.USER) User user)
     {
         snapshotService.push(documentId, push.getSnapshot(), user);
         return ResponseEntity.status(HttpStatus.CREATED).build();

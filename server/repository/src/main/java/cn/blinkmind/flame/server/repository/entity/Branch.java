@@ -8,8 +8,8 @@ import org.springframework.data.mongodb.core.index.CompoundIndex;
 
 @org.springframework.data.mongodb.core.mapping.Document(collection = "branches")
 @CompoundIndex(name = "unique_index", unique = true, def = "{'name':1,'documentRef._id':1}")
-public class Branch extends BasicEntity<Long> implements Commit<Archive>
-{
+public class Branch extends BasicEntity<Long> implements Commit<Archive> {
+
     private String name;
     private Ref<Long> documentRef;
     private Document document;
@@ -21,41 +21,34 @@ public class Branch extends BasicEntity<Long> implements Commit<Archive>
     @Id
     @Override
     @JsonProperty(access = JsonProperty.Access.READ_WRITE)
-    public Long getId()
-    {
+    public Long getId() {
         return super.getId();
     }
 
-    public String getName()
-    {
+    public String getName() {
         return name;
     }
 
-    public void setName(String name)
-    {
+    public void setName(String name) {
         this.name = name;
     }
 
     @JsonIgnore
-    public Ref<Long> getDocumentRef()
-    {
+    public Ref<Long> getDocumentRef() {
         return documentRef;
     }
 
     @JsonIgnore
-    private void setDocumentRef(Ref<Long> documentRef)
-    {
+    private void setDocumentRef(Ref<Long> documentRef) {
         this.documentRef = documentRef;
     }
 
     @Transient
-    public Document getDocument()
-    {
+    public Document getDocument() {
         return document;
     }
 
-    public void setDocument(Document document)
-    {
+    public void setDocument(Document document) {
         this.document = document;
         if (this.document != null)
             setDocumentRef(new Ref<>(this.document));
@@ -64,45 +57,37 @@ public class Branch extends BasicEntity<Long> implements Commit<Archive>
 
     @Override
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    public Headers getHeaders()
-    {
+    public Headers getHeaders() {
         return headers;
     }
 
-    private void setHeaders(Headers headers)
-    {
+    private void setHeaders(Headers headers) {
         this.headers = headers;
     }
 
-    public Archive getArchive()
-    {
+    public Archive getArchive() {
         return archive;
     }
 
-    public void setArchive(Archive archive)
-    {
+    public void setArchive(Archive archive) {
         this.archive = archive;
     }
 
     @JsonIgnore
-    public Ref<Long> getOriginRef()
-    {
+    public Ref<Long> getOriginRef() {
         return originRef;
     }
 
-    private void setOriginRef(Ref<Long> originRef)
-    {
+    private void setOriginRef(Ref<Long> originRef) {
         this.originRef = originRef;
     }
 
     @Transient
-    public Branch getOrigin()
-    {
+    public Branch getOrigin() {
         return origin;
     }
 
-    public void setOrigin(Branch origin)
-    {
+    public void setOrigin(Branch origin) {
         this.origin = origin;
         if (this.origin != null)
             setOriginRef(new Ref<>(this.origin));
@@ -111,8 +96,7 @@ public class Branch extends BasicEntity<Long> implements Commit<Archive>
 
     @Override
     @JsonIgnore
-    public Archive getPayload()
-    {
+    public Archive getPayload() {
         return this.archive;
     }
 }

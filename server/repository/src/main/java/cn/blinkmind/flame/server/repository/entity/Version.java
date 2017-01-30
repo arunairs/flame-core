@@ -1,57 +1,50 @@
 package cn.blinkmind.flame.server.repository.entity;
 
-public class Version
-{
-	private Integer major;
-	private Integer minor;
-	private Integer patch;
+public class Version {
 
-	public Integer getMajor()
-	{
-		return major;
-	}
+    private Integer major;
+    private Integer minor;
+    private Integer patch;
 
-	public Integer getMinor()
-	{
-		return minor;
-	}
+    public Integer getMajor() {
+        return major;
+    }
 
-	public Integer getPatch()
-	{
-		return patch;
-	}
+    public Integer getMinor() {
+        return minor;
+    }
 
-	private Version()
-	{
-	}
+    public Integer getPatch() {
+        return patch;
+    }
 
-	public Version(Integer major, Integer minor, Integer patch)
-	{
-		this.major = major;
-		this.minor = minor;
-		this.patch = patch;
-	}
+    private Version() {
+    }
 
-	@Override
-	public boolean equals(Object o)
-	{
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
+    public Version(Integer major, Integer minor, Integer patch) {
+        this.major = major;
+        this.minor = minor;
+        this.patch = patch;
+    }
 
-		Version version = (Version) o;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
-		if (!major.equals(version.major)) return false;
-		if (!minor.equals(version.minor)) return false;
-		return patch.equals(version.patch);
+        Version version = (Version) o;
 
-	}
+        if (!major.equals(version.major)) return false;
+        if (!minor.equals(version.minor)) return false;
+        return patch.equals(version.patch);
 
-	@Override
-	public int hashCode()
-	{
-		int result = major.hashCode();
-		result = 31 * result + minor.hashCode();
-		result = 31 * result + patch.hashCode();
-		return result;
-	}
+    }
+
+    @Override
+    public int hashCode() {
+        int result = major.hashCode();
+        result = 31 * result + minor.hashCode();
+        result = 31 * result + patch.hashCode();
+        return result;
+    }
 }
