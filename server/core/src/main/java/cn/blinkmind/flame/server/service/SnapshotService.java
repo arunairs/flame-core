@@ -1,19 +1,17 @@
 package cn.blinkmind.flame.server.service;
 
-import cn.blinkmind.flame.server.repository.entity.Commit;
-import cn.blinkmind.flame.server.repository.entity.Headers;
-import cn.blinkmind.flame.server.repository.entity.Push;
-import cn.blinkmind.flame.server.repository.util.IdGenerator;
-import cn.blinkmind.flame.server.util.patch.JsonPatch;
-import cn.blinkmind.flame.server.util.Assert;
-import cn.blinkmind.flame.server.exception.Error;
 import cn.blinkmind.flame.server.exception.Errors;
 import cn.blinkmind.flame.server.repository.SnapshotRepository;
 import cn.blinkmind.flame.server.repository.entity.Archive;
 import cn.blinkmind.flame.server.repository.entity.Branch;
+import cn.blinkmind.flame.server.repository.entity.Commit;
+import cn.blinkmind.flame.server.repository.entity.Headers;
 import cn.blinkmind.flame.server.repository.entity.Snapshot;
 import cn.blinkmind.flame.server.repository.entity.User;
 import cn.blinkmind.flame.server.repository.exception.ResourceNotFoundException;
+import cn.blinkmind.flame.server.repository.util.IdGenerator;
+import cn.blinkmind.flame.server.util.Assert;
+import cn.blinkmind.flame.server.util.patch.JsonPatch;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,6 +26,9 @@ public class SnapshotService extends AbstractPersistenceService
 
     @Autowired
     private SnapshotRepository snapshotRepository;
+
+    @Autowired
+    private ArchiveService archiveService;
 
     @Autowired
     private BranchService branchService;
@@ -124,14 +125,14 @@ public class SnapshotService extends AbstractPersistenceService
         Assert.notNull(snapshot, Errors.RESOURCE_NOT_FOUND);
     }
 
-    public void updateHeaders(final Snapshot snapshot, final Headers headers)
+    private void updateHeaders(final Snapshot snapshot, final Headers headers)
     {
         snapshotRepository.updateHeaders(snapshot.getId(), headers);
     }
 
     public void push(final Long documentId, final Snapshot rawData, final User user)
     {
-        Assert.isTrue(rawData != null && rawData.getId() != null, Errors.PUSH_SNAPSHOT_IS_NOT_SPECIFIED);
+        Assert.isTrue(rawData != null && rawData.getId() != null, Errors.SNAPSHOT_IS_NOT_SPECIFIED);
         Snapshot snapshot = this.require(rawData.getId(), user, Errors.SNAPSHOT_IS_NOT_FOUND);
 
         Branch branch = snapshot.getBranch();
@@ -143,5 +144,19 @@ public class SnapshotService extends AbstractPersistenceService
         Assert.notNull(result, Errors.SNAPSHOT_IS_OUTDATED);
 
         this.updateHeaders(snapshot, result.getHeaders());
+    }
+
+    public void pull(final Long documentId, final Snapshot rawData, final User user)
+    {
+        Assert.isTrue(rawData != null && rawData.getId() != null, Errors.SNAPSHOT_IS_NOT_SPECIFIED);
+        Snapshot snapshot = this.require(rawData.getId(), user, Errors.SNAPSHOT_IS_NOT_FOUND);
+
+        Branch branch = snapshot.getBranch();
+        Assert.notNull(branch, Errors.BRANCH_IS_NOT_FOUND);
+        Assert.equals(branch.getDocumentRef().getId(), documentId, Errors.BRANCH_NOT_MATCHES_DOCUMENT);
+        archiveService.diff(snapshot.getArchive(), branch.getArchive());
+
+        if (snapshot.getHeaders().getLong(Commit.VERSION) >= branch.getHeaders().getLong(Commit.VERSION)) return;
+        archiveService.diff(snapshot.getArchive(), branch.getArchive());
     }
 }
