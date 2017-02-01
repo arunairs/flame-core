@@ -5,61 +5,51 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import java.util.*;
 
 @JsonInclude(value = JsonInclude.Include.NON_NULL)
-public class HttpRequest extends BasicHttpRequest
-{
-	private LinkedHashSet<SingleFieldHttpRequestParameter> headers;
-	private LinkedHashSet<SingleFieldHttpRequestParameter> paths;
-	private LinkedHashSet<SingleFieldHttpRequestParameter> queries;
-	private LinkedHashSet<SingleFieldHttpRequestParameter> cookies;
-	private HttpRequestBody body;
+public class HttpRequest extends BasicHttpRequest {
 
-	public LinkedHashSet<SingleFieldHttpRequestParameter> getHeaders()
-	{
-		return headers;
-	}
+    private LinkedHashSet<SingleFieldHttpRequestParameter> headers;
+    private LinkedHashSet<SingleFieldHttpRequestParameter> paths;
+    private LinkedHashSet<SingleFieldHttpRequestParameter> queries;
+    private LinkedHashSet<SingleFieldHttpRequestParameter> cookies;
+    private HttpRequestBody body;
 
-	public void setHeaders(LinkedHashSet<SingleFieldHttpRequestParameter> headers)
-	{
-		this.headers = headers;
-	}
+    public LinkedHashSet<SingleFieldHttpRequestParameter> getHeaders() {
+        return headers;
+    }
 
-	public LinkedHashSet<SingleFieldHttpRequestParameter> getPaths()
-	{
-		return paths;
-	}
+    public void setHeaders(LinkedHashSet<SingleFieldHttpRequestParameter> headers) {
+        this.headers = headers;
+    }
 
-	public void setPaths(LinkedHashSet<SingleFieldHttpRequestParameter> paths)
-	{
-		this.paths = paths;
-	}
+    public LinkedHashSet<SingleFieldHttpRequestParameter> getPaths() {
+        return paths;
+    }
 
-	public LinkedHashSet<SingleFieldHttpRequestParameter> getQueries()
-	{
-		return queries;
-	}
+    public void setPaths(LinkedHashSet<SingleFieldHttpRequestParameter> paths) {
+        this.paths = paths;
+    }
 
-	public void setQueries(LinkedHashSet<SingleFieldHttpRequestParameter> queries)
-	{
-		this.queries = queries;
-	}
+    public LinkedHashSet<SingleFieldHttpRequestParameter> getQueries() {
+        return queries;
+    }
 
-	public LinkedHashSet<SingleFieldHttpRequestParameter> getCookies()
-	{
-		return cookies;
-	}
+    public void setQueries(LinkedHashSet<SingleFieldHttpRequestParameter> queries) {
+        this.queries = queries;
+    }
 
-	public void setCookies(LinkedHashSet<SingleFieldHttpRequestParameter> cookies)
-	{
-		this.cookies = cookies;
-	}
+    public LinkedHashSet<SingleFieldHttpRequestParameter> getCookies() {
+        return cookies;
+    }
 
-	public HttpRequestBody getBody()
-	{
-		return body;
-	}
+    public void setCookies(LinkedHashSet<SingleFieldHttpRequestParameter> cookies) {
+        this.cookies = cookies;
+    }
 
-	public void setBody(HttpRequestBody body)
-	{
-		this.body = body;
-	}
+    public HttpRequestBody getBody() {
+        return body;
+    }
+
+    public void setBody(HttpRequestBody body) {
+        this.body = body;
+    }
 }

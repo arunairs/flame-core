@@ -1,60 +1,50 @@
 package cn.blinkmind.flame.server.web.request.http;
 
-public class SingleFieldHttpRequestParameter implements HttpRequestParameter
-{
-	private String name;
-	private String value;
-	private Boolean isRequired;
-	private HttpParameterType httpParameterType;
-	private String comment;
+public class SingleFieldHttpRequestParameter implements HttpRequestParameter {
 
-	public String getName()
-	{
-		return name;
-	}
+    private String name;
+    private String value;
+    private Boolean isRequired;
+    private HttpParameterType httpParameterType;
+    private String comment;
 
-	public void setName(String name)
-	{
-		this.name = name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public String getValue()
-	{
-		return value;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setValue(String value)
-	{
-		this.value = value;
-	}
+    public String getValue() {
+        return value;
+    }
 
-	public Boolean getRequired()
-	{
-		return isRequired;
-	}
+    public void setValue(String value) {
+        this.value = value;
+    }
 
-	public void setRequired(Boolean required)
-	{
-		isRequired = required;
-	}
+    public Boolean getRequired() {
+        return isRequired;
+    }
 
-	public HttpParameterType getHttpParameterType()
-	{
-		return httpParameterType;
-	}
+    public void setRequired(Boolean required) {
+        isRequired = required;
+    }
 
-	public void setHttpParameterType(HttpParameterType httpParameterType)
-	{
-		this.httpParameterType = httpParameterType;
-	}
+    public HttpParameterType getHttpParameterType() {
+        return httpParameterType;
+    }
 
-	public String getComment()
-	{
-		return comment;
-	}
+    public void setHttpParameterType(HttpParameterType httpParameterType) {
+        this.httpParameterType = httpParameterType;
+    }
 
-	public void setComment(String comment)
-	{
-		this.comment = comment;
-	}
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
 }
