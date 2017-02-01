@@ -4,45 +4,46 @@ import java.util.HashMap;
 
 public class Headers extends HashMap<String, Object> {
 
-    public Boolean putBoolean(String key, Boolean value) {
-        return this.putHeader(key, value);
+    public Headers putBoolean(String key, Boolean value) {
+        putHeader(key, value);
+        return this;
     }
 
     public Boolean getBoolean(String key) {
         return this.getHeaderOrDefault(key, null);
     }
 
-    public Integer putInteger(String key, Integer value) {
-        return this.putHeader(key, value);
+    public Headers putInteger(String key, Integer value) {
+        putHeader(key, value);
+        return this;
     }
 
     public Integer getInteger(String key) {
         return this.getHeaderOrDefault(key, null);
     }
 
-    public Long putLong(String key, Long value) {
-        return this.putHeader(key, value);
+    public Headers putLong(String key, Long value) {
+        putHeader(key, value);
+        return this;
     }
 
     public Long getLong(String key) {
         return this.getHeaderOrDefault(key, null);
     }
 
-    public String putString(String key, String value) {
-        return this.putHeader(key, value);
+    public Headers putString(String key, String value) {
+        putHeader(key, value);
+        return this;
     }
 
-    public String putString(String key) {
-        return this.getHeaderOrDefault(key, null);
-    }
-
-    public <T> T putHeader(String key) {
+    public <T> T getHeader(String key) {
         return this.getHeaderOrDefault(key, null);
     }
 
     @SuppressWarnings("unchecked")
-    public <T> T putHeader(String key, T value) {
-        return (T) super.put(key, value);
+    public Headers putHeader(String key, Object value) {
+        super.put(key, value);
+        return this;
     }
 
     @SuppressWarnings("unchecked")
