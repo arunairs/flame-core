@@ -2,8 +2,8 @@ archivesBaseName = "${archivePrefix}-repository"
 
 dependencies {
     compile project(':server:common:web')
-    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.4'
-    compile group: 'org.aspectj', name: 'aspectjweaver', version: '1.8.9'
+    compile group: 'org.apache.commons', name: 'commons-lang3', version: libs.commons.lang.version
+    compile group: 'org.aspectj', name: 'aspectjweaver', version: '1.8.10'
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-mongodb', version: libs.spring.boot.version
     compile group: 'com.smoketurner.snowizard', name: 'snowizard-core', version: '1.9.2'
 }
