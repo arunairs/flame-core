@@ -10,7 +10,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Collection;
 import java.util.List;
 
-public class JSONUtil {
+public class JsonUtil {
 
     private static final ObjectMapper _objectMapper;
 

@@ -20,6 +20,7 @@ import java.util.stream.Stream;
 
 @Service
 public class ArchiveService {
+
     public Diffs<String> diff(Archive base, Archive head) {
         Diffs<String> diffs = new Diffs<>();
         Diff diff = JaversBuilder.javers().build().compare(base, head);
@@ -38,7 +39,10 @@ public class ArchiveService {
     }
 
     private Collection<String> resolveModifiedObjects(final Diff diff) {
-        return new ArrayList<>();
+        return diff.getChangesByType(ValueChange.class)
+                .stream()
+                .map(ValueChange::getPropertyName)
+                .collect(Collectors.toList());
     }
 
     private Collection<String> resolveRemovedObjects(final Diff diff) {

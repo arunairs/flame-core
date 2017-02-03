@@ -1,5 +1,6 @@
 package cn.blinkmind.flame.server.service;
 
+import cn.blinkmind.flame.server.bean.Diffs;
 import cn.blinkmind.flame.server.exception.Errors;
 import cn.blinkmind.flame.server.repository.SnapshotRepository;
 import cn.blinkmind.flame.server.repository.entity.Archive;
@@ -17,10 +18,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
+import java.util.UUID;
 
 @Service
-public class SnapshotService extends AbstractPersistenceService
-{
+public class SnapshotService extends AbstractPersistenceService {
+
     @Autowired
     private IdGenerator<Long> idGenerator;
 
@@ -33,8 +35,7 @@ public class SnapshotService extends AbstractPersistenceService
     @Autowired
     private BranchService branchService;
 
-    public Snapshot create(final Long branchId, final Snapshot rawData, final User creator)
-    {
+    public Snapshot create(final Long branchId, final Snapshot rawData, final User creator) {
         Branch branch = branchService.require(branchId, creator, Errors.BRANCH_IS_NOT_FOUND);
         Assert.notBlank(rawData.getName(), Errors.SNAPSHOT_NAME_IS_BLANK);
         Assert.isFalse(snapshotRepository.exists(rawData.getName(), branch.getId(), creator), Errors.RESOURCE_ALREADY_EXISTS);
@@ -49,45 +50,36 @@ public class SnapshotService extends AbstractPersistenceService
         return snapshot;
     }
 
-    public Snapshot get(final Long id, final User user)
-    {
+    public Snapshot get(final Long id, final User user) {
         return snapshotRepository.get(id);
     }
 
-    public Snapshot require(final Long id, final User user)
-    {
+    public Snapshot require(final Long id, final User user) {
         Snapshot snapshot = snapshotRepository.require(id);
         return snapshot;
     }
 
-    public Snapshot require(final Long id, final User user, final RuntimeException exception)
-    {
-        try
-        {
+    public Snapshot require(final Long id, final User user, final RuntimeException exception) {
+        try {
             Snapshot snapshot = require(id, user);
             return snapshot;
-        }
-        catch (ResourceNotFoundException e)
-        {
+        } catch (ResourceNotFoundException e) {
             throw exception;
         }
     }
 
-    public Snapshot get(final Branch branch, final User user)
-    {
+    public Snapshot get(final Branch branch, final User user) {
         Snapshot snapshot = snapshotRepository.get(branch, user);
         return snapshot;
     }
 
-    public Snapshot require(final Branch branch, final User user)
-    {
+    public Snapshot require(final Branch branch, final User user) {
         Snapshot snapshot = get(branch, user);
         Assert.notNull(snapshot, Errors.RESOURCE_NOT_FOUND);
         return snapshot;
     }
 
-    public Snapshot patch(final Long id, final Map<String, Object> rawData, final User user)
-    {
+    public Snapshot patch(final Long id, final Map<String, Object> rawData, final User user) {
         Snapshot snapshot = this.require(id, user);
         JsonPatch.on(snapshot)
                 .mappedBy(rawData)
@@ -97,41 +89,38 @@ public class SnapshotService extends AbstractPersistenceService
         return snapshot;
     }
 
-    public boolean exists(final Long id, final Long branchId)
-    {
+    public boolean exists(final Long id, final Long branchId) {
         return snapshotRepository.exists(id, branchId);
     }
 
-    public void delete(final Long id, final User user)
-    {
+    public void delete(final Long id, final User user) {
         snapshotRepository.delete(id);
     }
 
-    public void updateArchive(final Long snapshotId, final Archive archive, final User user)
-    {
-        if (CollectionUtils.isNotEmpty(archive.getModules()))
-        {
+    public void updateArchive(final Long snapshotId, Archive archive, final User user) {
+        Snapshot snapshot = this.require(snapshotId, user);
+        if (Diffs.isEmpty(archiveService.diff(snapshot.getArchive(), archive)))
+            return;
+
+        snapshot.getHeaders().add(Commit.SN, UUID.randomUUID().toString().replace("-", "").substring(0, 8));
+        if (CollectionUtils.isNotEmpty(archive.getModules())) {
             archive.getModules().forEach(module ->
             {
                 if (module.getId() == null) module.setId(idGenerator.nextId());
-                if (CollectionUtils.isNotEmpty(module.getApis()))
-                {
+                if (CollectionUtils.isNotEmpty(module.getApis())) {
                     module.getApis().stream().filter(api -> api.getId() == null)
                             .forEach(api -> api.setId(idGenerator.nextId()));
                 }
             });
         }
-        Snapshot snapshot = snapshotRepository.updateArchive(snapshotId, archive);
-        Assert.notNull(snapshot, Errors.RESOURCE_NOT_FOUND);
+        Assert.notNull(snapshotRepository.updateArchive(snapshotId, snapshot.getHeaders(), archive), Errors.RESOURCE_NOT_FOUND);
     }
 
-    private void updateHeaders(final Snapshot snapshot, final Headers headers)
-    {
+    private void updateHeaders(final Snapshot snapshot, final Headers headers) {
         snapshotRepository.updateHeaders(snapshot.getId(), headers);
     }
 
-    public void push(final Long documentId, final Snapshot rawData, final User user)
-    {
+    public void push(final Long documentId, final Snapshot rawData, final User user) {
         Assert.isTrue(rawData != null && rawData.getId() != null, Errors.SNAPSHOT_IS_NOT_SPECIFIED);
         Snapshot snapshot = this.require(rawData.getId(), user, Errors.SNAPSHOT_IS_NOT_FOUND);
 
@@ -139,22 +128,19 @@ public class SnapshotService extends AbstractPersistenceService
         Assert.notNull(branch, Errors.BRANCH_IS_NOT_FOUND);
         Assert.equals(branch.getDocumentRef().getId(), documentId, Errors.BRANCH_NOT_MATCHES_DOCUMENT);
 
-        Assert.isTrue(snapshot.getHeaders().getLong(Commit.VERSION) >= branch.getHeaders().getLong(Commit.VERSION), Errors.SNAPSHOT_IS_OUTDATED);
         Branch result = branchService.updateArchive(branch, snapshot, user);
         Assert.notNull(result, Errors.SNAPSHOT_IS_OUTDATED);
 
         this.updateHeaders(snapshot, result.getHeaders());
     }
 
-    public void pull(final Long documentId, final Snapshot rawData, final User user)
-    {
+    public void pull(final Long documentId, final Snapshot rawData, final User user) {
         Assert.isTrue(rawData != null && rawData.getId() != null, Errors.SNAPSHOT_IS_NOT_SPECIFIED);
         Snapshot snapshot = this.require(rawData.getId(), user, Errors.SNAPSHOT_IS_NOT_FOUND);
 
         Branch branch = snapshot.getBranch();
         Assert.notNull(branch, Errors.BRANCH_IS_NOT_FOUND);
         Assert.equals(branch.getDocumentRef().getId(), documentId, Errors.BRANCH_NOT_MATCHES_DOCUMENT);
-        archiveService.diff(snapshot.getArchive(), branch.getArchive());
 
         if (snapshot.getHeaders().getLong(Commit.VERSION) >= branch.getHeaders().getLong(Commit.VERSION)) return;
         archiveService.diff(snapshot.getArchive(), branch.getArchive());

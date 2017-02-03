@@ -71,11 +71,12 @@ public class SnapshotRepository extends AbstractMongoRepository<Snapshot, Long> 
         return this.exists(query);
     }
 
-    public Snapshot updateArchive(final Long snapshotId, final Archive archive) {
+    public Snapshot updateArchive(final Long snapshotId, final Headers headers, final Archive archive) {
         Query query = new Query();
         query.addCriteria(Criteria.where(Keys.ID).is(snapshotId));
         Update update = new Update();
         update.set(Keys.ARCHIVE, archive);
+        update.set(Keys.HEADERS, headers);
         return this.update(query, update);
     }
 

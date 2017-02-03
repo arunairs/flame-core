@@ -1,6 +1,6 @@
 package cn.blinkmind.flame.server.util.patch;
 
-import cn.blinkmind.flame.server.util.JSONUtil;
+import cn.blinkmind.flame.server.util.JsonUtil;
 
 import java.util.Map;
 
@@ -9,7 +9,7 @@ public class JsonPatch<T> extends Patch<T, Map>
     @Override
     protected T convert(final Map source)
     {
-        return JSONUtil.convert(source, getTargetClass());
+        return JsonUtil.convert(source, getTargetClass());
     }
 
     @Override
