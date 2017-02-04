@@ -1,7 +1,6 @@
 package cn.blinkmind.flame.server.repository.entity;
 
 import cn.blinkmind.flame.server.web.request.http.BasicHttpRequest;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.data.annotation.Transient;
 
@@ -52,11 +51,5 @@ public class Archive extends BasicEntity<Long> implements Resource<Long> {
     @Override
     public String getUri() {
         return this.request != null ? this.request.getUri() : null;
-    }
-
-    @JsonIgnore
-    @Override
-    public Resource getParent() {
-        return null;
     }
 }

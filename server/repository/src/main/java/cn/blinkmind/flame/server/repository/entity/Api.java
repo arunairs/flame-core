@@ -9,7 +9,7 @@ import org.springframework.data.annotation.Transient;
 
 import java.util.StringJoiner;
 
-public class Api extends BasicEntity<Long> implements Resource<Long> {
+public class Api extends NodeEntity {
 
     private String name;
     private String description;

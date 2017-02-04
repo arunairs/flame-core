@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringJoiner;
 
-public class Module extends BasicEntity<Long> implements Resource<Long> {
+public class Module extends NodeEntity {
 
     private String name;
     private BasicHttpRequest request = new BasicHttpRequest();
