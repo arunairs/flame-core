@@ -8,7 +8,6 @@ targetCompatibility = 1.8
 dependencies {
     compile project(':server:common:util')
     compile project(':server:repository')
-    compile group: 'org.javers', name: 'javers-core', version: '2.9.2'
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: libs.spring.boot.version
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-redis', version: libs.spring.boot.version
 //    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-elasticsearch', version: libs.spring.boot.version

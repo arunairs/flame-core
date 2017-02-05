@@ -11,6 +11,7 @@ public class Diffs<E> {
     private Set<E> addedCollection;
     private Set<E> modifiedCollection;
     private Set<E> removedCollection;
+    private Set<E> reorderedCollection;
 
     @JsonProperty("added")
     public Set<E> getAddedCollection() {
@@ -45,10 +46,42 @@ public class Diffs<E> {
         this.removedCollection = removedCollection;
     }
 
+    @JsonProperty("reordered")
+    public Set<E> getReorderedCollection() {
+        return reorderedCollection;
+    }
+
+    private void setReorderedCollection(Set<E> reorderedCollection) {
+        if (this.reorderedCollection == null)
+            this.reorderedCollection = new LinkedHashSet<>();
+        this.reorderedCollection = reorderedCollection;
+    }
+
+    public void add(DiffResult diffResult, E diff) {
+        if (diffResult == null) throw new NullPointerException();
+        switch (diffResult) {
+            case ADDED:
+                getAddedCollection().add(diff);
+                break;
+            case MODIFIED:
+                getModifiedCollection().add(diff);
+                break;
+            case REMOVED:
+                getRemovedCollection().add(diff);
+                break;
+            case REORDERED:
+                getReorderedCollection().add(diff);
+                break;
+            default:
+                return;
+        }
+    }
+
     public boolean isNotEmpty() {
         return CollectionUtils.isNotEmpty(addedCollection)
                 || CollectionUtils.isNotEmpty(modifiedCollection)
-                || CollectionUtils.isNotEmpty(removedCollection);
+                || CollectionUtils.isNotEmpty(removedCollection)
+                || CollectionUtils.isNotEmpty(reorderedCollection);
     }
 
     public boolean isEmpty() {
