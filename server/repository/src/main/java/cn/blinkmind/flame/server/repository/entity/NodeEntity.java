@@ -1,10 +1,10 @@
 package cn.blinkmind.flame.server.repository.entity;
 
-public abstract class NodeEntity extends BasicEntity<Long> implements Resource<Long> {
+public abstract class NodeEntity extends BasicEntity<Long> implements Locatable {
 
     private String path;
 
-    public abstract Resource<Long> getParent();
+    public abstract Locatable getParent();
 
     public String getPath() {
         return path;

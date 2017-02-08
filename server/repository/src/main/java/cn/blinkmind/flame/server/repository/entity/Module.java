@@ -1,8 +1,6 @@
 package cn.blinkmind.flame.server.repository.entity;
 
-import cn.blinkmind.flame.server.web.request.http.BasicHttpRequest;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.annotation.Id;
@@ -15,7 +13,6 @@ import java.util.StringJoiner;
 public class Module extends NodeEntity {
 
     private String name;
-    private BasicHttpRequest request = new BasicHttpRequest();
     private List<Api> apis;
     private Archive archive;
 
@@ -32,15 +29,6 @@ public class Module extends NodeEntity {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public BasicHttpRequest getRequest() {
-        return request;
-    }
-
-    @JsonIgnoreProperties(value = {"methods"})
-    private void setRequest(BasicHttpRequest request) {
-        this.request = request;
     }
 
     public List<Api> getApis() {
@@ -68,31 +56,20 @@ public class Module extends NodeEntity {
     }
 
     @Override
-    public String getScheme() {
-        if (this.request != null && StringUtils.isNotBlank(this.request.getScheme())) {
-            return this.request.getScheme();
-        }
-        if (getParent() != null && StringUtils.isNotBlank(getParent().getScheme())) {
-            return getParent().getScheme();
-        }
-        return null;
-    }
-
-    @Override
     public String getUri() {
         StringJoiner joiner = new StringJoiner("/");
         if (getParent() != null) {
             joiner.add(getParent().getUri());
         }
-        if (this.request != null && StringUtils.isNotBlank(this.request.getUri())) {
-            joiner.add(this.request.getUri());
+        if (StringUtils.isNotBlank(this.getUri())) {
+            joiner.add(this.getUri());
         }
         return joiner.toString();
     }
 
     @JsonIgnore
     @Override
-    public Resource getParent() {
+    public Locatable getParent() {
         return archive;
     }
 }

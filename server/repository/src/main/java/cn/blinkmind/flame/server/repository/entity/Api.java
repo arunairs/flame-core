@@ -9,7 +9,7 @@ import org.springframework.data.annotation.Transient;
 
 import java.util.StringJoiner;
 
-public class Api extends NodeEntity {
+public class Api extends NodeEntity implements Resource {
 
     private String name;
     private String description;
@@ -72,9 +72,6 @@ public class Api extends NodeEntity {
         if (this.request != null && StringUtils.isNotBlank(this.request.getScheme())) {
             return this.request.getScheme();
         }
-        if (getParent() != null && StringUtils.isNotBlank(getParent().getScheme())) {
-            return getParent().getScheme();
-        }
         return null;
     }
 
@@ -93,7 +90,7 @@ public class Api extends NodeEntity {
 
     @JsonIgnore
     @Override
-    public Resource getParent() {
+    public Locatable getParent() {
         return module;
     }
 }
