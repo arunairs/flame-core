@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import java.util.*;
 
 @JsonInclude(value = JsonInclude.Include.NON_NULL)
-public class HttpRequest extends Request {
+public class HttpRequest implements Request {
 
     private String uri;
     private String scheme;
