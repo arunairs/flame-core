@@ -1,12 +1,21 @@
 package cn.blinkmind.flame.server.repository.entity;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
+
 import java.util.List;
 
-public class HttpArchive extends AbstractArchive implements HttpNode {
-    private List<HttpModule> children;
+@JsonTypeName(value = ArchiveType.Value.HTTP)
+public class HttpArchive extends AbstractArchive{
+
+    private List<HttpModule> modules;
 
     @Override
-    public List<HttpModule> getChildren() {
-        return children;
+    public ArchiveType getArchiveType() {
+        return ArchiveType.HTTP;
+    }
+
+    @Override
+    public List<HttpModule> getModules() {
+        return modules;
     }
 }

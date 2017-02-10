@@ -71,7 +71,7 @@ public class Snapshot extends BasicEntity<Long> implements Commit<Archive> {
     }
 
     public void setArchive(Archive archive) {
-        this.archive = archive == null ? new Archive() : archive;
+        this.archive = archive;
     }
 
     @Override

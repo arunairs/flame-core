@@ -4,7 +4,8 @@ import cn.blinkmind.flame.server.web.request.http.HttpRequest;
 import cn.blinkmind.flame.server.web.request.http.HttpResponse;
 import org.springframework.data.annotation.Transient;
 
-public class HttpApi extends AbstractApi implements HttpNode {
+public class HttpApi extends AbstractApi{
+
     private HttpRequest request;
     private HttpResponse response;
     private HttpModule module;
@@ -37,7 +38,6 @@ public class HttpApi extends AbstractApi implements HttpNode {
     }
 
     @Override
-    @Transient
     public HttpModule getParent() {
         return module;
     }

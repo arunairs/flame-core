@@ -12,6 +12,7 @@ import org.springframework.data.annotation.Transient;
 import java.util.StringJoiner;
 
 public interface Api extends NameNode, Locatable, Persistable<Long> {
+
     Request getRequest();
 
     Response getResponse();

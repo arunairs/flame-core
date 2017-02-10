@@ -1,21 +1,25 @@
 package cn.blinkmind.flame.server.repository.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import java.util.List;
 
-public class HttpModule extends AbstractModule implements HttpNode {
-    private HttpArchive archive;
-    private List<HttpNode> children;
+public class HttpModule extends AbstractModule {
 
-    @JsonIgnore
+    private Node parent;
+    private List<HttpModule> modules;
+    private List<HttpApi> apis;
+
     @Override
-    public HttpArchive getParent() {
-        return archive;
+    public Node getParent() {
+        return parent;
     }
 
     @Override
-    public List<HttpNode> getChildren() {
-        return children;
+    public List<? extends Module> getModules() {
+        return modules;
+    }
+
+    @Override
+    public List<? extends Api> getApis() {
+        return apis;
     }
 }

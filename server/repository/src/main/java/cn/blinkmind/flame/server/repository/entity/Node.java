@@ -1,9 +1,11 @@
 package cn.blinkmind.flame.server.repository.entity;
 
-import java.util.Collection;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.data.annotation.Transient;
 
 public interface Node {
-    Node getParent();
 
-    Collection<? extends Node> getChildren();
+    @Transient
+    @JsonIgnore
+    Node getParent();
 }

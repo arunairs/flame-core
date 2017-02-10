@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.data.annotation.Id;
 
 public abstract class AbstractPersistableArchiveNameNode extends AbstractArchiveNode implements NameNode, Persistable<Long> {
+
     private Long id;
     private String name;
 

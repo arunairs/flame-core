@@ -1,6 +1,7 @@
 package cn.blinkmind.flame.server.repository.entity;
 
 public abstract class AbstractArchiveNode implements Node, Locatable {
+
     private String path;
     private String description;
 
