@@ -7,7 +7,7 @@ import java.util.Collection;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "archiveType")
 @JsonSubTypes({@JsonSubTypes.Type(value = HttpArchive.class)})
-public interface Archive extends Node, Locatable {
+public interface Archive extends ArchiveNode{
 
     ArchiveType getArchiveType();
 

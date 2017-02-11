@@ -15,7 +15,6 @@ public abstract class AbstractPersistableArchiveNameNode extends AbstractArchive
         return id;
     }
 
-    @Override
     public void setId(Long id) {
         this.id = id;
     }
