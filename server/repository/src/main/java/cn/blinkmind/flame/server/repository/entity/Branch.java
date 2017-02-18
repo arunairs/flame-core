@@ -13,7 +13,7 @@ public class Branch extends BasicEntity<Long> implements Commit<Archive> {
     private String name;
     private Ref<Long> documentRef;
     private Document document;
-    private Headers headers = new Headers();
+    private Headers headers;
     private Archive archive;
     private Ref<Long> originRef;
     private Branch origin;
@@ -58,6 +58,7 @@ public class Branch extends BasicEntity<Long> implements Commit<Archive> {
     @Override
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     public Headers getHeaders() {
+        if (headers == null) headers = new Headers();
         return headers;
     }
 

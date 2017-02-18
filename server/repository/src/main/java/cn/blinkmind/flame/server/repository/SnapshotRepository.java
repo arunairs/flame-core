@@ -5,10 +5,11 @@ import cn.blinkmind.flame.server.repository.entity.Branch;
 import cn.blinkmind.flame.server.repository.entity.Headers;
 import cn.blinkmind.flame.server.repository.entity.Snapshot;
 import cn.blinkmind.flame.server.repository.entity.User;
-import cn.blinkmind.flame.server.repository.exception.ResourceNotFoundException;
 import cn.blinkmind.flame.server.repository.query.Keys;
 import com.mongodb.BasicDBList;
 import com.mongodb.DBObject;
+import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.aggregation.Aggregation;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -17,9 +18,8 @@ import org.springframework.data.mongodb.core.query.Update;
 @org.springframework.stereotype.Repository
 public class SnapshotRepository extends AbstractMongoRepository<Snapshot, Long> {
 
-    @Override
-    protected Class<Snapshot> getEntityClass() {
-        return Snapshot.class;
+    public SnapshotRepository(ApplicationEventPublisher applicationEventPublisher, MongoTemplate mongoTemplate) {
+        super(applicationEventPublisher, mongoTemplate);
     }
 
     @Override
@@ -47,12 +47,6 @@ public class SnapshotRepository extends AbstractMongoRepository<Snapshot, Long> 
                 .and("creatorRef._id").is(user.getId());
         query.addCriteria(criteria);
         return this.findOne(query);
-    }
-
-    public Snapshot require(final Branch branch, final User user) {
-        Snapshot snapshot = get(branch, user);
-        if (snapshot == null) throw new ResourceNotFoundException();
-        return snapshot;
     }
 
     public boolean exists(final String name, final Long branchId, final User user) {

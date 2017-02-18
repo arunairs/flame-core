@@ -5,6 +5,8 @@ import cn.blinkmind.flame.server.repository.entity.Archive;
 import cn.blinkmind.flame.server.repository.entity.Branch;
 import cn.blinkmind.flame.server.repository.entity.Commit;
 import cn.blinkmind.flame.server.repository.entity.User;
+import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
@@ -13,9 +15,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class BranchRepository extends AbstractMongoRepository<Branch, Long> {
 
-    @Override
-    protected Class<Branch> getEntityClass() {
-        return Branch.class;
+    public BranchRepository(ApplicationEventPublisher applicationEventPublisher, MongoTemplate mongoTemplate) {
+        super(applicationEventPublisher, mongoTemplate);
     }
 
     @Override
@@ -51,10 +52,11 @@ public class BranchRepository extends AbstractMongoRepository<Branch, Long> {
 
     public Branch updateArchive(final Long branchId, final Commit<Archive> commit, final User user) {
         Query query = new Query();
-        query.addCriteria(Criteria.where(Keys.ID).is(branchId).and(Keys.Headers.VERSION).lte(commit.getHeaders().getLong(Commit.VERSION)));
+        query.addCriteria(Criteria.where(Keys.ID).is(branchId).and(Keys.HEADERS + "." + Commit.VERSION).lte(commit.getHeaders().getLong(Commit.VERSION)));
         Update update = new Update();
         update.set(Keys.ARCHIVE, commit.getPayload());
-        update.inc(Keys.Headers.VERSION, 1);
+        update.set(Keys.HEADERS + "." + Commit.SN, commit.getHeaders().getString(Commit.SN));
+        update.inc(Keys.HEADERS + "." + Commit.VERSION, 1);
         return this.update(query, update);
     }
 }

@@ -1,15 +1,8 @@
 package cn.blinkmind.flame.server.repository;
 
 import cn.blinkmind.flame.server.repository.entity.Persistable;
-import cn.blinkmind.flame.server.repository.event.AfterEntityCreatedEvent;
-import cn.blinkmind.flame.server.repository.event.AfterEntityUpdatedEvent;
-import cn.blinkmind.flame.server.repository.event.AfterUpdateAppliedEvent;
-import cn.blinkmind.flame.server.repository.event.BeforeEntityCreatedEvent;
-import cn.blinkmind.flame.server.repository.event.BeforeEntityUpdatedEvent;
-import cn.blinkmind.flame.server.repository.event.BeforeUpdateAppliedEvent;
-import cn.blinkmind.flame.server.repository.exception.ResourceNotFoundException;
+import cn.blinkmind.flame.server.repository.event.*;
 import cn.blinkmind.flame.server.repository.query.Keys;
-import cn.blinkmind.flame.server.repository.util.IdGenerator;
 import com.mongodb.DBObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
@@ -20,27 +13,22 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
 import static org.springframework.data.mongodb.core.FindAndModifyOptions.options;
 
 public abstract class AbstractMongoRepository<T extends Persistable<ID>, ID extends Serializable> {
-
-    @Autowired(required = false)
-    private IdGenerator<ID> idGenerator;
-
-    @Autowired
-    private ApplicationEventPublisher publisher;
-
-    @Autowired
+    private ApplicationEventPublisher applicationEventPublisher;
     private MongoTemplate mongoTemplate;
+    private Class<T> entityClass;
 
-    protected MongoTemplate getMongoTemplate() {
-        return mongoTemplate;
+    @Autowired
+    public AbstractMongoRepository(ApplicationEventPublisher applicationEventPublisher, MongoTemplate mongoTemplate) {
+        this.applicationEventPublisher = applicationEventPublisher;
+        this.mongoTemplate = mongoTemplate;
+        this.init();
     }
-
-    protected abstract Class<T> getEntityClass();
 
     public T update(final T entity) {
         Query query = new Query();
@@ -49,29 +37,23 @@ public abstract class AbstractMongoRepository<T extends Persistable<ID>, ID exte
     }
 
     public T update(final Query query, final T entity) {
-        this.publisher.publishEvent(new BeforeEntityUpdatedEvent<>(entity));
+        this.applicationEventPublisher.publishEvent(new BeforeEntityUpdatedEvent<>(entity));
         DBObject object = (DBObject) getMongoTemplate().getConverter().convertToMongoType(entity);
         Update update = Update.fromDBObject(object);
         T result = update(query, update);
-        this.publisher.publishEvent(new AfterEntityUpdatedEvent<>(entity));
+        this.applicationEventPublisher.publishEvent(new AfterEntityUpdatedEvent<>(entity));
         return result;
     }
 
     public T update(final Query query, final Update update) {
-        this.publisher.publishEvent(new BeforeUpdateAppliedEvent(update));
-        T result = getMongoTemplate().findAndModify(query, update, options().upsert(false).returnNew(true), getEntityClass());
-        this.publisher.publishEvent(new AfterUpdateAppliedEvent(update));
+        this.applicationEventPublisher.publishEvent(new BeforeUpdateAppliedEvent(update));
+        T result = getMongoTemplate().findAndModify(query, update, options().upsert(false).returnNew(true), this.entityClass);
+        this.applicationEventPublisher.publishEvent(new AfterUpdateAppliedEvent(update));
         return result;
     }
 
-    public T require(final ID id) {
-        T entity = get(id);
-        if (entity == null) throw new ResourceNotFoundException();
-        return entity;
-    }
-
     public T get(final ID id) {
-        return id == null ? null : getMongoTemplate().findById(id, getEntityClass());
+        return id == null ? null : getMongoTemplate().findById(id, this.entityClass);
     }
 
     public T get(final T entity) {
@@ -80,39 +62,37 @@ public abstract class AbstractMongoRepository<T extends Persistable<ID>, ID exte
 
 
     public T findOne(final Query query) {
-        return getMongoTemplate().findOne(query, getEntityClass());
+        return getMongoTemplate().findOne(query, this.entityClass);
     }
 
     public boolean exists(final ID id) {
         Query query = new Query();
         query.addCriteria(Criteria.where(Keys.ID).is(id));
-        return getMongoTemplate().exists(query, getEntityClass());
+        return getMongoTemplate().exists(query, this.entityClass);
     }
 
     public boolean exists(final Query query) {
-        return getMongoTemplate().exists(query, getEntityClass());
+        return getMongoTemplate().exists(query, this.entityClass);
     }
 
     public List<T> findAll(final Query query) {
-        return getMongoTemplate().find(query, getEntityClass());
+        return getMongoTemplate().find(query, this.entityClass);
     }
 
     public List<T> findAll() {
-        return getMongoTemplate().findAll(getEntityClass());
+        return getMongoTemplate().findAll(this.entityClass);
     }
 
     public List<T> findAll(final Iterable<ID> ids) {
         Query query = new Query();
         query.addCriteria(Criteria.where(Keys.ID).in(ids));
-        return getMongoTemplate().find(query, getEntityClass());
+        return getMongoTemplate().find(query, this.entityClass);
     }
 
     public T insert(final T entity) {
-        this.publisher.publishEvent(new BeforeEntityCreatedEvent<>(entity));
-        if (idGenerator != null)
-            entity.setId(idGenerator.nextId());
+        this.applicationEventPublisher.publishEvent(new BeforeEntityCreatedEvent<>(entity));
         getMongoTemplate().insert(entity);
-        this.publisher.publishEvent(new AfterEntityCreatedEvent<>(entity));
+        this.applicationEventPublisher.publishEvent(new AfterEntityCreatedEvent<>(entity));
         return entity;
     }
 
@@ -124,13 +104,13 @@ public abstract class AbstractMongoRepository<T extends Persistable<ID>, ID exte
     }
 
     public long count(final Query query) {
-        return getMongoTemplate().count(query, getEntityClass());
+        return getMongoTemplate().count(query, this.entityClass);
     }
 
     public void delete(final ID id) {
         Query query = new Query();
         query.addCriteria(Criteria.where("_id").is(id));
-        getMongoTemplate().remove(query, getEntityClass());
+        getMongoTemplate().remove(query, this.entityClass);
     }
 
     public void delete(final T entity) {
@@ -138,7 +118,7 @@ public abstract class AbstractMongoRepository<T extends Persistable<ID>, ID exte
     }
 
     public void delete(final Query query) {
-        getMongoTemplate().remove(query, getEntityClass());
+        getMongoTemplate().remove(query, this.entityClass);
     }
 
     public void delete(final Iterable<T> entities) {
@@ -148,6 +128,24 @@ public abstract class AbstractMongoRepository<T extends Persistable<ID>, ID exte
     }
 
     public BulkOperations bulkOps(final BulkOperations.BulkMode bulkMode) {
-        return getMongoTemplate().bulkOps(bulkMode, getEntityClass());
+        return getMongoTemplate().bulkOps(bulkMode, this.entityClass);
+    }
+
+    protected MongoTemplate getMongoTemplate() {
+        return mongoTemplate;
+    }
+
+    private void init() {
+        this.entityClass = getEntityClass(this.getClass());
+    }
+
+    @SuppressWarnings("unchecked")
+    private Class<T> getEntityClass(Class<?> repositoryClass) {
+        Class<?> superClass = repositoryClass.getSuperclass();
+        if (superClass == AbstractMongoRepository.class) {
+            ParameterizedType parameterizedType = (ParameterizedType) repositoryClass.getGenericSuperclass();
+            return (Class<T>) parameterizedType.getActualTypeArguments()[0];
+        }
+        return getEntityClass(superClass);
     }
 }

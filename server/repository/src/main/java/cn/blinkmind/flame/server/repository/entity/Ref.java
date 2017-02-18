@@ -5,23 +5,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
 
 public class Ref<ID extends Serializable> {
-
     private ID id;
-
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    public ID getId() {
-        return id;
-    }
-
-    public void setId(ID id) {
-        this.id = id;
-    }
-
-    private Ref() {
-    }
 
     public Ref(Persistable<ID> persistable) {
         this.id = persistable.getId();
+    }
+
+    private Ref() {
     }
 
     @Override
@@ -37,5 +27,14 @@ public class Ref<ID extends Serializable> {
     @Override
     public int hashCode() {
         return id.hashCode();
+    }
+
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    public ID getId() {
+        return id;
+    }
+
+    public void setId(ID id) {
+        this.id = id;
     }
 }

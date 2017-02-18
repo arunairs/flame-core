@@ -10,11 +10,10 @@ import org.springframework.data.mongodb.core.index.CompoundIndex;
 @org.springframework.data.mongodb.core.mapping.Document(collection = "snapshots")
 @CompoundIndex(name = "unique_index", unique = true, def = "{'name':1,'branchRef._id':1,'creatorRef._id':1}")
 public class Snapshot extends BasicEntity<Long> implements Commit<Archive> {
-
     private String name;
     private Ref<Long> branchRef;
     private Branch branch;
-    private Headers headers = new Headers();
+    private Headers headers;
     private Archive archive;
 
     @Id
@@ -58,10 +57,11 @@ public class Snapshot extends BasicEntity<Long> implements Commit<Archive> {
     @Override
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     public Headers getHeaders() {
+        if (this.headers == null) headers = new Headers();
         return headers;
     }
 
-    private void setHeaders(Headers headers) {
+    public void setHeaders(Headers headers) {
         this.headers = headers;
     }
 

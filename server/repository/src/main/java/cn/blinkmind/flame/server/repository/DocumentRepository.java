@@ -6,6 +6,8 @@ import cn.blinkmind.flame.server.repository.query.Keys;
 import com.mongodb.BasicDBList;
 import com.mongodb.DBObject;
 import org.apache.commons.collections.CollectionUtils;
+import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.aggregation.Aggregation;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.stereotype.Repository;
@@ -13,9 +15,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class DocumentRepository extends AbstractMongoRepository<Document, Long> {
 
-    @Override
-    protected Class<Document> getEntityClass() {
-        return Document.class;
+    public DocumentRepository(ApplicationEventPublisher applicationEventPublisher, MongoTemplate mongoTemplate) {
+        super(applicationEventPublisher, mongoTemplate);
     }
 
     @Override

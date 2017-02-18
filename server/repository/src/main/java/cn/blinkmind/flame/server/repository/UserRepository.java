@@ -1,13 +1,14 @@
 package cn.blinkmind.flame.server.repository;
 
 import cn.blinkmind.flame.server.repository.entity.User;
+import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class UserRepository extends AbstractMongoRepository<User, Long> {
 
-    @Override
-    protected Class<User> getEntityClass() {
-        return User.class;
+    public UserRepository(ApplicationEventPublisher applicationEventPublisher, MongoTemplate mongoTemplate) {
+        super(applicationEventPublisher, mongoTemplate);
     }
 }
