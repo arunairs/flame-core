@@ -1,58 +1,14 @@
 package cn.blinkmind.flame.server.repository.entity;
 
+import lombok.*;
+
+@Getter
+@ToString
+@EqualsAndHashCode
+@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class Version {
     private Integer major;
     private Integer minor;
     private Integer patch;
-
-    public Version(Integer major, Integer minor, Integer patch) {
-        this.major = major;
-        this.minor = minor;
-        this.patch = patch;
-    }
-
-    private Version() {
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Version version = (Version) o;
-
-        if (!major.equals(version.major)) return false;
-        if (!minor.equals(version.minor)) return false;
-        return patch.equals(version.patch);
-
-    }
-
-    @Override
-    public int hashCode() {
-        int result = major.hashCode();
-        result = 31 * result + minor.hashCode();
-        result = 31 * result + patch.hashCode();
-        return result;
-    }
-
-    @Override
-    public String toString() {
-        return "Version{" +
-                "major=" + major +
-                ", minor=" + minor +
-                ", patch=" + patch +
-                '}';
-    }
-
-    public Integer getMajor() {
-        return major;
-    }
-
-    public Integer getMinor() {
-        return minor;
-    }
-
-    public Integer getPatch() {
-        return patch;
-    }
 }
