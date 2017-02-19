@@ -1,36 +1,18 @@
 package cn.blinkmind.flame.server.repository.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Getter;
+import lombok.Setter;
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 
-public class Account extends BasicEntity<Long> {
+@Getter
+@Setter
+public abstract class Account extends BaseEntity<Long> {
     private String username;
     private String password;
     private String salt;
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    @JsonIgnore
-    public String getSalt() {
-        return salt;
-    }
-
-    public void setSalt(String salt) {
-        this.salt = salt;
+    @Override
+    public String toString() {
+        return ReflectionToStringBuilder.toString(this);
     }
 }

@@ -1,12 +1,17 @@
 package cn.blinkmind.flame.server.repository.entity;
 
-import org.springframework.data.annotation.Transient;
+import lombok.Getter;
+import lombok.Setter;
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-@org.springframework.data.mongodb.core.mapping.Document(collection = "users")
+@Getter
+@Setter
+@Document(collection = "users")
 public class User extends Account {
+
     @Override
-    @Transient
-    public User getCreator() {
-        return super.getCreator();
+    public String toString() {
+        return ReflectionToStringBuilder.toString(this);
     }
 }
