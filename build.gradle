@@ -20,6 +20,9 @@ buildscript {
                         codec    : [version: '1.10'],
                         validator: [version: '1.5.1'],
                         beanutils: [version: '1.9.3']
+                ],
+                lombok : [
+                        version: '1.16.14'
                 ]
         ]
     }
