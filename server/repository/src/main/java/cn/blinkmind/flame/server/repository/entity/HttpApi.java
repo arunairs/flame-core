@@ -5,7 +5,6 @@ import cn.blinkmind.flame.server.web.request.http.HttpResponse;
 import org.springframework.data.annotation.Transient;
 
 public class HttpApi extends AbstractApi{
-
     private HttpRequest request;
     private HttpResponse response;
     private HttpModule module;

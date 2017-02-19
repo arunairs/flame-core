@@ -9,7 +9,6 @@ import org.springframework.data.mongodb.core.index.CompoundIndex;
 @org.springframework.data.mongodb.core.mapping.Document(collection = "branches")
 @CompoundIndex(name = "unique_index", unique = true, def = "{'name':1,'documentRef._id':1}")
 public class Branch extends BasicEntity<Long> implements Commit<Archive> {
-
     private String name;
     private Ref<Long> documentRef;
     private Document document;

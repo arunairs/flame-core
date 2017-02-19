@@ -1,7 +1,6 @@
 package cn.blinkmind.flame.server.repository.entity;
 
 public abstract class AbstractArchiveNode implements ArchiveNode {
-
     private String path;
     private String description;
 

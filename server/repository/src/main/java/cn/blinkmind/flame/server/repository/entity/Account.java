@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Account extends BasicEntity<Long> {
-
     private String username;
     private String password;
     private String salt;

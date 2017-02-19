@@ -1,7 +1,6 @@
 package cn.blinkmind.flame.server.repository.entity;
 
 public interface Commit<T> {
-
     String SN = "commitNumber";
     String VERSION = "commitVersion";
 

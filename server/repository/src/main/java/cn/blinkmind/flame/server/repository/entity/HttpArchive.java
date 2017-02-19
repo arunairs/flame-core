@@ -6,7 +6,6 @@ import java.util.List;
 
 @JsonTypeName(value = ArchiveType.Value.HTTP)
 public class HttpArchive extends AbstractArchive{
-
     private List<HttpModule> modules;
 
     @Override

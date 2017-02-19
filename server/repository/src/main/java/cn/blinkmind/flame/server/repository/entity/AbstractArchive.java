@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.annotation.Transient;
 
 public abstract class AbstractArchive extends AbstractArchiveNode implements Archive {
-
     @Override
     @Transient
     @JsonIgnore

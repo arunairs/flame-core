@@ -3,7 +3,6 @@ package cn.blinkmind.flame.server.repository.entity;
 import java.util.HashMap;
 
 public class Headers extends HashMap<String, Object> {
-
     public Boolean getBoolean(String key) {
         return this.getHeaderOrDefault(key, null);
     }

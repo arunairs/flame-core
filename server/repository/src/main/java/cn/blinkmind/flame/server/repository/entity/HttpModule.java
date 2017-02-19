@@ -3,7 +3,6 @@ package cn.blinkmind.flame.server.repository.entity;
 import java.util.List;
 
 public class HttpModule extends AbstractModule {
-
     private Node parent;
     private List<HttpModule> modules;
     private List<HttpApi> apis;
