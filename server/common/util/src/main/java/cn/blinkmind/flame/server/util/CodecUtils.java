@@ -3,7 +3,7 @@ package cn.blinkmind.flame.server.util;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
 
-public class CodecUtil {
+public class CodecUtils {
 
     public static String md5(String value, String salt) {
         return DigestUtils.md5Hex(StringUtils.isNotBlank(salt) ? value + salt : value);

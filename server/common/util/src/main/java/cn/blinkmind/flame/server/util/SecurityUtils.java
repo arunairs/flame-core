@@ -5,8 +5,7 @@ import org.apache.commons.codec.binary.Base64;
 import java.security.SecureRandom;
 import java.util.Random;
 
-public class SecurityUtil {
-
+public class SecurityUtils {
     private static final Random SECURE_RANDOM = new SecureRandom();
 
     public static String randomSalt() {
