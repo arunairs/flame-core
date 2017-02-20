@@ -2,7 +2,7 @@ package cn.blinkmind.flame.server.util;
 
 import cn.blinkmind.flame.server.repository.entity.Version;
 
-public class VersionUtil
+public class VersionUtils
 {
 	public static boolean isValid(Version version)
 	{

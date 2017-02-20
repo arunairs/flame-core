@@ -1,6 +1,6 @@
 package cn.blinkmind.flame.server.listener;
 
-import cn.blinkmind.flame.server.repository.entity.BasicEntity;
+import cn.blinkmind.flame.server.repository.entity.BaseEntity;
 import cn.blinkmind.flame.server.repository.event.BeforeEntityCreatedEvent;
 import cn.blinkmind.flame.server.repository.event.BeforeUpdateAppliedEvent;
 import cn.blinkmind.flame.server.repository.util.IdGenerator;
@@ -9,26 +9,29 @@ import org.springframework.context.event.EventListener;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Component
-public class RepositoryListener {
-
-    @Autowired(required = false)
+public class RepositoryEventListener {
     private IdGenerator<Long> idGenerator;
+
+    @Autowired
+    public RepositoryEventListener(IdGenerator<Long> idGenerator) {
+        this.idGenerator = idGenerator;
+    }
 
     @EventListener
     public void handleBeforeEntityCreatedEvent(BeforeEntityCreatedEvent<Long> event) {
-        BasicEntity<Long> entity = (BasicEntity<Long>) event.getSource();
-        if (idGenerator != null && entity.getId() != null)
+        BaseEntity<Long> entity = (BaseEntity<Long>) event.getSource();
+        if (entity.getId() == null)
             entity.setId(idGenerator.nextId());
-        if (entity.getCreatedDate() == null)
-            entity.setCreatedDate(new Date());
+        if (entity.getCreatedDateTime() == null)
+            entity.setCreatedDateTime(LocalDateTime.now());
     }
 
     @EventListener
     public void handleBeforeEntityUpdatedEvent(BeforeUpdateAppliedEvent event) {
         Update update = event.getSource();
-        update.getUpdateObject().put("updatedDate", new Date());
+        update.getUpdateObject().put("modifiedDateTime", LocalDateTime.now());
     }
 }
