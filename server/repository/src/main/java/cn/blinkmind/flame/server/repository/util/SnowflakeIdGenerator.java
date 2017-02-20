@@ -5,9 +5,9 @@ import com.ge.snowizard.exceptions.InvalidSystemClock;
 
 public class SnowflakeIdGenerator implements IdGenerator<Long> {
 
-    private IdWorker idWorker;
+    private final IdWorker idWorker;
 
-    public SnowflakeIdGenerator(int workerId, int dataCenterId) {
+    public SnowflakeIdGenerator(final int workerId, final int dataCenterId) {
         this.idWorker = new IdWorker(workerId, dataCenterId);
     }
 
