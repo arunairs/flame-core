@@ -15,7 +15,6 @@ public class BeanConfig {
 
     @Bean
     public IdGenerator<Long> idGenerator() {
-        IdGenerator<Long> idGenerator = new SnowflakeIdGenerator(env.getHostWorkId(), env.getHostDataCenterId());
-        return idGenerator;
+        return new SnowflakeIdGenerator(env.getHostWorkId(), env.getHostDataCenterId());
     }
 }
