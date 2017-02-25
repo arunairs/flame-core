@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @JsonInclude(value = JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public abstract class BaseDTO {
-    private Long id;
-    private LocalDateTime createdDateTime;
-    private LocalDateTime modifiedDateTime;
+    protected Long id;
+    protected LocalDateTime createdDateTime;
+    protected LocalDateTime modifiedDateTime;
 }

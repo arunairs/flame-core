@@ -33,7 +33,7 @@ public class DocumentServiceImpl implements DocumentService {
     }
 
     @Override
-    public Long create(final DocumentDTO documentDTO, final UserDTO userDTO) {
+    public DocumentDTO create(final DocumentDTO documentDTO, final UserDTO userDTO) {
         Assert.isNotBlank(documentDTO.getName(), Errors.DOCUMENT_NAME_IS_BLANK);
 
         Document document = new Document();
@@ -41,6 +41,7 @@ public class DocumentServiceImpl implements DocumentService {
         document.setDescription(documentDTO.getDescription());
         document.setCreatorRef(new Ref<>(userDTO.getId()));
         this.documentRepository.insert(document);
-        return document.getId();
+
+        return new DocumentDTO(document);
     }
 }

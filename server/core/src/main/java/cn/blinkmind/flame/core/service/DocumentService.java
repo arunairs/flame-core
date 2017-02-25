@@ -6,5 +6,5 @@ import cn.blinkmind.flame.core.dto.UserDTO;
 public interface DocumentService {
     DocumentDTO get(final Long id, final UserDTO userDTO);
 
-    Long create(final DocumentDTO documentDTO, final UserDTO userDTO);
+    DocumentDTO create(final DocumentDTO documentDTO, final UserDTO userDTO);
 }
