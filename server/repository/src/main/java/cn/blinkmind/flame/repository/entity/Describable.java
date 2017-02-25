@@ -1,5 +1,7 @@
 package cn.blinkmind.flame.repository.entity;
 
-public interface NameNode extends Node {
+public interface Describable {
     String getName();
+
+    String getDescription();
 }

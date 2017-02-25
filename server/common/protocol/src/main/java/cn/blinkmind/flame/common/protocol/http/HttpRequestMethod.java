@@ -1,4 +1,4 @@
-package cn.blinkmind.flame.common.web.http;
+package cn.blinkmind.flame.common.protocol.http;
 
 public enum HttpRequestMethod {
     GET,

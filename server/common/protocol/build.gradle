@@ -1,6 +1,7 @@
-archivesBaseName = "${archivePrefix}-common-web"
+archivesBaseName = "${archivePrefix}-common-protocol"
 
 dependencies {
     compile project(':server:common:util')
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: libs.jackson.version
+    compile group: 'org.projectlombok', name: 'lombok', version: libs.lombok.version
 }

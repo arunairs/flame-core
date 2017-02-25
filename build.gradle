@@ -44,6 +44,9 @@ allprojects { project ->
     apply plugin: 'propdeps-idea'
     apply plugin: 'propdeps-eclipse'
 
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+
     version = archiveVersion
 
     project.tasks.withType(JavaCompile) {

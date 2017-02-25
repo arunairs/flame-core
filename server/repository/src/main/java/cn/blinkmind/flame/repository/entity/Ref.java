@@ -1,6 +1,7 @@
 package cn.blinkmind.flame.repository.entity;
 
 import lombok.*;
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 
 import java.io.Serializable;
 
@@ -14,5 +15,10 @@ public class Ref<ID extends Serializable> {
 
     public Ref(Persistable<ID> persistable) {
         this(persistable.getId());
+    }
+
+    @Override
+    public String toString() {
+        return ReflectionToStringBuilder.toString(this);
     }
 }

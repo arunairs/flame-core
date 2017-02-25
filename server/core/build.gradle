@@ -2,9 +2,6 @@ apply plugin: 'org.springframework.boot'
 
 archivesBaseName = "${archivePrefix}-core"
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
-
 dependencies {
     compile project(':server:common:util')
     compile project(':server:repository')
