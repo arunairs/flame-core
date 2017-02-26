@@ -1,6 +1,6 @@
 package cn.blinkmind.flame.core;
 
-import cn.blinkmind.flame.repository.entity.User;
+import cn.blinkmind.flame.repository.model.User;
 import org.testng.annotations.Test;
 
 public class TmpTest {

@@ -1,13 +1,12 @@
 package cn.blinkmind.flame.core.service.impl;
 
 import cn.blinkmind.flame.core.common.util.Assert;
-import cn.blinkmind.flame.common.util.BeanUtils;
 import cn.blinkmind.flame.core.dto.DocumentDTO;
 import cn.blinkmind.flame.core.dto.UserDTO;
 import cn.blinkmind.flame.core.exception.Errors;
 import cn.blinkmind.flame.repository.DocumentRepository;
-import cn.blinkmind.flame.repository.entity.Document;
-import cn.blinkmind.flame.repository.entity.Ref;
+import cn.blinkmind.flame.repository.model.Document;
+import cn.blinkmind.flame.repository.model.Ref;
 import cn.blinkmind.flame.core.service.DocumentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,9 +26,7 @@ public class DocumentServiceImpl implements DocumentService {
         if (document == null) {
             return null;
         }
-        DocumentDTO documentDTO = new DocumentDTO();
-        BeanUtils.copyProperties(documentDTO, document);
-        return documentDTO;
+        return new DocumentDTO(document);
     }
 
     @Override

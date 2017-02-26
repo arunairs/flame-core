@@ -1,6 +1,6 @@
 package cn.blinkmind.flame.core.common.util;
 
-import cn.blinkmind.flame.repository.entity.Version;
+import cn.blinkmind.flame.repository.model.Version;
 
 public class VersionUtils
 {

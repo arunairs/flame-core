@@ -1,7 +1,7 @@
 package cn.blinkmind.flame.core.service;
 
 import cn.blinkmind.flame.core.bean.Diffs;
-import cn.blinkmind.flame.repository.entity.Archive;
+import cn.blinkmind.flame.repository.model.Archive;
 import cn.blinkmind.flame.core.common.util.DiffUtils;
 import org.apache.commons.lang3.ClassUtils;
 import org.springframework.stereotype.Service;

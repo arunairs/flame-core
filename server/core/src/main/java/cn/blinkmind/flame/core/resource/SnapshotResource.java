@@ -1,12 +1,12 @@
 package cn.blinkmind.flame.core.resource;
 
 import cn.blinkmind.flame.core.exception.Errors;
-import cn.blinkmind.flame.repository.entity.Snapshot;
+import cn.blinkmind.flame.repository.model.Snapshot;
 import cn.blinkmind.flame.core.annotation.Token;
 import cn.blinkmind.flame.core.bean.ObjectId;
 import cn.blinkmind.flame.core.constant.Attributes;
-import cn.blinkmind.flame.repository.entity.Archive;
-import cn.blinkmind.flame.repository.entity.User;
+import cn.blinkmind.flame.repository.model.Archive;
+import cn.blinkmind.flame.repository.model.User;
 import cn.blinkmind.flame.core.service.SnapshotService;
 import cn.blinkmind.flame.core.common.util.Assert;
 import org.springframework.beans.factory.annotation.Autowired;

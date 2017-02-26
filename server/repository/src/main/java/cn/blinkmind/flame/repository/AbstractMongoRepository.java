@@ -1,6 +1,6 @@
 package cn.blinkmind.flame.repository;
 
-import cn.blinkmind.flame.repository.entity.Persistable;
+import cn.blinkmind.flame.repository.model.Persistable;
 import cn.blinkmind.flame.repository.query.Keys;
 import cn.blinkmind.flame.repository.event.*;
 import com.mongodb.DBObject;
@@ -19,8 +19,8 @@ import java.util.List;
 import static org.springframework.data.mongodb.core.FindAndModifyOptions.options;
 
 public abstract class AbstractMongoRepository<T extends Persistable<ID>, ID extends Serializable> {
-    private ApplicationEventPublisher applicationEventPublisher;
-    private MongoTemplate mongoTemplate;
+    private final ApplicationEventPublisher applicationEventPublisher;
+    private final MongoTemplate mongoTemplate;
     private Class<T> entityClass;
 
     @Autowired
@@ -31,15 +31,12 @@ public abstract class AbstractMongoRepository<T extends Persistable<ID>, ID exte
     }
 
     public T update(final T entity) {
-        Query query = new Query();
-        query.addCriteria(Criteria.where(Keys.ID).is(entity.getId()));
-        return update(query, entity);
+        return update(new Query().addCriteria(Criteria.where(Keys.ID).is(entity.getId())), entity);
     }
 
     public T update(final Query query, final T entity) {
         this.applicationEventPublisher.publishEvent(new BeforeEntityUpdatedEvent<>(entity));
-        DBObject object = (DBObject) getMongoTemplate().getConverter().convertToMongoType(entity);
-        Update update = Update.fromDBObject(object);
+        Update update = Update.fromDBObject((DBObject) getMongoTemplate().getConverter().convertToMongoType(entity));
         T result = update(query, update);
         this.applicationEventPublisher.publishEvent(new AfterEntityUpdatedEvent<>(entity));
         return result;
@@ -66,9 +63,7 @@ public abstract class AbstractMongoRepository<T extends Persistable<ID>, ID exte
     }
 
     public boolean exists(final ID id) {
-        Query query = new Query();
-        query.addCriteria(Criteria.where(Keys.ID).is(id));
-        return getMongoTemplate().exists(query, this.entityClass);
+        return getMongoTemplate().exists(new Query().addCriteria(Criteria.where(Keys.ID).is(id)), this.entityClass);
     }
 
     public boolean exists(final Query query) {
@@ -84,9 +79,7 @@ public abstract class AbstractMongoRepository<T extends Persistable<ID>, ID exte
     }
 
     public List<T> findAll(final Iterable<ID> ids) {
-        Query query = new Query();
-        query.addCriteria(Criteria.where(Keys.ID).in(ids));
-        return getMongoTemplate().find(query, this.entityClass);
+        return getMongoTemplate().find(new Query().addCriteria(Criteria.where(Keys.ID).in(ids)), this.entityClass);
     }
 
     public T insert(final T entity) {
@@ -96,11 +89,11 @@ public abstract class AbstractMongoRepository<T extends Persistable<ID>, ID exte
         return entity;
     }
 
-    public List<T> insert(final Iterable<T> entities) {
+    public Iterable<T> insert(final Iterable<T> entities) {
         for (T entity : entities) {
             insert(entity);
         }
-        return (List<T>) entities;
+        return entities;
     }
 
     public long count(final Query query) {
@@ -108,9 +101,7 @@ public abstract class AbstractMongoRepository<T extends Persistable<ID>, ID exte
     }
 
     public void delete(final ID id) {
-        Query query = new Query();
-        query.addCriteria(Criteria.where("_id").is(id));
-        getMongoTemplate().remove(query, this.entityClass);
+        getMongoTemplate().remove(new Query().addCriteria(Criteria.where("_id").is(id)), this.entityClass);
     }
 
     public void delete(final T entity) {

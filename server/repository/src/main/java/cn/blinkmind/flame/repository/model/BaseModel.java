@@ -1,4 +1,4 @@
-package cn.blinkmind.flame.repository.entity;
+package cn.blinkmind.flame.repository.model;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -10,12 +10,12 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
-public abstract class BaseEntity<ID extends Serializable> implements Persistable<ID> {
+public abstract class BaseModel<ID extends Serializable> implements Persistable<ID> {
     @Id
     private ID id;
-    private Ref<ID> creatorRef;
     private LocalDateTime createdDateTime;
     private LocalDateTime modifiedDateTime;
+    private Ref<ID> creatorRef;
 
     @Override
     public String toString() {

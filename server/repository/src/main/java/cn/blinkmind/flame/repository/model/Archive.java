@@ -1,14 +1,17 @@
-package cn.blinkmind.flame.repository.entity;
+package cn.blinkmind.flame.repository.model;
 
+import cn.blinkmind.flame.common.protocol.Request;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.util.List;
 
 @Getter
 @Setter
-@Document(collection = "users")
-public class User extends Account {
+public class Archive extends AbstractArchive {
+    private List<Module> modules;
+    private Request request;
 
     @Override
     public String toString() {

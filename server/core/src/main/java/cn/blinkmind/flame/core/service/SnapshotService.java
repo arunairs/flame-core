@@ -5,7 +5,7 @@ import cn.blinkmind.flame.core.common.patch.JsonPatch;
 import cn.blinkmind.flame.core.bean.Diffs;
 import cn.blinkmind.flame.core.exception.Errors;
 import cn.blinkmind.flame.repository.SnapshotRepository;
-import cn.blinkmind.flame.repository.entity.*;
+import cn.blinkmind.flame.repository.model.*;
 import cn.blinkmind.flame.repository.util.IdGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

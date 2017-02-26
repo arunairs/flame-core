@@ -16,7 +16,7 @@ import java.net.URI;
 @RestController
 @RequestMapping(path = "documents")
 public class DocumentResource extends AbstractResource {
-    private DocumentService documentService;
+    private final DocumentService documentService;
 
     @Autowired
     public DocumentResource(DocumentService documentService) {
@@ -32,8 +32,8 @@ public class DocumentResource extends AbstractResource {
     }
 
     @Token
-    @GetMapping(path = "{documentId}")
-    public ResponseEntity<DocumentDTO> get(@PathVariable(name = "documentId") long documentId,
+    @GetMapping(path = "{id}")
+    public ResponseEntity<DocumentDTO> get(@PathVariable(name = "id") Long documentId,
                                            @RequestAttribute(name = Attributes.USER) UserDTO userDTO) {
         DocumentDTO documentDTO = documentService.get(documentId, userDTO);
         Assert.isNotNull(documentDTO, Errors.RESOURCE_NOT_FOUND);

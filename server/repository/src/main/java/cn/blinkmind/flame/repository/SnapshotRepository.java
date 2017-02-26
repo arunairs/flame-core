@@ -1,6 +1,6 @@
 package cn.blinkmind.flame.repository;
 
-import cn.blinkmind.flame.repository.entity.*;
+import cn.blinkmind.flame.repository.model.*;
 import cn.blinkmind.flame.repository.query.Keys;
 import com.mongodb.BasicDBList;
 import com.mongodb.DBObject;

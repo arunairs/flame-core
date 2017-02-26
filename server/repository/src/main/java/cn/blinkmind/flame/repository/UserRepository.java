@@ -1,6 +1,6 @@
 package cn.blinkmind.flame.repository;
 
-import cn.blinkmind.flame.repository.entity.User;
+import cn.blinkmind.flame.repository.model.User;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Repository;

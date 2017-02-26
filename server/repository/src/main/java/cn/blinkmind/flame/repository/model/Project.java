@@ -1,7 +1,7 @@
-package cn.blinkmind.flame.repository.entity;
+package cn.blinkmind.flame.repository.model;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "projects")
-public class Project extends BaseEntity<Long> {
+public class Project extends BaseModel<Long> {
 }

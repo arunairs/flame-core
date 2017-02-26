@@ -1,4 +1,4 @@
-package cn.blinkmind.flame.repository.entity;
+package cn.blinkmind.flame.repository.model;
 
 import java.io.Serializable;
 

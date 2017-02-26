@@ -1,10 +1,10 @@
 package cn.blinkmind.flame.repository;
 
-import cn.blinkmind.flame.repository.entity.Archive;
-import cn.blinkmind.flame.repository.entity.Branch;
-import cn.blinkmind.flame.repository.entity.Commit;
+import cn.blinkmind.flame.repository.model.Archive;
+import cn.blinkmind.flame.repository.model.Branch;
+import cn.blinkmind.flame.repository.model.Commit;
 import cn.blinkmind.flame.repository.query.Keys;
-import cn.blinkmind.flame.repository.entity.User;
+import cn.blinkmind.flame.repository.model.User;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;

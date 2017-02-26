@@ -1,4 +1,4 @@
-package cn.blinkmind.flame.repository.entity;
+package cn.blinkmind.flame.repository.model;
 
 import cn.blinkmind.flame.common.protocol.Response;
 import com.fasterxml.jackson.annotation.JsonSubTypes;

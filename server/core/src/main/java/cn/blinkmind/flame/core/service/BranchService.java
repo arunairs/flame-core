@@ -4,7 +4,7 @@ import cn.blinkmind.flame.core.common.util.Assert;
 import cn.blinkmind.flame.core.common.patch.JsonPatch;
 import cn.blinkmind.flame.core.exception.Errors;
 import cn.blinkmind.flame.repository.BranchRepository;
-import cn.blinkmind.flame.repository.entity.*;
+import cn.blinkmind.flame.repository.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,6 +1,6 @@
 package cn.blinkmind.flame.core.listener;
 
-import cn.blinkmind.flame.repository.entity.BaseEntity;
+import cn.blinkmind.flame.repository.model.BaseModel;
 import cn.blinkmind.flame.repository.event.BeforeUpdateAppliedEvent;
 import cn.blinkmind.flame.repository.util.IdGenerator;
 import cn.blinkmind.flame.repository.event.BeforeEntityCreatedEvent;
@@ -22,7 +22,7 @@ public class RepositoryEventListener {
 
     @EventListener
     public void handleBeforeEntityCreatedEvent(BeforeEntityCreatedEvent<Long> event) {
-        BaseEntity<Long> entity = (BaseEntity<Long>) event.getSource();
+        BaseModel<Long> entity = (BaseModel<Long>) event.getSource();
         if (entity.getId() == null)
             entity.setId(idGenerator.nextId());
         if (entity.getCreatedDateTime() == null)

@@ -1,4 +1,4 @@
-package cn.blinkmind.flame.repository.entity;
+package cn.blinkmind.flame.repository.model;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -6,7 +6,7 @@ import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 
 @Getter
 @Setter
-public abstract class Account extends BaseEntity<Long> {
+public abstract class Account extends BaseModel<Long> {
     private String username;
     private String password;
     private String salt;

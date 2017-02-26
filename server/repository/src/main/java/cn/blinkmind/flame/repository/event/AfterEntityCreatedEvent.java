@@ -1,6 +1,6 @@
 package cn.blinkmind.flame.repository.event;
 
-import cn.blinkmind.flame.repository.entity.Persistable;
+import cn.blinkmind.flame.repository.model.Persistable;
 
 import java.io.Serializable;
 

@@ -6,7 +6,7 @@ import cn.blinkmind.flame.core.dto.UserDTO;
 import cn.blinkmind.flame.core.exception.Errors;
 import cn.blinkmind.flame.core.service.UserService;
 import cn.blinkmind.flame.repository.UserRepository;
-import cn.blinkmind.flame.repository.entity.User;
+import cn.blinkmind.flame.repository.model.User;
 import cn.blinkmind.flame.common.util.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
