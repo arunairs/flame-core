@@ -1,15 +1,16 @@
 package cn.blinkmind.flame.core.service.impl;
 
 import cn.blinkmind.flame.core.common.util.Assert;
-import cn.blinkmind.flame.core.dto.DocumentDTO;
-import cn.blinkmind.flame.core.dto.UserDTO;
 import cn.blinkmind.flame.core.exception.Errors;
+import cn.blinkmind.flame.core.service.DocumentService;
 import cn.blinkmind.flame.repository.DocumentRepository;
 import cn.blinkmind.flame.repository.model.Document;
 import cn.blinkmind.flame.repository.model.Ref;
-import cn.blinkmind.flame.core.service.DocumentService;
+import cn.blinkmind.flame.repository.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class DocumentServiceImpl implements DocumentService {
@@ -21,24 +22,19 @@ public class DocumentServiceImpl implements DocumentService {
     }
 
     @Override
-    public DocumentDTO get(final Long id, final UserDTO userDTO) {
-        Document document = this.documentRepository.get(id);
-        if (document == null) {
-            return null;
-        }
-        return new DocumentDTO(document);
+    public Optional<Document> get(final Long id, final User user) {
+        return Optional.ofNullable(this.documentRepository.get(id));
     }
 
     @Override
-    public DocumentDTO create(final DocumentDTO documentDTO, final UserDTO userDTO) {
-        Assert.isNotBlank(documentDTO.getName(), Errors.DOCUMENT_NAME_IS_BLANK);
+    public Document create(final Document input, final User user) {
+        Assert.isNotBlank(input.getName(), Errors.DOCUMENT_NAME_IS_BLANK);
 
         Document document = new Document();
-        document.setName(documentDTO.getName());
-        document.setDescription(documentDTO.getDescription());
-        document.setCreatorRef(new Ref<>(userDTO.getId()));
+        document.setName(input.getName());
+        document.setDescription(input.getDescription());
+        document.setCreatorRef(new Ref<>(user.getId()));
         this.documentRepository.insert(document);
-
-        return new DocumentDTO(document);
+        return document;
     }
 }

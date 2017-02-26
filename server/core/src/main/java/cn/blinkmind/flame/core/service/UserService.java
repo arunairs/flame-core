@@ -1,7 +1,11 @@
 package cn.blinkmind.flame.core.service;
 
-import cn.blinkmind.flame.core.dto.UserDTO;
+import cn.blinkmind.flame.repository.model.User;
+
+import java.util.Optional;
 
 public interface UserService {
-    Long create(final UserDTO userDTO);
+    User create(final User input);
+
+    Optional<User> get(final Long id);
 }

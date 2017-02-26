@@ -3,13 +3,14 @@ package cn.blinkmind.flame.core.resource;
 import cn.blinkmind.flame.core.annotation.Token;
 import cn.blinkmind.flame.core.common.util.Assert;
 import cn.blinkmind.flame.core.constant.Attributes;
-import cn.blinkmind.flame.core.dto.DocumentDTO;
-import cn.blinkmind.flame.core.dto.UserDTO;
 import cn.blinkmind.flame.core.exception.Errors;
 import cn.blinkmind.flame.core.service.DocumentService;
+import cn.blinkmind.flame.repository.model.Document;
+import cn.blinkmind.flame.repository.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 
@@ -25,18 +26,19 @@ public class DocumentResource extends AbstractResource {
 
     @Token
     @PostMapping
-    public ResponseEntity<DocumentDTO> create(@RequestBody DocumentDTO documentDTO,
-                                              @RequestAttribute(name = Attributes.USER) UserDTO userDTO) {
-        DocumentDTO createdDocument = documentService.create(documentDTO, userDTO);
-        return ResponseEntity.created(URI.create("/documents/" + createdDocument.getId())).body(createdDocument);
+    public ResponseEntity<Document> create(@RequestBody final Document input,
+                                           @RequestAttribute(name = Attributes.USER) final User user) {
+        Document document = documentService.create(input, user);
+        URI location = ServletUriComponentsBuilder
+                .fromCurrentRequest().path("/{documentId}")
+                .buildAndExpand(document.getId()).toUri();
+        return ResponseEntity.created(location).body(document);
     }
 
     @Token
-    @GetMapping(path = "{id}")
-    public ResponseEntity<DocumentDTO> get(@PathVariable(name = "id") Long documentId,
-                                           @RequestAttribute(name = Attributes.USER) UserDTO userDTO) {
-        DocumentDTO documentDTO = documentService.get(documentId, userDTO);
-        Assert.isNotNull(documentDTO, Errors.RESOURCE_NOT_FOUND);
-        return ResponseEntity.ok(documentDTO);
+    @GetMapping(path = "{documentId}")
+    public ResponseEntity<Document> get(@PathVariable(name = "documentId") final Long documentId,
+                                        @RequestAttribute(name = Attributes.USER) final User user) {
+        return ResponseEntity.ok(documentService.get(documentId, user).orElseThrow(() -> Errors.RESOURCE_NOT_FOUND));
     }
 }

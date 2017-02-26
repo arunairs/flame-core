@@ -1,10 +1,12 @@
 package cn.blinkmind.flame.core.service;
 
-import cn.blinkmind.flame.core.dto.DocumentDTO;
-import cn.blinkmind.flame.core.dto.UserDTO;
+import cn.blinkmind.flame.repository.model.Document;
+import cn.blinkmind.flame.repository.model.User;
+
+import java.util.Optional;
 
 public interface DocumentService {
-    DocumentDTO get(final Long id, final UserDTO userDTO);
+    Optional<Document> get(final Long id, final User user);
 
-    DocumentDTO create(final DocumentDTO documentDTO, final UserDTO userDTO);
+    Document create(final Document input, final User user);
 }
