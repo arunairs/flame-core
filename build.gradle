@@ -9,16 +9,16 @@ buildscript {
     ext {
         libs = [
                 spring : [
-                        mvc : [version: '4.3.6.RELEASE'],
-                        boot: [version: '1.5.1.RELEASE']
+                        mvc : [version: '4.3.7.RELEASE'],
+                        boot: [version: '1.5.2.RELEASE']
                 ],
                 jackson: [
-                        version: '2.8.6'
+                        version: '2.8.7'
                 ],
                 commons: [
                         lang     : [version: '3.5'],
                         codec    : [version: '1.10'],
-                        validator: [version: '1.5.1'],
+                        validator: [version: '1.6'],
                         beanutils: [version: '1.9.3']
                 ],
                 lombok : [
@@ -59,7 +59,7 @@ allprojects { project ->
     }
 
     dependencies {
-        testCompile group: 'org.testng', name: 'testng', version: '6.9.10'
+        testCompile group: 'org.testng', name: 'testng', version: '6.11'
     }
 
     test {
