@@ -4,7 +4,6 @@ dependencies {
     compile group: 'org.apache.commons', name: 'commons-lang3', version: libs.commons.lang.version
     compile group: 'commons-beanutils', name: 'commons-beanutils', version: libs.commons.beanutils.version
     compile group: 'commons-codec', name: 'commons-codec', version: libs.commons.codec.version
-    compile group: 'commons-validator', name: 'commons-validator', version: libs.commons.validator.version
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: libs.jackson.version
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: libs.jackson.version
 }
