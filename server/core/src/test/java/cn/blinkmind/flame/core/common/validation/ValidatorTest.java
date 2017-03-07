@@ -2,7 +2,7 @@ package cn.blinkmind.flame.core.common.validation;
 
 import org.testng.annotations.Test;
 
-import static cn.blinkmind.flame.core.common.validation.Matcher.eq;
+import static cn.blinkmind.flame.core.common.validation.Matcher.*;
 import static cn.blinkmind.flame.core.common.validation.Validator.validateThat;
 
 public class ValidatorTest {
@@ -27,4 +27,17 @@ public class ValidatorTest {
         });
     }
 
+    @Test
+    public void pass_the_validation_when_1_is_greater_than_0() {
+        validateThat(1, gt(0), () -> {
+            throw new RuntimeException();
+        });
+    }
+
+    @Test
+    public void pass_the_validation_when_1_is_greater_than_or_equals_0() {
+        validateThat(1, gte(0), () -> {
+            throw new RuntimeException();
+        });
+    }
 }
