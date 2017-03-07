@@ -1,0 +1,7 @@
+server:
+  port: 8081
+  contextPath: /flame
+
+spring.data.mongodb:
+  database: test
+  uri: mongodb://localhost/${spring.data.mongodb.database}
