@@ -10,7 +10,7 @@ public abstract class Matcher<T> {
         return new EqualMatcher<>(expected);
     }
 
-    public static <T> Matcher<T> neq(T expected) {
+    public static <T> Matcher<T> ne(T expected) {
         return new NegativeMatcher<>(new EqualMatcher<>(expected));
     }
 
