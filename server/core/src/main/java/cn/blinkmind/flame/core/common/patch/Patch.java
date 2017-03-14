@@ -9,8 +9,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 @SuppressWarnings("unchecked")
-public abstract class Patch<T, S>
-{
+public abstract class Patch<T, S> {
     private static final String METHOD_PREFIX_GET = "get";
     private static final String METHOD_PREFIX_IS = "is";
     private static final String METHOD_PREFIX_SET = "set";
@@ -22,72 +21,59 @@ public abstract class Patch<T, S>
     private PatchListener.UpdateCallback updateCallback;
     private Set<PatchField> fields = new LinkedHashSet<>();
 
-    protected Class<T> getTargetClass()
-    {
+    protected Class<T> getTargetClass() {
         return targetClass;
     }
 
-    protected S getSource()
-    {
+    protected S getSource() {
         return source;
     }
 
-    protected T getTarget()
-    {
+    protected T getTarget() {
         return target;
     }
 
-    public Patch<T, S> mappedBy(final S source)
-    {
+    public Patch<T, S> mappedBy(final S source) {
         this.source = source;
         this.converted = null;
         return this;
     }
 
-    protected Patch<T, S> bind(final T target)
-    {
+    protected Patch<T, S> bind(final T target) {
         this.target = target;
         this.targetClass = (Class<T>) this.target.getClass();
         return this;
     }
 
-    public Patch<T, S> onUpdated(final PatchListener.UpdateCallback updateCallback)
-    {
+    public Patch<T, S> onUpdated(final PatchListener.UpdateCallback updateCallback) {
         this.updateCallback = updateCallback;
         return this;
     }
 
-    public Patch<T, S> fields(final String... fields)
-    {
-        for (String field : fields)
-        {
+    public Patch<T, S> fields(final String... fields) {
+        for (String field : fields) {
             this.fields.add(new PatchField(field));
         }
         return this;
     }
 
-    public PatchField fields()
-    {
+    public PatchField fields() {
         return new PatchField(this);
     }
 
-    public void apply()
-    {
+    public void apply() {
         fields.forEach(field ->
                 apply(getTarget(), field.name, getSource(), field.mappedBy, getConverted())
         );
     }
 
-    public void apply(final T target)
-    {
+    public void apply(final T target) {
         this.bind(target);
         this.apply();
     }
 
-    protected T getConverted()
-    {
-        if (this.converted == null)
-        {
+    protected T getConverted() {
+        if (this.converted == null) {
             this.converted = convert(source);
         }
         return converted;
@@ -97,11 +83,9 @@ public abstract class Patch<T, S>
 
     protected abstract boolean contains(final S source, final String fieldName);
 
-    protected <V> boolean apply(final T target, final String targetFieldName, final S source, final String mappedBy, final T converted)
-    {
+    protected <V> boolean apply(final T target, final String targetFieldName, final S source, final String mappedBy, final T converted) {
         if (source == null || !contains(source, mappedBy)) return false;
-        try
-        {
+        try {
             Class<T> targetClass = getTargetClass();
             Field field = targetClass.getDeclaredField(targetFieldName);
             field.setAccessible(true);
@@ -121,50 +105,41 @@ public abstract class Patch<T, S>
             setterMethod.invoke(target, current);
             if (updateCallback != null)
                 updateCallback.callback(new PatchEvent.UpdateEvent<>(targetFieldName, mappedBy, previous, current, getConverted()));
-        }
-        catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException | NoSuchFieldException e)
-        {
+        } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException | NoSuchFieldException e) {
             throw new RuntimeException(e);
         }
         return true;
     }
 
-    public class PatchField
-    {
+    public class PatchField {
         private Patch<T, S> patch;
         private String name;
         private String mappedBy;
 
-        private PatchField(final String name, final String mappedBy)
-        {
+        private PatchField(final String name, final String mappedBy) {
             this.name = name;
             this.mappedBy = mappedBy;
         }
 
-        private PatchField(final String field)
-        {
+        private PatchField(final String field) {
             this(field, field);
         }
 
-        private PatchField(final Patch<T, S> patch)
-        {
+        private PatchField(final Patch<T, S> patch) {
             this.patch = patch;
         }
 
-        public PatchField add(final String field)
-        {
+        public PatchField add(final String field) {
             fields.add(new PatchField(field, field));
             return this;
         }
 
-        public PatchField add(final String field, final String mappedBy)
-        {
+        public PatchField add(final String field, final String mappedBy) {
             fields.add(new PatchField(field, mappedBy));
             return this;
         }
 
-        public Patch<T, S> end()
-        {
+        public Patch<T, S> end() {
             return this.patch;
         }
     }

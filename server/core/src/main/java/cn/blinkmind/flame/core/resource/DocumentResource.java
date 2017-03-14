@@ -1,7 +1,6 @@
 package cn.blinkmind.flame.core.resource;
 
 import cn.blinkmind.flame.core.annotation.Token;
-import cn.blinkmind.flame.core.common.util.Assert;
 import cn.blinkmind.flame.core.constant.Attributes;
 import cn.blinkmind.flame.core.exception.Errors;
 import cn.blinkmind.flame.core.service.DocumentService;

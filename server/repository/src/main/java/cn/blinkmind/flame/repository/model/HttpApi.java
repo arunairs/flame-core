@@ -6,11 +6,11 @@ import cn.blinkmind.flame.common.protocol.http.HttpResponse;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import lombok.Getter;
 import lombok.Setter;
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-
+import lombok.ToString;
 
 @Getter
 @Setter
+@ToString
 @JsonTypeName(value = Protocol.Values.HTTP)
 public class HttpApi extends AbstractApi {
     private HttpRequest request;
@@ -19,10 +19,5 @@ public class HttpApi extends AbstractApi {
     @Override
     public String getProtocol() {
         return Protocol.Values.HTTP;
-    }
-
-    @Override
-    public String toString() {
-        return ReflectionToStringBuilder.toString(this);
     }
 }

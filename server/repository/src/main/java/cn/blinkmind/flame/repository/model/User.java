@@ -2,16 +2,12 @@ package cn.blinkmind.flame.repository.model;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import lombok.ToString;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Getter
 @Setter
+@ToString
 @Document(collection = "users")
 public class User extends Account {
-
-    @Override
-    public String toString() {
-        return ReflectionToStringBuilder.toString(this);
-    }
 }

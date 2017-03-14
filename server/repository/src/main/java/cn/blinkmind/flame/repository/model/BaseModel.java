@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 import lombok.Setter;
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import lombok.ToString;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
 
@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
+@ToString
 @JsonInclude(value = JsonInclude.Include.NON_NULL)
 public abstract class BaseModel<ID extends Serializable> implements Persistable<ID> {
     @Id
@@ -25,9 +26,4 @@ public abstract class BaseModel<ID extends Serializable> implements Persistable<
 
     @Transient
     private User creator;
-
-    @Override
-    public String toString() {
-        return ReflectionToStringBuilder.toString(this);
-    }
 }

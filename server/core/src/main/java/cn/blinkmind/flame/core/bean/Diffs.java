@@ -1,61 +1,24 @@
 package cn.blinkmind.flame.core.bean;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.apache.commons.collections.CollectionUtils;
+import com.google.common.collect.Sets;
+import lombok.Getter;
 
-import java.util.LinkedHashSet;
 import java.util.Set;
 
+@Getter
 public class Diffs<E> {
-
-    private Set<E> addedCollection;
-    private Set<E> modifiedCollection;
-    private Set<E> removedCollection;
-    private Set<E> reorderedCollection;
-
     @JsonProperty("added")
-    public Set<E> getAddedCollection() {
-        if (this.addedCollection == null)
-            this.addedCollection = new LinkedHashSet<>();
-        return this.addedCollection;
-    }
-
-    private void setAddedCollection(Set<E> addedCollection) {
-        this.addedCollection = addedCollection;
-    }
+    private Set<E> addedCollection = Sets.newLinkedHashSet();
 
     @JsonProperty("modified")
-    public Set<E> getModifiedCollection() {
-        if (this.modifiedCollection == null)
-            this.modifiedCollection = new LinkedHashSet<>();
-        return this.modifiedCollection;
-    }
-
-    private void setModifiedCollection(Set<E> modifiedCollection) {
-        this.modifiedCollection = modifiedCollection;
-    }
+    private Set<E> modifiedCollection = Sets.newLinkedHashSet();
 
     @JsonProperty("removed")
-    public Set<E> getRemovedCollection() {
-        if (this.removedCollection == null)
-            this.removedCollection = new LinkedHashSet<>();
-        return this.removedCollection;
-    }
-
-    private void setRemovedCollection(Set<E> removedCollection) {
-        this.removedCollection = removedCollection;
-    }
+    private Set<E> removedCollection = Sets.newLinkedHashSet();
 
     @JsonProperty("reordered")
-    public Set<E> getReorderedCollection() {
-        return reorderedCollection;
-    }
-
-    private void setReorderedCollection(Set<E> reorderedCollection) {
-        if (this.reorderedCollection == null)
-            this.reorderedCollection = new LinkedHashSet<>();
-        this.reorderedCollection = reorderedCollection;
-    }
+    private Set<E> reorderedCollection = Sets.newLinkedHashSet();
 
     public void add(DiffResult diffResult, E diff) {
         if (diffResult == null) throw new NullPointerException();
@@ -78,14 +41,14 @@ public class Diffs<E> {
     }
 
     public boolean isNotEmpty() {
-        return CollectionUtils.isNotEmpty(addedCollection)
-                || CollectionUtils.isNotEmpty(modifiedCollection)
-                || CollectionUtils.isNotEmpty(removedCollection)
-                || CollectionUtils.isNotEmpty(reorderedCollection);
+        return !isEmpty();
     }
 
     public boolean isEmpty() {
-        return !isNotEmpty();
+        return addedCollection.isEmpty()
+                && modifiedCollection.isEmpty()
+                && removedCollection.isEmpty()
+                && reorderedCollection.isEmpty();
     }
 
     public static boolean isEmpty(Diffs diffs) {

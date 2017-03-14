@@ -3,7 +3,7 @@ package cn.blinkmind.flame.common.util;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.commons.lang3.StringUtils;
+import com.google.common.base.Strings;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -22,7 +22,7 @@ public class JsonUtils {
     }
 
     public static <T> T deserialize(Class<T> clazz, String value, ObjectMapper objectMapper) {
-        if (StringUtils.isBlank(value)) return null;
+        if (Strings.isNullOrEmpty(value)) return null;
         try {
             return objectMapper.readValue(value, clazz);
         } catch (IOException e) {
@@ -39,7 +39,7 @@ public class JsonUtils {
     }
 
     public static <T> List<T> deserialize(Class<T> clazz, Class<? extends Collection> collectionClazz, String value, ObjectMapper objectMapper) {
-        if (StringUtils.isBlank(value)) return null;
+        if (Strings.isNullOrEmpty(value)) return null;
         JavaType javaType = objectMapper.getTypeFactory().constructParametrizedType(collectionClazz, List.class, clazz);
         try {
             return objectMapper.readValue(value, javaType);

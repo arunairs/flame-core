@@ -1,9 +1,10 @@
 package cn.blinkmind.flame.repository.model;
 
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import lombok.ToString;
 
 import java.util.HashMap;
 
+@ToString
 public class Headers extends HashMap<String, Object> {
     public Boolean getBoolean(String key) {
         return this.getHeaderOrDefault(key, null);
@@ -33,10 +34,5 @@ public class Headers extends HashMap<String, Object> {
     @SuppressWarnings("unchecked")
     public <T> T getHeaderOrDefault(String key, T defaultValue) {
         return (T) super.getOrDefault(key, defaultValue);
-    }
-
-    @Override
-    public String toString() {
-        return ReflectionToStringBuilder.toString(this);
     }
 }
