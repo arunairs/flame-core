@@ -6,6 +6,7 @@
 build/
 /classes/
 server/core/data/
+server/core/logs/
 web/node_modules
 web/npm-debug.log
 web/client/dist
