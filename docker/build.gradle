@@ -23,9 +23,6 @@ allprojects { project ->
 
     apply plugin: 'com.bmuschko.docker-remote-api'
 
-    apply plugin: 'docker-compose'
-
-
     docker {
         url = dockerSetting.url
         registryCredentials {

@@ -7,16 +7,10 @@ dependencies {
     compile project(':server:repository')
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: libs.spring.boot.version
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-log4j2', version: libs.spring.boot.version
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-redis', version: libs.spring.boot.version
+//    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-redis', version: libs.spring.boot.version
     compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: libs.jackson.version
-    compile group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-yaml', version: libs.jackson.version
-
-//    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-elasticsearch', version: libs.spring.boot.version
-//    compile group: 'org.springframework.boot', name: 'spring-boot-starter-amqp', version: libs.spring.boot.version
 
     testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: libs.spring.boot.version
     testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: libs.spring.boot.version
     testCompile group: 'org.springframework', name: 'spring-test', version: libs.spring.mvc.version
 }
-
-compileJava.dependsOn(processResources)

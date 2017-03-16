@@ -1,3 +1,42 @@
 ext {
     archivePrefix = 'flame'
 }
+
+subprojects { project ->
+    apply plugin: 'java'
+
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+
+    version = archiveVersion
+
+    project.tasks.withType(JavaCompile) {
+        options.encoding = 'UTF-8'
+    }
+
+    repositories {
+        maven { url 'http://maven.aliyun.com/nexus/content/groups/public' }
+        jcenter()
+    }
+
+    configurations {
+        all*.exclude module: 'spring-boot-starter-logging'
+    }
+
+    dependencies {
+        testCompile group: 'org.testng', name: 'testng', version: libs.testng.version
+    }
+
+    test {
+        useTestNG()
+        enabled = true
+    }
+
+    task s1tests(type: Test) {
+        useTestNG() {
+            includeGroups 's1'
+        }
+
+        //jvmArgs '-Xdebug', '-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5007'
+    }
+}

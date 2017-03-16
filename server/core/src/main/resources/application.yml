@@ -1,2 +1,4 @@
 spring.profiles.active: dev
 spring.jackson.serialization.write-dates-as-timestamps: false
+spring.jpa.properties.javax.persistence.validation.mode: none
+spring.output.ansi.enabled: always

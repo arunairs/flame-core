@@ -1,5 +1,7 @@
 import cn.blinkmind.flame.gradle.Environment
 
+apply plugin: 'docker-compose'
+
 buildscript {
     repositories {
         maven { url 'http://maven.aliyun.com/nexus/content/groups/public' }
@@ -24,60 +26,19 @@ buildscript {
                 ],
                 lombok : [
                         version: '1.16.14'
+                ],
+                testng : [
+                        version: '6.11'
                 ]
         ]
     }
 
     dependencies {
         classpath group: 'org.springframework.boot', name: 'spring-boot-gradle-plugin', version: libs.spring.boot.version
-        classpath group: 'org.springframework.build.gradle', name: 'propdeps-plugin', version: '0.0.7'
         classpath group: 'com.bmuschko', name: 'gradle-docker-plugin', version: '3.0.4'
         classpath group: 'com.avast.gradle', name: 'docker-compose-gradle-plugin', version: '0.3.21'
     }
 }
 
-def env = Environment.getInstance().addProperties(rootProject.file('gradle.properties').newDataInputStream())
-rootProject.ext.env = env
+rootProject.ext.env = Environment.getInstance().addProperties(rootProject.file('gradle.properties').newDataInputStream())
 
-allprojects { project ->
-    apply plugin: 'java'
-    apply plugin: 'propdeps'
-    apply plugin: 'propdeps-maven'
-    apply plugin: 'propdeps-idea'
-    apply plugin: 'propdeps-eclipse'
-
-    sourceCompatibility = 1.8
-    targetCompatibility = 1.8
-
-    version = archiveVersion
-
-    project.tasks.withType(JavaCompile) {
-        options.encoding = 'UTF-8'
-    }
-
-    repositories {
-        maven { url 'http://maven.aliyun.com/nexus/content/groups/public' }
-        jcenter()
-    }
-
-    configurations {
-        all*.exclude module: 'spring-boot-starter-logging'
-    }
-
-    dependencies {
-        testCompile group: 'org.testng', name: 'testng', version: '6.11'
-    }
-
-    test {
-        useTestNG()
-        enabled = true
-    }
-
-    task s1tests(type: Test) {
-        useTestNG() {
-            includeGroups 's1'
-        }
-
-        //jvmArgs '-Xdebug', '-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5007'
-    }
-}

@@ -1,6 +1,5 @@
 rootProject.name = 'flame'
 include ':buildSrc'
-include ':docker'
 include ':server'
 include ':server:common'
 include ':server:common:util'
