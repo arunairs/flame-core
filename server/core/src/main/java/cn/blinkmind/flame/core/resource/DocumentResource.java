@@ -28,10 +28,10 @@ public class DocumentResource extends AbstractResource {
     public ResponseEntity<Document> create(@RequestBody final Document input,
                                            @RequestAttribute(name = Attributes.USER) final User user) {
         Document document = documentService.create(input, user);
-        URI location = ServletUriComponentsBuilder
+        return ResponseEntity.created(ServletUriComponentsBuilder
                 .fromCurrentRequest().path("/{documentId}")
-                .buildAndExpand(document.getId()).toUri();
-        return ResponseEntity.created(location).body(document);
+                .buildAndExpand(document.getId()).toUri())
+                .body(document);
     }
 
     @Token
