@@ -4,6 +4,7 @@ import com.google.common.collect.Maps;
 import lombok.ToString;
 
 import java.util.HashMap;
+import java.util.Map;
 
 @ToString
 public class Headers {
@@ -51,6 +52,11 @@ public class Headers {
 
     public <T> Headers put(String key, T value) {
         this.hashMap.put(key, value);
+        return this;
+    }
+
+    public Headers putAll(Headers headers) {
+        this.hashMap.putAll(headers.hashMap);
         return this;
     }
 
