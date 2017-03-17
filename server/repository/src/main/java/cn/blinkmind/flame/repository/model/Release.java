@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Getter
 @Setter
-@ToString
+@ToString(callSuper = true)
 @Document(collection = "releases")
 public class Release extends BaseModel<Long> {
     private Version version;

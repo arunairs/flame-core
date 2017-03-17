@@ -9,7 +9,7 @@ import java.util.List;
 
 @Getter
 @Setter
-@ToString
+@ToString(callSuper = true)
 public class Module extends AbstractModule {
     private List<Module> modules;
     private List<AbstractApi> apis;

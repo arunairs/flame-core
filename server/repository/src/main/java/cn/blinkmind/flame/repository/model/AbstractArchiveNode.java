@@ -8,7 +8,7 @@ import org.springframework.data.annotation.Id;
 
 @Getter
 @Setter
-@ToString
+@ToString(callSuper = true)
 public abstract class AbstractArchiveNode implements Describable, Persistable<Long> {
     @Id
     private Long id;

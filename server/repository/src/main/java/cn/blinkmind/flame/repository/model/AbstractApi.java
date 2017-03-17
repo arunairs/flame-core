@@ -9,7 +9,7 @@ import lombok.ToString;
 
 @Getter
 @Setter
-@ToString
+@ToString(callSuper = true)
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "protocol")
 @JsonSubTypes({@JsonSubTypes.Type(value = HttpApi.class)})
 public abstract class AbstractApi extends AbstractArchiveNode {

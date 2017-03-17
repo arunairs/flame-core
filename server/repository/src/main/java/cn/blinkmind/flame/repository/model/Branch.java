@@ -8,7 +8,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Getter
 @Setter
-@ToString
+@ToString(callSuper = true)
 @Document(collection = "branches")
 @CompoundIndex(name = "unique_index", unique = true, def = "{'name':1,'documentRef._id':1}")
 public class Branch extends BaseModel<Long> implements Commit<Archive> {
