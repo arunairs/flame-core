@@ -6,7 +6,6 @@ dependencies {
     compile project(':server:common:util')
     compile project(':server:repository')
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: libs.spring.boot.version
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-log4j2', version: libs.spring.boot.version
 //    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-redis', version: libs.spring.boot.version
     compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: libs.jackson.version
 

@@ -19,10 +19,6 @@ subprojects { project ->
         jcenter()
     }
 
-    configurations {
-        all*.exclude module: 'spring-boot-starter-logging'
-    }
-
     dependencies {
         testCompile group: 'org.testng', name: 'testng', version: libs.testng.version
     }
