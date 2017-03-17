@@ -1,4 +1,4 @@
-rootProject.name = 'flame'
+rootProject.name = 'giraf'
 include ':buildSrc'
 include ':server'
 include ':server:common'

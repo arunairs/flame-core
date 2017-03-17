@@ -1,5 +1,5 @@
 ext {
-    archivePrefix = 'flame'
+    archivePrefix = rootProject.name
 }
 
 subprojects { project ->
