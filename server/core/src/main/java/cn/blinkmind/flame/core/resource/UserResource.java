@@ -25,9 +25,9 @@ public class UserResource extends AbstractResource {
     @PostMapping
     public ResponseEntity<User> create(@RequestBody final User input) {
         User user = userService.create(input);
-        URI location = ServletUriComponentsBuilder
+        return ResponseEntity.created(ServletUriComponentsBuilder
                 .fromCurrentRequest().path("/{userId}")
-                .buildAndExpand(user.getId()).toUri();
-        return ResponseEntity.created(location).body(user);
+                .buildAndExpand(user.getId()).toUri())
+                .body(user);
     }
 }

@@ -2,7 +2,6 @@ package cn.blinkmind.flame.core.service.impl;
 
 import cn.blinkmind.flame.common.util.CodecUtils;
 import cn.blinkmind.flame.common.util.SecurityUtils;
-import cn.blinkmind.flame.core.common.util.Assert;
 import cn.blinkmind.flame.core.exception.Errors;
 import cn.blinkmind.flame.core.service.UserService;
 import cn.blinkmind.flame.repository.UserRepository;
@@ -11,6 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+
+import static cn.blinkmind.flame.core.common.validation.Matcher.blank;
+import static cn.blinkmind.flame.core.common.validation.Matcher.not;
+import static cn.blinkmind.flame.core.common.validation.Validator.validateThat;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -23,8 +26,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User create(User input) {
-        Assert.isNotBlank(input.getUsername(), Errors.ACCOUNT_NAME_IS_BLANK);
-        Assert.isNotBlank(input.getPassword(), Errors.ACCOUNT_PASSWORD_IS_BLANK);
+        validateThat(input.getUsername(), not(blank()), () -> {
+            throw Errors.ACCOUNT_NAME_IS_BLANK;
+        }).and(input.getPassword(), not(blank()), () -> {
+            throw Errors.ACCOUNT_PASSWORD_IS_BLANK;
+        });
 
         String salt = SecurityUtils.randomSalt();
         User user = new User();
