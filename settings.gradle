@@ -2,7 +2,6 @@ rootProject.name = 'giraf'
 
 include ':buildSrc',
         ':server',
-        ':server:common',
         ':server:common:util',
         ':server:common:protocol',
         ':server:core',

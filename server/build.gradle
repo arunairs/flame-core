@@ -1,3 +1,5 @@
+import java.nio.charset.StandardCharsets
+
 ext {
     archivePrefix = rootProject.name
 }
@@ -5,13 +7,13 @@ ext {
 subprojects { project ->
     apply plugin: 'java'
 
-    sourceCompatibility = 1.8
-    targetCompatibility = 1.8
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
 
     version = archiveVersion
 
     project.tasks.withType(JavaCompile) {
-        options.encoding = 'UTF-8'
+        options.encoding = StandardCharsets.UTF_8.name()
     }
 
     repositories {
@@ -20,7 +22,7 @@ subprojects { project ->
     }
 
     dependencies {
-        testCompile group: 'org.testng', name: 'testng', version: libs.testng.version
+        testCompile "org.testng:testng:${libs.testng.version}"
     }
 
     test {

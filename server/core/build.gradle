@@ -3,12 +3,15 @@ apply plugin: 'org.springframework.boot'
 archivesBaseName = "${archivePrefix}-core"
 
 dependencies {
-    compile project(':server:common:util')
-    compile project(':server:repository')
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: libs.spring.boot.version
-//    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-redis', version: libs.spring.boot.version
-    compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: libs.jackson.version
-
-    testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: libs.spring.boot.version
-    testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: libs.spring.boot.version
+    compile(
+            project(':server:common:util'),
+            project(':server:repository'),
+            "org.springframework.boot:spring-boot-starter-web:${libs.spring.boot.version}",
+            "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:${libs.jackson.version}",
+    )
+    
+    testCompile(
+            "org.springframework.boot:spring-boot-starter-web:${libs.spring.boot.version}",
+            "org.springframework.boot:spring-boot-starter-test:${libs.spring.boot.version}"
+    )
 }

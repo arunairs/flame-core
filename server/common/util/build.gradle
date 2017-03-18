@@ -1,9 +1,11 @@
 archivesBaseName = "${archivePrefix}-common-util"
 
 dependencies {
-    compile group: 'com.google.guava', name: 'guava', version: libs.google.guava.version
-    compile group: 'org.apache.commons', name: 'commons-lang3', version: libs.commons.lang.version
-    compile group: 'commons-codec', name: 'commons-codec', version: libs.commons.codec.version
-    compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: libs.jackson.version
-    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: libs.jackson.version
+    compile(
+            "com.google.guava:guava:${libs.google.guava.version}",
+            "org.apache.commons:commons-lang3:${libs.commons.lang.version}",
+            "commons-codec:commons-codec:${libs.commons.codec.version}",
+            "com.fasterxml.jackson.core:jackson-core:${libs.jackson.version}",
+            "com.fasterxml.jackson.core:jackson-databind:${libs.jackson.version}"
+    )
 }
