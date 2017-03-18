@@ -1,3 +1,5 @@
+import java.nio.charset.StandardCharsets
+
 apply plugin: 'docker-compose'
 
 buildscript {
@@ -37,5 +39,40 @@ buildscript {
                 "com.avast.gradle:docker-compose-gradle-plugin:0.3.21"
         )
     }
+}
 
+allprojects { project ->
+    apply plugin: 'java'
+    apply from: "${rootDir}/config/checkstyle/checkstyle.gradle"
+
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+
+    project.version = archiveVersion
+
+    project.tasks.withType(JavaCompile) {
+        options.encoding = StandardCharsets.UTF_8.name()
+    }
+
+    repositories {
+        maven { url 'http://maven.aliyun.com/nexus/content/groups/public' }
+        jcenter()
+    }
+
+    dependencies {
+        testCompile "org.testng:testng:${libs.testng.version}"
+    }
+
+    test {
+        useTestNG()
+        enabled = true
+    }
+
+    task s1tests(type: Test) {
+        useTestNG() {
+            includeGroups 's1'
+        }
+
+        //jvmArgs '-Xdebug', '-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5007'
+    }
 }
