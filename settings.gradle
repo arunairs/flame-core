@@ -1,8 +1,9 @@
 rootProject.name = 'giraf'
-include ':buildSrc'
-include ':server'
-include ':server:common'
-include ':server:common:util'
-include ':server:common:protocol'
-include ':server:core'
-include ':server:repository'
+
+include ':buildSrc',
+        ':server',
+        ':server:common',
+        ':server:common:util',
+        ':server:common:protocol',
+        ':server:core',
+        ':server:repository'
