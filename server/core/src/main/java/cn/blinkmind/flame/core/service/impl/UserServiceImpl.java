@@ -13,6 +13,7 @@ import java.util.Optional;
 
 import static cn.blinkmind.flame.core.common.validation.Matcher.blank;
 import static cn.blinkmind.flame.core.common.validation.Matcher.not;
+import static cn.blinkmind.flame.core.common.validation.Validator.orElseThrow;
 import static cn.blinkmind.flame.core.common.validation.Validator.validateThat;
 
 @Service
@@ -26,11 +27,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User create(User input) {
-        validateThat(input.getUsername(), not(blank()), () -> {
-            throw Errors.ACCOUNT_NAME_IS_BLANK;
-        }).and(input.getPassword(), not(blank()), () -> {
-            throw Errors.ACCOUNT_PASSWORD_IS_BLANK;
-        });
+        validateThat(input.getUsername(), not(blank()), orElseThrow(Errors.ACCOUNT_NAME_IS_BLANK))
+                .and(input.getPassword(), not(blank()), orElseThrow(Errors.ACCOUNT_PASSWORD_IS_BLANK));
 
         String salt = SecurityUtils.randomSalt();
         User user = new User();

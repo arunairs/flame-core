@@ -13,6 +13,7 @@ import java.util.Optional;
 
 import static cn.blinkmind.flame.core.common.validation.Matcher.blank;
 import static cn.blinkmind.flame.core.common.validation.Matcher.not;
+import static cn.blinkmind.flame.core.common.validation.Validator.orElseThrow;
 import static cn.blinkmind.flame.core.common.validation.Validator.validateThat;
 
 @Service
@@ -31,9 +32,7 @@ public class DocumentServiceImpl implements DocumentService {
 
     @Override
     public Document create(final Document input, final User user) {
-        validateThat(input.getName(), not(blank()), () -> {
-            throw Errors.DOCUMENT_NAME_IS_BLANK;
-        });
+        validateThat(input.getName(), not(blank()), orElseThrow(Errors.DOCUMENT_NAME_IS_BLANK));
 
         Document document = new Document();
         document.setName(input.getName());
