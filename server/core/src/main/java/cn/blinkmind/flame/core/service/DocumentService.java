@@ -8,5 +8,5 @@ import java.util.Optional;
 public interface DocumentService {
     Optional<Document> get(final Long id, final User user);
 
-    Document create(final Document input, final User user);
+    Document create(final Document document, final User user);
 }

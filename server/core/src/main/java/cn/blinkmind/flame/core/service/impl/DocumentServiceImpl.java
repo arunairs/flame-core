@@ -31,14 +31,14 @@ public class DocumentServiceImpl implements DocumentService {
     }
 
     @Override
-    public Document create(final Document input, final User user) {
-        validateThat(input.getName(), not(blank()), orElseThrow(Errors.DOCUMENT_NAME_IS_BLANK));
+    public Document create(final Document document, final User user) {
+        validateThat(document.getName(), not(blank()), orElseThrow(Errors.DOCUMENT_NAME_IS_BLANK));
 
-        Document document = new Document();
-        document.setName(input.getName());
-        document.setDescription(input.getDescription());
-        document.setCreatorRef(new Ref<>(user.getId()));
-        this.documentRepository.insert(document);
-        return document;
+        Document output = new Document();
+        output.setName(document.getName());
+        output.setDescription(document.getDescription());
+        output.setCreatorRef(new Ref<>(user.getId()));
+        this.documentRepository.insert(output);
+        return output;
     }
 }

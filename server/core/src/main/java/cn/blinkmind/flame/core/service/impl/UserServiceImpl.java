@@ -26,17 +26,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User create(User input) {
-        validateThat(input.getUsername(), not(blank()), orElseThrow(Errors.ACCOUNT_NAME_IS_BLANK))
-                .and(input.getPassword(), not(blank()), orElseThrow(Errors.ACCOUNT_PASSWORD_IS_BLANK));
+    public User create(User user) {
+        validateThat(user.getUsername(), not(blank()), orElseThrow(Errors.ACCOUNT_NAME_IS_BLANK))
+                .and(user.getPassword(), not(blank()), orElseThrow(Errors.ACCOUNT_PASSWORD_IS_BLANK));
 
         String salt = SecurityUtils.randomSalt();
-        User user = new User();
-        user.setUsername(input.getUsername());
-        user.setSalt(salt);
-        user.setPassword(CodecUtils.sha256(input.getPassword(), salt));
-        this.userRepository.insert(user);
-        return user;
+        User output = new User();
+        output.setUsername(user.getUsername());
+        output.setSalt(salt);
+        output.setPassword(CodecUtils.sha256(user.getPassword(), salt));
+        this.userRepository.insert(output);
+        return output;
     }
 
     @Override
