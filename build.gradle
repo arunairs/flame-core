@@ -34,7 +34,7 @@ buildscript {
 
     dependencies {
         classpath(
-                "org.springframework.boot:spring-boot-gradle-plugin:${libs.spring.boot.version}",
+                "org.springframework.boot:spring-boot-gradle-plugin:$libs.spring.boot.version",
                 "com.bmuschko:gradle-docker-plugin:3.0.4",
                 "com.avast.gradle:docker-compose-gradle-plugin:0.3.21"
         )
@@ -43,7 +43,8 @@ buildscript {
 
 allprojects { project ->
     apply plugin: 'java'
-    apply from: "${rootDir}/config/checkstyle/checkstyle.gradle"
+    apply from: "$rootDir/tool/checkstyle/checkstyle.gradle"
+    apply from: "$rootDir/tool/findbugs/findbugs.gradle"
 
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
@@ -60,7 +61,7 @@ allprojects { project ->
     }
 
     dependencies {
-        testCompile "org.testng:testng:${libs.testng.version}"
+        testCompile "org.testng:testng:$libs.testng.version"
     }
 
     test {

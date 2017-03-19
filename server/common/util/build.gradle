@@ -1,11 +1,11 @@
-archivesBaseName = "${archivePrefix}-common-util"
+archivesBaseName = "$archivePrefix-common-util"
 
 dependencies {
     compile(
-            "com.google.guava:guava:${libs.google.guava.version}",
-            "org.apache.commons:commons-lang3:${libs.commons.lang.version}",
-            "commons-codec:commons-codec:${libs.commons.codec.version}",
-            "com.fasterxml.jackson.core:jackson-core:${libs.jackson.version}",
-            "com.fasterxml.jackson.core:jackson-databind:${libs.jackson.version}"
+            "com.google.guava:guava:$libs.google.guava.version",
+            "org.apache.commons:commons-lang3:$libs.commons.lang.version",
+            "commons-codec:commons-codec:$libs.commons.codec.version",
+            "com.fasterxml.jackson.core:jackson-core:$libs.jackson.version",
+            "com.fasterxml.jackson.core:jackson-databind:$libs.jackson.version"
     )
 }

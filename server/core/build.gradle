@@ -1,17 +1,17 @@
 apply plugin: 'org.springframework.boot'
 
-archivesBaseName = "${archivePrefix}-core"
+archivesBaseName = "$archivePrefix-core"
 
 dependencies {
     compile(
             project(':server:common:util'),
             project(':server:repository'),
-            "org.springframework.boot:spring-boot-starter-web:${libs.spring.boot.version}",
-            "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:${libs.jackson.version}",
+            "org.springframework.boot:spring-boot-starter-web:$libs.spring.boot.version",
+            "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$libs.jackson.version",
     )
     
     testCompile(
-            "org.springframework.boot:spring-boot-starter-web:${libs.spring.boot.version}",
-            "org.springframework.boot:spring-boot-starter-test:${libs.spring.boot.version}"
+            "org.springframework.boot:spring-boot-starter-web:$libs.spring.boot.version",
+            "org.springframework.boot:spring-boot-starter-test:$libs.spring.boot.version"
     )
 }

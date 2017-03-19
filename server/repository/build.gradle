@@ -1,10 +1,10 @@
-archivesBaseName = "${archivePrefix}-repository"
+archivesBaseName = "$archivePrefix-repository"
 
 dependencies {
     compile(
             project(':server:common:protocol'),
             "org.aspectj:aspectjweaver:1.8.10",
-            "org.springframework.boot:spring-boot-starter-data-mongodb:${libs.spring.boot.version}",
+            "org.springframework.boot:spring-boot-starter-data-mongodb:$libs.spring.boot.version",
             "com.smoketurner.snowizard:snowizard-core:1.9.2"
     )
 }
