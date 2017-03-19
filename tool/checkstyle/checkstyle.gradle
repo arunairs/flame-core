@@ -3,3 +3,10 @@ apply plugin: 'checkstyle'
 checkstyle {
     configFile = file("$rootDir/tool/checkstyle/google_checks.xml")
 }
+
+tasks.withType(FindBugs) {
+    reports {
+        xml.enabled = false
+        html.enabled = true
+    }
+}
