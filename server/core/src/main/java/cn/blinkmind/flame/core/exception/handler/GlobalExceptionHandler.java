@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
-public class GlobalControllerExceptionHandler
+public class GlobalExceptionHandler
 {
     @ExceptionHandler(value = BadRequestException.class)
     private ResponseEntity<Error> handleBadRequestException(BadRequestException exception)
