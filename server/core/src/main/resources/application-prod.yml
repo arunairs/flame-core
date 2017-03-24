@@ -1,6 +1,6 @@
 server:
   port: 8081
-  contextPath: /giraf
+  contextPath: /flame
 
 spring.data.mongodb:
   database: test
