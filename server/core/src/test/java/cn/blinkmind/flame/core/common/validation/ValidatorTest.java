@@ -3,7 +3,6 @@ package cn.blinkmind.flame.core.common.validation;
 import org.testng.annotations.Test;
 
 import static cn.blinkmind.flame.core.common.validation.Matcher.*;
-import static cn.blinkmind.flame.core.common.validation.Validator.orElse;
 import static cn.blinkmind.flame.core.common.validation.Validator.orElseThrow;
 import static cn.blinkmind.flame.core.common.validation.Validator.validateThat;
 
@@ -26,6 +25,6 @@ public class ValidatorTest {
 
     @Test
     public void pass_the_validation_when_1_is_greater_than_or_equals_0() {
-        validateThat(1, gte(0), orElseThrow(RuntimeException::new));
+        validateThat(1, ge(0), orElseThrow(RuntimeException::new));
     }
 }

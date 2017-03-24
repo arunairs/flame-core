@@ -41,7 +41,7 @@ public abstract class Matcher<T> {
         return new GreaterThanMatcher<>(expected);
     }
 
-    public static <T extends Number & Comparable<? extends Number>> Matcher<T> gte(T expected) {
+    public static <T extends Number & Comparable<? extends Number>> Matcher<T> ge(T expected) {
         return new GreaterThanOrEqualMatcher<>(expected);
     }
 
@@ -49,7 +49,7 @@ public abstract class Matcher<T> {
         return new LessThanMatcher<>(expected);
     }
 
-    public static <T extends Number & Comparable<? extends Number>> Matcher<T> lte(T expected) {
+    public static <T extends Number & Comparable<? extends Number>> Matcher<T> le(T expected) {
         return new LessThanOrEqualMatcher<>(expected);
     }
 
