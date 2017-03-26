@@ -14,7 +14,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 @RestController
 @RequestMapping(path = "documents")
 public class DocumentResource extends AbstractResource {
-    private final DocumentService documentService;
+    private DocumentService documentService;
 
     @Autowired
     public DocumentResource(DocumentService documentService) {
@@ -23,19 +23,19 @@ public class DocumentResource extends AbstractResource {
 
     @Token
     @PostMapping
-    public ResponseEntity<Document> create(@RequestBody final Document input,
-                                           @RequestAttribute(name = Attributes.USER) final User user) {
-        Document document = documentService.create(input, user);
+    public ResponseEntity<Document> create(@RequestBody Document document,
+                                           @RequestAttribute(name = Attributes.USER) User user) {
+        Document output = documentService.create(document, user);
         return ResponseEntity.created(ServletUriComponentsBuilder
-                .fromCurrentRequest().path("/{documentId}")
-                .buildAndExpand(document.getId()).toUri())
-                .body(document);
+                .fromCurrentRequest().path("{documentId}")
+                .buildAndExpand(output.getId()).toUri())
+                .body(output);
     }
 
     @Token
     @GetMapping(path = "{documentId}")
-    public ResponseEntity<Document> get(@PathVariable(name = "documentId") final Long documentId,
-                                        @RequestAttribute(name = Attributes.USER) final User user) {
+    public ResponseEntity<Document> get(@PathVariable(name = "documentId") Long documentId,
+                                        @RequestAttribute(name = Attributes.USER) User user) {
         return ResponseEntity.ok(documentService.get(documentId, user).orElseThrow(() -> Errors.RESOURCE_NOT_FOUND));
     }
 }

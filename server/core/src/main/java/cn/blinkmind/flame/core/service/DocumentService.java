@@ -6,7 +6,7 @@ import cn.blinkmind.flame.repository.model.User;
 import java.util.Optional;
 
 public interface DocumentService {
-    Optional<Document> get(final Long id, final User user);
+    Optional<Document> get(Long id, User user);
 
-    Document create(final Document document, final User user);
+    Document create(Document document, User user);
 }

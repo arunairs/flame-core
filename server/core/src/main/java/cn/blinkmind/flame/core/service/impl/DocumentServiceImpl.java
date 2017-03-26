@@ -18,7 +18,7 @@ import static cn.blinkmind.flame.core.common.validation.Validator.validateThat;
 
 @Service
 public class DocumentServiceImpl implements DocumentService {
-    private final DocumentRepository documentRepository;
+    private DocumentRepository documentRepository;
 
     @Autowired
     public DocumentServiceImpl(DocumentRepository documentRepository) {
@@ -26,12 +26,12 @@ public class DocumentServiceImpl implements DocumentService {
     }
 
     @Override
-    public Optional<Document> get(final Long id, final User user) {
+    public Optional<Document> get(Long id, User user) {
         return Optional.ofNullable(this.documentRepository.get(id));
     }
 
     @Override
-    public Document create(final Document document, final User user) {
+    public Document create(Document document, User user) {
         validateThat(document.getName(), not(blank()), orElseThrow(Errors.DOCUMENT_NAME_IS_BLANK));
 
         Document output = new Document();
