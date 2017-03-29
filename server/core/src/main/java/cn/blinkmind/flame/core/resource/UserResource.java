@@ -15,7 +15,7 @@ import java.net.URI;
 @RestController
 @RequestMapping(path = "users")
 public class UserResource extends AbstractResource {
-    private final UserService userService;
+    private UserService userService;
 
     @Autowired
     public UserResource(UserService userService) {
@@ -23,11 +23,11 @@ public class UserResource extends AbstractResource {
     }
 
     @PostMapping
-    public ResponseEntity<User> create(@RequestBody final User input) {
-        User user = userService.create(input);
+    public ResponseEntity<User> create(@RequestBody User user) {
+        User output = userService.create(user);
         return ResponseEntity.created(ServletUriComponentsBuilder
                 .fromCurrentRequest().path("/{userId}")
-                .buildAndExpand(user.getId()).toUri())
-                .body(user);
+                .buildAndExpand(output.getId()).toUri())
+                .body(output);
     }
 }

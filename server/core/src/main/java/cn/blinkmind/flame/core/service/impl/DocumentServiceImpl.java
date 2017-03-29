@@ -41,4 +41,9 @@ public class DocumentServiceImpl implements DocumentService {
         this.documentRepository.insert(output);
         return output;
     }
+
+    @Override
+    public boolean exists(Long id) {
+        return documentRepository.exists(id);
+    }
 }

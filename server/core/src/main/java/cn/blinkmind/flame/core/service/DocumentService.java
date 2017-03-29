@@ -9,4 +9,6 @@ public interface DocumentService {
     Optional<Document> get(Long id, User user);
 
     Document create(Document document, User user);
+
+    boolean exists(Long id);
 }
