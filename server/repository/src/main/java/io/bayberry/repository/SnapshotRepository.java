@@ -1,22 +1,17 @@
 package io.bayberry.repository;
 
-import io.bayberry.repository.model.*;
-import io.bayberry.repository.query.Keys;
 import com.mongodb.BasicDBList;
 import com.mongodb.DBObject;
-import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.data.mongodb.core.MongoTemplate;
+import io.bayberry.repository.model.*;
+import io.bayberry.repository.query.Keys;
 import org.springframework.data.mongodb.core.aggregation.Aggregation;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
+import org.springframework.stereotype.Repository;
 
-@org.springframework.stereotype.Repository
+@Repository
 public class SnapshotRepository extends AbstractMongoRepository<Snapshot, Long> {
-
-    public SnapshotRepository(ApplicationEventPublisher applicationEventPublisher, MongoTemplate mongoTemplate) {
-        super(applicationEventPublisher, mongoTemplate);
-    }
 
     @Override
     public Snapshot get(final Long id) {

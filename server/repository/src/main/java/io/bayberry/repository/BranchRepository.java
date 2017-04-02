@@ -3,10 +3,8 @@ package io.bayberry.repository;
 import io.bayberry.repository.model.Archive;
 import io.bayberry.repository.model.Branch;
 import io.bayberry.repository.model.Commit;
-import io.bayberry.repository.query.Keys;
 import io.bayberry.repository.model.User;
-import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.data.mongodb.core.MongoTemplate;
+import io.bayberry.repository.query.Keys;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
@@ -14,10 +12,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class BranchRepository extends AbstractMongoRepository<Branch, Long> {
-
-    public BranchRepository(ApplicationEventPublisher applicationEventPublisher, MongoTemplate mongoTemplate) {
-        super(applicationEventPublisher, mongoTemplate);
-    }
 
     public boolean exists(final String name, final Long documentId) {
         Query query = new Query();

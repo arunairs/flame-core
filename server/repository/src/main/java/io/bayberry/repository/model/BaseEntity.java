@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @Setter
 @ToString
 @JsonInclude(value = JsonInclude.Include.NON_NULL)
-public abstract class BaseModel<ID extends Serializable> implements Persistable<ID> {
+public abstract class BaseEntity<ID extends Serializable> implements Persistable<ID> {
     @Id
     private ID id;
     private LocalDateTime createdDateTime;

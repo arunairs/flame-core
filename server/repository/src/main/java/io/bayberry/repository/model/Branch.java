@@ -12,7 +12,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @ToString(callSuper = true)
 @Document(collection = "branches")
 @CompoundIndex(name = "unique_index", unique = true, def = "{'name':1,'documentRef._id':1}")
-public class Branch extends BaseModel<Long> implements Commit<Archive> {
+public class Branch extends BaseEntity<Long> implements Commit<Archive> {
     private String name;
     private Headers headers;
     private Archive archive;

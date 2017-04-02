@@ -1,17 +1,16 @@
 package io.bayberry.repository;
 
-import io.bayberry.repository.event.*;
+import com.mongodb.DBObject;
 import io.bayberry.repository.model.Persistable;
 import io.bayberry.repository.query.Keys;
-import com.mongodb.DBObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.mongodb.core.BulkOperations;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 
+import javax.annotation.PostConstruct;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
@@ -19,33 +18,23 @@ import java.util.List;
 import static org.springframework.data.mongodb.core.FindAndModifyOptions.options;
 
 public abstract class AbstractMongoRepository<T extends Persistable<ID>, ID extends Serializable> {
-    private final ApplicationEventPublisher applicationEventPublisher;
-    private final MongoTemplate mongoTemplate;
-    private Class<T> entityClass;
 
     @Autowired
-    public AbstractMongoRepository(ApplicationEventPublisher applicationEventPublisher, MongoTemplate mongoTemplate) {
-        this.applicationEventPublisher = applicationEventPublisher;
-        this.mongoTemplate = mongoTemplate;
-        this.init();
-    }
+    private MongoTemplate mongoTemplate;
+    private Class<T> entityClass;
 
     public T update(final T entity) {
         return update(new Query().addCriteria(Criteria.where(Keys.ID).is(entity.getId())), entity);
     }
 
     public T update(final Query query, final T entity) {
-        this.applicationEventPublisher.publishEvent(new BeforeEntityUpdatedEvent<>(entity));
         Update update = Update.fromDBObject((DBObject) getMongoTemplate().getConverter().convertToMongoType(entity));
         T result = update(query, update);
-        this.applicationEventPublisher.publishEvent(new AfterEntityUpdatedEvent<>(entity));
         return result;
     }
 
     public T update(final Query query, final Update update) {
-        this.applicationEventPublisher.publishEvent(new BeforeUpdateAppliedEvent(update));
         T result = getMongoTemplate().findAndModify(query, update, options().upsert(false).returnNew(true), this.entityClass);
-        this.applicationEventPublisher.publishEvent(new AfterUpdateAppliedEvent(update));
         return result;
     }
 
@@ -78,9 +67,7 @@ public abstract class AbstractMongoRepository<T extends Persistable<ID>, ID exte
     }
 
     public T insert(final T entity) {
-        this.applicationEventPublisher.publishEvent(new BeforeEntityCreatedEvent<>(entity));
         getMongoTemplate().insert(entity);
-        this.applicationEventPublisher.publishEvent(new AfterEntityCreatedEvent<>(entity));
         return entity;
     }
 
@@ -121,6 +108,7 @@ public abstract class AbstractMongoRepository<T extends Persistable<ID>, ID exte
         return mongoTemplate;
     }
 
+    @PostConstruct
     private void init() {
         this.entityClass = getEntityClass(this.getClass());
     }

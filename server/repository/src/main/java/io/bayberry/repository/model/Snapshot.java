@@ -12,7 +12,7 @@ import org.springframework.data.mongodb.core.index.CompoundIndex;
 @ToString(callSuper = true)
 @Document(collection = "snapshots")
 @CompoundIndex(name = "unique_index", unique = true, def = "{'name':1,'branchRef._id':1,'creatorRef._id':1}")
-public class Snapshot extends BaseModel<Long> implements Commit<Archive> {
+public class Snapshot extends BaseEntity<Long> implements Commit<Archive> {
     private String name;
     private Ref<Long> branchRef;
     private Headers headers;
