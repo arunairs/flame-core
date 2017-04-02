@@ -1,4 +1,4 @@
-package cn.blinkmind.flame.gradle.constant
+package io.bayberry.gradle.constant
 
 class TaskGroup {
     static final String CONFIG = 'Config'
