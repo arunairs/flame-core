@@ -1,6 +1,6 @@
-package cn.blinkmind.flame.common.protocol.http;
+package io.bayberry.common.protocol.http;
 
-import cn.blinkmind.flame.common.protocol.Response;
+import io.bayberry.common.protocol.Response;
 
 public class HttpResponse implements Response {
 }

@@ -1,4 +1,4 @@
-package cn.blinkmind.flame.common.protocol;
+package io.bayberry.common.protocol;
 
 public interface Request {
 }

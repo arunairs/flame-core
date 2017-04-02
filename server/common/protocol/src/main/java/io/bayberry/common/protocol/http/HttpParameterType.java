@@ -1,4 +1,4 @@
-package cn.blinkmind.flame.common.protocol.http;
+package io.bayberry.common.protocol.http;
 
 public class HttpParameterType {
 }

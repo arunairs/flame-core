@@ -1,6 +1,6 @@
 package cn.blinkmind.flame.core.common.patch;
 
-import cn.blinkmind.flame.common.util.JsonUtils;
+import io.bayberry.common.util.JsonUtils;
 
 import java.util.Map;
 

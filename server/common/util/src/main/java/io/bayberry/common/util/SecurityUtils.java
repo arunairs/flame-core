@@ -1,4 +1,4 @@
-package cn.blinkmind.flame.common.util;
+package io.bayberry.common.util;
 
 import org.apache.commons.codec.binary.Base64;
 

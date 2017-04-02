@@ -1,4 +1,4 @@
-package cn.blinkmind.flame.common.util;
+package io.bayberry.common.util;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JavaType;

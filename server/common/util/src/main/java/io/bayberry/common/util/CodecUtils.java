@@ -1,4 +1,4 @@
-package cn.blinkmind.flame.common.util;
+package io.bayberry.common.util;
 
 import com.google.common.base.Strings;
 import org.apache.commons.codec.digest.DigestUtils;
