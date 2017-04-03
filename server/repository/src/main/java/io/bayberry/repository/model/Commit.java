@@ -1,18 +1,32 @@
 package io.bayberry.repository.model;
 
-public interface Commit<T> {
-    String SN = "commitNumber";
-    String VERSION = "commitVersion";
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-    Headers getHeaders();
+import java.util.Objects;
 
-    T getPayload();
+@Getter
+@Setter
+@ToString(callSuper = true)
+@Document(collection = "commits")
+public class Commit extends BaseEntity<Long> {
+    private static final String COMMIT_ID = "id";
+    private static final String COMMIT_VERSION = "version";
+    private Headers headers;
+    private Archive payload;
+    private Ref<Long> branchRef;
 
     static boolean equals(Commit first, Commit second) {
-        return first.getHeaders().getString(SN).equals(second.getHeaders().getString(SN));
+        return Objects.equals(first.getCommitId(), second.getCommitId());
     }
 
-    default Long getVersion() {
-        return getHeaders().getLong(VERSION);
+    public Long getCommitVersion() {
+        return getHeaders().getLong(COMMIT_VERSION);
+    }
+
+    public String getCommitId() {
+        return getHeaders().getString(COMMIT_ID);
     }
 }
