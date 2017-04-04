@@ -46,9 +46,8 @@ public class BranchServiceImpl implements BranchService {
                     .orElseThrow(() -> Errors.BRANCH_ORIGIN_IS_NOT_FOUND);
             output.setOriginRef(new Ref<>(origin.getId()));
             output.setArchive(origin.getArchive());
-            output.getHeaders().putAll(origin.getHeaders());
+            output.getHeader().putAll(origin.getHeader());
         } else {
-            output.getHeaders().put(Commit.VERSION, 0L).put(Commit.SN, null);
         }
         branchRepository.insert(output);
         return output;
@@ -72,12 +71,5 @@ public class BranchServiceImpl implements BranchService {
         output.setName(branch.getName());
         branchRepository.update(output);
         return output;
-    }
-
-    @Override
-    public Branch updateArchive(Branch branch, Commit<Archive> commit, User user) {
-        Validator.validateThat(commit.getVersion(), ge(branch.getVersion()), orElseThrow(Errors.SNAPSHOT_IS_OUTDATED));
-        if (Commit.equals(commit, branch)) return branch;
-        return branchRepository.updateArchive(branch.getId(), commit, user);
     }
 }

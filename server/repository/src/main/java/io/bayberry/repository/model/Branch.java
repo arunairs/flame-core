@@ -1,6 +1,5 @@
 package io.bayberry.repository.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,12 +14,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @CompoundIndex(name = "unique_index", unique = true, def = "{'name':1,'documentRef._id':1}")
 public class Branch extends BaseEntity<Long> {
     private String name;
-    private Headers headers;
+    private Header header;
     private Archive archive;
     private Ref<Long> documentRef;
-
-    @JsonIgnore
-    private Long commitVersion;
 
     @JsonProperty(value = "origin")
     private Ref<Long> originRef;

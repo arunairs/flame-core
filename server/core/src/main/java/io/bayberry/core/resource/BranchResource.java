@@ -13,7 +13,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @RestController
 public class BranchResource extends AbstractResource {
-    private BranchService branchService;
+    private final BranchService branchService;
 
     @Autowired
     public BranchResource(BranchService branchService) {

@@ -14,7 +14,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 @RestController
 @RequestMapping(path = "documents")
 public class DocumentResource extends AbstractResource {
-    private DocumentService documentService;
+    private final DocumentService documentService;
 
     @Autowired
     public DocumentResource(DocumentService documentService) {
