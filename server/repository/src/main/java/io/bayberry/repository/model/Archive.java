@@ -11,6 +11,8 @@ import java.util.List;
 @Setter
 @ToString(callSuper = true)
 public class Archive extends AbstractArchive {
-    private List<Module> modules;
     private Request request;
+    private List<Node> structure;
+    private List<Module> modules;
+    private List<AbstractApi> apis;
 }
