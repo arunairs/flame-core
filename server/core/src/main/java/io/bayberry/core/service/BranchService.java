@@ -9,9 +9,9 @@ public interface BranchService {
 
     Optional<Branch> get(Long id, User user);
 
-    Branch create(Long documentId, Branch branch, User creator);
+    Branch create(String name, Long documentId, User user);
 
-    boolean exists(Long id, Long documentId);
+    Branch create(Branch branch, Long documentId, User user);
 
     void delete(Long id, User user);
 

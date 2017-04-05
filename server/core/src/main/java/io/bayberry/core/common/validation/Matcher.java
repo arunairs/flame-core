@@ -37,6 +37,10 @@ public abstract class Matcher<T> {
         return new NegativeMatcher<>(matcher);
     }
 
+    public static boolean not(boolean condition) {
+        return !condition;
+    }
+
     public static <T extends Number & Comparable<? extends Number>> Matcher<T> gt(T expected) {
         return new GreaterThanMatcher<>(expected);
     }

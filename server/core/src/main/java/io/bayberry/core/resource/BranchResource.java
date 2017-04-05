@@ -25,7 +25,7 @@ public class BranchResource extends AbstractResource {
     public ResponseEntity<Branch> create(@PathVariable(name = "documentId") Long documentId,
                                          @RequestBody Branch branch,
                                          @RequestAttribute(name = Attributes.USER) User user) {
-        Branch output = branchService.create(documentId, branch, user);
+        Branch output = branchService.create(branch, documentId, user);
         return ResponseEntity.created(ServletUriComponentsBuilder
                 .fromCurrentRequest().path("branches/{branchId}")
                 .buildAndExpand(output.getId()).toUri())

@@ -1,29 +1,29 @@
 package io.bayberry.core.service.impl;
 
+import io.bayberry.core.common.validation.Validator;
 import io.bayberry.core.exception.Errors;
 import io.bayberry.core.service.BranchService;
-import io.bayberry.core.service.DocumentService;
 import io.bayberry.repository.BranchRepository;
-import io.bayberry.core.common.validation.Validator;
-import io.bayberry.repository.model.*;
+import io.bayberry.repository.model.Branch;
+import io.bayberry.repository.model.Ref;
+import io.bayberry.repository.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-import static io.bayberry.core.common.validation.Matcher.*;
+import static io.bayberry.core.common.validation.Matcher.blank;
+import static io.bayberry.core.common.validation.Matcher.not;
 import static io.bayberry.core.common.validation.Validator.orElseThrow;
 import static io.bayberry.core.common.validation.Validator.validateThat;
 
 @Service
 public class BranchServiceImpl implements BranchService {
-    private BranchRepository branchRepository;
-    private DocumentService documentService;
+    private final BranchRepository branchRepository;
 
     @Autowired
-    public BranchServiceImpl(BranchRepository branchRepository, DocumentService documentService) {
+    public BranchServiceImpl(BranchRepository branchRepository) {
         this.branchRepository = branchRepository;
-        this.documentService = documentService;
     }
 
     @Override
@@ -32,30 +32,31 @@ public class BranchServiceImpl implements BranchService {
     }
 
     @Override
-    public Branch create(Long documentId, Branch branch, User creator) {
-        Validator.validateThat(branch.getName(), not(blank()), orElseThrow(Errors.BRANCH_NAME_IS_BLANK))
-                .and(branchRepository.exists(branch.getName(), documentId),
-                        orElseThrow(Errors.RESOURCE_ALREADY_EXISTS));
+    public Branch create(String name, Long documentId, User user) {
+        Branch branch = new Branch();
+        branch.setName(name);
+        return this.create(branch, documentId, user);
+    }
+
+    @Override
+    public Branch create(Branch branch, Long documentId, User user) {
+        validateThat(branch.getName(), not(blank()), orElseThrow(() -> Errors.BRANCH_NAME_IS_BLANK)).
+                and(not(branchRepository.exists(branch.getName(), documentId)),
+                        orElseThrow(() -> Errors.RESOURCE_ALREADY_EXISTS));
 
         Branch output = new Branch();
         output.setName(branch.getName());
-        output.setCreator(creator);
+        output.setCreator(user);
         output.setDocumentRef(new Ref<>(documentId));
         if (branch.hasOrigin()) {
-            Branch origin = this.get(branch.getOriginId(), creator)
+            Branch origin = this.get(branch.getOriginId(), user)
                     .orElseThrow(() -> Errors.BRANCH_ORIGIN_IS_NOT_FOUND);
             output.setOriginRef(new Ref<>(origin.getId()));
             output.setArchive(origin.getArchive());
             output.getHeader().putAll(origin.getHeader());
-        } else {
         }
         branchRepository.insert(output);
         return output;
-    }
-
-    @Override
-    public boolean exists(Long id, Long documentId) {
-        return branchRepository.exists(id, documentId);
     }
 
     @Override
