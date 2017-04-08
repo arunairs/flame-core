@@ -4,8 +4,8 @@ import io.bayberry.core.annotation.Token;
 import io.bayberry.core.constant.Attributes;
 import io.bayberry.core.exception.Errors;
 import io.bayberry.core.domain.Documents;
-import io.bayberry.repository.model.Document;
-import io.bayberry.repository.model.User;
+import io.bayberry.repository.entity.Document;
+import io.bayberry.repository.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,7 +13,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @RestController
 @RequestMapping(path = "documents")
-public class DocumentResource extends AbstractResource {
+public class DocumentResource {
     private final Documents documents;
 
     @Autowired

@@ -2,14 +2,14 @@ package io.bayberry.core.resource;
 
 import io.bayberry.core.annotation.Token;
 import io.bayberry.core.constant.Attributes;
-import io.bayberry.repository.model.Push;
-import io.bayberry.repository.model.User;
+import io.bayberry.repository.entity.Push;
+import io.bayberry.repository.entity.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-public class PushResource extends AbstractResource {
+public class PushResource {
 
     @Token
     @PostMapping(path = "documents/{documentId}/pushes")

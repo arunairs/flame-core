@@ -1,7 +1,7 @@
 package io.bayberry.core.resource;
 
 import io.bayberry.core.domain.Users;
-import io.bayberry.repository.model.User;
+import io.bayberry.repository.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,7 +12,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @RestController
 @RequestMapping(path = "users")
-public class UserResource extends AbstractResource {
+public class UserResource {
     private Users users;
 
     @Autowired

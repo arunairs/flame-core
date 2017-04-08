@@ -2,14 +2,14 @@ package io.bayberry.core.resource;
 
 import io.bayberry.core.annotation.Token;
 import io.bayberry.core.constant.Attributes;
-import io.bayberry.repository.model.Pull;
-import io.bayberry.repository.model.User;
+import io.bayberry.repository.entity.Pull;
+import io.bayberry.repository.entity.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-public class PullResource extends AbstractResource {
+public class PullResource {
 
     @Token
     @PostMapping(path = "documents/{documentId}/pulls")

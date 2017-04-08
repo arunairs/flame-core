@@ -3,8 +3,8 @@ package io.bayberry.core.resource;
 import io.bayberry.core.annotation.Token;
 import io.bayberry.core.bean.ObjectId;
 import io.bayberry.core.constant.Attributes;
-import io.bayberry.repository.model.Project;
-import io.bayberry.repository.model.User;
+import io.bayberry.repository.entity.Project;
+import io.bayberry.repository.entity.User;
 import io.bayberry.core.domain.Projects;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class ProjectResource extends AbstractResource {
-    
+public class ProjectResource {
+
     @Autowired
     private Projects projects;
 
