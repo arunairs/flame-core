@@ -1,4 +1,4 @@
-package io.bayberry.repository.model;
+package io.bayberry.repository.entity;
 
 import io.bayberry.common.protocol.Protocol;
 import io.bayberry.common.protocol.http.HttpRequest;

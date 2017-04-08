@@ -6,7 +6,7 @@ import io.bayberry.core.common.validation.Matcher;
 import io.bayberry.core.common.validation.Validator;
 import io.bayberry.core.exception.Errors;
 import io.bayberry.repository.UserRepository;
-import io.bayberry.repository.model.User;
+import io.bayberry.repository.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

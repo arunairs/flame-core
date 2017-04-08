@@ -1,6 +1,6 @@
 package io.bayberry.core.common.util;
 
-import io.bayberry.repository.model.Version;
+import io.bayberry.repository.entity.Version;
 
 public class VersionUtils
 {

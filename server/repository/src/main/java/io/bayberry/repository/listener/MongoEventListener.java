@@ -1,6 +1,6 @@
 package io.bayberry.repository.listener;
 
-import io.bayberry.repository.model.BaseEntity;
+import io.bayberry.repository.entity.BaseEntity;
 import io.bayberry.repository.util.IdGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.mapping.event.AbstractMongoEventListener;

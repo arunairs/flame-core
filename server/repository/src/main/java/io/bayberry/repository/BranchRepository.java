@@ -1,6 +1,6 @@
 package io.bayberry.repository;
 
-import io.bayberry.repository.model.Branch;
+import io.bayberry.repository.entity.Branch;
 import io.bayberry.repository.query.Keys;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;

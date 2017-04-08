@@ -1,7 +1,7 @@
 package io.bayberry.repository;
 
 import com.mongodb.DBObject;
-import io.bayberry.repository.model.Persistable;
+import io.bayberry.repository.entity.Persistable;
 import io.bayberry.repository.query.Keys;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.BulkOperations;

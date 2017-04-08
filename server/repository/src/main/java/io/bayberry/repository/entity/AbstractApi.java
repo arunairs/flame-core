@@ -1,4 +1,4 @@
-package io.bayberry.repository.model;
+package io.bayberry.repository.entity;
 
 import io.bayberry.common.protocol.Response;
 import com.fasterxml.jackson.annotation.JsonSubTypes;

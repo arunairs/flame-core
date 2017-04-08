@@ -1,4 +1,4 @@
-package io.bayberry.repository.model;
+package io.bayberry.repository.entity;
 
 import com.google.common.collect.Maps;
 import lombok.ToString;

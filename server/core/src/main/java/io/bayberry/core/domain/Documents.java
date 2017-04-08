@@ -2,11 +2,10 @@ package io.bayberry.core.domain;
 
 import io.bayberry.core.exception.Errors;
 import io.bayberry.repository.DocumentRepository;
-import io.bayberry.repository.model.Document;
-import io.bayberry.repository.model.Ref;
-import io.bayberry.repository.model.User;
+import io.bayberry.repository.entity.Document;
+import io.bayberry.repository.entity.Ref;
+import io.bayberry.repository.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;

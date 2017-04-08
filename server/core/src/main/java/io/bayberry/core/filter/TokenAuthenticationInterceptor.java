@@ -1,7 +1,7 @@
 package io.bayberry.core.filter;
 
 import io.bayberry.core.annotation.Token;
-import io.bayberry.repository.model.User;
+import io.bayberry.repository.entity.User;
 import org.springframework.web.method.HandlerMethod;
 
 import javax.servlet.http.HttpServletRequest;

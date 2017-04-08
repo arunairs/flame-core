@@ -1,7 +1,7 @@
 package io.bayberry.core.domain;
 
 import io.bayberry.core.bean.Diff;
-import io.bayberry.repository.model.Archive;
+import io.bayberry.repository.entity.Archive;
 import io.bayberry.core.common.util.DiffUtils;
 import org.apache.commons.lang3.ClassUtils;
 import org.springframework.stereotype.Service;
