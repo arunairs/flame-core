@@ -1,13 +1,13 @@
-package io.bayberry.core.service;
+package io.bayberry.core.domain;
 
 import io.bayberry.core.SpringBootTestNGContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.annotations.Test;
 
-public class ArchiveServiceTest extends SpringBootTestNGContext {
+public class ArchivesTest extends SpringBootTestNGContext {
 
     @Autowired
-    private ArchiveService archiveService;
+    private Archives archives;
 
     @Test
     public void testDiff() throws Exception {

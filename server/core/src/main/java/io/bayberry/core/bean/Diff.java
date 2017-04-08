@@ -7,7 +7,7 @@ import lombok.Getter;
 import java.util.Set;
 
 @Getter
-public class Diffs<E> {
+public class Diff<E> {
     @JsonProperty("added")
     private Set<E> addedCollection = Sets.newLinkedHashSet();
 
@@ -20,9 +20,9 @@ public class Diffs<E> {
     @JsonProperty("reordered")
     private Set<E> reorderedCollection = Sets.newLinkedHashSet();
 
-    public void add(DiffResult diffResult, E diff) {
-        if (diffResult == null) throw new NullPointerException();
-        switch (diffResult) {
+    public void add(DiffType diffType, E diff) {
+        if (diffType == null) throw new NullPointerException();
+        switch (diffType) {
             case ADDED:
                 getAddedCollection().add(diff);
                 break;
@@ -51,11 +51,11 @@ public class Diffs<E> {
                 && reorderedCollection.isEmpty();
     }
 
-    public static boolean isEmpty(Diffs diffs) {
-        return diffs.isEmpty();
+    public static boolean isEmpty(Diff diff) {
+        return diff.isEmpty();
     }
 
-    public static boolean isNotEmpty(Diffs diffs) {
-        return diffs.isNotEmpty();
+    public static boolean isNotEmpty(Diff diff) {
+        return diff.isNotEmpty();
     }
 }

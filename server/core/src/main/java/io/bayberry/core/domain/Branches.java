@@ -1,8 +1,7 @@
-package io.bayberry.core.service.impl;
+package io.bayberry.core.domain;
 
 import io.bayberry.core.common.validation.Validator;
 import io.bayberry.core.exception.Errors;
-import io.bayberry.core.service.BranchService;
 import io.bayberry.repository.BranchRepository;
 import io.bayberry.repository.model.Branch;
 import io.bayberry.repository.model.Ref;
@@ -18,27 +17,25 @@ import static io.bayberry.core.common.validation.Validator.orElseThrow;
 import static io.bayberry.core.common.validation.Validator.validateThat;
 
 @Service
-public class BranchServiceImpl implements BranchService {
+public class Branches {
+
     private final BranchRepository branchRepository;
 
     @Autowired
-    public BranchServiceImpl(BranchRepository branchRepository) {
+    public Branches(BranchRepository branchRepository) {
         this.branchRepository = branchRepository;
     }
 
-    @Override
     public Optional<Branch> get(Long id, User user) {
         return Optional.ofNullable(branchRepository.get(id));
     }
 
-    @Override
     public Branch create(String name, Long documentId, User user) {
         Branch branch = new Branch();
         branch.setName(name);
         return this.create(branch, documentId, user);
     }
 
-    @Override
     public Branch create(Branch branch, Long documentId, User user) {
         validateThat(branch.getName(), not(blank()), orElseThrow(() -> Errors.BRANCH_NAME_IS_BLANK)).
                 and(not(branchRepository.exists(branch.getName(), documentId)),
@@ -59,12 +56,10 @@ public class BranchServiceImpl implements BranchService {
         return output;
     }
 
-    @Override
     public void delete(Long id, User user) {
         branchRepository.delete(id);
     }
 
-    @Override
     public Branch updateProfile(Long id, Branch branch, User user) {
         Validator.validateThat(branch.getName(), not(blank()), orElseThrow(Errors.BRANCH_NAME_IS_BLANK));
 

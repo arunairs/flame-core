@@ -1,6 +1,6 @@
-package io.bayberry.core.service;
+package io.bayberry.core.domain;
 
-import io.bayberry.core.bean.Diffs;
+import io.bayberry.core.bean.Diff;
 import io.bayberry.repository.model.Archive;
 import io.bayberry.core.common.util.DiffUtils;
 import org.apache.commons.lang3.ClassUtils;
@@ -12,19 +12,19 @@ import java.util.Collection;
 import java.util.stream.Stream;
 
 @Service
-public class ArchiveService {
+public class Archives {
 
-    public Diffs<String> diff(Archive base, Archive head) {
+    public Diff<String> diff(Archive base, Archive head) {
         return resolveDiffs(base, head);
     }
 
-    private Diffs<String> resolveDiffs(Archive base, Archive head) {
-        Diffs<String> diffs = new Diffs<>();
-        resolveDiffs(diffs, "", Archive.class, base, head);
-        return diffs;
+    private Diff<String> resolveDiffs(Archive base, Archive head) {
+        Diff<String> diff = new Diff<>();
+        resolveDiffs(diff, "", Archive.class, base, head);
+        return diff;
     }
 
-    private <T> void resolveDiffs(Diffs<String> diffs, String path, Class<T> beanClass, T base, T head) {
+    private <T> void resolveDiffs(Diff<String> diff, String path, Class<T> beanClass, T base, T head) {
         if (beanClass == null) return;
         try {
             Stream.of(Introspector.getBeanInfo(beanClass).getPropertyDescriptors())
@@ -36,7 +36,7 @@ public class ArchiveService {
                         } else if (propertyType.isArray()) {
 
                         } else if (ClassUtils.isPrimitiveOrWrapper(propertyType) || propertyType.getPackage().getName().startsWith("java")) {
-                            diffs.add(DiffUtils.diff(descriptor.getName(), base, head), path.length() > 0 ? path + "/" + descriptor.getName() : descriptor.getName());
+                            diff.add(DiffUtils.diff(descriptor.getName(), base, head), path.length() > 0 ? path + "/" + descriptor.getName() : descriptor.getName());
                         } else {
 
                         }

@@ -1,6 +1,6 @@
 package io.bayberry.core.bean;
 
-public enum DiffResult {
+public enum DiffType {
     IDENTICAL,
     ADDED,
     REMOVED,

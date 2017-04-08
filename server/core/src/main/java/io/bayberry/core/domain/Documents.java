@@ -1,13 +1,12 @@
-package io.bayberry.core.service.impl;
+package io.bayberry.core.domain;
 
 import io.bayberry.core.exception.Errors;
-import io.bayberry.core.service.BranchService;
-import io.bayberry.core.service.DocumentService;
 import io.bayberry.repository.DocumentRepository;
 import io.bayberry.repository.model.Document;
 import io.bayberry.repository.model.Ref;
 import io.bayberry.repository.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -18,22 +17,20 @@ import static io.bayberry.core.common.validation.Validator.orElseThrow;
 import static io.bayberry.core.common.validation.Validator.validateThat;
 
 @Service
-public class DocumentServiceImpl implements DocumentService {
+public class Documents {
     private final DocumentRepository documentRepository;
-    private final BranchService branchService;
+    private final Branches branches;
 
     @Autowired
-    public DocumentServiceImpl(DocumentRepository documentRepository, BranchService branchService) {
+    public Documents(DocumentRepository documentRepository, Branches branches) {
         this.documentRepository = documentRepository;
-        this.branchService = branchService;
+        this.branches = branches;
     }
 
-    @Override
     public Optional<Document> get(Long id, User user) {
         return Optional.ofNullable(this.documentRepository.get(id));
     }
 
-    @Override
     public Document create(Document document, User user) {
         validateThat(document.getName(), not(blank()), orElseThrow(() -> Errors.DOCUMENT_NAME_IS_BLANK));
 
@@ -43,7 +40,7 @@ public class DocumentServiceImpl implements DocumentService {
         output.setCreatorRef(new Ref<>(user.getId()));
         this.documentRepository.insert(output);
 
-        this.branchService.create("master", output.getId(), user);
+        this.branches.create("master", output.getId(), user);
         return output;
     }
 }

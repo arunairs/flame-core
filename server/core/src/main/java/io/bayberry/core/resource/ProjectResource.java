@@ -5,7 +5,7 @@ import io.bayberry.core.bean.ObjectId;
 import io.bayberry.core.constant.Attributes;
 import io.bayberry.repository.model.Project;
 import io.bayberry.repository.model.User;
-import io.bayberry.core.service.ProjectService;
+import io.bayberry.core.domain.Projects;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ProjectResource extends AbstractResource {
     
     @Autowired
-    private ProjectService projectService;
+    private Projects projects;
 
     @Token
     @PostMapping(path = "projects")
