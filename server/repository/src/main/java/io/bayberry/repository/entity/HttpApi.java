@@ -12,7 +12,7 @@ import lombok.ToString;
 @Setter
 @ToString(callSuper = true)
 @JsonTypeName(value = Protocol.Values.HTTP)
-public class HttpApi extends AbstractApi {
+public class HttpApi extends Api {
     private HttpRequest request;
     private HttpResponse response;
 
