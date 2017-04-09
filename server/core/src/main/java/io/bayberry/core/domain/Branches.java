@@ -30,12 +30,6 @@ public class Branches {
         return Optional.ofNullable(branchRepository.get(id));
     }
 
-    public Branch create(String name, Long documentId, User user) {
-        Branch branch = new Branch();
-        branch.setName(name);
-        return this.create(branch, documentId, user);
-    }
-
     public Branch create(Branch branch, Long documentId, User user) {
         validateThat(branch.getName(), not(blank()), orElseThrow(() -> Errors.BRANCH_NAME_IS_BLANK)).
                 and(not(branchRepository.exists(branch.getName(), documentId)),
@@ -60,7 +54,7 @@ public class Branches {
         branchRepository.delete(id);
     }
 
-    public Branch updateProfile(Long id, Branch branch, User user) {
+    public Branch update(Long id, Branch branch, User user) {
         Validator.validateThat(branch.getName(), not(blank()), orElseThrow(Errors.BRANCH_NAME_IS_BLANK));
 
         Branch output = this.get(id, user).orElseThrow(() -> Errors.RESOURCE_NOT_FOUND);

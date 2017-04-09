@@ -2,6 +2,7 @@ package io.bayberry.core.domain;
 
 import io.bayberry.core.exception.Errors;
 import io.bayberry.repository.DocumentRepository;
+import io.bayberry.repository.entity.Branch;
 import io.bayberry.repository.entity.Document;
 import io.bayberry.repository.entity.Ref;
 import io.bayberry.repository.entity.User;
@@ -39,7 +40,7 @@ public class Documents {
         output.setCreatorRef(new Ref<>(user.getId()));
         this.documentRepository.insert(output);
 
-        this.branches.create("master", output.getId(), user);
+        this.branches.create(Branch.builder().name("master").build(), output.getId(), user);
         return output;
     }
 }

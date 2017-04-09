@@ -33,9 +33,9 @@ public class DocumentResource {
     }
 
     @Token
-    @GetMapping(path = "{documentId}")
-    public ResponseEntity<Document> get(@PathVariable(name = "documentId") Long documentId,
+    @GetMapping(path = "{id}")
+    public ResponseEntity<Document> get(@PathVariable(name = "id") Long id,
                                         @RequestAttribute(name = Attributes.USER) User user) {
-        return ResponseEntity.ok(documents.get(documentId, user).orElseThrow(() -> Errors.RESOURCE_NOT_FOUND));
+        return ResponseEntity.ok(documents.get(id, user).orElseThrow(() -> Errors.RESOURCE_NOT_FOUND));
     }
 }
