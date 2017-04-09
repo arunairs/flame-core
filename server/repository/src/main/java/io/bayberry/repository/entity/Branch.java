@@ -1,15 +1,15 @@
 package io.bayberry.repository.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.springframework.data.mongodb.core.index.CompoundIndex;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Getter
 @Setter
+@Builder
 @ToString(callSuper = true)
+@NoArgsConstructor
 @Document(collection = "branches")
 @CompoundIndex(name = "unique_index", unique = true, def = "{'name':1,'documentRef._id':1}")
 public class Branch extends BaseEntity<Long> {

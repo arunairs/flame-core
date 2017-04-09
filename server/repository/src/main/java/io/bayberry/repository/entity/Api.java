@@ -14,12 +14,7 @@ import org.springframework.data.annotation.Id;
 @ToString(callSuper = true)
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "protocol")
 @JsonSubTypes({@JsonSubTypes.Type(value = HttpApi.class)})
-public abstract class Api implements Persistable<Long> {
-    @Id
-    private Long id;
-    private String name;
-    private String description;
-    private Ref<Long> parent;
+public abstract class Api extends Node {
 
     public abstract String getProtocol();
 
