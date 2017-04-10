@@ -59,7 +59,7 @@ public class BranchService {
 
         Branch output = this.get(id, user).orElseThrow(() -> Errors.RESOURCE_NOT_FOUND);
         output.setName(branch.getName());
-        branchRepository.update(output);
+        branchRepository.updateAndReturn(output);
         return output;
     }
 

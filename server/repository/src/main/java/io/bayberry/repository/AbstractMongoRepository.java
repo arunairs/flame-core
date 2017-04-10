@@ -1,6 +1,7 @@
 package io.bayberry.repository;
 
 import com.mongodb.DBObject;
+import com.mongodb.WriteResult;
 import io.bayberry.repository.entity.Persistable;
 import io.bayberry.repository.query.Keys;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,19 +23,6 @@ public abstract class AbstractMongoRepository<T extends Persistable<ID>, ID exte
     @Autowired
     private MongoTemplate mongoTemplate;
     private Class<T> entityClass;
-
-    public T update(final T entity) {
-        return update(Query.query(Criteria.where(Keys.ID).is(entity.getId())), entity);
-    }
-
-    public T update(final Query query, final T entity) {
-        Update update = Update.fromDBObject((DBObject) getMongoTemplate().getConverter().convertToMongoType(entity));
-        return update(query, update);
-    }
-
-    public T update(final Query query, final Update update) {
-        return getMongoTemplate().findAndModify(query, update, options().upsert(false).returnNew(true), this.entityClass);
-    }
 
     public T get(final ID id) {
         return id == null ? null : getMongoTemplate().findById(id, this.entityClass);
@@ -74,6 +62,32 @@ public abstract class AbstractMongoRepository<T extends Persistable<ID>, ID exte
             insert(entity);
         }
         return entities;
+    }
+
+    public T updateAndReturn(final T entity) {
+        return updateAndReturn(Query.query(Criteria.where(Keys.ID).is(entity.getId())), entity);
+    }
+
+    public T updateAndReturn(final Query query, final T entity) {
+        Update update = Update.fromDBObject((DBObject) getMongoTemplate().getConverter().convertToMongoType(entity));
+        return updateAndReturn(query, update);
+    }
+
+    public T updateAndReturn(final Query query, final Update update) {
+        return getMongoTemplate().findAndModify(query, update, options().upsert(false).returnNew(true), this.entityClass);
+    }
+
+    public WriteResult update(final T entity) {
+        return update(Query.query(Criteria.where(Keys.ID).is(entity.getId())), entity);
+    }
+
+    public WriteResult update(final Query query, final T entity) {
+        Update update = Update.fromDBObject((DBObject) getMongoTemplate().getConverter().convertToMongoType(entity));
+        return update(query, update);
+    }
+
+    public WriteResult update(final Query query, final Update update) {
+        return getMongoTemplate().updateMulti(query, update, this.entityClass);
     }
 
     public long count(final Query query) {
