@@ -4,15 +4,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
 
 @Getter
 @Setter
-@ToString
-public abstract class Node implements Persistable<Long> {
-    @Id
-    private Long id;
+@ToString(callSuper = true)
+public abstract class Node extends BaseEntity<Long> {
     private String name;
     private String description;
     private Ref<Long> parent;

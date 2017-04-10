@@ -1,4 +1,4 @@
-package io.bayberry.core.domain;
+package io.bayberry.core.service;
 
 import io.bayberry.core.common.validation.Validator;
 import io.bayberry.core.exception.Errors;
@@ -17,12 +17,12 @@ import static io.bayberry.core.common.validation.Validator.orElseThrow;
 import static io.bayberry.core.common.validation.Validator.validateThat;
 
 @Service
-public class Branches {
+public class BranchService {
 
     private final BranchRepository branchRepository;
 
     @Autowired
-    public Branches(BranchRepository branchRepository) {
+    public BranchService(BranchRepository branchRepository) {
         this.branchRepository = branchRepository;
     }
 
@@ -61,5 +61,9 @@ public class Branches {
         output.setName(branch.getName());
         branchRepository.update(output);
         return output;
+    }
+
+    public boolean exists(Long id) {
+        return branchRepository.exists(id);
     }
 }

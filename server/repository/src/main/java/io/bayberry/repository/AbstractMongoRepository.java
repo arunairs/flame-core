@@ -24,46 +24,44 @@ public abstract class AbstractMongoRepository<T extends Persistable<ID>, ID exte
     private Class<T> entityClass;
 
     public T update(final T entity) {
-        return update(new Query().addCriteria(Criteria.where(Keys.ID).is(entity.getId())), entity);
+        return update(Query.query(Criteria.where(Keys.ID).is(entity.getId())), entity);
     }
 
     public T update(final Query query, final T entity) {
         Update update = Update.fromDBObject((DBObject) getMongoTemplate().getConverter().convertToMongoType(entity));
-        T result = update(query, update);
-        return result;
+        return update(query, update);
     }
 
     public T update(final Query query, final Update update) {
-        T result = getMongoTemplate().findAndModify(query, update, options().upsert(false).returnNew(true), this.entityClass);
-        return result;
+        return getMongoTemplate().findAndModify(query, update, options().upsert(false).returnNew(true), this.entityClass);
     }
 
     public T get(final ID id) {
         return id == null ? null : getMongoTemplate().findById(id, this.entityClass);
     }
 
-    public T findOne(final Query query) {
+    public T get(final Query query) {
         return getMongoTemplate().findOne(query, this.entityClass);
     }
 
     public boolean exists(final ID id) {
-        return getMongoTemplate().exists(new Query().addCriteria(Criteria.where(Keys.ID).is(id)), this.entityClass);
+        return getMongoTemplate().exists(Query.query(Criteria.where(Keys.ID).is(id)), this.entityClass);
     }
 
     public boolean exists(final Query query) {
         return getMongoTemplate().exists(query, this.entityClass);
     }
 
-    public List<T> findAll(final Query query) {
+    public List<T> list(final Query query) {
         return getMongoTemplate().find(query, this.entityClass);
     }
 
-    public List<T> findAll() {
+    public List<T> list() {
         return getMongoTemplate().findAll(this.entityClass);
     }
 
-    public List<T> findAll(final Iterable<ID> ids) {
-        return getMongoTemplate().find(new Query().addCriteria(Criteria.where(Keys.ID).in(ids)), this.entityClass);
+    public List<T> list(final Iterable<ID> ids) {
+        return getMongoTemplate().find(Query.query(Criteria.where(Keys.ID).in(ids)), this.entityClass);
     }
 
     public T insert(final T entity) {
@@ -83,7 +81,7 @@ public abstract class AbstractMongoRepository<T extends Persistable<ID>, ID exte
     }
 
     public void delete(final ID id) {
-        getMongoTemplate().remove(new Query().addCriteria(Criteria.where("_id").is(id)), this.entityClass);
+        getMongoTemplate().remove(Query.query(Criteria.where("_id").is(id)), this.entityClass);
     }
 
     public void delete(final T entity) {

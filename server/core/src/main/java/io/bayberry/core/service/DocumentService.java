@@ -1,4 +1,4 @@
-package io.bayberry.core.domain;
+package io.bayberry.core.service;
 
 import io.bayberry.core.exception.Errors;
 import io.bayberry.repository.DocumentRepository;
@@ -17,14 +17,14 @@ import static io.bayberry.core.common.validation.Validator.orElseThrow;
 import static io.bayberry.core.common.validation.Validator.validateThat;
 
 @Service
-public class Documents {
+public class DocumentService {
     private final DocumentRepository documentRepository;
-    private final Branches branches;
+    private final BranchService branchService;
 
     @Autowired
-    public Documents(DocumentRepository documentRepository, Branches branches) {
+    public DocumentService(DocumentRepository documentRepository, BranchService branchService) {
         this.documentRepository = documentRepository;
-        this.branches = branches;
+        this.branchService = branchService;
     }
 
     public Optional<Document> get(Long id, User user) {
@@ -40,7 +40,7 @@ public class Documents {
         output.setCreatorRef(new Ref<>(user.getId()));
         this.documentRepository.insert(output);
 
-        this.branches.create(Branch.builder().name("master").build(), output.getId(), user);
+        this.branchService.create(Branch.builder().name("master").build(), output.getId(), user);
         return output;
     }
 }

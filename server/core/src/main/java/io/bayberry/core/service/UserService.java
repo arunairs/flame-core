@@ -1,4 +1,4 @@
-package io.bayberry.core.domain;
+package io.bayberry.core.service;
 
 import io.bayberry.common.util.CodecUtils;
 import io.bayberry.common.util.SecurityUtils;
@@ -13,11 +13,11 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class Users {
+public class UserService {
     private final UserRepository userRepository;
 
     @Autowired
-    public Users(UserRepository userRepository) {
+    public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 

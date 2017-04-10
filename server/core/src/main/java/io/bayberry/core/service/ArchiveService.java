@@ -1,4 +1,4 @@
-package io.bayberry.core.domain;
+package io.bayberry.core.service;
 
 import io.bayberry.core.bean.Diff;
 import io.bayberry.repository.entity.Archive;
@@ -12,7 +12,7 @@ import java.util.Collection;
 import java.util.stream.Stream;
 
 @Service
-public class Archives {
+public class ArchiveService {
 
     public Diff<String> diff(Archive base, Archive head) {
         return resolveDiffs(base, head);

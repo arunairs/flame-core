@@ -12,8 +12,4 @@ import java.io.Serializable;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class Ref<ID extends Serializable> {
     private ID id;
-
-    public Ref(Persistable<ID> persistable) {
-        this(persistable.getId());
-    }
 }

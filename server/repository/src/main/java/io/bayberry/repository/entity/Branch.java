@@ -10,6 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Builder
 @ToString(callSuper = true)
 @NoArgsConstructor
+@AllArgsConstructor
 @Document(collection = "branches")
 @CompoundIndex(name = "unique_index", unique = true, def = "{'name':1,'documentRef._id':1}")
 public class Branch extends BaseEntity<Long> {
