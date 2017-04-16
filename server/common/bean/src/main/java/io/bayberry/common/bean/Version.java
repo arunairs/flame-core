@@ -1,4 +1,4 @@
-package io.bayberry.repository.entity;
+package io.bayberry.common.bean;
 
 import lombok.*;
 
@@ -8,7 +8,12 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class Version {
+
     private Integer major;
     private Integer minor;
     private Integer patch;
+
+    public static boolean isValid(Version version) {
+        return version.getMajor() != null && version.getMinor() != null && version.getPatch() != null;
+    }
 }

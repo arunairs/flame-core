@@ -1,13 +1,13 @@
-package io.bayberry.repository.entity;
+package io.bayberry.common.bean;
 
-import com.google.common.collect.Maps;
 import lombok.ToString;
 
 import java.util.HashMap;
 
 @ToString
 public class Header {
-    private HashMap<String, Object> hashMap = Maps.newHashMap();
+
+    private HashMap<String, Object> hashMap = new HashMap<>();
 
     public Boolean getBoolean(String key) {
         return this.getBoolean(key, null);
