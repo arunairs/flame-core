@@ -1,4 +1,4 @@
-package io.bayberry.core.bean;
+package io.bayberry.core.domain;
 
 public enum DiffType {
     IDENTICAL,

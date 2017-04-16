@@ -1,10 +1,9 @@
-package io.bayberry.core.common.util;
+package io.bayberry.core.domain;
 
-import io.bayberry.core.bean.DiffType;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.reflect.FieldUtils;
 
-public class DiffUtils {
+public class DiffResolver {
 
     public static <T> DiffType diff(String fieldName, T base, T head) {
         try {

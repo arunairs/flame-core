@@ -1,4 +1,4 @@
-package io.bayberry.core.bean;
+package io.bayberry.core.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.collect.Sets;
