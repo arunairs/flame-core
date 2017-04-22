@@ -1,7 +1,8 @@
 package io.bayberry.core.filter;
 
 import io.bayberry.core.annotation.Token;
-import io.bayberry.repository.entity.User;
+import io.bayberry.core.authentication.Auth;
+import io.bayberry.core.constant.Attributes;
 import org.springframework.web.method.HandlerMethod;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,9 +33,8 @@ public class TokenAuthenticationInterceptor extends AbstractAuthenticationInterc
 
     @Override
     protected void requestAccepted(HttpServletRequest request, HttpServletResponse response) {
-        User user = new User();
-        user.setId(842745207869931520L);
-        request.setAttribute("user", user);
+        Auth auth = new Auth(842745207869931520L);
+        request.setAttribute(Attributes.AUTH, auth);
     }
 
     @Override
