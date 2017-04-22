@@ -1,6 +1,8 @@
 package io.bayberry.core.service;
 
 import io.bayberry.core.authentication.Auth;
+import io.bayberry.core.event.EventPublisher;
+import io.bayberry.core.event.DocumentCreatedEvent;
 import io.bayberry.repository.DocumentRepository;
 import io.bayberry.repository.model.Branch;
 import io.bayberry.repository.model.Document;
@@ -13,13 +15,12 @@ import java.util.Optional;
 public class DocumentService {
 
     private final DocumentRepository documentRepository;
-    private final BranchService branchService;
+    private final EventPublisher eventPublisher;
 
     @Autowired
-    public DocumentService(DocumentRepository documentRepository,
-                           BranchService branchService) {
+    public DocumentService(DocumentRepository documentRepository, EventPublisher eventPublisher) {
         this.documentRepository = documentRepository;
-        this.branchService = branchService;
+        this.eventPublisher = eventPublisher;
     }
 
     public Optional<Document> get(Long id, Auth auth) {
@@ -29,13 +30,7 @@ public class DocumentService {
     public Document create(Document document, Auth auth) {
         document.setCreatorId(auth.getUserId());
         this.documentRepository.insert(document);
-        this.createFirstBranch(document.getId(), auth);
+        this.eventPublisher.publish(new DocumentCreatedEvent(document, auth));
         return document;
-    }
-
-    private void createFirstBranch(Long documentId, Auth auth) {
-        Branch branch = new Branch();
-        branch.setName("master");
-        this.branchService.create(branch, documentId, auth);
     }
 }
