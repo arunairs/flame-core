@@ -1,46 +1,41 @@
 package io.bayberry.core.service;
 
-import io.bayberry.core.exception.Errors;
+import io.bayberry.core.authentication.Auth;
 import io.bayberry.repository.DocumentRepository;
-import io.bayberry.repository.entity.Branch;
-import io.bayberry.repository.entity.Document;
-import io.bayberry.repository.entity.Ref;
-import io.bayberry.repository.entity.User;
+import io.bayberry.repository.model.Branch;
+import io.bayberry.repository.model.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-import static io.bayberry.core.common.validation.Matcher.blank;
-import static io.bayberry.core.common.validation.Matcher.not;
-import static io.bayberry.core.common.validation.Validator.orElseThrow;
-import static io.bayberry.core.common.validation.Validator.validateThat;
-
 @Service
 public class DocumentService {
+
     private final DocumentRepository documentRepository;
     private final BranchService branchService;
 
     @Autowired
-    public DocumentService(DocumentRepository documentRepository, BranchService branchService) {
+    public DocumentService(DocumentRepository documentRepository,
+                           BranchService branchService) {
         this.documentRepository = documentRepository;
         this.branchService = branchService;
     }
 
-    public Optional<Document> get(Long id, User user) {
+    public Optional<Document> get(Long id, Auth auth) {
         return Optional.ofNullable(this.documentRepository.get(id));
     }
 
-    public Document create(Document document, User user) {
-        validateThat(document.getName(), not(blank()), orElseThrow(() -> Errors.DOCUMENT_NAME_IS_BLANK));
+    public Document create(Document document, Auth auth) {
+        document.setCreatorId(auth.getUserId());
+        this.documentRepository.insert(document);
+        this.createFirstBranch(document.getId(), auth);
+        return document;
+    }
 
-        Document output = new Document();
-        output.setName(document.getName());
-        output.setDescription(document.getDescription());
-        output.setCreatorRef(new Ref<>(user.getId()));
-        this.documentRepository.insert(output);
-
-        this.branchService.create(Branch.builder().name("master").build(), output.getId(), user);
-        return output;
+    private void createFirstBranch(Long documentId, Auth auth) {
+        Branch branch = new Branch();
+        branch.setName("master");
+        this.branchService.create(branch, documentId, auth);
     }
 }
