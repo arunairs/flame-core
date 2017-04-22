@@ -26,14 +26,16 @@ public class BranchController {
     @Token
     @PostMapping(path = "documents/{documentId}/branches")
     public BranchResponse create(@PathVariable(name = "documentId") Long documentId,
-                                 @Valid @RequestBody BranchRequest request, User user) {
+                                 @Valid @RequestBody BranchRequest request,
+                                 User user) {
         return new BranchResponse(branchService.create(branchConverter.convert(request), documentId, user));
     }
 
     @Token
     @PutMapping(path = "branches/{id}")
     public BranchResponse update(@PathVariable(name = "id") Long id,
-                                 @Valid @RequestBody BranchRequest request, User user) {
+                                 @Valid @RequestBody BranchRequest request,
+                                 User user) {
         request.setId(id);
         return new BranchResponse(branchService.update(branchConverter.convert(request), user));
     }
