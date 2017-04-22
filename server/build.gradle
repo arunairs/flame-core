@@ -1,3 +1,11 @@
 ext {
     archivePrefix = rootProject.name
 }
+
+subprojects { project ->
+    dependencies {
+        compile(
+                "org.projectlombok:lombok:$libs.lombok.version"
+        )
+    }
+}

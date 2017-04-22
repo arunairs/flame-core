@@ -1,6 +1,5 @@
 package io.bayberry.repository.model;
 
-import io.bayberry.common.bean.Header;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.mongodb.core.index.CompoundIndex;

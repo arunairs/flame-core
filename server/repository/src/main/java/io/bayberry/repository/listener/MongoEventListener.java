@@ -1,6 +1,6 @@
 package io.bayberry.repository.listener;
 
-import io.bayberry.repository.entity.BaseEntity;
+import io.bayberry.repository.model.BaseModel;
 import io.bayberry.repository.util.IdGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.mapping.event.AbstractMongoEventListener;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDateTime;
 
 @Component
-public class MongoEventListener extends AbstractMongoEventListener<BaseEntity<Long>> {
+public class MongoEventListener extends AbstractMongoEventListener<BaseModel> {
     private IdGenerator<Long> idGenerator;
 
     @Autowired
@@ -19,17 +19,17 @@ public class MongoEventListener extends AbstractMongoEventListener<BaseEntity<Lo
     }
 
     @Override
-    public void onBeforeConvert(BeforeConvertEvent<BaseEntity<Long>> event) {
+    public void onBeforeConvert(BeforeConvertEvent<BaseModel> event) {
         super.onBeforeConvert(event);
 
-        BaseEntity<Long> entity = event.getSource();
-        if (entity.getId() == null) {
-            entity.setId(idGenerator.nextId());
+        BaseModel model = event.getSource();
+        if (model.getId() == null) {
+            model.setId(idGenerator.nextId());
         }
-        if (entity.getCreatedDateTime() == null) {
-            entity.setCreatedDateTime(LocalDateTime.now());
+        if (model.getCreatedDateTime() == null) {
+            model.setCreatedDateTime(LocalDateTime.now());
         } else {
-            entity.setModifiedDateTime(LocalDateTime.now());
+            model.setModifiedDateTime(LocalDateTime.now());
         }
     }
 }

@@ -1,4 +1,4 @@
-package io.bayberry.common.bean;
+package io.bayberry.repository.model;
 
 import lombok.*;
 
