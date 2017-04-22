@@ -6,6 +6,7 @@ dependencies {
             "org.apache.commons:commons-lang3:$libs.commons.lang.version",
             "commons-codec:commons-codec:$libs.commons.codec.version",
             "com.fasterxml.jackson.core:jackson-core:$libs.jackson.version",
-            "com.fasterxml.jackson.core:jackson-databind:$libs.jackson.version"
+            "com.fasterxml.jackson.core:jackson-databind:$libs.jackson.version",
+            "cglib:cglib:3.2.5"
     )
 }
