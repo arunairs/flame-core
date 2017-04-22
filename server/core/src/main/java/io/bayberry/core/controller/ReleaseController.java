@@ -1,7 +1,7 @@
-package io.bayberry.core.resource;
+package io.bayberry.core.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class ReleaseResource {
+public class ReleaseController {
 }

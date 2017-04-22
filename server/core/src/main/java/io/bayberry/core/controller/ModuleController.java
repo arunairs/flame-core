@@ -1,31 +1,31 @@
-package io.bayberry.core.resource;
+package io.bayberry.core.controller;
 
 import io.bayberry.core.annotation.Token;
 import io.bayberry.core.constant.Attributes;
 import io.bayberry.core.service.ModuleService;
-import io.bayberry.repository.entity.Module;
-import io.bayberry.repository.entity.User;
+import io.bayberry.repository.model.Module;
+import io.bayberry.repository.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @RestController
-public class ModuleResource {
+public class ModuleController {
 
     private final ModuleService moduleService;
 
     @Autowired
-    public ModuleResource(ModuleService moduleService) {
+    public ModuleController(ModuleService moduleService) {
         this.moduleService = moduleService;
     }
 
     @Token
     @PostMapping(path = "branches/{branchId}/modules")
     public ResponseEntity<Module> create(@PathVariable(name = "branchId") Long branchId,
-                                         @RequestBody Module module,
-                                         @RequestAttribute(name = Attributes.USER) User user) {
-        Module output = moduleService.create(module, branchId, user);
+                                         @RequestBody Module moduleEntity,
+                                         @RequestAttribute(name = Attributes.AUTH) User userEntity) {
+        Module output = moduleService.create(moduleEntity, branchId, userEntity);
         return ResponseEntity.created(ServletUriComponentsBuilder
                 .fromCurrentRequest().path("branches/{branchId}/modules/{moduleId}")
                 .buildAndExpand(branchId, output.getId()).toUri())

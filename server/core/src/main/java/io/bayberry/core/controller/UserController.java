@@ -1,7 +1,7 @@
-package io.bayberry.core.resource;
+package io.bayberry.core.controller;
 
 import io.bayberry.core.service.UserService;
-import io.bayberry.repository.entity.User;
+import io.bayberry.repository.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,17 +12,17 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @RestController
 @RequestMapping(path = "users")
-public class UserResource {
+public class UserController {
     private UserService userService;
 
     @Autowired
-    public UserResource(UserService userService) {
+    public UserController(UserService userService) {
         this.userService = userService;
     }
 
     @PostMapping
-    public ResponseEntity<User> create(@RequestBody User user) {
-        User output = userService.create(user);
+    public ResponseEntity<User> create(@RequestBody User userEntity) {
+        User output = userService.create(userEntity);
         return ResponseEntity.created(ServletUriComponentsBuilder
                 .fromCurrentRequest().path("/{userId}")
                 .buildAndExpand(output.getId()).toUri())
