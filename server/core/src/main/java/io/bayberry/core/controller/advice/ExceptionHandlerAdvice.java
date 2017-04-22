@@ -1,4 +1,4 @@
-package io.bayberry.core.exception.handler;
+package io.bayberry.core.controller.advice;
 
 import io.bayberry.core.exception.BadRequestException;
 import io.bayberry.core.exception.Error;
@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
-public class GlobalExceptionHandler
+public class ExceptionHandlerAdvice
 {
     @ExceptionHandler(value = BadRequestException.class)
     private ResponseEntity<Error> handleBadRequestException(BadRequestException exception)
