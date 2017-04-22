@@ -1,4 +1,4 @@
-package io.bayberry.core.auth;
+package io.bayberry.core.authentication;
 
 import io.bayberry.core.constant.Attributes;
 import org.springframework.core.MethodParameter;

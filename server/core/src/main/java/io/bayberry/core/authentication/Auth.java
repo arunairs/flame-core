@@ -1,4 +1,4 @@
-package io.bayberry.core.auth;
+package io.bayberry.core.authentication;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
