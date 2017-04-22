@@ -29,7 +29,7 @@ public class DocumentService {
     public Document create(Document document, Auth auth) {
         document.setCreatorId(auth.getUserId());
         this.documentRepository.insert(document);
-        this.eventPublisher.publish(new DocumentCreatedEvent(document, auth));
+        this.eventPublisher.publish(new DocumentCreatedEvent(document));
         return document;
     }
 }
