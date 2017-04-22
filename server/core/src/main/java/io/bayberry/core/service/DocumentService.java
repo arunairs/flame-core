@@ -1,10 +1,9 @@
 package io.bayberry.core.service;
 
 import io.bayberry.core.authentication.Auth;
-import io.bayberry.core.event.EventPublisher;
 import io.bayberry.core.event.DocumentCreatedEvent;
+import io.bayberry.core.event.EventPublisher;
 import io.bayberry.repository.DocumentRepository;
-import io.bayberry.repository.model.Branch;
 import io.bayberry.repository.model.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
