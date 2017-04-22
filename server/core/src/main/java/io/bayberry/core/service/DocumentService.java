@@ -1,6 +1,6 @@
 package io.bayberry.core.service;
 
-import io.bayberry.core.authentication.Auth;
+import io.bayberry.core.authentication.User;
 import io.bayberry.core.event.DocumentCreatedEvent;
 import io.bayberry.core.event.EventPublisher;
 import io.bayberry.repository.DocumentRepository;
@@ -22,12 +22,12 @@ public class DocumentService {
         this.eventPublisher = eventPublisher;
     }
 
-    public Optional<Document> get(Long id, Auth auth) {
+    public Optional<Document> get(Long id, User user) {
         return Optional.ofNullable(this.documentRepository.get(id));
     }
 
-    public Document create(Document document, Auth auth) {
-        document.setCreatorId(auth.getUserId());
+    public Document create(Document document, User user) {
+        document.setCreatorId(user.getId());
         this.documentRepository.insert(document);
         this.eventPublisher.publish(new DocumentCreatedEvent(document));
         return document;

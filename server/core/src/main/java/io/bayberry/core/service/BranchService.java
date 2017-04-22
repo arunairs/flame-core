@@ -1,10 +1,9 @@
 package io.bayberry.core.service;
 
-import io.bayberry.core.authentication.Auth;
+import io.bayberry.core.authentication.User;
 import io.bayberry.core.exception.Errors;
 import io.bayberry.repository.BranchRepository;
 import io.bayberry.repository.model.Branch;
-import io.bayberry.repository.model.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,21 +19,21 @@ public class BranchService {
         this.branchRepository = branchRepository;
     }
 
-    public Optional<Branch> get(Long id, Auth auth) {
+    public Optional<Branch> get(Long id, User user) {
         return Optional.ofNullable(branchRepository.get(id));
     }
 
-    public Branch create(Branch branch, Long documentId, Auth auth) {
+    public Branch create(Branch branch, Long documentId, User user) {
         if (branchRepository.exists(branch.getName(), documentId)) {
             throw Errors.RESOURCE_ALREADY_EXISTS;
         }
 
         Branch output = new Branch();
         output.setName(branch.getName());
-        output.setCreatorId(auth.getUserId());
+        output.setCreatorId(user.getId());
         output.setDocumentId(documentId);
         if (branch.getOriginId() != null) {
-            Branch origin = this.get(branch.getOriginId(), auth)
+            Branch origin = this.get(branch.getOriginId(), user)
                     .orElseThrow(() -> Errors.BRANCH_ORIGIN_IS_NOT_FOUND);
             output.setOriginId(origin.getId());
             output.setArchive(origin.getArchive());
@@ -44,11 +43,11 @@ public class BranchService {
         return output;
     }
 
-    public void delete(Long id, Auth auth) {
+    public void delete(Long id, User user) {
         branchRepository.delete(id);
     }
 
-    public Branch update(Branch branch, Auth auth) {
+    public Branch update(Branch branch, User user) {
         if (!this.exists(branch.getId())) throw Errors.RESOURCE_NOT_FOUND;
         return branchRepository.updateAndReturn(branch);
     }

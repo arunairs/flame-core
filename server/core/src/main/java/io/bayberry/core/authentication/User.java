@@ -5,8 +5,7 @@ import lombok.Getter;
 
 @Getter
 @Builder
-public class Auth {
+public class User {
 
-    private String token;
-    private User user;
+    private Long id;
 }

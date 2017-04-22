@@ -1,7 +1,7 @@
 package io.bayberry.core.controller;
 
 import io.bayberry.core.annotation.Token;
-import io.bayberry.core.authentication.Auth;
+import io.bayberry.core.authentication.User;
 import io.bayberry.core.dto.DocumentRequest;
 import io.bayberry.core.dto.DocumentResponse;
 import io.bayberry.core.dto.converter.DocumentConverter;
@@ -27,13 +27,13 @@ public class DocumentController {
 
     @Token
     @PostMapping
-    public DocumentResponse create(@Valid @RequestBody DocumentRequest request, Auth auth) {
-        return new DocumentResponse(documentService.create(documentConverter.convert(request), auth));
+    public DocumentResponse create(@Valid @RequestBody DocumentRequest request, User user) {
+        return new DocumentResponse(documentService.create(documentConverter.convert(request), user));
     }
 
     @Token
     @GetMapping(path = "{id}")
-    public DocumentResponse get(@PathVariable(name = "id") Long id, Auth auth) {
-        return new DocumentResponse(documentService.get(id, auth).orElseThrow(() -> Errors.RESOURCE_NOT_FOUND));
+    public DocumentResponse get(@PathVariable(name = "id") Long id, User user) {
+        return new DocumentResponse(documentService.get(id, user).orElseThrow(() -> Errors.RESOURCE_NOT_FOUND));
     }
 }

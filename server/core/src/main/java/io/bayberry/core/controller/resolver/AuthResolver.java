@@ -1,5 +1,6 @@
-package io.bayberry.core.authentication;
+package io.bayberry.core.controller.resolver;
 
+import io.bayberry.core.authentication.Auth;
 import io.bayberry.core.constant.Attributes;
 import org.springframework.core.MethodParameter;
 import org.springframework.web.bind.support.WebDataBinderFactory;

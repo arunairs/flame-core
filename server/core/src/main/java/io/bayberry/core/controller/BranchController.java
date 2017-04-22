@@ -1,7 +1,7 @@
 package io.bayberry.core.controller;
 
 import io.bayberry.core.annotation.Token;
-import io.bayberry.core.authentication.Auth;
+import io.bayberry.core.authentication.User;
 import io.bayberry.core.dto.BranchRequest;
 import io.bayberry.core.dto.BranchResponse;
 import io.bayberry.core.dto.converter.BranchConverter;
@@ -26,21 +26,21 @@ public class BranchController {
     @Token
     @PostMapping(path = "documents/{documentId}/branches")
     public BranchResponse create(@PathVariable(name = "documentId") Long documentId,
-                                 @Valid @RequestBody BranchRequest request, Auth auth) {
-        return new BranchResponse(branchService.create(branchConverter.convert(request), documentId, auth));
+                                 @Valid @RequestBody BranchRequest request, User user) {
+        return new BranchResponse(branchService.create(branchConverter.convert(request), documentId, user));
     }
 
     @Token
     @PutMapping(path = "branches/{id}")
     public BranchResponse update(@PathVariable(name = "id") Long id,
-                                 @Valid @RequestBody BranchRequest request, Auth auth) {
+                                 @Valid @RequestBody BranchRequest request, User user) {
         request.setId(id);
-        return new BranchResponse(branchService.update(branchConverter.convert(request), auth));
+        return new BranchResponse(branchService.update(branchConverter.convert(request), user));
     }
 
     @Token
     @DeleteMapping(path = "branches/{id}")
-    public void delete(@PathVariable(name = "id") Long id, Auth auth) {
-        branchService.delete(id, auth);
+    public void delete(@PathVariable(name = "id") Long id, User user) {
+        branchService.delete(id, user);
     }
 }

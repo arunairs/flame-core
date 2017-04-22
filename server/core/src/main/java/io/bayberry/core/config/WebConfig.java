@@ -1,6 +1,7 @@
 package io.bayberry.core.config;
 
-import io.bayberry.core.authentication.AuthResolver;
+import io.bayberry.core.controller.resolver.AuthResolver;
+import io.bayberry.core.controller.resolver.UserResolver;
 import io.bayberry.core.filter.RestfulResponseInterceptor;
 import io.bayberry.core.filter.TokenAuthenticationInterceptor;
 import org.springframework.context.annotation.Configuration;
@@ -22,6 +23,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
         argumentResolvers.add(new AuthResolver());
+        argumentResolvers.add(new UserResolver());
         super.addArgumentResolvers(argumentResolvers);
     }
 }
