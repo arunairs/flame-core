@@ -1,20 +1,14 @@
 package io.bayberry.core.service;
 
-import io.bayberry.core.common.validation.Validator;
+import io.bayberry.core.authentication.Auth;
 import io.bayberry.core.exception.Errors;
 import io.bayberry.repository.BranchRepository;
-import io.bayberry.repository.entity.Branch;
-import io.bayberry.repository.entity.Ref;
-import io.bayberry.repository.entity.User;
+import io.bayberry.repository.model.Branch;
+import io.bayberry.repository.model.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
-
-import static io.bayberry.core.common.validation.Matcher.blank;
-import static io.bayberry.core.common.validation.Matcher.not;
-import static io.bayberry.core.common.validation.Validator.orElseThrow;
-import static io.bayberry.core.common.validation.Validator.validateThat;
 
 @Service
 public class BranchService {
@@ -26,23 +20,23 @@ public class BranchService {
         this.branchRepository = branchRepository;
     }
 
-    public Optional<Branch> get(Long id, User user) {
+    public Optional<Branch> get(Long id, Auth auth) {
         return Optional.ofNullable(branchRepository.get(id));
     }
 
-    public Branch create(Branch branch, Long documentId, User user) {
-        validateThat(branch.getName(), not(blank()), orElseThrow(() -> Errors.BRANCH_NAME_IS_BLANK)).
-                and(not(branchRepository.exists(branch.getName(), documentId)),
-                        orElseThrow(() -> Errors.RESOURCE_ALREADY_EXISTS));
+    public Branch create(Branch branch, Long documentId, Auth auth) {
+        if (branchRepository.exists(branch.getName(), documentId)) {
+            throw Errors.RESOURCE_ALREADY_EXISTS;
+        }
 
         Branch output = new Branch();
         output.setName(branch.getName());
-        output.setCreator(user);
-        output.setDocumentRef(new Ref<>(documentId));
-        if (branch.hasOrigin()) {
-            Branch origin = this.get(branch.getOriginId(), user)
+        output.setCreatorId(auth.getUserId());
+        output.setDocumentId(documentId);
+        if (branch.getOriginId() != null) {
+            Branch origin = this.get(branch.getOriginId(), auth)
                     .orElseThrow(() -> Errors.BRANCH_ORIGIN_IS_NOT_FOUND);
-            output.setOriginRef(new Ref<>(origin.getId()));
+            output.setOriginId(origin.getId());
             output.setArchive(origin.getArchive());
             output.getHeader().putAll(origin.getHeader());
         }
@@ -50,17 +44,13 @@ public class BranchService {
         return output;
     }
 
-    public void delete(Long id, User user) {
+    public void delete(Long id, Auth auth) {
         branchRepository.delete(id);
     }
 
-    public Branch update(Long id, Branch branch, User user) {
-        Validator.validateThat(branch.getName(), not(blank()), orElseThrow(Errors.BRANCH_NAME_IS_BLANK));
-
-        Branch output = this.get(id, user).orElseThrow(() -> Errors.RESOURCE_NOT_FOUND);
-        output.setName(branch.getName());
-        branchRepository.updateAndReturn(output);
-        return output;
+    public Branch update(Branch branch, Auth auth) {
+        if (!this.exists(branch.getId())) throw Errors.RESOURCE_NOT_FOUND;
+        return branchRepository.updateAndReturn(branch);
     }
 
     public boolean exists(Long id) {
