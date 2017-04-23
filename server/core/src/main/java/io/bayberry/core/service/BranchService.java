@@ -3,6 +3,7 @@ package io.bayberry.core.service;
 import io.bayberry.core.authentication.User;
 import io.bayberry.core.exception.Errors;
 import io.bayberry.repository.BranchRepository;
+import io.bayberry.repository.model.Archive;
 import io.bayberry.repository.model.Branch;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,19 +29,18 @@ public class BranchService {
             throw Errors.RESOURCE_ALREADY_EXISTS;
         }
 
-        Branch output = new Branch();
-        output.setName(branch.getName());
-        output.setCreatorId(user.getId());
-        output.setDocumentId(documentId);
+        branch.setCreatorId(user.getId());
+        branch.setDocumentId(documentId);
         if (branch.getOriginId() != null) {
             Branch origin = this.get(branch.getOriginId(), user)
                     .orElseThrow(() -> Errors.BRANCH_ORIGIN_IS_NOT_FOUND);
-            output.setOriginId(origin.getId());
-            output.setArchive(origin.getArchive());
-            output.getHeader().putAll(origin.getHeader());
+            branch.setArchive(origin.getArchive());
+            branch.getHeader().putAll(origin.getHeader());
+        } else {
+            branch.setArchive(new Archive());
         }
-        branchRepository.insert(output);
-        return output;
+        branchRepository.insert(branch);
+        return branch;
     }
 
     public void delete(Long id, User user) {
