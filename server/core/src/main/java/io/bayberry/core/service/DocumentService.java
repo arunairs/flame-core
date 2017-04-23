@@ -28,8 +28,8 @@ public class DocumentService {
 
     public Document create(Document document, User user) {
         document.setCreatorId(user.getId());
-        this.documentRepository.insert(document);
-        this.eventPublisher.publish(new DocumentCreatedEvent(document));
+        documentRepository.insert(document);
+        eventPublisher.publish(new DocumentCreatedEvent(document));
         return document;
     }
 }
