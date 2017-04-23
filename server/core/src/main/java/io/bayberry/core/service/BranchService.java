@@ -29,18 +29,22 @@ public class BranchService {
             throw Errors.RESOURCE_ALREADY_EXISTS;
         }
 
-        branch.setCreatorId(user.getId());
         branch.setDocumentId(documentId);
-        if (branch.getOriginId() != null) {
+        branch.setCreatorId(user.getId());
+        if (branch.hasOrigin()) {
             Branch origin = this.get(branch.getOriginId(), user)
                     .orElseThrow(() -> Errors.BRANCH_ORIGIN_IS_NOT_FOUND);
-            branch.setArchive(origin.getArchive());
-            branch.getHeader().putAll(origin.getHeader());
+            this.copyPropertiesFromOrigin(branch, origin);
         } else {
             branch.setArchive(new Archive());
         }
         branchRepository.insert(branch);
         return branch;
+    }
+
+    private void copyPropertiesFromOrigin(Branch branch, Branch origin) {
+        branch.setArchive(origin.getArchive());
+        branch.getHeader().putAll(origin.getHeader());
     }
 
     public void delete(Long id, User user) {
