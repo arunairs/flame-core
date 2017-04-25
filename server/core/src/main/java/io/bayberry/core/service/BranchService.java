@@ -52,11 +52,8 @@ public class BranchService {
     }
 
     public Branch update(Branch branch, User user) {
-        if (!this.exists(branch.getId())) throw Errors.RESOURCE_NOT_FOUND;
-        return branchRepository.updateAndReturn(branch);
-    }
-
-    public boolean exists(Long id) {
-        return branchRepository.exists(id);
+        if (!branchRepository.exists(branch.getId()))
+            throw Errors.RESOURCE_NOT_FOUND;
+        return branchRepository.update(branch);
     }
 }
