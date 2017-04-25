@@ -1,7 +1,6 @@
 package io.bayberry.repository;
 
 import com.mongodb.DBObject;
-import com.mongodb.WriteResult;
 import io.bayberry.repository.model.Persistable;
 import io.bayberry.repository.query.Keys;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,95 +23,82 @@ public abstract class AbstractMongoRepository<T extends Persistable<ID>, ID exte
     private MongoTemplate mongoTemplate;
     private Class<T> entityClass;
 
-    public T get(final ID id) {
+    protected T get(final ID id) {
         return id == null ? null : getMongoTemplate().findById(id, this.entityClass);
     }
 
-    public T get(final Query query) {
+    protected T get(final Query query) {
         return getMongoTemplate().findOne(query, this.entityClass);
     }
 
-    public boolean exists(final ID id) {
+    protected boolean exists(final ID id) {
         return getMongoTemplate().exists(Query.query(Criteria.where(Keys.ID).is(id)), this.entityClass);
     }
 
-    public boolean exists(final Query query) {
+    protected boolean exists(final Query query) {
         return getMongoTemplate().exists(query, this.entityClass);
     }
 
-    public List<T> list(final Query query) {
+    protected List<T> list(final Query query) {
         return getMongoTemplate().find(query, this.entityClass);
     }
 
-    public List<T> list() {
+    protected List<T> list() {
         return getMongoTemplate().findAll(this.entityClass);
     }
 
-    public List<T> list(final Iterable<ID> ids) {
+    protected List<T> list(final Iterable<ID> ids) {
         return getMongoTemplate().find(Query.query(Criteria.where(Keys.ID).in(ids)), this.entityClass);
     }
 
-    public T insert(final T entity) {
+    protected T insert(final T entity) {
         getMongoTemplate().insert(entity);
         return entity;
     }
 
-    public Iterable<T> insert(final Iterable<T> entities) {
+    protected Iterable<T> insert(final Iterable<T> entities) {
         for (T entity : entities) {
             insert(entity);
         }
         return entities;
     }
 
-    public T updateAndReturn(final T entity) {
-        return updateAndReturn(Query.query(Criteria.where(Keys.ID).is(entity.getId())), entity);
-    }
-
-    public T updateAndReturn(final Query query, final T entity) {
-        Update update = Update.fromDBObject((DBObject) getMongoTemplate().getConverter().convertToMongoType(entity));
-        return updateAndReturn(query, update);
-    }
-
-    public T updateAndReturn(final Query query, final Update update) {
-        return getMongoTemplate().findAndModify(query, update, options().upsert(false).returnNew(true), this.entityClass);
-    }
-
-    public WriteResult update(final T entity) {
+    protected T update(final T entity) {
         return update(Query.query(Criteria.where(Keys.ID).is(entity.getId())), entity);
     }
 
-    public WriteResult update(final Query query, final T entity) {
+    protected T update(final Query query, final T entity) {
         Update update = Update.fromDBObject((DBObject) getMongoTemplate().getConverter().convertToMongoType(entity));
         return update(query, update);
     }
 
-    public WriteResult update(final Query query, final Update update) {
-        return getMongoTemplate().updateMulti(query, update, this.entityClass);
+    protected T update(final Query query, final Update update) {
+        return getMongoTemplate().findAndModify(query, update, options().upsert(false).returnNew(true), this.entityClass);
     }
 
-    public long count(final Query query) {
+    protected long count(final Query query) {
         return getMongoTemplate().count(query, this.entityClass);
     }
 
-    public void delete(final ID id) {
+    protected void delete(final ID id) {
         getMongoTemplate().remove(Query.query(Criteria.where("_id").is(id)), this.entityClass);
     }
 
-    public void delete(final T entity) {
+    protected void delete(final T entity) {
         getMongoTemplate().remove(entity);
     }
 
-    public void delete(final Query query) {
+    protected void delete(final Query query) {
         getMongoTemplate().remove(query, this.entityClass);
     }
 
-    public void delete(final Iterable<T> entities) {
+    protected void delete(final Iterable<T> entities) {
         for (T entity : entities) {
             delete(entity);
         }
     }
 
-    public BulkOperations bulkOps(final BulkOperations.BulkMode bulkMode) {
+    protected BulkOperations bulkOps(final BulkOperations.BulkMode bulkMode) {
         return getMongoTemplate().bulkOps(bulkMode, this.entityClass);
     }
 
