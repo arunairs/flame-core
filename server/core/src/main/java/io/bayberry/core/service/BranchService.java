@@ -1,14 +1,13 @@
 package io.bayberry.core.service;
 
 import io.bayberry.core.authentication.User;
-import io.bayberry.core.exception.Errors;
+import io.bayberry.core.exception.Error;
+import io.bayberry.core.service.result.Result;
 import io.bayberry.repository.BranchRepository;
 import io.bayberry.repository.model.Archive;
 import io.bayberry.repository.model.Branch;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 public class BranchService {
@@ -20,40 +19,41 @@ public class BranchService {
         this.branchRepository = branchRepository;
     }
 
-    public Optional<Branch> get(Long id, User user) {
-        return Optional.ofNullable(branchRepository.get(id));
+    public Result<Branch, Error> get(Long id, User user) {
+        Branch branch = branchRepository.get(id);
+        return Result.failIfNull(branch, Error.BRANCH_NOT_FOUND);
     }
 
-    public Branch create(Branch branch, Long documentId, User user) {
+    public Result<Branch, Error> create(Branch branch, Long documentId, User user) {
         if (branchRepository.exists(branch.getName(), documentId)) {
-            throw Errors.RESOURCE_ALREADY_EXISTS;
+            return Result.fail(Error.BRANCH_ALREADY_EXISTS);
         }
 
         branch.setDocumentId(documentId);
         branch.setCreatorId(user.getId());
         if (branch.hasOrigin()) {
-            Branch origin = this.get(branch.getOriginId(), user)
-                    .orElseThrow(() -> Errors.BRANCH_ORIGIN_IS_NOT_FOUND);
-            this.copyPropertiesFromOrigin(branch, origin);
+            Result<Branch, Error> originResult = this.get(branch.getOriginId(), user);
+            if (originResult.hasError()) return Result.fail(originResult.getError());
+            this.copyPropertiesFromOrigin(branch, originResult.getValue());
         } else {
             branch.setArchive(new Archive());
         }
         branchRepository.insert(branch);
-        return branch;
-    }
-
-    private void copyPropertiesFromOrigin(Branch branch, Branch origin) {
-        branch.setArchive(origin.getArchive());
-        branch.getHeader().putAll(origin.getHeader());
+        return Result.ok(branch);
     }
 
     public void delete(Long id, User user) {
         branchRepository.delete(id);
     }
 
-    public Branch update(Branch branch, User user) {
+    public Result<Branch, Error> update(Branch branch, User user) {
         if (!branchRepository.exists(branch.getId()))
-            throw Errors.RESOURCE_NOT_FOUND;
-        return branchRepository.update(branch);
+            return Result.fail(Error.BRANCH_NOT_FOUND);
+        return Result.ok(branchRepository.update(branch));
+    }
+
+    private void copyPropertiesFromOrigin(Branch branch, Branch origin) {
+        branch.setArchive(origin.getArchive());
+        branch.getHeader().putAll(origin.getHeader());
     }
 }

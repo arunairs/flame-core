@@ -1,30 +1,13 @@
 package io.bayberry.core.exception;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
-import java.lang.*;
+@Getter
+@AllArgsConstructor
+public class BadRequestException extends RuntimeException {
 
-public class BadRequestException extends RuntimeException
-{
+    private HttpStatus httpStatus;
     private Error error;
-
-    public BadRequestException(HttpStatus httpStatus, Integer code, String message)
-    {
-        this(new Error(httpStatus, code, message));
-    }
-
-    public BadRequestException(Error error)
-    {
-        this.error = error;
-    }
-
-    public Error getError()
-    {
-        return error;
-    }
-
-    private void setError(Error error)
-    {
-        this.error = error;
-    }
 }

@@ -5,6 +5,8 @@ import io.bayberry.core.authentication.User;
 import io.bayberry.core.dto.BranchRequest;
 import io.bayberry.core.dto.BranchResponse;
 import io.bayberry.core.dto.converter.BranchConverter;
+import io.bayberry.core.exception.ResourceConflictException;
+import io.bayberry.core.exception.ResourceNotFoundException;
 import io.bayberry.core.service.BranchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -28,7 +30,14 @@ public class BranchController {
     public BranchResponse create(@PathVariable(name = "documentId") Long documentId,
                                  @Valid @RequestBody BranchRequest request,
                                  User user) {
-        return new BranchResponse(branchService.create(branchConverter.convert(request), documentId, user));
+        return new BranchResponse(branchService.create(branchConverter.convert(request), documentId, user).orElse(error -> {
+            switch (error) {
+                case BRANCH_ALREADY_EXISTS:
+                    throw new ResourceConflictException(error);
+                case BRANCH_ORIGIN_IS_NOT_FOUND:
+                    throw new ResourceNotFoundException(error);
+            }
+        }));
     }
 
     @Token
@@ -37,7 +46,12 @@ public class BranchController {
                                  @Valid @RequestBody BranchRequest request,
                                  User user) {
         request.setId(id);
-        return new BranchResponse(branchService.update(branchConverter.convert(request), user));
+        return new BranchResponse(branchService.update(branchConverter.convert(request), user).orElse(error -> {
+            switch (error) {
+                case BRANCH_NOT_FOUND:
+                    throw new ResourceNotFoundException(error);
+            }
+        }));
     }
 
     @Token

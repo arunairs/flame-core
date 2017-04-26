@@ -1,54 +1,26 @@
 package io.bayberry.core.exception;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.springframework.http.HttpStatus;
+public enum Error {
 
-public class Error
-{
-    private HttpStatus httpStatus;
+    DOCUMENT_NOT_FOUND(10000, "document not dound"),
+
+    BRANCH_NOT_FOUND(10000, "branch not dound"),
+    BRANCH_ALREADY_EXISTS(1000, ""),
+    BRANCH_ORIGIN_IS_NOT_FOUND(1000, "");
+
     private String message;
     private Integer code;
 
-    public Error(Integer code, String message)
-    {
-        this(HttpStatus.BAD_REQUEST, code, message);
-    }
-
-    public Error(HttpStatus httpStatus, Integer code, String message)
-    {
-        this.httpStatus = httpStatus;
+    Error(Integer code, String message) {
         this.code = code;
         this.message = message;
     }
 
-    public String getMessage()
-    {
+    public String getMessage() {
         return message;
     }
 
-    public void setMessage(String message)
-    {
-        this.message = message;
-    }
-
-    public Integer getCode()
-    {
+    public Integer getCode() {
         return code;
-    }
-
-    public void setCode(Integer code)
-    {
-        this.code = code;
-    }
-
-    @JsonIgnore
-    public HttpStatus getHttpStatus()
-    {
-        return httpStatus;
-    }
-
-    public void setHttpStatus(HttpStatus httpStatus)
-    {
-        this.httpStatus = httpStatus;
     }
 }
