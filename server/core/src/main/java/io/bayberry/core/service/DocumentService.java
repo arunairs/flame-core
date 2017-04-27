@@ -4,7 +4,7 @@ import io.bayberry.core.authentication.User;
 import io.bayberry.core.common.Result;
 import io.bayberry.core.event.DocumentCreatedEvent;
 import io.bayberry.core.event.EventPublisher;
-import io.bayberry.core.exception.Error;
+import io.bayberry.core.common.Error;
 import io.bayberry.repository.DocumentRepository;
 import io.bayberry.repository.model.Document;
 import org.springframework.beans.factory.annotation.Autowired;

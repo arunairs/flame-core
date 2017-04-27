@@ -8,6 +8,7 @@ import java.util.List;
 @Getter
 @Setter
 public class Module extends BaseModel {
+
     private String name;
     private String description;
     private Long parentId;

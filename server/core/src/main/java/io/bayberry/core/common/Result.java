@@ -1,4 +1,4 @@
-package io.bayberry.core.service.result;
+package io.bayberry.core.common;
 
 import java.util.function.Consumer;
 

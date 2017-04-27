@@ -2,7 +2,7 @@ package io.bayberry.core.service;
 
 import io.bayberry.core.authentication.User;
 import io.bayberry.core.common.Result;
-import io.bayberry.core.exception.Error;
+import io.bayberry.core.common.Error;
 import io.bayberry.repository.BranchRepository;
 import io.bayberry.repository.model.Archive;
 import io.bayberry.repository.model.Branch;
