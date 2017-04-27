@@ -18,6 +18,7 @@ public class ValidatorDispatcher implements ConstraintValidator<ValidatedBy, Obj
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public boolean isValid(Object value, ConstraintValidatorContext context) {
         for (Class<? extends Validator> validatorClass : validatorClasses) {
             if (!getValidator(validatorClass).isValid(value)) return false;
