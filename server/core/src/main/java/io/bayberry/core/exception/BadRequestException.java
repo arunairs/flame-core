@@ -1,5 +1,6 @@
 package io.bayberry.core.exception;
 
+import io.bayberry.core.common.Error;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
@@ -8,6 +9,10 @@ import org.springframework.http.HttpStatus;
 @AllArgsConstructor
 public class BadRequestException extends RuntimeException {
 
-    private HttpStatus httpStatus;
-    private Error error;
+    private final HttpStatus httpStatus;
+    private final Error error;
+
+    public BadRequestException(Error error) {
+        this(HttpStatus.BAD_REQUEST, error);
+    }
 }
