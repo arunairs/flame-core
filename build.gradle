@@ -40,9 +40,9 @@ buildscript {
 
 allprojects { project ->
     apply plugin: 'java'
-    apply from: "$rootDir/tool/checkstyle/checkstyle.gradle"
-    apply from: "$rootDir/tool/findbugs/findbugs.gradle"
-    apply from: "$rootDir/tool/jacoco/jacoco.gradle"
+    apply from: "$rootDir/gradle/plugin/checkstyle/checkstyle.gradle"
+    apply from: "$rootDir/gradle/plugin/findbugs/findbugs.gradle"
+    apply from: "$rootDir/gradle/plugin/jacoco/jacoco.gradle"
 
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
