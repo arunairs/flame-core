@@ -8,10 +8,8 @@ import java.util.List;
 
 @Getter
 @Setter
-public class Archive implements Persistable<Long> {
+public class Archive {
 
-    @Id
-    private Long id;
     private String description;
     private List<Long> moduleOrder;
     private List<Module> moduleEntities;
