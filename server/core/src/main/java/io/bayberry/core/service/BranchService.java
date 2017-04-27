@@ -1,8 +1,8 @@
 package io.bayberry.core.service;
 
 import io.bayberry.core.authentication.User;
+import io.bayberry.core.common.Result;
 import io.bayberry.core.exception.Error;
-import io.bayberry.core.service.result.Result;
 import io.bayberry.repository.BranchRepository;
 import io.bayberry.repository.model.Archive;
 import io.bayberry.repository.model.Branch;
@@ -49,7 +49,7 @@ public class BranchService {
     public Result<Branch, Error> update(Branch branch, User user) {
         if (!branchRepository.exists(branch.getId()))
             return Result.fail(Error.BRANCH_NOT_FOUND);
-        return Result.ok(branchRepository.update(branch));
+        return Result.ok(branchRepository.updateAndReturn(branch));
     }
 
     private void copyPropertiesFromOrigin(Branch branch, Branch origin) {
