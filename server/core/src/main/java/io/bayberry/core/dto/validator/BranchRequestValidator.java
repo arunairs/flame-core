@@ -1,7 +1,7 @@
 package io.bayberry.core.dto.validator;
 
+import io.bayberry.core.common.Error;
 import io.bayberry.core.dto.BranchRequest;
-import io.bayberry.core.exception.Error;
 import io.bayberry.core.exception.IllegalRequestParameterException;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
