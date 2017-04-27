@@ -28,8 +28,8 @@ public class BranchRepository extends AbstractMongoRepository<Branch, Long> {
     }
 
     @Override
-    public Branch update(Branch branch) {
-        return super.update(branch);
+    public Branch updateAndReturn(Branch branch) {
+        return super.updateAndReturn(branch);
     }
 
     @Override

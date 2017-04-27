@@ -1,6 +1,7 @@
 package io.bayberry.repository;
 
 import com.mongodb.DBObject;
+import com.mongodb.WriteResult;
 import io.bayberry.repository.model.Persistable;
 import io.bayberry.repository.query.Keys;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,17 +64,21 @@ public abstract class AbstractMongoRepository<T extends Persistable<ID>, ID exte
         return entities;
     }
 
-    protected T update(final T entity) {
-        return update(Query.query(Criteria.where(Keys.ID).is(entity.getId())), entity);
+    protected T updateAndReturn(final T entity) {
+        return updateAndReturn(Query.query(Criteria.where(Keys.ID).is(entity.getId())), entity);
     }
 
-    protected T update(final Query query, final T entity) {
+    protected T updateAndReturn(final Query query, final T entity) {
         Update update = Update.fromDBObject((DBObject) getMongoTemplate().getConverter().convertToMongoType(entity));
-        return update(query, update);
+        return updateAndReturn(query, update);
     }
 
-    protected T update(final Query query, final Update update) {
+    protected T updateAndReturn(final Query query, final Update update) {
         return getMongoTemplate().findAndModify(query, update, options().upsert(false).returnNew(true), this.entityClass);
+    }
+
+    public WriteResult update(final Query query, final Update update) {
+        return getMongoTemplate().updateMulti(query, update, this.entityClass);
     }
 
     protected long count(final Query query) {
