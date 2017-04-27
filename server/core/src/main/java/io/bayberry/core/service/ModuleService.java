@@ -1,41 +1,42 @@
 package io.bayberry.core.service;
 
-import io.bayberry.core.exception.Errors;
+import io.bayberry.core.authentication.User;
+import io.bayberry.core.common.Result;
+import io.bayberry.core.common.Error;
+import io.bayberry.repository.BranchRepository;
 import io.bayberry.repository.ModuleRepository;
-import io.bayberry.repository.entity.Module;
-import io.bayberry.repository.entity.User;
-import io.bayberry.repository.exception.ResourceAlreadyExistsException;
+import io.bayberry.repository.model.Module;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-
 @Service
 public class ModuleService {
+
     private final ModuleRepository moduleRepository;
-    private final BranchService branchService;
+    private final BranchRepository branchRepository;
 
     @Autowired
-    public ModuleService(ModuleRepository moduleRepository, BranchService branchService) {
+    public ModuleService(ModuleRepository moduleRepository, BranchRepository branchRepository) {
         this.moduleRepository = moduleRepository;
-        this.branchService = branchService;
+        this.branchRepository = branchRepository;
     }
 
-    public Module create(Module module, Long branchId, User user) {
-        if (!branchService.exists(branchId))
-            throw Errors.BRANCH_IS_NOT_FOUND;
-
-        Module output = new Module();
-        output.setName(module.getName());
-        output.setDescription(module.getDescription());
-        output.setParent(module.getParent());
-        output.setCreatedDateTime(LocalDateTime.now());
-        output.setCreatorRef(user.getRef());
-        try {
-            moduleRepository.create(output, branchId);
-        } catch (ResourceAlreadyExistsException exception) {
-            throw Errors.MODULE_ALREADY_EXISTS;
+    public Result<Module, Error> create(Module module, Long branchId, User user) {
+        module.setCreatorId(user.getId());
+        if (moduleRepository.create(module, branchId) == null) {
+            if (!branchRepository.exists(branchId))
+                return Result.fail(Error.BRANCH_NOT_FOUND);
+            else
+                return Result.fail(Error.MODULE_NOT_FOUND);
         }
-        return output;
+        return Result.ok(module);
+    }
+
+    public Result<Module, Error> update(Module module, Long branchId, User user) {
+        return Result.failIfNull(moduleRepository.update(module, branchId), Error.MODULE_NOT_FOUND);
+    }
+
+    public void delete(Long moduleId, Long branchId, User user) {
+        moduleRepository.delete(moduleId, branchId);
     }
 }
