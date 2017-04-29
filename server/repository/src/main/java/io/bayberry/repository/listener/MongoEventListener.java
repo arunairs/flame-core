@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 
 @Component
 public class MongoEventListener extends AbstractMongoEventListener<BaseModel> {
+
     private IdGenerator<Long> idGenerator;
 
     @Autowired
