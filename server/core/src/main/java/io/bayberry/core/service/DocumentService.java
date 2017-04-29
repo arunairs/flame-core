@@ -35,6 +35,6 @@ public class DocumentService {
     }
 
     public Result<Document, Error> update(Document document, User user) {
-        return Result.failIfNull(documentRepository.updateAndReturn(document), Error.DOCUMENT_NOT_FOUND);
+        return Result.failIfNull(documentRepository.update(document), Error.DOCUMENT_NOT_FOUND);
     }
 }

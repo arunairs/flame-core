@@ -50,6 +50,10 @@ public class ModuleRepository extends AbstractMongoRepository<Branch, Long> {
         return this.extractFrom(super.get(query));
     }
 
+    public boolean exists(Long moduleId, Long branchId) {
+        return super.exists(Query.query(Criteria.where(ID).is(branchId).and("archive.modules._id").is(moduleId)));
+    }
+
     public Module update(Module module) {
         module.setModifiedDateTime(LocalDateTime.now());
         super.update(Query.query(Criteria.where(ID).is(module.getBranchId())
@@ -66,10 +70,6 @@ public class ModuleRepository extends AbstractMongoRepository<Branch, Long> {
         super.update(Query.query(Criteria.where(ID).is(branchId)),
                 new Update().pull("archive.moduleOrder", moduleId)
                         .pull("archive.modules", Query.query(Criteria.where(ID).is(moduleId))));
-    }
-
-    public boolean exists(Long moduleId, Long branchId) {
-        return super.exists(Query.query(Criteria.where(ID).is(branchId).and("archive.modules._id").is(moduleId)));
     }
 
     private Module extractFrom(Branch branch) {

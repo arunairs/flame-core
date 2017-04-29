@@ -24,6 +24,18 @@ public abstract class AbstractMongoRepository<T extends Persistable<ID>, ID exte
     private MongoTemplate mongoTemplate;
     private Class<T> entityClass;
 
+    protected T insert(final T entity) {
+        getMongoTemplate().insert(entity);
+        return entity;
+    }
+
+    protected Iterable<T> insert(final Iterable<T> entities) {
+        for (T entity : entities) {
+            insert(entity);
+        }
+        return entities;
+    }
+
     protected T get(final ID id) {
         return id == null ? null : getMongoTemplate().findById(id, this.entityClass);
     }
@@ -52,18 +64,6 @@ public abstract class AbstractMongoRepository<T extends Persistable<ID>, ID exte
         return getMongoTemplate().find(Query.query(Criteria.where(Keys.ID).in(ids)), this.entityClass);
     }
 
-    protected T insert(final T entity) {
-        getMongoTemplate().insert(entity);
-        return entity;
-    }
-
-    protected Iterable<T> insert(final Iterable<T> entities) {
-        for (T entity : entities) {
-            insert(entity);
-        }
-        return entities;
-    }
-
     protected T updateAndReturn(final T entity) {
         return updateAndReturn(Query.query(Criteria.where(Keys.ID).is(entity.getId())), entity);
     }
@@ -71,6 +71,10 @@ public abstract class AbstractMongoRepository<T extends Persistable<ID>, ID exte
     protected T updateAndReturn(final Query query, final T entity) {
         Update update = Update.fromDBObject((DBObject) getMongoTemplate().getConverter().convertToMongoType(entity));
         return updateAndReturn(query, update);
+    }
+
+    protected T updateAndReturn(final ID id, final Update update) {
+        return updateAndReturn(Query.query(Criteria.where(Keys.ID).is(id)), update);
     }
 
     protected T updateAndReturn(final Query query, final Update update) {

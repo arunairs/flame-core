@@ -7,6 +7,11 @@ import org.springframework.stereotype.Repository;
 public class DocumentRepository extends AbstractMongoRepository<Document, Long> {
 
     @Override
+    public Document insert(Document document) {
+        return super.insert(document);
+    }
+
+    @Override
     public Document get(Long id) {
         return super.get(id);
     }
@@ -16,13 +21,7 @@ public class DocumentRepository extends AbstractMongoRepository<Document, Long> 
         return super.exists(id);
     }
 
-    @Override
-    public Document insert(Document document) {
-        return super.insert(document);
-    }
-
-    @Override
-    public Document updateAndReturn(Document entity) {
+    public Document update(Document entity) {
         return super.updateAndReturn(entity);
     }
 }
