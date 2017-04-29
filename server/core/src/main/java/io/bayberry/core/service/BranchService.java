@@ -19,17 +19,10 @@ public class BranchService {
         this.branchRepository = branchRepository;
     }
 
-    public Result<Branch, Error> get(Long id, User user) {
-        Branch branch = branchRepository.get(id);
-        return Result.failIfNull(branch, Error.BRANCH_NOT_FOUND);
-    }
-
-    public Result<Branch, Error> create(Branch branch, Long documentId, User user) {
-        if (branchRepository.exists(branch.getName(), documentId)) {
+    public Result<Branch, Error> create(Branch branch, User user) {
+        if (branchRepository.exists(branch.getName(), branch.getDocumentId())) {
             return Result.fail(Error.BRANCH_ALREADY_EXISTS);
         }
-
-        branch.setDocumentId(documentId);
         branch.setCreatorId(user.getId());
         if (branch.hasOrigin()) {
             Result<Branch, Error> originResult = this.get(branch.getOriginId(), user);
@@ -40,6 +33,11 @@ public class BranchService {
         }
         branchRepository.insert(branch);
         return Result.ok(branch);
+    }
+
+    public Result<Branch, Error> get(Long id, User user) {
+        Branch branch = branchRepository.get(id);
+        return Result.failIfNull(branch, Error.BRANCH_NOT_FOUND);
     }
 
     public void delete(Long id, User user) {
