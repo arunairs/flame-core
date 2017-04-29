@@ -12,8 +12,8 @@ public class DocumentRepository extends AbstractMongoRepository<Document, Long> 
     }
 
     @Override
-    public boolean exists(Long aLong) {
-        return super.exists(aLong);
+    public boolean exists(Long id) {
+        return super.exists(id);
     }
 
     @Override
