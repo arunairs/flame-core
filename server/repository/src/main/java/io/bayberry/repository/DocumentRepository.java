@@ -22,6 +22,6 @@ public class DocumentRepository extends AbstractMongoRepository<Document, Long> 
     }
 
     public Document update(Document entity) {
-        return super.updateAndReturn(entity);
+        return super.findAndModify(entity);
     }
 }

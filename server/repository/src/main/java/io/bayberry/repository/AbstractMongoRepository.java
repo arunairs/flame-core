@@ -64,24 +64,24 @@ public abstract class AbstractMongoRepository<T extends Persistable<ID>, ID exte
         return getMongoTemplate().find(Query.query(Criteria.where(Keys.ID).in(ids)), this.entityClass);
     }
 
-    protected T updateAndReturn(final T entity) {
-        return updateAndReturn(Query.query(Criteria.where(Keys.ID).is(entity.getId())), entity);
+    protected T findAndModify(final T entity) {
+        return findAndModify(Query.query(Criteria.where(Keys.ID).is(entity.getId())), entity);
     }
 
-    protected T updateAndReturn(final Query query, final T entity) {
+    protected T findAndModify(final Query query, final T entity) {
         Update update = Update.fromDBObject((DBObject) getMongoTemplate().getConverter().convertToMongoType(entity));
-        return updateAndReturn(query, update);
+        return findAndModify(query, update);
     }
 
-    protected T updateAndReturn(final ID id, final Update update) {
-        return updateAndReturn(Query.query(Criteria.where(Keys.ID).is(id)), update);
+    protected T findAndModify(final ID id, final Update update) {
+        return findAndModify(Query.query(Criteria.where(Keys.ID).is(id)), update);
     }
 
-    protected T updateAndReturn(final Query query, final Update update) {
+    protected T findAndModify(final Query query, final Update update) {
         return getMongoTemplate().findAndModify(query, update, options().upsert(false).returnNew(true), this.entityClass);
     }
 
-    public WriteResult update(final Query query, final Update update) {
+    public WriteResult updateMulti(final Query query, final Update update) {
         return getMongoTemplate().updateMulti(query, update, this.entityClass);
     }
 
@@ -89,21 +89,21 @@ public abstract class AbstractMongoRepository<T extends Persistable<ID>, ID exte
         return getMongoTemplate().count(query, this.entityClass);
     }
 
-    protected void delete(final ID id) {
+    protected void remove(final ID id) {
         getMongoTemplate().remove(Query.query(Criteria.where("_id").is(id)), this.entityClass);
     }
 
-    protected void delete(final T entity) {
+    protected void remove(final T entity) {
         getMongoTemplate().remove(entity);
     }
 
-    protected void delete(final Query query) {
+    protected void remove(final Query query) {
         getMongoTemplate().remove(query, this.entityClass);
     }
 
-    protected void delete(final Iterable<T> entities) {
+    protected void remove(final Iterable<T> entities) {
         for (T entity : entities) {
-            delete(entity);
+            remove(entity);
         }
     }
 
