@@ -2,6 +2,7 @@ package io.bayberry.repository.model;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.data.annotation.Transient;
 
 import java.util.List;
 
@@ -14,4 +15,6 @@ public class Module extends BaseModel {
     private Long parentId;
     private List<Long> moduleOrder;
     private List<Long> apiOrder;
+    @Transient
+    private Long branchId;
 }

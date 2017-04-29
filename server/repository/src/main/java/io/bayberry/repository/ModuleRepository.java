@@ -24,28 +24,28 @@ public class ModuleRepository extends AbstractMongoRepository<Branch, Long> {
         this.idGenerator = idGenerator;
     }
 
-    public Module create(Module module, Long branchId) {
+    public Module create(Module module) {
         module.setId(idGenerator.nextId());
         module.setCreatedDateTime(LocalDateTime.now());
 
-        WriteResult result = super.update(Query.query(Criteria.where(ID).is(branchId)),
+        WriteResult result = super.update(Query.query(Criteria.where(ID).is(module.getBranchId())),
                 new Update().push("archive.modules", module));
         if (result.getN() == 0) return null;
 
         if (module.getParentId() == null) {
-            result = super.update(Query.query(Criteria.where(ID).is(branchId)),
+            result = super.update(Query.query(Criteria.where(ID).is(module.getBranchId())),
                     new Update().push("archive.moduleOrder", module.getId()));
         } else {
-            result = super.update(Query.query(Criteria.where(ID).is(branchId)
+            result = super.update(Query.query(Criteria.where(ID).is(module.getBranchId())
                             .and("archive.modules._id").is(module.getParentId())),
                     new Update().push("archive.modules.$.moduleOrder", module.getId()));
         }
         return result.getN() == 0 ? null : module;
     }
 
-    public Module update(Module module, Long branchId) {
+    public Module update(Module module) {
         module.setModifiedDateTime(LocalDateTime.now());
-        WriteResult result = super.update(Query.query(Criteria.where(ID).is(branchId)
+        WriteResult result = super.update(Query.query(Criteria.where(ID).is(module.getBranchId())
                         .and("archive.modules._id").is(module.getId())),
                 new Update().set("archive.modules.$.name", module.getName())
                         .set("archive.modules.$.description", module.getDescription())
