@@ -41,11 +41,11 @@ public class BranchService {
     }
 
     public void delete(Long id, User user) {
-        branchRepository.delete(id);
+        branchRepository.remove(id);
     }
 
     public Result<Branch, Error> update(Branch branch, User user) {
-        return Result.failIfNull(branchRepository.updateAndReturn(branch), Error.BRANCH_NOT_FOUND);
+        return Result.failIfNull(branchRepository.update(branch), Error.BRANCH_NOT_FOUND);
     }
 
     private void copyPropertiesFromOrigin(Branch branch, Branch origin) {

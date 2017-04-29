@@ -52,15 +52,15 @@ public abstract class AbstractMongoRepository<T extends Persistable<ID>, ID exte
         return getMongoTemplate().exists(query, this.entityClass);
     }
 
-    protected List<T> list(final Query query) {
+    protected List<T> findAll(final Query query) {
         return getMongoTemplate().find(query, this.entityClass);
     }
 
-    protected List<T> list() {
+    protected List<T> findAll() {
         return getMongoTemplate().findAll(this.entityClass);
     }
 
-    protected List<T> list(final Iterable<ID> ids) {
+    protected List<T> findAll(final Iterable<ID> ids) {
         return getMongoTemplate().find(Query.query(Criteria.where(Keys.ID).in(ids)), this.entityClass);
     }
 
@@ -81,7 +81,15 @@ public abstract class AbstractMongoRepository<T extends Persistable<ID>, ID exte
         return getMongoTemplate().findAndModify(query, update, options().upsert(false).returnNew(true), this.entityClass);
     }
 
-    public WriteResult updateMulti(final Query query, final Update update) {
+    protected WriteResult updateFirst(final ID id, final Update update) {
+        return updateFirst(Query.query(Criteria.where(Keys.ID).is(id)), update);
+    }
+
+    protected WriteResult updateFirst(final Query query, final Update update) {
+        return getMongoTemplate().updateFirst(query, update, this.entityClass);
+    }
+
+    protected WriteResult updateMulti(final Query query, final Update update) {
         return getMongoTemplate().updateMulti(query, update, this.entityClass);
     }
 

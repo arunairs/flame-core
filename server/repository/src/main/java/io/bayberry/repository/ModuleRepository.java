@@ -29,15 +29,15 @@ public class ModuleRepository extends AbstractMongoRepository<Branch, Long> {
         module.setId(idGenerator.nextId());
         module.setCreatedDateTime(LocalDateTime.now());
 
-        WriteResult result = super.updateMulti(Query.query(Criteria.where(ID).is(module.getBranchId())),
+        WriteResult result = super.updateFirst(Query.query(Criteria.where(ID).is(module.getBranchId())),
                 new Update().push("archive.modules", module));
         if (result.getN() == 0) return null;
 
         if (module.getParentId() == null) {
-            result = super.updateMulti(Query.query(Criteria.where(ID).is(module.getBranchId())),
+            result = super.updateFirst(Query.query(Criteria.where(ID).is(module.getBranchId())),
                     new Update().push("archive.moduleOrder", module.getId()));
         } else {
-            result = super.updateMulti(Query.query(Criteria.where(ID).is(module.getBranchId())
+            result = super.updateFirst(Query.query(Criteria.where(ID).is(module.getBranchId())
                             .and("archive.modules._id").is(module.getParentId())),
                     new Update().push("archive.modules.$.moduleOrder", module.getId()));
         }
@@ -56,7 +56,7 @@ public class ModuleRepository extends AbstractMongoRepository<Branch, Long> {
 
     public Module update(Module module) {
         module.setModifiedDateTime(LocalDateTime.now());
-        super.updateMulti(Query.query(Criteria.where(ID).is(module.getBranchId())
+        super.updateFirst(Query.query(Criteria.where(ID).is(module.getBranchId())
                         .and("archive.modules._id").is(module.getId())),
                 new Update().set("archive.modules.$.name", module.getName())
                         .set("archive.modules.$.description", module.getDescription())
@@ -65,9 +65,9 @@ public class ModuleRepository extends AbstractMongoRepository<Branch, Long> {
     }
 
     public void delete(Long moduleId, Long branchId) {
-        super.updateMulti(Query.query(Criteria.where(ID).is(branchId).and("archive.modules.moduleOrder").is(moduleId)),
+        super.updateFirst(Query.query(Criteria.where(ID).is(branchId).and("archive.modules.moduleOrder").is(moduleId)),
                 new Update().pull("archive.modules.$.moduleOrder", moduleId));
-        super.updateMulti(Query.query(Criteria.where(ID).is(branchId)),
+        super.updateFirst(Query.query(Criteria.where(ID).is(branchId)),
                 new Update().pull("archive.moduleOrder", moduleId)
                         .pull("archive.modules", Query.query(Criteria.where(ID).is(moduleId))));
     }
