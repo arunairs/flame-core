@@ -30,13 +30,11 @@ public class DocumentService {
     }
 
     public Result<Document, Error> get(Long id, User user) {
-        Document document = this.documentRepository.get(id);
+        Document document = documentRepository.get(id);
         return Result.failIfNull(document, Error.DOCUMENT_NOT_FOUND);
     }
 
     public Result<Document, Error> update(Document document, User user) {
-        documentRepository.insert(document);
-        eventPublisher.publish(new DocumentCreatedEvent(document));
-        return Result.ok(document);
+        return Result.failIfNull(documentRepository.updateAndReturn(document), Error.DOCUMENT_NOT_FOUND);
     }
 }

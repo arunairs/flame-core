@@ -20,4 +20,9 @@ public class DocumentRepository extends AbstractMongoRepository<Document, Long> 
     public Document insert(Document document) {
         return super.insert(document);
     }
+
+    @Override
+    public Document updateAndReturn(Document entity) {
+        return super.updateAndReturn(entity);
+    }
 }
