@@ -9,6 +9,7 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.CollectionUtils;
 
 import java.time.LocalDateTime;
 
@@ -43,14 +44,20 @@ public class ModuleRepository extends AbstractMongoRepository<Branch, Long> {
         return result.getN() == 0 ? null : module;
     }
 
+    public Module get(Long moduleId, Long branchId) {
+        Query query = Query.query(Criteria.where(ID).is(branchId).and("archive.modules._id").is(moduleId));
+        query.fields().include("archive.modules.$");
+        return this.extractFrom(super.get(query));
+    }
+
     public Module update(Module module) {
         module.setModifiedDateTime(LocalDateTime.now());
-        WriteResult result = super.update(Query.query(Criteria.where(ID).is(module.getBranchId())
+        super.update(Query.query(Criteria.where(ID).is(module.getBranchId())
                         .and("archive.modules._id").is(module.getId())),
                 new Update().set("archive.modules.$.name", module.getName())
                         .set("archive.modules.$.description", module.getDescription())
                         .set("archive.modules.$.modifiedDateTime", module.getModifiedDateTime()));
-        return result.getN() == 0 ? null : module;
+        return this.get(module.getId(), module.getBranchId());
     }
 
     public void delete(Long moduleId, Long branchId) {
@@ -63,5 +70,10 @@ public class ModuleRepository extends AbstractMongoRepository<Branch, Long> {
 
     public boolean exists(Long moduleId, Long branchId) {
         return super.exists(Query.query(Criteria.where(ID).is(branchId).and("archive.modules._id").is(moduleId)));
+    }
+
+    private Module extractFrom(Branch branch) {
+        if (branch == null || CollectionUtils.isEmpty(branch.getArchive().getModules())) return null;
+        return branch.getArchive().getModules().get(0);
     }
 }
