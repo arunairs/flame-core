@@ -17,4 +17,6 @@ public class ModuleRequest {
     private Long parentId;
     private String name;
     private String description;
+    @JsonIgnore
+    private Long branchId;
 }

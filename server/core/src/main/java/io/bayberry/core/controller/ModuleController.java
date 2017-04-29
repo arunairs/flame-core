@@ -29,7 +29,8 @@ public class ModuleController {
     public ModuleResponse create(@PathVariable(name = "branchId") Long branchId,
                                  @Valid @RequestBody ModuleRequest request,
                                  User user) {
-        return new ModuleResponse(moduleService.create(moduleConverter.convert(request), branchId, user).orElse(error -> {
+        request.setBranchId(branchId);
+        return new ModuleResponse(moduleService.create(moduleConverter.convert(request), user).orElse(error -> {
             switch (error) {
                 case BRANCH_NOT_FOUND:
                     throw new ResourceNotFoundException(error);
@@ -43,8 +44,9 @@ public class ModuleController {
                                           @PathVariable(name = "parentId") Long parentId,
                                           @Valid @RequestBody ModuleRequest request,
                                           User user) {
+        request.setBranchId(branchId);
         request.setParentId(parentId);
-        return new ModuleResponse(moduleService.create(moduleConverter.convert(request), branchId, user).orElse(error -> {
+        return new ModuleResponse(moduleService.create(moduleConverter.convert(request), user).orElse(error -> {
             switch (error) {
                 case BRANCH_NOT_FOUND:
                     throw new ResourceNotFoundException(error);
@@ -61,7 +63,8 @@ public class ModuleController {
                                  @Valid @RequestBody ModuleRequest request,
                                  User user) {
         request.setId(moduleId);
-        return new ModuleResponse(moduleService.update(moduleConverter.convert(request), branchId, user).orElse(error -> {
+        request.setBranchId(branchId);
+        return new ModuleResponse(moduleService.update(moduleConverter.convert(request), user).orElse(error -> {
             throw new ResourceNotFoundException(error);
         }));
     }
