@@ -11,6 +11,7 @@ public class BranchResponse {
 
     private Long id;
     private String name;
+    private Long documentId;
 
     public BranchResponse(Branch branch) {
         BeanUtils.copy(branch, this);

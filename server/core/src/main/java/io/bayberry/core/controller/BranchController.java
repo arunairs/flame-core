@@ -30,7 +30,8 @@ public class BranchController {
     public BranchResponse create(@PathVariable(name = "documentId") Long documentId,
                                  @Valid @RequestBody BranchRequest request,
                                  User user) {
-        return new BranchResponse(branchService.create(branchConverter.convert(request), documentId, user).orElse(error -> {
+        request.setDocumentId(documentId);
+        return new BranchResponse(branchService.create(branchConverter.convert(request), user).orElse(error -> {
             switch (error) {
                 case BRANCH_ALREADY_EXISTS:
                     throw new ResourceConflictException(error);

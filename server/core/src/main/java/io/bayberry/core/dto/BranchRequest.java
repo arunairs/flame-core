@@ -14,4 +14,6 @@ public class BranchRequest {
     @JsonIgnore
     private Long id;
     private String name;
+    @JsonIgnore
+    private Long documentId;
 }
