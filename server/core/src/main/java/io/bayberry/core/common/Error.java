@@ -1,5 +1,12 @@
 package io.bayberry.core.common;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+@Getter
+@AllArgsConstructor
+@JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum Error {
 
     DOCUMENT_NOT_FOUND(10000, "document not dound"),
@@ -13,21 +20,10 @@ public enum Error {
     MODULE_NOT_FOUND(1000, ""),
     MODULE_NAME_IS_BLANK(1000, ""),
 
+    API_NAME_IS_BLANK(1000, ""),
+
     RESOURCE_ALREADY_EXISTS(1000, "");
 
-    private String message;
     private Integer code;
-
-    Error(Integer code, String message) {
-        this.code = code;
-        this.message = message;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public Integer getCode() {
-        return code;
-    }
+    private String message;
 }
