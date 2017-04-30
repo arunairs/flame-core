@@ -20,6 +20,6 @@ public class UserResolver implements HandlerMethodArgumentResolver {
     @Override
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
         Auth auth = (Auth) webRequest.getAttribute(Attributes.AUTH, RequestAttributes.SCOPE_REQUEST);
-        return auth.getUser();
+        return auth == null ? null : auth.getUser();
     }
 }
