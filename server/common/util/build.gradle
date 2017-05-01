@@ -4,6 +4,7 @@ dependencies {
     compile(
             "com.google.guava:guava:$libs.google.guava.version",
             "org.apache.commons:commons-lang3:$libs.commons.lang.version",
+            "org.apache.commons:commons-collections4:$libs.commons.collections.version",
             "commons-codec:commons-codec:$libs.commons.codec.version",
             "com.fasterxml.jackson.core:jackson-core:$libs.jackson.version",
             "com.fasterxml.jackson.core:jackson-databind:$libs.jackson.version",
