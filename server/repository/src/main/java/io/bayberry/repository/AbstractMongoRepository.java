@@ -2,6 +2,7 @@ package io.bayberry.repository;
 
 import com.mongodb.DBObject;
 import com.mongodb.WriteResult;
+import io.bayberry.common.util.ReflectionUtils;
 import io.bayberry.repository.model.Persistable;
 import io.bayberry.repository.query.Keys;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,6 @@ import org.springframework.data.mongodb.core.query.Update;
 
 import javax.annotation.PostConstruct;
 import java.io.Serializable;
-import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
 import static org.springframework.data.mongodb.core.FindAndModifyOptions.options;
@@ -125,16 +125,11 @@ public abstract class AbstractMongoRepository<T extends Persistable<ID>, ID exte
 
     @PostConstruct
     private void init() {
-        this.entityClass = getEntityClass(this.getClass());
+        this.entityClass = getEntityClass();
     }
 
     @SuppressWarnings("unchecked")
-    private Class<T> getEntityClass(Class<?> repositoryClass) {
-        Class<?> superClass = repositoryClass.getSuperclass();
-        if (superClass == AbstractMongoRepository.class) {
-            ParameterizedType parameterizedType = (ParameterizedType) repositoryClass.getGenericSuperclass();
-            return (Class<T>) parameterizedType.getActualTypeArguments()[0];
-        }
-        return getEntityClass(superClass);
+    private Class<T> getEntityClass() {
+        return (Class<T>) ReflectionUtils.getParameterizedTypesOf(this.getClass(), AbstractMongoRepository.class)[0];
     }
 }
