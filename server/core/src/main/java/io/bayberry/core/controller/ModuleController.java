@@ -60,10 +60,10 @@ public class ModuleController {
     }
 
     @Token
-    @DeleteMapping(path = "branches/{branchId}/archive/modules/{moduleId}")
+    @DeleteMapping(path = "branches/{branchId}/archive/modules/{id}")
     public void delete(@PathVariable(name = "branchId") Long branchId,
-                       @PathVariable(name = "moduleId") Long moduleId,
+                       @PathVariable(name = "id") Long id,
                        User user) {
-        moduleService.delete(moduleId, branchId, user);
+        moduleService.delete(id, branchId, user);
     }
 }
