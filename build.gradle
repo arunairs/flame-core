@@ -12,8 +12,9 @@ buildscript {
                         boot: [version: '1.5.3.RELEASE']
                 ],
                 commons: [
-                        lang : [version: '3.5'],
-                        codec: [version: '1.10']
+                        lang       : [version: '3.5'],
+                        codec      : [version: '1.10'],
+                        collections: [version: '4.1']
                 ],
                 google : [
                         guava: [version: '21.0']
