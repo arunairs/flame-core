@@ -19,6 +19,7 @@ public class ApiRequestBodyAdvice extends GenericRequestBodyAdvice<ApiRequest> {
     @Override
     public ApiRequest postProcess(ApiRequest request, MethodParameter parameter) {
         Map<String, String> pathVariables = RequestUtils.getPathVariables(httpServletRequest);
+        request.setId(MapUtils.getLong(pathVariables, "id"));
         request.setBranchId(MapUtils.getLong(pathVariables, "branchId"));
         request.setModuleId(MapUtils.getLong(pathVariables, "moduleId"));
         return request;
