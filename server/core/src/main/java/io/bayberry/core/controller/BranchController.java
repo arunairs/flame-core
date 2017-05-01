@@ -27,10 +27,8 @@ public class BranchController {
 
     @Token
     @PostMapping(path = "documents/{documentId}/branches")
-    public BranchResponse create(@PathVariable(name = "documentId") Long documentId,
-                                 @Valid @RequestBody BranchRequest request,
+    public BranchResponse create(@Valid @RequestBody BranchRequest request,
                                  User user) {
-        request.setDocumentId(documentId);
         return new BranchResponse(branchService.create(branchConverter.convert(request), user).orElse(error -> {
             switch (error) {
                 case BRANCH_ALREADY_EXISTS:
@@ -43,10 +41,8 @@ public class BranchController {
 
     @Token
     @PutMapping(path = "branches/{id}")
-    public BranchResponse update(@PathVariable(name = "id") Long id,
-                                 @Valid @RequestBody BranchRequest request,
+    public BranchResponse update(@Valid @RequestBody BranchRequest request,
                                  User user) {
-        request.setId(id);
         return new BranchResponse(branchService.update(branchConverter.convert(request), user).orElse(error -> {
             switch (error) {
                 case BRANCH_NOT_FOUND:

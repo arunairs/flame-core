@@ -44,10 +44,8 @@ public class DocumentController {
 
     @Token
     @PutMapping(path = "{id}")
-    public DocumentResponse update(@PathVariable(name = "id") Long id,
-                                   @Valid @RequestBody DocumentRequest request,
+    public DocumentResponse update(@Valid @RequestBody DocumentRequest request,
                                    User user) {
-        request.setId(id);
         return new DocumentResponse(documentService.update(documentConverter.convert(request), user).orElse(error -> {
             switch (error) {
                 case DOCUMENT_NOT_FOUND:
