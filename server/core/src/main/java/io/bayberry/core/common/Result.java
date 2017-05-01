@@ -32,7 +32,7 @@ public class Result<T, E> {
         return this.error;
     }
 
-    public boolean hasError() {
+    public boolean hasErrors() {
         return this.error != null;
     }
 

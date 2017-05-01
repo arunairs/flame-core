@@ -26,7 +26,7 @@ public class BranchService {
         branch.setCreatorId(user.getId());
         if (branch.hasOrigin()) {
             Result<Branch, Error> originResult = this.get(branch.getOriginId(), user);
-            if (originResult.hasError()) return Result.fail(originResult.getError());
+            if (originResult.hasErrors()) return Result.fail(originResult.getError());
             this.copyPropertiesFromOrigin(branch, originResult.getValue());
         } else {
             branch.setArchive(new Archive());
