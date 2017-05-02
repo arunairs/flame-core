@@ -17,4 +17,8 @@ public class Module extends BaseModel {
     private List<Long> apiOrder;
     @Transient
     private Long branchId;
+
+    public boolean hasParent() {
+        return this.parentId != null;
+    }
 }
