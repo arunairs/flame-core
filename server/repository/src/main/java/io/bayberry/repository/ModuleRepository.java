@@ -26,7 +26,7 @@ public class ModuleRepository extends AbstractMongoRepository<Branch, Long> {
     }
 
     public Module create(Module module) {
-        module.setId(idGenerator.nextId());
+        module.setId(this.idGenerator.nextId());
         module.setCreatedDateTime(LocalDateTime.now());
 
         WriteResult result = super.updateFirst(Query.query(Criteria.where(ID).is(module.getBranchId())),
