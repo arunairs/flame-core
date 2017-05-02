@@ -30,22 +30,22 @@ public class ModuleRepository extends AbstractMongoRepository<Branch, Long> {
 
         this.pushToArchiveModules(module);
         if (module.hasParent()) {
-            this.pushToParentModuleOrder(module);
+            this.addToParentModuleOrder(module);
         } else {
-            this.pushToArchiveModuleOrder(module);
+            this.addToArchiveModuleOrder(module);
         }
         return this.get(module.getBranchId(), module.getId());
     }
 
-    private void pushToArchiveModuleOrder(Module module) {
-        super.updateFirst(Query.query(Criteria.where(ID).is(module.getBranchId())),
-                new Update().push("archive.moduleOrder", module.getId()));
-    }
-
-    private void pushToParentModuleOrder(Module module) {
+    private void addToParentModuleOrder(Module module) {
         super.updateFirst(Query.query(Criteria.where(ID).is(module.getBranchId())
                         .and("archive.modules._id").is(module.getParentId())),
                 new Update().push("archive.modules.$.moduleOrder", module.getId()));
+    }
+
+    private void addToArchiveModuleOrder(Module module) {
+        super.updateFirst(Query.query(Criteria.where(ID).is(module.getBranchId())),
+                new Update().push("archive.moduleOrder", module.getId()));
     }
 
     private void pushToArchiveModules(Module module) {
