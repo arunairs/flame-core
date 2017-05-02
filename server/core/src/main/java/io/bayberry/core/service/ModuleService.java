@@ -36,7 +36,7 @@ public class ModuleService {
         return Result.failIfNull(moduleRepository.update(module), Error.MODULE_NOT_FOUND);
     }
 
-    public void delete(Long moduleId, Long branchId, User user) {
-        moduleRepository.delete(moduleId, branchId);
+    public void delete(Long branchId, Long id, User user) {
+        moduleRepository.delete(branchId, id);
     }
 }

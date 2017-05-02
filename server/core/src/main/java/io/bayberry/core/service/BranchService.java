@@ -20,7 +20,7 @@ public class BranchService {
     }
 
     public Result<Branch, Error> create(Branch branch, User user) {
-        if (branchRepository.exists(branch.getName(), branch.getDocumentId())) {
+        if (branchRepository.exists(branch.getDocumentId(), branch.getName())) {
             return Result.fail(Error.BRANCH_ALREADY_EXISTS);
         }
         branch.setCreatorId(user.getId());

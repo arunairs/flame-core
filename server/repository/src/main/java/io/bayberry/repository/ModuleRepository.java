@@ -34,24 +34,24 @@ public class ModuleRepository extends AbstractMongoRepository<Branch, Long> {
         if (result.getN() == 0) return null;
 
         if (module.getParentId() == null) {
-            result = super.updateFirst(Query.query(Criteria.where(ID).is(module.getBranchId())),
+            super.updateFirst(Query.query(Criteria.where(ID).is(module.getBranchId())),
                     new Update().push("archive.moduleOrder", module.getId()));
         } else {
-            result = super.updateFirst(Query.query(Criteria.where(ID).is(module.getBranchId())
+            super.updateFirst(Query.query(Criteria.where(ID).is(module.getBranchId())
                             .and("archive.modules._id").is(module.getParentId())),
                     new Update().push("archive.modules.$.moduleOrder", module.getId()));
         }
-        return this.get(module.getId(), module.getBranchId());
+        return this.get(module.getBranchId(), module.getId());
     }
 
-    public Module get(Long moduleId, Long branchId) {
-        Query query = Query.query(Criteria.where(ID).is(branchId).and("archive.modules._id").is(moduleId));
+    public Module get(Long branchId, Long id) {
+        Query query = Query.query(Criteria.where(ID).is(branchId).and("archive.modules._id").is(id));
         query.fields().include("archive.modules.$");
         return this.extractFrom(super.get(query));
     }
 
-    public boolean exists(Long moduleId, Long branchId) {
-        return super.exists(Query.query(Criteria.where(ID).is(branchId).and("archive.modules._id").is(moduleId)));
+    public boolean exists(Long branchId, Long id) {
+        return super.exists(Query.query(Criteria.where(ID).is(branchId).and("archive.modules._id").is(id)));
     }
 
     public Module update(Module module) {
@@ -61,15 +61,15 @@ public class ModuleRepository extends AbstractMongoRepository<Branch, Long> {
                 new Update().set("archive.modules.$.name", module.getName())
                         .set("archive.modules.$.description", module.getDescription())
                         .set("archive.modules.$.modifiedDateTime", module.getModifiedDateTime()));
-        return this.get(module.getId(), module.getBranchId());
+        return this.get(module.getBranchId(), module.getId());
     }
 
-    public void delete(Long moduleId, Long branchId) {
-        super.updateFirst(Query.query(Criteria.where(ID).is(branchId).and("archive.modules.moduleOrder").is(moduleId)),
-                new Update().pull("archive.modules.$.moduleOrder", moduleId));
+    public void delete(Long branchId, Long id) {
+        super.updateFirst(Query.query(Criteria.where(ID).is(branchId).and("archive.modules.moduleOrder").is(id)),
+                new Update().pull("archive.modules.$.moduleOrder", id));
         super.updateFirst(Query.query(Criteria.where(ID).is(branchId)),
-                new Update().pull("archive.moduleOrder", moduleId)
-                        .pull("archive.modules", Query.query(Criteria.where(ID).is(moduleId))));
+                new Update().pull("archive.moduleOrder", id)
+                        .pull("archive.modules", Query.query(Criteria.where(ID).is(id))));
     }
 
     private Module extractFrom(Branch branch) {

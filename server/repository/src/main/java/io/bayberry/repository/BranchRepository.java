@@ -18,7 +18,7 @@ public class BranchRepository extends AbstractMongoRepository<Branch, Long> {
         return super.insert(branch);
     }
 
-    public boolean exists(String branchName, Long documentId) {
+    public boolean exists(Long documentId, String branchName) {
         return this.exists(Query.query(Criteria.where("documentId").is(documentId).and("name").is(branchName)));
     }
 

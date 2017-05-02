@@ -64,6 +64,6 @@ public class ModuleController {
     public void delete(@PathVariable(name = "branchId") Long branchId,
                        @PathVariable(name = "id") Long id,
                        User user) {
-        moduleService.delete(id, branchId, user);
+        moduleService.delete(branchId, id, user);
     }
 }
