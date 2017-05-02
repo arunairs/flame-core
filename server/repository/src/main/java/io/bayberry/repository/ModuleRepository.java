@@ -41,7 +41,7 @@ public class ModuleRepository extends AbstractMongoRepository<Branch, Long> {
                             .and("archive.modules._id").is(module.getParentId())),
                     new Update().push("archive.modules.$.moduleOrder", module.getId()));
         }
-        return result.getN() == 0 ? null : module;
+        return this.get(module.getId(), module.getBranchId());
     }
 
     public Module get(Long moduleId, Long branchId) {
