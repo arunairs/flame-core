@@ -119,7 +119,7 @@ public abstract class AbstractMongoRepository<T extends Persistable<ID>, ID exte
         return getMongoTemplate().bulkOps(bulkMode, this.entityClass);
     }
 
-    protected MongoTemplate getMongoTemplate() {
+    private MongoTemplate getMongoTemplate() {
         return mongoTemplate;
     }
 
