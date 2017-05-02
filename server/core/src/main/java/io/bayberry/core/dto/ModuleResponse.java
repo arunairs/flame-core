@@ -15,6 +15,6 @@ public class ModuleResponse {
     private Long parentId;
 
     public ModuleResponse(Module module) {
-        BeanUtils.copy(module, this);
+        BeanUtils.copyProperties(module, this);
     }
 }

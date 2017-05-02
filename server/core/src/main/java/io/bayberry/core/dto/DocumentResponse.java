@@ -14,6 +14,6 @@ public class DocumentResponse {
     private String description;
 
     public DocumentResponse(Document document) {
-        BeanUtils.copy(document, this);
+        BeanUtils.copyProperties(document, this);
     }
 }
