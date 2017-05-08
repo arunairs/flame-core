@@ -6,7 +6,7 @@ import io.bayberry.core.common.Result;
 import io.bayberry.core.event.DocumentCreatedEvent;
 import io.bayberry.core.event.EventPublisher;
 import io.bayberry.repository.DocumentRepository;
-import io.bayberry.repository.model.Document;
+import io.bayberry.repository.entity.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,8 +30,7 @@ public class DocumentService {
     }
 
     public Result<Document, Error> get(Long id, User user) {
-        Document document = documentRepository.get(id);
-        return Result.failIfNull(document, Error.DOCUMENT_NOT_FOUND);
+        return Result.failIfNull(documentRepository.get(id), Error.DOCUMENT_NOT_FOUND);
     }
 
     public Result<Document, Error> update(Document document, User user) {

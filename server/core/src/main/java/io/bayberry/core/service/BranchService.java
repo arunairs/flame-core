@@ -4,8 +4,9 @@ import io.bayberry.core.authentication.User;
 import io.bayberry.core.common.Error;
 import io.bayberry.core.common.Result;
 import io.bayberry.repository.BranchRepository;
-import io.bayberry.repository.model.Archive;
-import io.bayberry.repository.model.Branch;
+import io.bayberry.repository.entity.Archive;
+import io.bayberry.repository.entity.Branch;
+import io.bayberry.repository.exception.BranchNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,9 +36,13 @@ public class BranchService {
         return Result.ok(branch);
     }
 
+    private void copyPropertiesFromOrigin(Branch branch, Branch origin) {
+        branch.setArchive(origin.getArchive());
+        branch.getHeader().putAll(origin.getHeader());
+    }
+
     public Result<Branch, Error> get(Long id, User user) {
-        Branch branch = branchRepository.get(id);
-        return Result.failIfNull(branch, Error.BRANCH_NOT_FOUND);
+        return Result.failIfNull(branchRepository.get(id), Error.BRANCH_NOT_FOUND);
     }
 
     public void delete(Long id, User user) {
@@ -45,11 +50,10 @@ public class BranchService {
     }
 
     public Result<Branch, Error> update(Branch branch, User user) {
-        return Result.failIfNull(branchRepository.update(branch), Error.BRANCH_NOT_FOUND);
-    }
-
-    private void copyPropertiesFromOrigin(Branch branch, Branch origin) {
-        branch.setArchive(origin.getArchive());
-        branch.getHeader().putAll(origin.getHeader());
+        try {
+            return Result.failIfNull(branchRepository.update(branch), Error.BRANCH_NOT_FOUND);
+        } catch (BranchNotFoundException e) {
+            return Result.fail(Error.BRANCH_NOT_FOUND);
+        }
     }
 }
