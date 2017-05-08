@@ -69,7 +69,7 @@ public abstract class AbstractMongoRepository<T extends Persistable<ID>, ID exte
     }
 
     protected T findAndModify(final Query query, final T entity) {
-        Update update = Update.fromDBObject((DBObject) getMongoTemplate().getConverter().convertToMongoType(entity));
+        Update update = getUpdateFromObject(entity);
         return findAndModify(query, update);
     }
 
@@ -79,6 +79,10 @@ public abstract class AbstractMongoRepository<T extends Persistable<ID>, ID exte
 
     protected T findAndModify(final Query query, final Update update) {
         return getMongoTemplate().findAndModify(query, update, options().upsert(false).returnNew(true), this.entityClass);
+    }
+
+    protected <E> WriteResult updateFirst(final Query query, final E entity) {
+        return getMongoTemplate().updateFirst(query, getUpdateFromObject(entity), this.entityClass);
     }
 
     protected WriteResult updateFirst(final ID id, final Update update) {
@@ -131,5 +135,9 @@ public abstract class AbstractMongoRepository<T extends Persistable<ID>, ID exte
     @SuppressWarnings("unchecked")
     private Class<T> getEntityClass() {
         return (Class<T>) ReflectionUtils.getParameterizedTypesOf(this.getClass(), AbstractMongoRepository.class)[0];
+    }
+
+    private <E> Update getUpdateFromObject(E entity) {
+        return Update.fromDBObject((DBObject) getMongoTemplate().getConverter().convertToMongoType(entity));
     }
 }
