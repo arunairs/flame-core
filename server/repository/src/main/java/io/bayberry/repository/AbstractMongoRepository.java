@@ -3,7 +3,7 @@ package io.bayberry.repository;
 import com.mongodb.DBObject;
 import com.mongodb.WriteResult;
 import io.bayberry.common.util.ReflectionUtils;
-import io.bayberry.repository.model.Persistable;
+import io.bayberry.repository.entity.Persistable;
 import io.bayberry.repository.query.Keys;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.BulkOperations;
@@ -29,7 +29,7 @@ public abstract class AbstractMongoRepository<T extends Persistable<ID>, ID exte
         return entity;
     }
 
-    protected Iterable<T> insert(final Iterable<T> entities) {
+    protected Iterable<T> insert(final Iterable<T> entities) throws Exception {
         for (T entity : entities) {
             insert(entity);
         }
@@ -37,7 +37,7 @@ public abstract class AbstractMongoRepository<T extends Persistable<ID>, ID exte
     }
 
     protected T get(final ID id) {
-        return id == null ? null : getMongoTemplate().findById(id, this.entityClass);
+        return getMongoTemplate().findById(id, this.entityClass);
     }
 
     protected T get(final Query query) {
