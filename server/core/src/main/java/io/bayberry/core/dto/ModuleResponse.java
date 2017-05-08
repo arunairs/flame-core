@@ -1,7 +1,7 @@
 package io.bayberry.core.dto;
 
 import io.bayberry.common.util.BeanUtils;
-import io.bayberry.repository.model.Module;
+import io.bayberry.repository.entity.Module;
 import lombok.Getter;
 import lombok.Setter;
 

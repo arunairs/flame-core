@@ -5,13 +5,13 @@ import lombok.Getter;
 
 @AllArgsConstructor
 public enum Protocol {
-    HTTP(Values.HTTP),
-    WEB_SOCKET(Values.WEB_SOCKET);
+    HTTP(Names.HTTP),
+    WEB_SOCKET(Names.WEB_SOCKET);
 
     @Getter
-    private final String value;
+    private final String name;
 
-    public interface Values {
+    public interface Names {
         String HTTP = "HTTP";
         String WEB_SOCKET = "WEB_SOCKET";
     }
