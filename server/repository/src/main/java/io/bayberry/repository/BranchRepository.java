@@ -1,6 +1,8 @@
 package io.bayberry.repository;
 
-import io.bayberry.repository.model.Branch;
+import com.mongodb.WriteResult;
+import io.bayberry.repository.entity.Branch;
+import io.bayberry.repository.exception.BranchNotFoundException;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
@@ -18,10 +20,6 @@ public class BranchRepository extends AbstractMongoRepository<Branch, Long> {
         return super.insert(branch);
     }
 
-    public boolean exists(Long documentId, String branchName) {
-        return this.exists(Query.query(Criteria.where("documentId").is(documentId).and("name").is(branchName)));
-    }
-
     @Override
     public Branch get(Long id) {
         Query query = Query.query(Criteria.where(ID).is(id));
@@ -34,13 +32,22 @@ public class BranchRepository extends AbstractMongoRepository<Branch, Long> {
         return super.exists(id);
     }
 
-    public Branch update(Branch branch) {
+    public boolean exists(Long documentId, String branchName) {
+        return this.exists(Query.query(Criteria.where("documentId").is(documentId).and("name").is(branchName)));
+    }
+
+    public Branch update(Branch branch) throws BranchNotFoundException {
         branch.setModifiedDateTime(LocalDateTime.now());
         Update update = new Update();
         update.set("name", branch.getName());
         update.set("modifiedDateTime", branch.getModifiedDateTime());
-        super.updateFirst(branch.getId(), update);
-        return this.get(branch.getId());
+        WriteResult result = super.updateFirst(branch.getId(), update);
+        if (result.getN() == 0)
+            throw new BranchNotFoundException();
+        Branch updatedBranch = this.get(branch.getId());
+        if (updatedBranch == null)
+            throw new BranchNotFoundException();
+        return updatedBranch;
     }
 
     @Override
