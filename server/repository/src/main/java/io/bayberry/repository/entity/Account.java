@@ -1,11 +1,11 @@
-package io.bayberry.repository.model;
+package io.bayberry.repository.entity;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public abstract class Account extends BaseModel {
+public abstract class Account extends BaseEntity {
 
     private String username;
     private String password;

@@ -1,4 +1,4 @@
-package io.bayberry.repository.model;
+package io.bayberry.repository.entity;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -8,13 +8,13 @@ import java.util.List;
 
 @Getter
 @Setter
-public class Module extends BaseModel {
+public class Module extends BaseEntity {
 
     private String name;
     private String description;
     private Long parentId;
-    private List<Long> moduleOrder;
-    private List<Long> apiOrder;
+    private List<Long> moduleOrders;
+    private List<Long> apiOrders;
     @Transient
     private Long branchId;
 

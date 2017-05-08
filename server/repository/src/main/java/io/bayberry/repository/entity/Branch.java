@@ -1,4 +1,4 @@
-package io.bayberry.repository.model;
+package io.bayberry.repository.entity;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -9,7 +9,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Setter
 @Document(collection = "branches")
 @CompoundIndex(name = "unique_index", unique = true, def = "{'name':1,'documentId':1}")
-public class Branch extends BaseModel {
+public class Branch extends BaseEntity {
 
     private String name;
     private Header header;

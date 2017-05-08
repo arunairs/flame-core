@@ -1,6 +1,6 @@
 package io.bayberry.repository.listener;
 
-import io.bayberry.repository.model.BaseModel;
+import io.bayberry.repository.entity.BaseEntity;
 import io.bayberry.repository.util.IdGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.mapping.event.AbstractMongoEventListener;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDateTime;
 
 @Component
-public class MongoEventListener extends AbstractMongoEventListener<BaseModel> {
+public class MongoEventListener extends AbstractMongoEventListener<BaseEntity> {
 
     private IdGenerator<Long> idGenerator;
 
@@ -20,10 +20,10 @@ public class MongoEventListener extends AbstractMongoEventListener<BaseModel> {
     }
 
     @Override
-    public void onBeforeConvert(BeforeConvertEvent<BaseModel> event) {
+    public void onBeforeConvert(BeforeConvertEvent<BaseEntity> event) {
         super.onBeforeConvert(event);
 
-        BaseModel model = event.getSource();
+        BaseEntity model = event.getSource();
         if (model.getId() == null) {
             model.setId(idGenerator.nextId());
         }

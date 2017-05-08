@@ -1,4 +1,4 @@
-package io.bayberry.repository.model;
+package io.bayberry.repository.entity;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
-public abstract class BaseModel implements Persistable<Long> {
+public abstract class BaseEntity implements Persistable<Long> {
 
     @Id
     private Long id;
