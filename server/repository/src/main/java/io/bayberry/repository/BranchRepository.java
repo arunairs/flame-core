@@ -44,10 +44,7 @@ public class BranchRepository extends AbstractMongoRepository<Branch, Long> {
         WriteResult result = super.updateFirst(branch.getId(), update);
         if (result.getN() == 0)
             throw new BranchNotFoundException();
-        Branch updatedBranch = this.get(branch.getId());
-        if (updatedBranch == null)
-            throw new BranchNotFoundException();
-        return updatedBranch;
+        return branch;
     }
 
     @Override
