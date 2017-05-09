@@ -20,6 +20,7 @@ public enum Error {
     MODULE_NOT_FOUND(1000, ""),
     MODULE_NAME_IS_BLANK(1000, ""),
 
+    API_NOT_FOUND(1000, ""),
     API_NAME_IS_BLANK(1000, ""),
 
     RESOURCE_ALREADY_EXISTS(1000, "");
