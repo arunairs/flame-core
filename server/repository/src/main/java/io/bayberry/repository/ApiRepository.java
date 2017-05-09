@@ -50,10 +50,6 @@ public class ApiRepository extends AbstractMongoRepository<Branch, Long> {
             throw new ModuleNotFoundException();
     }
 
-    public Api get(Long branchId, Long id) {
-        return null;
-    }
-
     public Api update(Api api) throws ApiNotFoundException {
         api.setModifiedDateTime(LocalDateTime.now());
 
