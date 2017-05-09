@@ -43,16 +43,20 @@ public class ModuleRepository extends AbstractMongoRepository<Branch, Long> {
     private void pushToArchiveModules(Module module) throws BranchNotFoundException {
         WriteResult result = super.updateFirst(Query.query(Criteria.where(ID).is(module.getBranchId())),
                 new Update().push("archive.modules", module));
-        if (result.getN() == 0)
+        if (result.getN() == 0) {
+            this.delete(module.getBranchId(), module.getId());
             throw new BranchNotFoundException();
+        }
     }
 
     private void addToParentModuleOrders(Module module) throws ModuleNotFoundException {
         WriteResult result = super.updateFirst(Query.query(Criteria.where(ID).is(module.getBranchId())
                         .and("archive.modules._id").is(module.getParentId())),
                 new Update().push("archive.modules.$.moduleOrders", module.getId()));
-        if (result.getN() == 0)
+        if (result.getN() == 0) {
+            this.delete(module.getBranchId(), module.getId());
             throw new ModuleNotFoundException();
+        }
     }
 
     private void addToArchiveModuleOrders(Module module) throws ModuleNotFoundException {
