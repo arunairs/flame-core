@@ -100,6 +100,7 @@ public class ModuleRepository extends AbstractMongoRepository<Branch, Long> {
                 new Update().pull("archive.modules.$.moduleOrders", id));
         super.updateFirst(Query.query(Criteria.where(ID).is(branchId)),
                 new Update().pull("archive.moduleOrders", id)
-                        .pull("archive.modules", Query.query(Criteria.where(ID).is(id))));
+                        .pull("archive.modules", Query.query(Criteria.where(ID).is(id)))
+                        .pull("archive.apis", Query.query(Criteria.where("moduleId").is(id))));
     }
 }

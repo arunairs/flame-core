@@ -13,10 +13,9 @@ public class ModuleRequest {
 
     @JsonIgnore
     private Long id;
-    @JsonIgnore
     private Long parentId;
-    private String name;
-    private String description;
     @JsonIgnore
     private Long branchId;
+    private String name;
+    private String description;
 }

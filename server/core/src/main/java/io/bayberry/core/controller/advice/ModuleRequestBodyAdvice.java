@@ -20,8 +20,7 @@ public class ModuleRequestBodyAdvice extends GenericRequestBodyAdvice<ModuleRequ
     public ModuleRequest postProcess(ModuleRequest request, MethodParameter parameter) {
         Map<String, String> pathVariables = RequestUtils.getPathVariables(httpServletRequest);
         request.setId(MapUtils.getLong(pathVariables, "id"));
-        request.setId(MapUtils.getLong(pathVariables, "branchId"));
-        request.setId(MapUtils.getLong(pathVariables, "moduleId"));
+        request.setBranchId(MapUtils.getLong(pathVariables, "branchId"));
         return request;
     }
 }
