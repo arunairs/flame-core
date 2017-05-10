@@ -11,12 +11,13 @@ import java.util.LinkedHashSet;
 @Setter
 @ToString
 public class HttpRequest implements Request {
+
     private String uri;
     private String scheme;
     private LinkedHashSet<HttpRequestMethod> methods;
     private LinkedHashSet<SingleFieldHttpRequestParameter> headers;
-    private LinkedHashSet<SingleFieldHttpRequestParameter> paths;
-    private LinkedHashSet<SingleFieldHttpRequestParameter> queries;
+    private LinkedHashSet<SingleFieldHttpRequestParameter> pathParams;
+    private LinkedHashSet<SingleFieldHttpRequestParameter> queryParams;
     private LinkedHashSet<SingleFieldHttpRequestParameter> cookies;
     private HttpRequestBody body;
 }
