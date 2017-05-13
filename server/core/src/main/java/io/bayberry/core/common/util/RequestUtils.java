@@ -7,6 +7,7 @@ import java.util.Map;
 
 public class RequestUtils {
 
+    @SuppressWarnings("unchecked")
     public static Map<String, String> getPathVariables(HttpServletRequest request) {
         return (Map<String, String>) request.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
     }
