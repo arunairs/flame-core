@@ -27,10 +27,10 @@ public class MongoEventListener extends AbstractMongoEventListener<BaseEntity> {
         if (model.getId() == null) {
             model.setId(idGenerator.nextId());
         }
-        if (model.getCreatedDateTime() == null) {
-            model.setCreatedDateTime(LocalDateTime.now());
+        if (model.getCreatedTime() == null) {
+            model.setCreatedTime(LocalDateTime.now());
         } else {
-            model.setModifiedDateTime(LocalDateTime.now());
+            model.setLastModifiedTime(LocalDateTime.now());
         }
     }
 }

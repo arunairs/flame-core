@@ -32,8 +32,10 @@ public class ModuleService {
     }
 
     public Result<Module, Error> update(Module module, User user) {
+        module.setLastModifierId(user.getId());
         try {
-            return Result.failIfNull(moduleRepository.update(module), Error.MODULE_NOT_FOUND);
+            moduleRepository.update(module);
+            return Result.ok();
         } catch (ModuleNotFoundException e) {
             return Result.fail(Error.MODULE_NOT_FOUND);
         }

@@ -17,6 +17,9 @@ public class RestfulResponseInterceptor extends HandlerInterceptorAdapter {
             case POST:
                 response.setStatus(HttpStatus.CREATED.value());
                 break;
+            case PUT:
+                response.setStatus(HttpStatus.NO_CONTENT.value());
+                break;
             case DELETE:
                 response.setStatus(HttpStatus.NO_CONTENT.value());
                 break;

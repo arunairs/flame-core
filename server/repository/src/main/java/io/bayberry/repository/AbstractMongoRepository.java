@@ -3,8 +3,9 @@ package io.bayberry.repository;
 import com.mongodb.DBObject;
 import com.mongodb.WriteResult;
 import io.bayberry.common.util.ReflectionUtils;
+import io.bayberry.repository.constant.Fields;
 import io.bayberry.repository.entity.Persistable;
-import io.bayberry.repository.query.Keys;
+import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.BulkOperations;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -45,7 +46,7 @@ public abstract class AbstractMongoRepository<T extends Persistable<ID>, ID exte
     }
 
     protected boolean exists(final ID id) {
-        return getMongoTemplate().exists(Query.query(Criteria.where(Keys.ID).is(id)), this.entityClass);
+        return getMongoTemplate().exists(Query.query(Criteria.where(Fields.ID).is(id)), this.entityClass);
     }
 
     protected boolean exists(final Query query) {
@@ -61,11 +62,11 @@ public abstract class AbstractMongoRepository<T extends Persistable<ID>, ID exte
     }
 
     protected List<T> findAll(final Iterable<ID> ids) {
-        return getMongoTemplate().find(Query.query(Criteria.where(Keys.ID).in(ids)), this.entityClass);
+        return getMongoTemplate().find(Query.query(Criteria.where(Fields.ID).in(ids)), this.entityClass);
     }
 
     protected T findAndModify(final T entity) {
-        return findAndModify(Query.query(Criteria.where(Keys.ID).is(entity.getId())), entity);
+        return findAndModify(Query.query(Criteria.where(Fields.ID).is(entity.getId())), entity);
     }
 
     protected T findAndModify(final Query query, final T entity) {
@@ -74,7 +75,7 @@ public abstract class AbstractMongoRepository<T extends Persistable<ID>, ID exte
     }
 
     protected T findAndModify(final ID id, final Update update) {
-        return findAndModify(Query.query(Criteria.where(Keys.ID).is(id)), update);
+        return findAndModify(Query.query(Criteria.where(Fields.ID).is(id)), update);
     }
 
     protected T findAndModify(final Query query, final Update update) {
@@ -86,7 +87,7 @@ public abstract class AbstractMongoRepository<T extends Persistable<ID>, ID exte
     }
 
     protected WriteResult updateFirst(final ID id, final Update update) {
-        return updateFirst(Query.query(Criteria.where(Keys.ID).is(id)), update);
+        return updateFirst(Query.query(Criteria.where(Fields.ID).is(id)), update);
     }
 
     protected WriteResult updateFirst(final Query query, final Update update) {
@@ -139,5 +140,17 @@ public abstract class AbstractMongoRepository<T extends Persistable<ID>, ID exte
 
     private <E> Update getUpdateFromObject(E entity) {
         return Update.fromDBObject((DBObject) getMongoTemplate().getConverter().convertToMongoType(entity));
+    }
+
+    protected <E> DBObject convertToDBObject(E object) {
+        return convertToDBObject(object, ArrayUtils.EMPTY_STRING_ARRAY);
+    }
+
+    protected <E> DBObject convertToDBObject(E object, String... ignoreProperties) {
+        DBObject dbObject = (DBObject) getMongoTemplate().getConverter().convertToMongoType(object);
+        for (String property : ignoreProperties) {
+            dbObject.removeField(property);
+        }
+        return dbObject;
     }
 }

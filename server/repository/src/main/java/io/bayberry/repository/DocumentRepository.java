@@ -1,6 +1,7 @@
 package io.bayberry.repository;
 
 import io.bayberry.repository.entity.Document;
+import io.bayberry.repository.exception.DocumentNotFoundException;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -21,7 +22,9 @@ public class DocumentRepository extends AbstractMongoRepository<Document, Long> 
         return super.exists(id);
     }
 
-    public Document update(Document entity) {
-        return super.findAndModify(entity);
+    public void update(Document entity) throws DocumentNotFoundException {
+        if (super.findAndModify(entity) == null) {
+            throw new DocumentNotFoundException();
+        }
     }
 }

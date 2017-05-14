@@ -15,7 +15,7 @@ import org.springframework.util.CollectionUtils;
 
 import java.time.LocalDateTime;
 
-import static io.bayberry.repository.query.Keys.ID;
+import static io.bayberry.repository.constant.Fields.ID;
 
 @Repository
 public class ModuleRepository extends AbstractMongoRepository<Branch, Long> {
@@ -29,7 +29,7 @@ public class ModuleRepository extends AbstractMongoRepository<Branch, Long> {
 
     public Module insert(Module module) throws BranchNotFoundException, ModuleNotFoundException {
         module.setId(this.idGenerator.nextId());
-        module.setCreatedDateTime(LocalDateTime.now());
+        module.setCreatedTime(LocalDateTime.now());
 
         this.pushToArchiveModules(module);
         if (module.hasParent()) {
@@ -81,22 +81,16 @@ public class ModuleRepository extends AbstractMongoRepository<Branch, Long> {
         return super.exists(Query.query(Criteria.where(ID).is(branchId).and("archive.modules._id").is(id)));
     }
 
-    public Module update(Module module) throws ModuleNotFoundException {
-        module.setModifiedDateTime(LocalDateTime.now());
+    public void update(Module module) throws ModuleNotFoundException {
+        module.setLastModifiedTime(LocalDateTime.now());
 
         WriteResult result = super.updateFirst(Query.query(Criteria.where(ID).is(module.getBranchId())
                         .and("archive.modules._id").is(module.getId())),
                 new Update().set("archive.modules.$.name", module.getName())
                         .set("archive.modules.$.description", module.getDescription())
-                        .set("archive.modules.$.modifiedDateTime", module.getModifiedDateTime()));
+                        .set("archive.modules.$.modifiedDateTime", module.getLastModifiedTime()));
         if (result.getN() == 0)
             throw new ModuleNotFoundException();
-
-        Module updatedModule = this.get(module.getBranchId(), module.getId());
-        if (updatedModule == null)
-            throw new ModuleNotFoundException();
-
-        return updatedModule;
     }
 
     public void delete(Long branchId, Long id) {

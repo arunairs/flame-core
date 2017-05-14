@@ -12,6 +12,10 @@ public class Result<T, E> {
         this.error = error;
     }
 
+    public static <T, E> Result<T, E> ok() {
+        return ok(null);
+    }
+
     public static <T, E> Result<T, E> ok(T value) {
         return new Result<>(value, null);
     }
@@ -37,13 +41,13 @@ public class Result<T, E> {
     }
 
     public T orElse(Consumer<E> consumer) {
-        if (this.value == null)
+        if (this.error != null)
             consumer.accept(error);
         return this.value;
     }
 
     public T orElse(Runnable runnable) {
-        if (this.value == null)
+        if (this.error != null)
             runnable.run();
         return this.value;
     }

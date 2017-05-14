@@ -44,13 +44,13 @@ public class DocumentController {
 
     @Token
     @PutMapping(path = "{id}")
-    public DocumentResponse update(@Valid @RequestBody DocumentRequest request,
-                                   User user) {
-        return new DocumentResponse(documentService.update(documentConverter.convert(request), user).orElse(error -> {
+    public void update(@Valid @RequestBody DocumentRequest request,
+                       User user) {
+        documentService.update(documentConverter.convert(request), user).orElse(error -> {
             switch (error) {
                 case DOCUMENT_NOT_FOUND:
                     throw new ResourceNotFoundException(error);
             }
-        }));
+        });
     }
 }

@@ -41,14 +41,14 @@ public class BranchController {
 
     @Token
     @PutMapping(path = "branches/{id}")
-    public BranchResponse update(@Valid @RequestBody BranchRequest request,
-                                 User user) {
-        return new BranchResponse(branchService.update(branchConverter.convert(request), user).orElse(error -> {
+    public void update(@Valid @RequestBody BranchRequest request,
+                       User user) {
+        branchService.update(branchConverter.convert(request), user).orElse(error -> {
             switch (error) {
                 case BRANCH_NOT_FOUND:
                     throw new ResourceNotFoundException(error);
             }
-        }));
+        });
     }
 
     @Token

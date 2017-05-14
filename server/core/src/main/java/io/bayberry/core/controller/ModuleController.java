@@ -52,11 +52,11 @@ public class ModuleController {
 
     @Token
     @PutMapping(path = "branches/{branchId}/archive/modules/{id}")
-    public ModuleResponse update(@Valid @RequestBody ModuleRequest request,
-                                 User user) {
-        return new ModuleResponse(moduleService.update(moduleConverter.convert(request), user).orElse(error -> {
+    public void update(@Valid @RequestBody ModuleRequest request,
+                       User user) {
+        moduleService.update(moduleConverter.convert(request), user).orElse(error -> {
             throw new ResourceNotFoundException(error);
-        }));
+        });
     }
 
     @Token

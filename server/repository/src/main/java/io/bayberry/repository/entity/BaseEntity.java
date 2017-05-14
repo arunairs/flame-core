@@ -12,7 +12,8 @@ public abstract class BaseEntity implements Persistable<Long> {
 
     @Id
     private Long id;
-    private LocalDateTime createdDateTime;
-    private LocalDateTime modifiedDateTime;
     private Long creatorId;
+    private Long lastModifierId;
+    private LocalDateTime createdTime;
+    private LocalDateTime lastModifiedTime;
 }

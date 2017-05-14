@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
 
-import static io.bayberry.repository.query.Keys.ID;
+import static io.bayberry.repository.constant.Fields.ID;
 
 @Repository
 public class BranchRepository extends AbstractMongoRepository<Branch, Long> {
@@ -36,15 +36,14 @@ public class BranchRepository extends AbstractMongoRepository<Branch, Long> {
         return this.exists(Query.query(Criteria.where("documentId").is(documentId).and("name").is(branchName)));
     }
 
-    public Branch update(Branch branch) throws BranchNotFoundException {
-        branch.setModifiedDateTime(LocalDateTime.now());
+    public void update(Branch branch) throws BranchNotFoundException {
+        branch.setLastModifiedTime(LocalDateTime.now());
         Update update = new Update();
         update.set("name", branch.getName());
-        update.set("modifiedDateTime", branch.getModifiedDateTime());
+        update.set("modifiedDateTime", branch.getLastModifiedTime());
         WriteResult result = super.updateFirst(branch.getId(), update);
         if (result.getN() == 0)
             throw new BranchNotFoundException();
-        return branch;
     }
 
     @Override

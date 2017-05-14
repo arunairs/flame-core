@@ -50,8 +50,10 @@ public class BranchService {
     }
 
     public Result<Branch, Error> update(Branch branch, User user) {
+        branch.setLastModifierId(user.getId());
         try {
-            return Result.failIfNull(branchRepository.update(branch), Error.BRANCH_NOT_FOUND);
+            branchRepository.update(branch);
+            return Result.ok();
         } catch (BranchNotFoundException e) {
             return Result.fail(Error.BRANCH_NOT_FOUND);
         }

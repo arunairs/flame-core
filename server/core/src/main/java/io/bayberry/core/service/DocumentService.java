@@ -7,6 +7,7 @@ import io.bayberry.core.event.DocumentCreatedEvent;
 import io.bayberry.core.event.EventPublisher;
 import io.bayberry.repository.DocumentRepository;
 import io.bayberry.repository.entity.Document;
+import io.bayberry.repository.exception.DocumentNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,6 +35,12 @@ public class DocumentService {
     }
 
     public Result<Document, Error> update(Document document, User user) {
-        return Result.failIfNull(documentRepository.update(document), Error.DOCUMENT_NOT_FOUND);
+        document.setLastModifierId(user.getId());
+        try {
+            documentRepository.update(document);
+            return Result.ok();
+        } catch (DocumentNotFoundException e) {
+            return Result.fail(Error.DOCUMENT_NOT_FOUND);
+        }
     }
 }
