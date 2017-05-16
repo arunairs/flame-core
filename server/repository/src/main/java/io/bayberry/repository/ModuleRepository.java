@@ -6,12 +6,12 @@ import io.bayberry.repository.entity.Module;
 import io.bayberry.repository.exception.BranchNotFoundException;
 import io.bayberry.repository.exception.ModuleNotFoundException;
 import io.bayberry.repository.util.IdGenerator;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Repository;
-import org.springframework.util.CollectionUtils;
 
 import java.time.LocalDateTime;
 
@@ -69,10 +69,10 @@ public class ModuleRepository extends AbstractMongoRepository<Branch, Long> {
     public Module get(Long branchId, Long id) {
         Query query = Query.query(Criteria.where(ID).is(branchId).and("archive.modules._id").is(id));
         query.fields().include("archive.modules.$");
-        return this.extractFrom(super.get(query));
+        return this.extract(super.get(query));
     }
 
-    private Module extractFrom(Branch branch) {
+    private Module extract(Branch branch) {
         if (branch == null || CollectionUtils.isEmpty(branch.getArchive().getModules())) return null;
         return branch.getArchive().getModules().get(0);
     }
