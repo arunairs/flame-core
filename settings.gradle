@@ -3,6 +3,6 @@ rootProject.name = 'bayberry'
 include ':buildSrc',
         ':server',
         ':server:common:util',
-        ':server:common:protocol',
+        ':server:common:api',
         ':server:core',
         ':server:repository'
