@@ -1,8 +1,0 @@
-archivesBaseName = "$archivePrefix-common-protocol"
-
-dependencies {
-    compile(
-            project(':server:common:util'),
-            "com.fasterxml.jackson.core:jackson-annotations:$libs.jackson.version",
-    )
-}
