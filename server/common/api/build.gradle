@@ -1,0 +1,8 @@
+archivesBaseName = "$archivePrefix-common-api"
+
+dependencies {
+    compile(
+            project(':server:common:util'),
+            "com.fasterxml.jackson.core:jackson-annotations:$libs.jackson.version",
+    )
+}
