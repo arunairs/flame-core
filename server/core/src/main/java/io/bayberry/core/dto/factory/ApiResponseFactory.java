@@ -1,12 +1,12 @@
 package io.bayberry.core.dto.factory;
 
 import com.google.common.collect.Maps;
-import io.bayberry.common.protocol.Protocol;
 import io.bayberry.common.util.BeanUtils;
 import io.bayberry.common.util.ReflectionUtils;
 import io.bayberry.core.dto.ApiResponse;
-import io.bayberry.repository.annotation.ProtocolType;
+import io.bayberry.repository.annotation.ApiInfo;
 import io.bayberry.repository.entity.Api;
+import io.bayberry.repository.entity.ApiType;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -18,7 +18,7 @@ import java.util.Set;
 @Component
 public class ApiResponseFactory {
 
-    private Map<Protocol, Class<? extends ApiResponse>> mappings = Maps.newHashMap();
+    private Map<ApiType, Class<? extends ApiResponse>> mappings = Maps.newHashMap();
 
     public ApiResponse createFrom(Api api) {
         ApiResponse response = this.getInstance(api);
@@ -28,7 +28,7 @@ public class ApiResponseFactory {
 
     private ApiResponse getInstance(Api api) {
         try {
-            Constructor<? extends ApiResponse> constructor = this.getMapping(api.getProtocol()).getDeclaredConstructor(Api.class);
+            Constructor<? extends ApiResponse> constructor = this.getMapping(api.getType()).getDeclaredConstructor(Api.class);
             constructor.setAccessible(true);
             return constructor.newInstance(api);
         } catch (NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException e) {
@@ -39,15 +39,15 @@ public class ApiResponseFactory {
     @PostConstruct
     private void init() {
         Set<Class<? extends ApiResponse>> subClasses = ReflectionUtils.getSubTypesOf(ApiResponse.class, ApiResponse.class);
-        subClasses.stream().filter(subClass -> subClass.isAnnotationPresent(ProtocolType.class))
-                .forEach(subClass -> this.setMapping(subClass.getAnnotation(ProtocolType.class).value(), subClass));
+        subClasses.stream().filter(subClass -> subClass.isAnnotationPresent(ApiInfo.class))
+                .forEach(subClass -> this.setMapping(subClass.getAnnotation(ApiInfo.class).type(), subClass));
     }
 
-    private void setMapping(Protocol protocol, Class<? extends ApiResponse> responseClass) {
-        this.mappings.put(protocol, responseClass);
+    private void setMapping(ApiType apiType, Class<? extends ApiResponse> responseClass) {
+        this.mappings.put(apiType, responseClass);
     }
 
-    private Class<? extends ApiResponse> getMapping(Protocol protocol) {
-        return this.mappings.get(protocol);
+    private Class<? extends ApiResponse> getMapping(ApiType apiType) {
+        return this.mappings.get(apiType);
     }
 }
