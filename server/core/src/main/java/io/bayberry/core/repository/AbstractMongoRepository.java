@@ -1,10 +1,10 @@
-package io.bayberry.repository;
+package io.bayberry.core.repository;
 
 import com.mongodb.DBObject;
 import com.mongodb.WriteResult;
 import io.bayberry.common.util.ReflectionUtils;
-import io.bayberry.repository.constant.Fields;
-import io.bayberry.repository.entity.Persistable;
+import io.bayberry.core.constant.Fields;
+import io.bayberry.core.repository.entity.Persistable;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.BulkOperations;
@@ -16,6 +16,7 @@ import org.springframework.data.mongodb.core.query.Update;
 import javax.annotation.PostConstruct;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Optional;
 
 import static org.springframework.data.mongodb.core.FindAndModifyOptions.options;
 
@@ -37,12 +38,12 @@ public abstract class AbstractMongoRepository<T extends Persistable<ID>, ID exte
         return entities;
     }
 
-    protected T get(final ID id) {
-        return getMongoTemplate().findById(id, this.entityClass);
+    protected Optional<T> get(final ID id) {
+        return Optional.ofNullable(getMongoTemplate().findById(id, this.entityClass));
     }
 
-    protected T get(final Query query) {
-        return getMongoTemplate().findOne(query, this.entityClass);
+    protected Optional<T> get(final Query query) {
+        return Optional.ofNullable(getMongoTemplate().findOne(query, this.entityClass));
     }
 
     protected boolean exists(final ID id) {

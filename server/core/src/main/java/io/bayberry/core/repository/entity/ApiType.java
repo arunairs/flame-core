@@ -1,4 +1,4 @@
-package io.bayberry.repository.entity;
+package io.bayberry.core.repository.entity;
 
 public enum ApiType {
     HTTP,

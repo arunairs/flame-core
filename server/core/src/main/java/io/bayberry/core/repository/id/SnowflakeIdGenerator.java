@@ -1,4 +1,4 @@
-package io.bayberry.repository.util;
+package io.bayberry.core.repository.id;
 
 import com.ge.snowizard.core.IdWorker;
 import com.ge.snowizard.exceptions.InvalidSystemClock;

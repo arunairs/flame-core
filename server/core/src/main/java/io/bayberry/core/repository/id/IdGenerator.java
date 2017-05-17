@@ -1,4 +1,4 @@
-package io.bayberry.repository.util;
+package io.bayberry.core.repository.id;
 
 public interface IdGenerator<T> {
 

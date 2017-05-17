@@ -1,6 +1,6 @@
-package io.bayberry.repository;
+package io.bayberry.core.repository;
 
-import io.bayberry.repository.entity.User;
+import io.bayberry.core.repository.entity.User;
 import org.springframework.stereotype.Repository;
 
 @Repository

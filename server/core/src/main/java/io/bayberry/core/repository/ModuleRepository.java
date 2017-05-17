@@ -1,11 +1,10 @@
-package io.bayberry.repository;
+package io.bayberry.core.repository;
 
 import com.mongodb.WriteResult;
-import io.bayberry.repository.entity.Branch;
-import io.bayberry.repository.entity.Module;
-import io.bayberry.repository.exception.BranchNotFoundException;
-import io.bayberry.repository.exception.ModuleNotFoundException;
-import io.bayberry.repository.util.IdGenerator;
+import io.bayberry.core.repository.entity.Branch;
+import io.bayberry.core.repository.entity.Module;
+import io.bayberry.core.repository.exception.EntityNotFoundException;
+import io.bayberry.core.repository.id.IdGenerator;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -14,8 +13,9 @@ import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
-import static io.bayberry.repository.constant.Fields.ID;
+import static io.bayberry.core.constant.Fields.ID;
 
 @Repository
 public class ModuleRepository extends AbstractMongoRepository<Branch, Long> {
@@ -27,7 +27,7 @@ public class ModuleRepository extends AbstractMongoRepository<Branch, Long> {
         this.idGenerator = idGenerator;
     }
 
-    public Module insert(Module module) throws BranchNotFoundException, ModuleNotFoundException {
+    public Module insert(Module module) throws EntityNotFoundException {
         module.setId(this.idGenerator.nextId());
         module.setCreatedTime(LocalDateTime.now());
 
@@ -40,40 +40,40 @@ public class ModuleRepository extends AbstractMongoRepository<Branch, Long> {
         return module;
     }
 
-    private void pushToArchiveModules(Module module) throws BranchNotFoundException {
+    private void pushToArchiveModules(Module module) throws EntityNotFoundException {
         WriteResult result = super.updateFirst(Query.query(Criteria.where(ID).is(module.getBranchId())),
                 new Update().push("archive.modules", module));
         if (result.getN() == 0) {
             this.delete(module.getBranchId(), module.getId());
-            throw new BranchNotFoundException();
+            throw new EntityNotFoundException();
         }
     }
 
-    private void addToParentModuleOrders(Module module) throws ModuleNotFoundException {
+    private void addToParentModuleOrders(Module module) throws EntityNotFoundException {
         WriteResult result = super.updateFirst(Query.query(Criteria.where(ID).is(module.getBranchId())
                         .and("archive.modules._id").is(module.getParentId())),
                 new Update().push("archive.modules.$.moduleOrders", module.getId()));
         if (result.getN() == 0) {
             this.delete(module.getBranchId(), module.getId());
-            throw new ModuleNotFoundException();
+            throw new EntityNotFoundException();
         }
     }
 
-    private void addToArchiveModuleOrders(Module module) throws ModuleNotFoundException {
+    private void addToArchiveModuleOrders(Module module) throws EntityNotFoundException {
         WriteResult result = super.updateFirst(Query.query(Criteria.where(ID).is(module.getBranchId())),
                 new Update().push("archive.moduleOrders", module.getId()));
         if (result.getN() == 0)
-            throw new ModuleNotFoundException();
+            throw new EntityNotFoundException();
     }
 
-    public Module get(Long branchId, Long id) {
+    public Optional<Module> get(Long branchId, Long id) {
         Query query = Query.query(Criteria.where(ID).is(branchId).and("archive.modules._id").is(id));
         query.fields().include("archive.modules.$");
-        return this.extract(super.get(query));
+        return super.get(query).map(this::extract);
     }
 
     private Module extract(Branch branch) {
-        if (branch == null || CollectionUtils.isEmpty(branch.getArchive().getModules())) return null;
+        if (CollectionUtils.isEmpty(branch.getArchive().getModules())) return null;
         return branch.getArchive().getModules().get(0);
     }
 
@@ -81,7 +81,7 @@ public class ModuleRepository extends AbstractMongoRepository<Branch, Long> {
         return super.exists(Query.query(Criteria.where(ID).is(branchId).and("archive.modules._id").is(id)));
     }
 
-    public void update(Module module) throws ModuleNotFoundException {
+    public void update(Module module) throws EntityNotFoundException {
         module.setLastModifiedTime(LocalDateTime.now());
 
         WriteResult result = super.updateFirst(Query.query(Criteria.where(ID).is(module.getBranchId())
@@ -90,7 +90,7 @@ public class ModuleRepository extends AbstractMongoRepository<Branch, Long> {
                         .set("archive.modules.$.description", module.getDescription())
                         .set("archive.modules.$.modifiedDateTime", module.getLastModifiedTime()));
         if (result.getN() == 0)
-            throw new ModuleNotFoundException();
+            throw new EntityNotFoundException();
     }
 
     public void delete(Long branchId, Long id) {
