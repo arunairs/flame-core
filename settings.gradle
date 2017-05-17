@@ -4,5 +4,4 @@ include ':buildSrc',
         ':server',
         ':server:common:util',
         ':server:common:api',
-        ':server:core',
-        ':server:repository'
+        ':server:core'
