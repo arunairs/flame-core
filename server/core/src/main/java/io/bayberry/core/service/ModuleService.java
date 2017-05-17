@@ -1,12 +1,11 @@
 package io.bayberry.core.service;
 
 import io.bayberry.core.authentication.User;
-import io.bayberry.core.common.Error;
-import io.bayberry.core.common.Result;
-import io.bayberry.repository.ModuleRepository;
-import io.bayberry.repository.entity.Module;
-import io.bayberry.repository.exception.BranchNotFoundException;
-import io.bayberry.repository.exception.ModuleNotFoundException;
+import io.bayberry.core.exception.BranchNotFoundException;
+import io.bayberry.core.exception.ModuleNotFoundException;
+import io.bayberry.core.repository.ModuleRepository;
+import io.bayberry.core.repository.entity.Module;
+import io.bayberry.core.repository.exception.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,24 +19,25 @@ public class ModuleService {
         this.moduleRepository = moduleRepository;
     }
 
-    public Result<Module, Error> create(Module module, User user) {
+    public Module create(Module module, User user) {
         module.setCreatorId(user.getId());
         try {
-            return Result.ok(moduleRepository.insert(module));
-        } catch (BranchNotFoundException e) {
-            return Result.fail(Error.BRANCH_NOT_FOUND);
-        } catch (ModuleNotFoundException e) {
-            return Result.fail(Error.MODULE_NOT_FOUND);
+            return moduleRepository.insert(module);
+        } catch (EntityNotFoundException e) {
+            if (module.hasParent()) {
+                throw new ModuleNotFoundException();
+            } else {
+                throw new BranchNotFoundException();
+            }
         }
     }
 
-    public Result<Module, Error> update(Module module, User user) {
+    public void update(Module module, User user) {
         module.setLastModifierId(user.getId());
         try {
             moduleRepository.update(module);
-            return Result.ok();
-        } catch (ModuleNotFoundException e) {
-            return Result.fail(Error.MODULE_NOT_FOUND);
+        } catch (EntityNotFoundException e) {
+            throw new ModuleNotFoundException();
         }
     }
 

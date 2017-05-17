@@ -1,8 +1,8 @@
 package io.bayberry.core.service;
 
-import io.bayberry.core.bean.Diff;
-import io.bayberry.repository.entity.Archive;
-import io.bayberry.core.common.util.DiffUtils;
+import io.bayberry.core.domain.Diff;
+import io.bayberry.core.domain.DiffResolver;
+import io.bayberry.core.repository.entity.Archive;
 import org.apache.commons.lang3.ClassUtils;
 import org.springframework.stereotype.Service;
 
@@ -36,7 +36,7 @@ public class ArchiveService {
                         } else if (propertyType.isArray()) {
 
                         } else if (ClassUtils.isPrimitiveOrWrapper(propertyType) || propertyType.getPackage().getName().startsWith("java")) {
-                            diff.add(DiffUtils.diff(descriptor.getName(), base, head), path.length() > 0 ? path + "/" + descriptor.getName() : descriptor.getName());
+                            diff.add(DiffResolver.diff(descriptor.getName(), base, head), path.length() > 0 ? path + "/" + descriptor.getName() : descriptor.getName());
                         } else {
 
                         }

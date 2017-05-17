@@ -1,13 +1,12 @@
 package io.bayberry.core.service;
 
 import io.bayberry.core.authentication.User;
-import io.bayberry.core.common.Error;
-import io.bayberry.core.common.Result;
 import io.bayberry.core.event.DocumentCreatedEvent;
 import io.bayberry.core.event.EventPublisher;
-import io.bayberry.repository.DocumentRepository;
-import io.bayberry.repository.entity.Document;
-import io.bayberry.repository.exception.DocumentNotFoundException;
+import io.bayberry.core.exception.DocumentNotFoundException;
+import io.bayberry.core.repository.DocumentRepository;
+import io.bayberry.core.repository.entity.Document;
+import io.bayberry.core.repository.exception.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,24 +22,23 @@ public class DocumentService {
         this.eventPublisher = eventPublisher;
     }
 
-    public Result<Document, Error> create(Document document, User user) {
+    public Document create(Document document, User user) {
         document.setCreatorId(user.getId());
         documentRepository.insert(document);
         eventPublisher.publish(new DocumentCreatedEvent(document));
-        return Result.ok(document);
+        return document;
     }
 
-    public Result<Document, Error> get(Long id, User user) {
-        return Result.failIfNull(documentRepository.get(id), Error.DOCUMENT_NOT_FOUND);
+    public Document get(Long id, User user) {
+        return documentRepository.get(id).orElseThrow(DocumentNotFoundException::new);
     }
 
-    public Result<Document, Error> update(Document document, User user) {
+    public void update(Document document, User user) {
         document.setLastModifierId(user.getId());
         try {
             documentRepository.update(document);
-            return Result.ok();
-        } catch (DocumentNotFoundException e) {
-            return Result.fail(Error.DOCUMENT_NOT_FOUND);
+        } catch (EntityNotFoundException e) {
+            throw new DocumentNotFoundException();
         }
     }
 }

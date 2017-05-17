@@ -2,8 +2,8 @@ package io.bayberry.core.service;
 
 import io.bayberry.common.util.CodecUtils;
 import io.bayberry.common.util.SecurityUtils;
-import io.bayberry.repository.UserRepository;
-import io.bayberry.repository.entity.User;
+import io.bayberry.core.repository.UserRepository;
+import io.bayberry.core.repository.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
