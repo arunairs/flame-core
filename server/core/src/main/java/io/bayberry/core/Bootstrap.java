@@ -8,6 +8,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 @SpringBootApplication
 @EnableMongoRepositories(basePackageClasses = {AbstractMongoRepository.class})
 public class Bootstrap {
+
     public static void main(String[] args) {
         new SpringApplication(Bootstrap.class).run(args);
     }
