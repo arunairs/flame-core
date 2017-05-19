@@ -1,7 +1,7 @@
 package io.bayberry.core.config;
 
-import io.bayberry.repository.util.IdGenerator;
-import io.bayberry.repository.util.SnowflakeIdGenerator;
+import io.bayberry.core.repository.id.IdGenerator;
+import io.bayberry.core.repository.id.SnowflakeIdGenerator;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

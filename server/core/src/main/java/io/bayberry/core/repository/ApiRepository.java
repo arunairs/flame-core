@@ -5,7 +5,6 @@ import com.mongodb.WriteResult;
 import io.bayberry.core.constant.Fields;
 import io.bayberry.core.repository.entity.Api;
 import io.bayberry.core.repository.entity.Branch;
-import io.bayberry.core.repository.exception.EntityNotFoundException;
 import io.bayberry.core.repository.id.IdGenerator;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,27 +29,24 @@ public class ApiRepository extends AbstractMongoRepository<Branch, Long> {
         this.idGenerator = idGenerator;
     }
 
-    public Api insert(Api api) throws EntityNotFoundException {
+    public Optional<Api> insert(Api api) {
         api.setId(this.idGenerator.nextId());
         api.setCreatedTime(LocalDateTime.now());
-        this.addToArchiveApis(api);
-        this.addToModuleApiOrders(api);
-        return api;
+        if (this.addToArchiveApis(api).getN() == 0 || this.addToModuleApiOrders(api).getN() == 0) {
+            return Optional.empty();
+        }
+        return Optional.of(api);
     }
 
-    private void addToArchiveApis(Api api) throws EntityNotFoundException {
-        WriteResult result = super.updateFirst(Query.query(Criteria.where(ID).is(api.getBranchId())),
+    private WriteResult addToArchiveApis(Api api) {
+        return super.updateFirst(Query.query(Criteria.where(ID).is(api.getBranchId())),
                 new Update().push("archive.apis", api));
-        if (result.getN() == 0)
-            throw new EntityNotFoundException();
     }
 
-    private void addToModuleApiOrders(Api api) throws EntityNotFoundException {
-        WriteResult result = super.updateFirst(Query.query(Criteria.where(ID).is(api.getBranchId())
+    private WriteResult addToModuleApiOrders(Api api) {
+        return super.updateFirst(Query.query(Criteria.where(ID).is(api.getBranchId())
                         .and("archive.modules._id").is(api.getModuleId())),
                 new Update().push("archive.modules.$.apiOrders", api.getId()));
-        if (result.getN() == 0)
-            throw new EntityNotFoundException();
     }
 
     public Optional<Api> get(Long branchId, Long id) {
@@ -64,12 +60,10 @@ public class ApiRepository extends AbstractMongoRepository<Branch, Long> {
         return branch.getArchive().getApis().get(0);
     }
 
-    public void update(Api api) throws EntityNotFoundException {
+    public int update(Api api) {
         api.setLastModifiedTime(LocalDateTime.now());
-        WriteResult result = super.updateFirst(Query.query(Criteria.where(ID).is(api.getBranchId())
-                .and("archive.apis._id").is(api.getId())), getApiUpdate(api));
-        if (result.getN() == 0)
-            throw new EntityNotFoundException();
+        return super.updateFirst(Query.query(Criteria.where(ID).is(api.getBranchId())
+                .and("archive.apis._id").is(api.getId())), getApiUpdate(api)).getN();
     }
 
     private Update getApiUpdate(Api api) {

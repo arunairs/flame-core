@@ -1,4 +1,4 @@
-package io.bayberry.core.repository.listener;
+package io.bayberry.core.listener;
 
 import io.bayberry.core.repository.entity.BaseEntity;
 import io.bayberry.core.repository.id.IdGenerator;

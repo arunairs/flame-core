@@ -3,10 +3,10 @@ package io.bayberry.core.dto.factory;
 import com.google.common.collect.Maps;
 import io.bayberry.common.util.BeanUtils;
 import io.bayberry.common.util.ReflectionUtils;
+import io.bayberry.core.annotation.ApiInfo;
 import io.bayberry.core.dto.ApiResponse;
-import io.bayberry.repository.annotation.ApiInfo;
-import io.bayberry.repository.entity.Api;
-import io.bayberry.repository.entity.ApiType;
+import io.bayberry.core.repository.entity.Api;
+import io.bayberry.core.repository.entity.ApiType;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;

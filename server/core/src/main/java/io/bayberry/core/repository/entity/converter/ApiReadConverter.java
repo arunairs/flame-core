@@ -1,4 +1,4 @@
-package io.bayberry.core.repository.converter;
+package io.bayberry.core.repository.entity.converter;
 
 import com.mongodb.DBObject;
 import io.bayberry.core.repository.entity.Api;

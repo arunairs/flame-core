@@ -6,7 +6,6 @@ import io.bayberry.core.dto.ApiRequest;
 import io.bayberry.core.dto.ApiResponse;
 import io.bayberry.core.dto.converter.ApiConverter;
 import io.bayberry.core.dto.factory.ApiResponseFactory;
-import io.bayberry.core.exception.ResourceNotFoundException;
 import io.bayberry.core.service.ApiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -31,26 +30,22 @@ public class ApiController {
     @PostMapping("branches/{branchId}/archive/modules/{moduleId}/apis")
     public ApiResponse create(@Valid @RequestBody ApiRequest request,
                               User user) {
-        return apiResponseFactory.createFrom(apiService.create(apiConverter.convert(request), user).orElse(error -> {
-            switch (error) {
-                case MODULE_NOT_FOUND:
-                    throw new ResourceNotFoundException(error);
-                case BRANCH_NOT_FOUND:
-                    throw new ResourceNotFoundException(error);
-            }
-        }));
+        return apiResponseFactory.createFrom(apiService.create(apiConverter.convert(request), user));
+    }
+
+    @Token
+    @GetMapping("branches/{branchId}/archive/apis/{id}")
+    public ApiResponse get(@PathVariable(name = "branchId") Long branchId,
+                           @PathVariable(name = "id") Long id,
+                           User user) {
+        return apiResponseFactory.createFrom(apiService.get(branchId, id, user));
     }
 
     @Token
     @PutMapping("branches/{branchId}/archive/apis/{id}")
-    public ApiResponse update(@Valid @RequestBody ApiRequest request,
-                              User user) {
-        return apiResponseFactory.createFrom(apiService.update(apiConverter.convert(request), user).orElse(error -> {
-            switch (error) {
-                case API_NOT_FOUND:
-                    throw new ResourceNotFoundException(error);
-            }
-        }));
+    public void update(@Valid @RequestBody ApiRequest request,
+                       User user) {
+        apiService.update(apiConverter.convert(request), user);
     }
 
     @Token

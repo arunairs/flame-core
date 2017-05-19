@@ -83,7 +83,11 @@ public abstract class AbstractMongoRepository<T extends Persistable<ID>, ID exte
         return getMongoTemplate().findAndModify(query, update, options().upsert(false).returnNew(true), this.entityClass);
     }
 
-    protected <E> WriteResult updateFirst(final Query query, final E entity) {
+    protected <E extends Persistable<ID>> WriteResult updateFirst(final E entity) {
+        return updateFirst(Query.query(Criteria.where(Fields.ID).is(entity.getId())), entity);
+    }
+
+    protected <E extends Persistable<ID>> WriteResult updateFirst(final Query query, final E entity) {
         return getMongoTemplate().updateFirst(query, getUpdateFromObject(entity), this.entityClass);
     }
 
@@ -103,21 +107,21 @@ public abstract class AbstractMongoRepository<T extends Persistable<ID>, ID exte
         return getMongoTemplate().count(query, this.entityClass);
     }
 
-    protected void remove(final ID id) {
+    protected void delete(final ID id) {
         getMongoTemplate().remove(Query.query(Criteria.where("_id").is(id)), this.entityClass);
     }
 
-    protected void remove(final T entity) {
+    protected void delete(final T entity) {
         getMongoTemplate().remove(entity);
     }
 
-    protected void remove(final Query query) {
+    protected void delete(final Query query) {
         getMongoTemplate().remove(query, this.entityClass);
     }
 
-    protected void remove(final Iterable<T> entities) {
+    protected void delete(final Iterable<T> entities) {
         for (T entity : entities) {
-            remove(entity);
+            delete(entity);
         }
     }
 

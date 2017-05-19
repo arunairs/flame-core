@@ -1,8 +1,6 @@
 package io.bayberry.core.repository;
 
-import com.mongodb.WriteResult;
 import io.bayberry.core.repository.entity.Branch;
-import io.bayberry.core.repository.exception.EntityNotFoundException;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
@@ -37,18 +35,16 @@ public class BranchRepository extends AbstractMongoRepository<Branch, Long> {
         return this.exists(Query.query(Criteria.where("documentId").is(documentId).and("name").is(branchName)));
     }
 
-    public void update(Branch branch) throws EntityNotFoundException {
+    public int update(Branch branch) {
         branch.setLastModifiedTime(LocalDateTime.now());
         Update update = new Update();
         update.set("name", branch.getName());
         update.set("modifiedDateTime", branch.getLastModifiedTime());
-        WriteResult result = super.updateFirst(branch.getId(), update);
-        if (result.getN() == 0)
-            throw new EntityNotFoundException();
+        return super.updateFirst(branch.getId(), update).getN();
     }
 
     @Override
-    public void remove(Long id) {
-        super.remove(id);
+    public void delete(Long id) {
+        super.delete(id);
     }
 }

@@ -6,7 +6,6 @@ import io.bayberry.core.exception.BranchNotFoundException;
 import io.bayberry.core.repository.BranchRepository;
 import io.bayberry.core.repository.entity.Archive;
 import io.bayberry.core.repository.entity.Branch;
-import io.bayberry.core.repository.exception.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -45,14 +44,12 @@ public class BranchService {
     }
 
     public void delete(Long id, User user) {
-        branchRepository.remove(id);
+        branchRepository.delete(id);
     }
 
     public void update(Branch branch, User user) {
         branch.setLastModifierId(user.getId());
-        try {
-            branchRepository.update(branch);
-        } catch (EntityNotFoundException e) {
+        if (branchRepository.update(branch) == 0) {
             throw new BranchNotFoundException();
         }
     }

@@ -7,7 +7,6 @@ import io.bayberry.core.exception.ModuleNotFoundException;
 import io.bayberry.core.repository.ApiRepository;
 import io.bayberry.core.repository.ModuleRepository;
 import io.bayberry.core.repository.entity.Api;
-import io.bayberry.core.repository.exception.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,16 +24,13 @@ public class ApiService {
 
     public Api create(Api api, User user) {
         api.setCreatorId(user.getId());
-        try {
-            apiRepository.insert(api);
-            return api;
-        } catch (EntityNotFoundException e) {
+        return apiRepository.insert(api).orElseGet(() -> {
             if (moduleRepository.get(api.getBranchId(), api.getModuleId()).isPresent()) {
                 throw new BranchNotFoundException();
             } else {
                 throw new ModuleNotFoundException();
             }
-        }
+        });
     }
 
     public Api get(Long branchId, Long id, User user) {
@@ -43,9 +39,7 @@ public class ApiService {
 
     public void update(Api api, User user) {
         api.setLastModifierId(user.getId());
-        try {
-            apiRepository.update(api);
-        } catch (EntityNotFoundException e) {
+        if (apiRepository.update(api) == 0) {
             throw new ApiNotFoundException();
         }
     }

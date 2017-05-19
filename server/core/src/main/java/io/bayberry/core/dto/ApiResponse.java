@@ -2,8 +2,8 @@ package io.bayberry.core.dto;
 
 import io.bayberry.common.api.Request;
 import io.bayberry.common.api.Response;
-import io.bayberry.repository.entity.Api;
-import io.bayberry.repository.entity.ApiType;
+import io.bayberry.core.repository.entity.Api;
+import io.bayberry.core.repository.entity.ApiType;
 import lombok.Getter;
 import lombok.Setter;
 

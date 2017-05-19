@@ -7,7 +7,7 @@ import io.bayberry.common.api.Request;
 import io.bayberry.common.api.Response;
 import io.bayberry.core.dto.validator.ApiRequestValidator;
 import io.bayberry.core.dto.validator.ValidatedBy;
-import io.bayberry.repository.entity.ApiType;
+import io.bayberry.core.repository.entity.ApiType;
 import lombok.Getter;
 import lombok.Setter;
 

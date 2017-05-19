@@ -1,4 +1,4 @@
-package io.bayberry.repository.constant;
+package io.bayberry.core.constant;
 
 public interface Fields {
 

@@ -6,7 +6,6 @@ import io.bayberry.core.event.EventPublisher;
 import io.bayberry.core.exception.DocumentNotFoundException;
 import io.bayberry.core.repository.DocumentRepository;
 import io.bayberry.core.repository.entity.Document;
-import io.bayberry.core.repository.exception.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,9 +34,7 @@ public class DocumentService {
 
     public void update(Document document, User user) {
         document.setLastModifierId(user.getId());
-        try {
-            documentRepository.update(document);
-        } catch (EntityNotFoundException e) {
+        if (documentRepository.update(document) == 0) {
             throw new DocumentNotFoundException();
         }
     }

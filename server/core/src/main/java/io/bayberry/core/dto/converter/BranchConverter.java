@@ -2,7 +2,7 @@ package io.bayberry.core.dto.converter;
 
 import io.bayberry.common.util.BeanUtils;
 import io.bayberry.core.dto.BranchRequest;
-import io.bayberry.repository.entity.Branch;
+import io.bayberry.core.repository.entity.Branch;
 import org.springframework.stereotype.Component;
 
 @Component

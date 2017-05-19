@@ -1,6 +1,6 @@
 package io.bayberry.core.dto;
 
-import io.bayberry.repository.entity.Document;
+import io.bayberry.core.repository.entity.Document;
 import lombok.Getter;
 import lombok.Setter;
 
