@@ -9,7 +9,6 @@ dependencies {
             "org.springframework.boot:spring-boot-starter-data-mongodb:$libs.spring.boot.version",
             "org.springframework.boot:spring-boot-starter-web:$libs.spring.boot.version",
 //            "org.springframework.boot:spring-boot-starter-security:$libs.spring.boot.version",
-            "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$libs.jackson.version",
             "com.smoketurner.snowizard:snowizard-core:1.9.2",
             "org.aspectj:aspectjweaver:1.8.10"
     )

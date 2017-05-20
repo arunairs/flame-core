@@ -6,7 +6,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.Optional;
 
 import static io.bayberry.core.constant.Fields.ID;
@@ -36,7 +36,7 @@ public class BranchRepository extends AbstractMongoRepository<Branch, Long> {
     }
 
     public int update(Branch branch) {
-        branch.setLastModifiedTime(LocalDateTime.now());
+        branch.setLastModifiedTime(Instant.now());
         Update update = new Update();
         update.set("name", branch.getName());
         update.set("modifiedDateTime", branch.getLastModifiedTime());

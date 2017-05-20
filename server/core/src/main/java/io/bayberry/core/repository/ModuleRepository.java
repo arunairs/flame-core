@@ -11,7 +11,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.Optional;
 
 import static io.bayberry.core.constant.Fields.ID;
@@ -28,7 +28,7 @@ public class ModuleRepository extends AbstractMongoRepository<Branch, Long> {
 
     public Optional<Module> insert(Module module) {
         module.setId(this.idGenerator.nextId());
-        module.setCreatedTime(LocalDateTime.now());
+        module.setCreatedTime(Instant.now());
 
         if (this.pushToArchiveModules(module).getN() == 0)
             return Optional.empty();
@@ -79,7 +79,7 @@ public class ModuleRepository extends AbstractMongoRepository<Branch, Long> {
     }
 
     public int update(Module module) {
-        module.setLastModifiedTime(LocalDateTime.now());
+        module.setLastModifiedTime(Instant.now());
 
         return super.updateFirst(Query.query(Criteria.where(ID).is(module.getBranchId())
                         .and("archive.modules._id").is(module.getId())),

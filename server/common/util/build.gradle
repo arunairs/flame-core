@@ -8,6 +8,7 @@ dependencies {
             "commons-codec:commons-codec:$libs.commons.codec.version",
             "com.fasterxml.jackson.core:jackson-core:$libs.jackson.version",
             "com.fasterxml.jackson.core:jackson-databind:$libs.jackson.version",
+            "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$libs.jackson.version",
             "org.reflections:reflections:0.9.11",
             "cglib:cglib:3.2.5"
     )
