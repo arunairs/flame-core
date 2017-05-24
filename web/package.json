@@ -1,7 +1,9 @@
 {
-    "name": "bayberry",
-    "version": "0.0.1",
-    "dependencies": {
-        
-    }
+  "name": "flame",
+  "version": "0.1.0",
+  "dependencies": {
+    "connect": "^3.6.2",
+    "koa": "^2.2.0",
+    "webpack": "^2.6.0"
+  }
 }
