@@ -9,12 +9,3 @@ services:
       - "27017:27017"
     expose:
       - "27017"
-  redis:
-    image: redis:latest
-    volumes:
-          - ./data/redis:/data
-    ports:
-      - "6379:6379"
-    expose:
-      - "6379"
-
