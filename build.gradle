@@ -9,7 +9,7 @@ buildscript {
     ext {
         libs = [
                 spring : [
-                        boot: [version: '1.5.3.RELEASE']
+                        boot: [version: '1.5.4.RELEASE']
                 ],
                 commons: [
                         lang       : [version: '3.5'],
