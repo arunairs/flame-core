@@ -6,15 +6,14 @@ dependencies {
     compile(
             project(':server:common:util'),
             project(':server:common:api'),
-            "org.springframework.boot:spring-boot-starter-data-mongodb:$libs.spring.boot.version",
-            "org.springframework.boot:spring-boot-starter-web:$libs.spring.boot.version",
-//            "org.springframework.boot:spring-boot-starter-security:$libs.spring.boot.version",
+            "org.springframework.boot:spring-boot-starter-data-mongodb",
+            "org.springframework.boot:spring-boot-starter-web",
             "com.smoketurner.snowizard:snowizard-core:1.9.2",
             "org.aspectj:aspectjweaver:1.8.10"
     )
 
     testCompile(
-            "org.springframework.boot:spring-boot-starter-web:$libs.spring.boot.version",
-            "org.springframework.boot:spring-boot-starter-test:$libs.spring.boot.version"
+            "org.springframework.boot:spring-boot-starter-web",
+            "org.springframework.boot:spring-boot-starter-test"
     )
 }

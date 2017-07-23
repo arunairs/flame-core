@@ -25,8 +25,8 @@ buildscript {
                 lombok : [
                         version: '1.16.16'
                 ],
-                testng : [
-                        version: '6.11'
+                junit  : [
+                        version: '4.12'
                 ]
         ]
     }
@@ -60,19 +60,6 @@ allprojects { project ->
     }
 
     dependencies {
-        testCompile "org.testng:testng:$libs.testng.version"
-    }
-
-    test {
-        useTestNG()
-        enabled = true
-    }
-
-    task s1tests(type: Test) {
-        useTestNG() {
-            includeGroups 's1'
-        }
-
-        //jvmArgs '-Xdebug', '-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5007'
+        testCompile "junit:junit:$libs.junit.version"
     }
 }
