@@ -1,7 +1,6 @@
 rootProject.name = 'flame'
 
-include ':buildSrc',
-        ':server',
+include ':server',
         ':server:common:util',
         ':server:common:api',
         ':server:core'
