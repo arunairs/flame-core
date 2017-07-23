@@ -19,6 +19,7 @@
   },
   "scripts": {
     "start": "babel-node app",
-    "dev": "webpack-dev-server --hot --open"
+    "dev": "webpack-dev-server --hot --open",
+    "package": "webpack --config webpack.config.js"
   }
 }
