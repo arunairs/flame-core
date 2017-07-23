@@ -1,4 +1,4 @@
-rootProject.name = 'bayberry'
+rootProject.name = 'flame'
 
 include ':buildSrc',
         ':server',
