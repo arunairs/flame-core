@@ -1,5 +1,6 @@
 import path from "path"
-module.exports = {
+
+export default {
     entry: "./src/main.js",
     output: {
         path: path.resolve(`./dist/${Date.now()}/`),
