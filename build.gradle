@@ -9,7 +9,7 @@ buildscript {
     ext {
         libs = [
                 spring : [
-                        boot: [version: '1.5.6.RELEASE']
+                        boot: [version: '1.5.8.RELEASE']
                 ],
                 commons: [
                         lang       : [version: '3.5'],
@@ -20,10 +20,10 @@ buildscript {
                         guava: [version: '21.0']
                 ],
                 jackson: [
-                        version: '2.8.8'
+                        version: '2.9.2'
                 ],
                 lombok : [
-                        version: '1.16.16'
+                        version: '1.16.18'
                 ],
                 junit  : [
                         version: '4.12'
